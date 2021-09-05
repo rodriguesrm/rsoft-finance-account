@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0-Docs", "0-Docs", "{14E9B086-A7A4-4F1D-BCB2-5BEE9DA48152}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9-Tests", "9-Tests", "{812B13B2-617E-4D48-84DC-72E41BF214B0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Service", "1-Service", "{16970498-0A2A-4027-8886-75FE8C80355A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSoft.Account.Core", "RSoft.Account.Core\RSoft.Account.Core.csproj", "{48EE250F-1947-4A0F-BEAF-98A7A1A38F15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48EE250F-1947-4A0F-BEAF-98A7A1A38F15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48EE250F-1947-4A0F-BEAF-98A7A1A38F15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48EE250F-1947-4A0F-BEAF-98A7A1A38F15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48EE250F-1947-4A0F-BEAF-98A7A1A38F15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{48EE250F-1947-4A0F-BEAF-98A7A1A38F15} = {16970498-0A2A-4027-8886-75FE8C80355A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E96B579E-924A-4DDC-BF92-AFB65D5E1E88}
+	EndGlobalSection
+EndGlobal

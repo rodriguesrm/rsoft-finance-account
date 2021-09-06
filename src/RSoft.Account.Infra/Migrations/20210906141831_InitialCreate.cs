@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RSoft.Account.Infra.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialCreate : InitialSeed
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -290,6 +290,9 @@ namespace RSoft.Account.Infra.Migrations
                 name: "IX_User_FullName",
                 table: "User",
                 columns: new[] { "FirstName", "LastName" });
+
+            Seed(migrationBuilder);
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RSoft.Account.Core.Ports;
 using RSoft.Account.Core.Services;
@@ -7,6 +8,8 @@ using RSoft.Account.Infra.Providers;
 using RSoft.Lib.Common.Options;
 using RSoft.Lib.Design.Infra.Data;
 using RSoft.Lib.Design.IoC;
+using System;
+using System.Collections.Generic;
 
 namespace RSoft.Account.Cross.IoC
 {
@@ -59,6 +62,33 @@ namespace RSoft.Account.Cross.IoC
             //services.AddScoped<IScopeAppService, ScopeAppService>();
 
             #endregion
+
+            services.AddServicesMediatR();
+
+            return services;
+
+        }
+
+        /// <summary>
+        /// Add mediator services 
+        /// </summary>
+        /// <param name="services">Service collection object</param>
+        private static IServiceCollection AddServicesMediatR(this IServiceCollection services)
+        {
+
+            List<string> assembliesNames = new List<string>()
+            {
+                "RSoft.Account.GrpcService",
+                "RSoft.Account.Application"
+            };
+
+
+            assembliesNames
+                .ForEach(assemblyName =>
+                {
+                    var assembly = AppDomain.CurrentDomain.Load(assemblyName);
+                    services.AddMediatR(assembly);
+                });
 
             return services;
 

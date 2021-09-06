@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<Authors>Rodrigo Rodrigues</Authors>
+		<Company>RSoft</Company>
+		<Description>Account gRPC client package</Description>
+		<PackageLicenseFile>license.txt</PackageLicenseFile>
+		<RepositoryUrl>https://github.com/rodriguesrm/rsoft-finance-account</RepositoryUrl>
+		<PackageTags>rsoft grpc account client</PackageTags>
+		<PackageIcon>rsoft-account-grpcclient-icon-32x32.png</PackageIcon>
+		<PackageIconUrl />
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\docs\license.txt">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="rsoft-account-grpcclient-icon-32x32.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Google.Protobuf" Version="3.17.3" />
+		<PackageReference Include="Grpc.Net.Client" Version="2.39.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.39.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<None Include="..\Protos">
+			<Link>Protos</Link>
+		</None>
+		<Protobuf Include="..\Protos\users.proto" GrpcServices="Client">
+			<Link>Protos\users.proto</Link>
+		</Protobuf>
+	</ItemGroup>
+
+</Project>

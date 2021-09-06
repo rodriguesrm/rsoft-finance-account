@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RSoft.Account.Core.Ports;
+using RSoft.Account.Core.Services;
 using RSoft.Account.Infra;
 using RSoft.Account.Infra.Providers;
 using RSoft.Lib.Common.Options;
@@ -45,7 +46,11 @@ namespace RSoft.Account.Cross.IoC
 
             #region Domain
 
-            //services.AddScoped<IUserDomainService, UserDomainService>();
+            services.AddScoped<IAccountDomainService, AccountDomainService>();
+            services.AddScoped<ICategoryDomainService, CategoryDomainService>();
+            services.AddScoped<IPaymentMethodDomainService, PaymentMethodDomainService>();
+            services.AddScoped<ITransactionDomainService, TransactionDomainService>();
+            services.AddScoped<IUserDomainService, UserDomainService>();
 
             #endregion
 

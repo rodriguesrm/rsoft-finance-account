@@ -31,6 +31,10 @@ namespace RSoft.Account.Infra.Configurations
                 .IsUnicode(false)
                 .IsRequired();
 
+            builder.Property(c => c.PaymentType)
+                .HasColumnName(nameof(PaymentMethod.PaymentType))
+                .IsRequired();
+
             #endregion
 
             #region FKs

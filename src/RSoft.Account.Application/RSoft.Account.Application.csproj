@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\finance-lib\src\RSoft.Finance.Domain\RSoft.Finance.Domain.csproj" />
+    <ProjectReference Include="..\RSoft.Account.Contracts\RSoft.Account.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

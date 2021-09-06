@@ -10,10 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\finance-lib\src\RSoft.Finance.Domain\RSoft.Finance.Domain.csproj" />
   </ItemGroup>
 

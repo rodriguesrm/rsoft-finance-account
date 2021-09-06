@@ -9,7 +9,7 @@ using RSoft.Account.Infra;
 namespace RSoft.Account.Infra.Migrations
 {
     [DbContext(typeof(AccountContext))]
-    [Migration("20210906103620_InitialCreate")]
+    [Migration("20210906141831_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -149,6 +149,10 @@ namespace RSoft.Account.Infra.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(80)")
                         .HasColumnName("Name");
+
+                    b.Property<int>("PaymentType")
+                        .HasColumnType("int")
+                        .HasColumnName("PaymentType");
 
                     b.HasKey("Id");
 

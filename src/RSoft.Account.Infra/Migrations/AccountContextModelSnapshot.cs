@@ -148,6 +148,10 @@ namespace RSoft.Account.Infra.Migrations
                         .HasColumnType("varchar(80)")
                         .HasColumnName("Name");
 
+                    b.Property<int>("PaymentType")
+                        .HasColumnType("int")
+                        .HasColumnName("PaymentType");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ChangedBy")

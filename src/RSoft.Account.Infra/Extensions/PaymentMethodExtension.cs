@@ -32,6 +32,7 @@ namespace RSoft.Account.Infra.Extensions
                 result = new PaymentMethodDomain(table.Id)
                 {
                     Name = table.Name,
+                    PaymentType = table.PaymentType,
                     CreatedOn = table.CreatedOn,
                     ChangedOn = table.ChangedOn,
                     IsActive = table.IsActive
@@ -62,6 +63,7 @@ namespace RSoft.Account.Infra.Extensions
                 result = new PaymentMethod(entity.Id)
                 {
                     Name = entity.Name,
+                    PaymentType = entity.PaymentType.Value,
                     CreatedOn = entity.CreatedOn,
                     CreatedBy = entity.CreatedAuthor.Id,
                     IsActive = entity.IsActive
@@ -83,6 +85,7 @@ namespace RSoft.Account.Infra.Extensions
             if (entity != null && table != null)
             {
                 table.Name = entity.Name;
+                table.PaymentType = entity.PaymentType.Value;
                 table.ChangedOn = entity.ChangedOn;
                 table.ChangedBy = entity.ChangedAuthor.Id;
                 table.IsActive = entity.IsActive;

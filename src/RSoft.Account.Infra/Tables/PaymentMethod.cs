@@ -1,4 +1,5 @@
-﻿using RSoft.Lib.Common.Contracts.Entities;
+﻿using RSoft.Finance.Domain.Enum;
+using RSoft.Lib.Common.Contracts.Entities;
 using RSoft.Lib.Design.Infra.Data;
 using RSoft.Lib.Design.Infra.Data.Tables;
 using System;
@@ -47,6 +48,11 @@ namespace RSoft.Account.Infra.Tables
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Payment type
+        /// </summary>
+        public PaymentTypeEnum PaymentType { get; set; }
 
         /// <summary>
         /// Active status flag

@@ -63,6 +63,7 @@ namespace RSoft.Account.Infra.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    PaymentType = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<ulong>(type: "bit", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),

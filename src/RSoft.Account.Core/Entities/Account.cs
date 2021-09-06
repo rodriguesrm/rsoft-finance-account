@@ -9,6 +9,9 @@ using System;
 namespace RSoft.Account.Core.Entities
 {
 
+    /// <summary>
+    /// Account entity
+    /// </summary>
     public class Account : EntityIdNameAuditBase<Guid, Account>, IEntity, IAuditAuthor<Guid>, IActive
     {
 

@@ -1,23 +1,22 @@
-﻿using RSoft.Lib.Common.Contracts;
-using RSoft.Lib.Common.Contracts.Entities;
-using RSoft.Lib.Design.Domain.Entities;
+﻿using RSoft.Lib.Common.Contracts.Entities;
+using RSoft.Lib.Design.Infra.Data;
+using RSoft.Lib.Design.Infra.Data.Tables;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
-namespace RSoft.Account.Core.Entities
+namespace RSoft.Account.Infra.Tables
 {
 
     /// <summary>
-    /// Category entity
+    /// Category table entity
     /// </summary>
-    public class Category : EntityIdNameAuditBase<Guid, Category>, IEntity, IAuditAuthor<Guid>, IActive
+    public class Category : TableIdNameAuditBase<Guid, Category>, ITable, IAuditNavigation<Guid, User>, IActive
     {
 
         #region Constructors
 
         /// <summary>
-        /// Create a new category instance
+        /// Create a new table instance
         /// </summary>
         public Category() : base(Guid.NewGuid(), null)
         {
@@ -25,18 +24,18 @@ namespace RSoft.Account.Core.Entities
         }
 
         /// <summary>
-        /// Create a new category instance
+        /// Create a new table instance
         /// </summary>
-        /// <param name="id">Category id value</param>
+        /// <param name="id">User id value</param>
         public Category(Guid id) : base(id, null)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Create a new category instance
+        /// Create a new table instance
         /// </summary>
-        /// <param name="id">Category id text</param>
+        /// <param name="id">User id text</param>
         /// <exception cref="System.ArgumentNullException"></exception>
         /// <exception cref="System.FormatException"></exception>
         /// <exception cref="System.OverflowException"></exception>
@@ -50,7 +49,7 @@ namespace RSoft.Account.Core.Entities
         #region Properties
 
         /// <summary>
-        /// Indicate if entity is active
+        /// Active status flag
         /// </summary>
         public bool IsActive { get; set; }
 
@@ -59,13 +58,23 @@ namespace RSoft.Account.Core.Entities
         #region Navigation/Lazy
 
         /// <summary>
-        /// Accounts list
+        /// Created author data
+        /// </summary>
+        public virtual User CreatedAuthor { get; set; }
+
+        /// <summary>
+        /// Changed author data
+        /// </summary>
+        public virtual User ChangedAuthor { get; set; }
+
+        /// <summary>
+        /// Accounts by this category
         /// </summary>
         public virtual ICollection<Account> Accounts { get; set; }
 
         #endregion
 
-        #region Local Methods
+        #region Local methods
 
         /// <summary>
         /// Iniatialize objects/properties/fields with default values
@@ -73,21 +82,12 @@ namespace RSoft.Account.Core.Entities
         private void Initialize()
         {
             IsActive = true;
+            Accounts = new HashSet<Account>();
         }
 
         #endregion
 
-        #region Public Methods
-
-        /// <summary>
-        /// Validate entity
-        /// </summary>
-        public override void Validate()
-        {
-            if (CreatedAuthor != null) AddNotifications(CreatedAuthor.Notifications);
-            if (ChangedAuthor != null) AddNotifications(ChangedAuthor.Notifications);
-            AddNotifications(new SimpleStringValidationContract(Name, nameof(Name), true, 3, 80).Contract.Notifications);
-        }
+        #region Public methods
 
         #endregion
 

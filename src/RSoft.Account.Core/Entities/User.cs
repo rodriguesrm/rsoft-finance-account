@@ -6,6 +6,9 @@ using System;
 namespace RSoft.Account.Core.Entities
 {
 
+    /// <summary>
+    /// User entity
+    /// </summary>
     public class User : EntityIdBase<Guid, User>, IActive
     {
 

@@ -1,46 +1,49 @@
-﻿using RSoft.Lib.Common.Contracts;
+﻿using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.DependencyInjection;
+using RSoft.Lib.Common.Abstractions;
+using RSoft.Lib.Common.Contracts;
 using RSoft.Lib.Common.Contracts.Entities;
 using RSoft.Lib.Design.Domain.Entities;
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using RSoft.Finance.Domain.Enum;
 
 namespace RSoft.Account.Core.Entities
 {
 
     /// <summary>
-    /// Category entity
+    /// PaymentMethod entity
     /// </summary>
-    public class Category : EntityIdNameAuditBase<Guid, Category>, IEntity, IAuditAuthor<Guid>, IActive
+    public class PaymentMethod : EntityIdNameAuditBase<Guid, PaymentMethod>, IEntity, IAuditAuthor<Guid>, IActive
     {
 
         #region Constructors
 
         /// <summary>
-        /// Create a new category instance
+        /// Create a new PaymentMethod instance
         /// </summary>
-        public Category() : base(Guid.NewGuid(), null)
+        public PaymentMethod() : base(Guid.NewGuid(), null)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Create a new category instance
+        /// Create a new PaymentMethod instance
         /// </summary>
-        /// <param name="id">Category id value</param>
-        public Category(Guid id) : base(id, null)
+        /// <param name="id">PaymentMethod id value</param>
+        public PaymentMethod(Guid id) : base(id, null)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Create a new category instance
+        /// Create a new PaymentMethod instance
         /// </summary>
-        /// <param name="id">Category id text</param>
+        /// <param name="id">PaymentMethod id text</param>
         /// <exception cref="System.ArgumentNullException"></exception>
         /// <exception cref="System.FormatException"></exception>
         /// <exception cref="System.OverflowException"></exception>
-        public Category(string id) : base()
+        public PaymentMethod(string id) : base()
         {
             Id = new Guid(id);
         }
@@ -48,6 +51,11 @@ namespace RSoft.Account.Core.Entities
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Payment type
+        /// </summary>
+        public PaymentTypeEnum? PaymentType { get; set; }
 
         /// <summary>
         /// Indicate if entity is active
@@ -84,12 +92,15 @@ namespace RSoft.Account.Core.Entities
         /// </summary>
         public override void Validate()
         {
+            IStringLocalizer<PaymentMethod> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<PaymentMethod>>();
             if (CreatedAuthor != null) AddNotifications(CreatedAuthor.Notifications);
             if (ChangedAuthor != null) AddNotifications(ChangedAuthor.Notifications);
-            AddNotifications(new SimpleStringValidationContract(Name, nameof(Name), true, 3, 80).Contract.Notifications);
+            AddNotifications(new SimpleStringValidationContract(Name, nameof(Name), true, 3, 50).Contract.Notifications);
+            AddNotifications(new RequiredValidationContract<PaymentTypeEnum?>(PaymentType, nameof(PaymentType), localizer["PAYMENTTYPE_REQUIRED"]).Contract.Notifications);
         }
 
         #endregion
 
     }
+
 }

@@ -9,7 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9-Tests", "9-Tests", "{812B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Service", "1-Service", "{16970498-0A2A-4027-8886-75FE8C80355A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSoft.Account.Core", "RSoft.Account.Core\RSoft.Account.Core.csproj", "{48EE250F-1947-4A0F-BEAF-98A7A1A38F15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Account.Core", "RSoft.Account.Core\RSoft.Account.Core.csproj", "{48EE250F-1947-4A0F-BEAF-98A7A1A38F15}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9-XFinance-Libs", "9-XFinance-Libs", "{F5EADA71-E0DC-4676-A106-EC6A50035808}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Finance.Domain", "..\..\finance-lib\src\RSoft.Finance.Domain\RSoft.Finance.Domain.csproj", "{BB7E49EB-1B59-448B-964E-00DA4CBB1C22}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Finance.Contracts", "..\..\finance-lib\src\RSoft.Finance.Contracts\RSoft.Finance.Contracts.csproj", "{0AFA9612-BB52-4C51-82F0-A9C8AC5EE36B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSoft.Account.Infra", "RSoft.Account.Infra\RSoft.Account.Infra.csproj", "{D0AA2BC7-55D4-4EC4-BD8B-A7A46B5696DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,12 +29,27 @@ Global
 		{48EE250F-1947-4A0F-BEAF-98A7A1A38F15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48EE250F-1947-4A0F-BEAF-98A7A1A38F15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48EE250F-1947-4A0F-BEAF-98A7A1A38F15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB7E49EB-1B59-448B-964E-00DA4CBB1C22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB7E49EB-1B59-448B-964E-00DA4CBB1C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB7E49EB-1B59-448B-964E-00DA4CBB1C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB7E49EB-1B59-448B-964E-00DA4CBB1C22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AFA9612-BB52-4C51-82F0-A9C8AC5EE36B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AFA9612-BB52-4C51-82F0-A9C8AC5EE36B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AFA9612-BB52-4C51-82F0-A9C8AC5EE36B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AFA9612-BB52-4C51-82F0-A9C8AC5EE36B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0AA2BC7-55D4-4EC4-BD8B-A7A46B5696DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0AA2BC7-55D4-4EC4-BD8B-A7A46B5696DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0AA2BC7-55D4-4EC4-BD8B-A7A46B5696DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0AA2BC7-55D4-4EC4-BD8B-A7A46B5696DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{48EE250F-1947-4A0F-BEAF-98A7A1A38F15} = {16970498-0A2A-4027-8886-75FE8C80355A}
+		{BB7E49EB-1B59-448B-964E-00DA4CBB1C22} = {F5EADA71-E0DC-4676-A106-EC6A50035808}
+		{0AFA9612-BB52-4C51-82F0-A9C8AC5EE36B} = {F5EADA71-E0DC-4676-A106-EC6A50035808}
+		{D0AA2BC7-55D4-4EC4-BD8B-A7A46B5696DC} = {16970498-0A2A-4027-8886-75FE8C80355A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E96B579E-924A-4DDC-BF92-AFB65D5E1E88}

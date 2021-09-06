@@ -39,13 +39,13 @@ namespace RSoft.Account.Infra.Configurations
                 .WithMany(d => d.CreatedPaymentMethods)
                 .HasForeignKey(fk => fk.CreatedBy)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK_{nameof(User)}_CreatedAuthor");
+                .HasConstraintName($"FK_{nameof(User)}_{nameof(PaymentMethod)}_{nameof(PaymentMethod.CreatedBy)}");
 
             builder.HasOne(o => o.ChangedAuthor)
                 .WithMany(d => d.ChangedPaymentMethods)
                 .HasForeignKey(fk => fk.ChangedBy)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK_{nameof(User)}_ChangedAuthor");
+                .HasConstraintName($"FK_{nameof(User)}_{nameof(PaymentMethod)}_{nameof(PaymentMethod.ChangedBy)}");
 
             #endregion
 

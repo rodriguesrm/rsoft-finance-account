@@ -53,22 +53,22 @@ namespace RSoft.Account.Infra.Configurations
             #region FKs
 
             builder.HasOne(o => o.CreatedAuthor)
-                .WithMany(d => d.ChangedTransactions)
+                .WithMany(d => d.CreatedTransactions)
                 .HasForeignKey(fk => fk.CreatedBy)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK_{nameof(User)}_CreatedAuthor");
+                .HasConstraintName($"FK_{nameof(User)}_{nameof(Transaction)}_{nameof(Transaction.CreatedBy)}");
 
             builder.HasOne(o => o.Account)
                 .WithMany(d => d.Transactions)
                 .HasForeignKey(fk => fk.AccountId)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK_{nameof(Account)}_{nameof(Transaction.AccountId)}");
+                .HasConstraintName($"FK_{nameof(User)}_{nameof(Transaction)}_{nameof(Transaction.AccountId)}");
 
             builder.HasOne(o => o.PaymentMethod)
                 .WithMany(d => d.Transactions)
                 .HasForeignKey(fk => fk.PaymentMethodId)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK_{nameof(PaymentMethod)}_{nameof(Transaction.PaymentMethodId)}");
+                .HasConstraintName($"FK_{nameof(User)}_{nameof(Transaction)}_{nameof(Transaction.PaymentMethodId)}");
 
             #endregion
 

@@ -15,7 +15,7 @@ namespace RSoft.Account.Infra.Configurations
         public void Configure(EntityTypeBuilder<Tables.Account> builder)
         {
 
-            builder.ToTable(nameof(Account));
+            builder.ToTable(nameof(Tables.Account));
 
             #region PK
 
@@ -39,22 +39,22 @@ namespace RSoft.Account.Infra.Configurations
             #region FKs
 
             builder.HasOne(o => o.CreatedAuthor)
-                .WithMany(d => d.ChangedAccounts)
+                .WithMany(d => d.CreatedAccounts)
                 .HasForeignKey(fk => fk.CreatedBy)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK_{nameof(User)}_CreatedAuthor");
+                .HasConstraintName($"FK_{nameof(User)}_{nameof(Tables.Account)}_{nameof(Tables.Account.CreatedBy)}");
 
             builder.HasOne(o => o.ChangedAuthor)
                 .WithMany(d => d.ChangedAccounts)
                 .HasForeignKey(fk => fk.ChangedBy)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK_{nameof(User)}_ChangedAuthor");
+                .HasConstraintName($"FK__{nameof(User)}_{nameof(Tables.Account)}_{nameof(Tables.Account.ChangedBy)}");
 
             builder.HasOne(o => o.Category)
                 .WithMany(d => d.Accounts)
                 .HasForeignKey(fk => fk.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK_{nameof(Category)}_{nameof(Tables.Account.CategoryId)}");
+                .HasConstraintName($"FK_{nameof(Tables.Account)}_{nameof(Tables.Account.CategoryId)}");
 
             #endregion
 

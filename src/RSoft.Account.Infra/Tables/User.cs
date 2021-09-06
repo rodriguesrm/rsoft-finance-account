@@ -101,11 +101,6 @@ namespace RSoft.Account.Infra.Tables
         /// </summary>
         public virtual ICollection<Transaction> CreatedTransactions { get; set; }
 
-        /// <summary>
-        /// Transactions changed by this user
-        /// </summary>
-        public virtual ICollection<Transaction> ChangedTransactions { get; set; }
-
         #endregion
 
         #region Local methods
@@ -123,7 +118,6 @@ namespace RSoft.Account.Infra.Tables
             CreatedAccounts = new HashSet<Account>();
             ChangedAccounts = new HashSet<Account>();
             CreatedTransactions = new HashSet<Transaction>();
-            ChangedTransactions = new HashSet<Transaction>();
         }
 
         #endregion

@@ -39,13 +39,13 @@ namespace RSoft.Account.Infra.Configurations
                 .WithMany(d => d.CreatedCategories)
                 .HasForeignKey(fk => fk.CreatedBy)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK_{nameof(User)}_CreatedAuthor");
+                .HasConstraintName($"FK_{nameof(User)}_{nameof(Category)}_{nameof(Category.CreatedBy)}");
 
             builder.HasOne(o => o.ChangedAuthor)
                 .WithMany(d => d.ChangedCategories)
                 .HasForeignKey(fk => fk.ChangedBy)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK_{nameof(User)}_ChangedAuthor");
+                .HasConstraintName($"FK_{nameof(User)}_{nameof(Category)}_{nameof(Category.ChangedBy)}");
 
             #endregion
 

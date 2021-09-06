@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option csharp_namespace = "RSoft.Account.Grpc";
+
+// service definitions
+service Category {
+	rpc CreateCategory (CreateCategoryRequest) returns (CreateCategoryReply);
+	rpc UpdateCategory (UpdateCategoryRequest) returns (UpdateCategoryReply);
+	rpc EnableCategory (EnableCategoryRequest) returns (EnableCategoryReply);
+	rpc DisableCategory (DisableCategoryRequest) returns (DisableCategoryReply);
+}
+
+// message contracts
+
+message ErrorsDictionary {
+	string key = 1;
+	string value = 2;
+}
+
+message CreateCategoryRequest {
+	string name = 1;
+}
+message CreateCategoryReply {
+	bool success = 1;
+	string id = 2;
+	repeated ErrorsDictionary errors = 3;
+}
+
+message UpdateCategoryRequest {
+	string id = 1;
+	string name = 2;
+}
+message UpdateCategoryReply {
+	bool success = 1;
+	repeated ErrorsDictionary errors = 2;
+}
+
+message EnableCategoryRequest {
+	string id = 1;
+}
+message EnableCategoryReply {
+	bool success = 1;
+	repeated ErrorsDictionary errors = 2;
+}
+
+message DisableCategoryRequest {
+	string id = 1;
+}
+message DisableCategoryReply {
+	bool success = 1;
+	repeated ErrorsDictionary errors = 2;
+}

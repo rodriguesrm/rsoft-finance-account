@@ -12,6 +12,9 @@
 		<Protobuf Include="..\Protos\users.proto">
 			<Link>Protos\users.proto</Link>
 		</Protobuf>
+		<Protobuf Include="..\Protos\category.proto">
+			<Link>Protos\category.proto</Link>
+		</Protobuf>
 	</ItemGroup>
 
 	<ItemGroup>

@@ -12,6 +12,33 @@ namespace RSoft.Account.Core.Entities
     public class User : EntityIdBase<Guid, User>, IActive
     {
 
+        #region Constructors
+
+        /// <summary>
+        /// Create a new user instance
+        /// </summary>
+        public User() : base(Guid.NewGuid()) { }
+
+        /// <summary>
+        /// Create a new user instance
+        /// </summary>
+        /// <param name="id">Category id value</param>
+        public User(Guid id) : base(id) { }
+
+        /// <summary>
+        /// Create a new user instance
+        /// </summary>
+        /// <param name="id">Category id text</param>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        /// <exception cref="System.FormatException"></exception>
+        /// <exception cref="System.OverflowException"></exception>
+        public User(string id) : base()
+        {
+            Id = new Guid(id);
+        }
+
+        #endregion
+
         #region Properties
 
         /// <summary>

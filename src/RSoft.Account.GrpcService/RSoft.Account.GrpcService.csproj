@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>07d585e4-b71d-4a1c-8e26-c3bc6a5e6e90</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.34.0" />
+    <PackageReference Include="RSoft.Logs" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RSoft.Account.Contracts\RSoft.Account.Contracts.csproj" />
+    <ProjectReference Include="..\RSoft.Account.Cross\RSoft.Account.Cross.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -93,12 +93,12 @@ namespace RSoft.Account.Infra.Tables
         /// <summary>
         /// Account data
         /// </summary>
-        public Account Account { get; set; }
+        public virtual Account Account { get; set; }
 
         /// <summary>
         /// Payment method data
         /// </summary>
-        public PaymentMethod PaymentMethod { get; set; }
+        public virtual PaymentMethod PaymentMethod { get; set; }
 
         #endregion
 

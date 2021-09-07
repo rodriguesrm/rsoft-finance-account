@@ -6,8 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RSoft.Account.Cross.IoC;
+using RSoft.Account.GrpcService.Services;
 using RSoft.Account.Infra.Extensions;
 using RSoft.Lib.Common.Web.Extensions;
+using RSoft.Lib.Web.Extensions;
 
 namespace RSoft.Account.GrpcService
 {
@@ -34,6 +36,7 @@ namespace RSoft.Account.GrpcService
         {
             services.AddGrpc();
             services.AddHttpContextAccessor();
+            services.AddJwtToken(Configuration);
             services.AddAccountRegister(Configuration);
             services.AddCultureLanguage(Configuration);
         }
@@ -46,11 +49,16 @@ namespace RSoft.Account.GrpcService
                 app.UseDeveloperExceptionPage();
             }
 
+            app.ConfigureLangague();
+
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapGrpcService<GreeterService>();
+                endpoints.MapGrpcService<CategoryGrpcService>();
 
                 endpoints.MapGet("/", async context =>
                 {

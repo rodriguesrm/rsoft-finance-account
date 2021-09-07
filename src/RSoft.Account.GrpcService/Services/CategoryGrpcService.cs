@@ -1,5 +1,6 @@
 ﻿using Grpc.Core;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Grpc;
@@ -14,6 +15,7 @@ namespace RSoft.Account.GrpcService.Services
     /// <summary>
     /// Category gRPC Service
     /// </summary>
+    [Authorize]
     public class CategoryGrpcService : Grpc.Category.CategoryBase
     {
 

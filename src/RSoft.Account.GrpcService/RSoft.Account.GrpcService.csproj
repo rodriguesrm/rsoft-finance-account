@@ -20,6 +20,7 @@
 	<ItemGroup>
 		<PackageReference Include="Grpc.AspNetCore" Version="2.39.0" />
 		<PackageReference Include="MediatR" Version="9.0.0" />
+		<PackageReference Include="RSoft.Lib.Web" Version="1.0.0" />
 		<PackageReference Include="RSoft.Logs" Version="1.1.0" />
 	</ItemGroup>
 

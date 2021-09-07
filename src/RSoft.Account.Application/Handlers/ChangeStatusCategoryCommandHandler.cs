@@ -18,9 +18,9 @@ namespace RSoft.Account.Application.Handlers
 {
 
     /// <summary>
-    /// Create category command handler
+    /// Change status category command handler
     /// </summary>
-    public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, CommandResult<bool>>
+    public class ChangeStatusCategoryCommandHandler : IRequestHandler<ChangeStatusCategoryCommand, CommandResult<bool>>
     {
 
         #region Local objects/variables
@@ -34,15 +34,15 @@ namespace RSoft.Account.Application.Handlers
         #region Constructors
 
         /// <summary>
-        /// Create a new handler instance
+        /// Create a handler instance
         /// </summary>
-        /// <param name="categoryDomainService">Category domain service object</param>
-        /// <param name="uow">Unit of work controller object</param>
-        /// <param name="logger">Logger object</param>
-        public UpdateCategoryCommandHandler(ICategoryDomainService categoryDomainService, IUnitOfWork uow, ILogger<CreateCategoryCommandHandler> logger)
+        /// <param name="uow"></param>
+        /// <param name="categoryDomainService"></param>
+        /// <param name="logger"></param>
+        public ChangeStatusCategoryCommandHandler(IUnitOfWork uow, ICategoryDomainService categoryDomainService, ILogger<CreateCategoryCommandHandler> logger)
         {
-            _categoryDomainService = categoryDomainService;
             _uow = uow;
+            _categoryDomainService = categoryDomainService;
             _logger = logger;
         }
 
@@ -53,25 +53,25 @@ namespace RSoft.Account.Application.Handlers
         /// <summary>
         /// Command handler
         /// </summary>
-        /// <param name="request">Request command data</param>
+        /// <param name="request">Command request data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public async Task<CommandResult<bool>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResult<bool>> Handle(ChangeStatusCategoryCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"{GetType().Name} HANDLER START");
             CommandResult<bool> result = new();
             Category entity = await _categoryDomainService.GetByKeyAsync(request.Id);
             if (entity == null)
             {
-                IStringLocalizer<UpdateCategoryCommandHandler> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<UpdateCategoryCommandHandler>>();
+                IStringLocalizer<ChangeStatusCategoryCommandHandler> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<ChangeStatusCategoryCommandHandler>>();
                 result.Errors = new List<GenericNotification>() { new GenericNotification("Category", localizer["CATEGORY_NOTFOUND"]) };
             }
             else
             {
-                entity.Name = request.Name;
+                entity.IsActive = request.IsActive;
                 entity = _categoryDomainService.Update(entity.Id, entity);
                 if (entity.Valid)
                 {
-                    _ = _uow.SaveChangesAsync();
+                    _ = await _uow.SaveChangesAsync();
                     result.Response = true;
                 }
                 else

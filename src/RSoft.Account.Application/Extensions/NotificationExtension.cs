@@ -16,7 +16,7 @@ namespace RSoft.Account.Application.Extensions
         /// Convert notifications to generic notification list
         /// </summary>
         /// <param name="notifications">Notifications list</param>
-        public static IEnumerable<GenericNotification> ToGenericNotifications(this IEnumerable<Notification> notifications)
+        public static IList<GenericNotification> ToGenericNotifications(this IEnumerable<Notification> notifications)
             => notifications.Select(n => new GenericNotification(n.Property, n.Message)).ToList();
 
     }

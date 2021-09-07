@@ -36,9 +36,9 @@ namespace RSoft.Account.Application.Handlers
         /// <summary>
         /// Create a handler instance
         /// </summary>
-        /// <param name="uow"></param>
-        /// <param name="categoryDomainService"></param>
-        /// <param name="logger"></param>
+        /// <param name="uow">Unit of work controller instance</param>
+        /// <param name="categoryDomainService">Category domain/core service</param>
+        /// <param name="logger">Logger object</param>
         public ChangeStatusCategoryCommandHandler(IUnitOfWork uow, ICategoryDomainService categoryDomainService, ILogger<CreateCategoryCommandHandler> logger)
         {
             _uow = uow;

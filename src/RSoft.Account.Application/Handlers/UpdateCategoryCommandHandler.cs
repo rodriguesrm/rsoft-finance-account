@@ -71,7 +71,7 @@ namespace RSoft.Account.Application.Handlers
                 entity = _categoryDomainService.Update(entity.Id, entity);
                 if (entity.Valid)
                 {
-                    _ = _uow.SaveChangesAsync();
+                    _ = await _uow.SaveChangesAsync();
                     result.Response = true;
                 }
                 else

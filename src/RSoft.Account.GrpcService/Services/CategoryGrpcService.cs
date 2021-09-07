@@ -3,11 +3,15 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using RSoft.Account.Contracts.Commands;
+using RSoft.Account.Contracts.Models;
 using RSoft.Account.Grpc;
 using RSoft.Finance.Contracts.Commands;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Google.Protobuf.WellKnownTypes;
+using System.Collections.Generic;
+using RSoft.Account.GrpcService.Extensions;
 
 namespace RSoft.Account.GrpcService.Services
 {
@@ -146,6 +150,62 @@ namespace RSoft.Account.GrpcService.Services
             }
             _logger.LogInformation($"DisableCategory finished {(reply.Success ? "sucessful" : "with errors")}");
             return reply;
+        }
+
+        /// <summary>
+        /// Get category by id
+        /// </summary>
+        /// <param name="request">Category request data</param>
+        /// <param name="context">Server call context object</param>
+        public override async Task<GetCategoryReply> GetCategory(GetCategoryRequest request, ServerCallContext context)
+        {
+            _logger.LogInformation("Starting GetCategory");
+            GetCategoryReply reply = new();
+            GetCategoryByIdCommand command = new(new Guid(request.Id));
+            CommandResult<CategoryDto> result = await _mediator.Send(command);
+            if (result.Response != null)
+            {
+                reply.Data = result.Response.Map();
+                reply.Success = true;
+            }
+            else
+            {
+                result.Errors.ToList().ForEach(err =>
+                {
+                    reply.Errors.Add(new ErrorsDictionary() { Key = err.Property, Value = err.Message });
+                });
+            }
+            _logger.LogInformation($"GetCategory finished {(reply.Success ? "sucessful" : "with errors")}");
+            return reply;
+        }
+
+        /// <summary>
+        /// List all categories
+        /// </summary>
+        /// <param name="request">Category request data</param>
+        /// <param name="context">Server call context object</param>
+        public override async Task<ListCategoryReply> ListCategory(ListCategoryRequest request, ServerCallContext context)
+        {
+
+            _logger.LogInformation("Starting ListCategory");
+            ListCategoryReply reply = new();
+            ListCategoryCommand command = new();
+            CommandResult<IEnumerable<CategoryDto>> result = await _mediator.Send(command);
+            if (result.Response != null)
+            {
+                reply.Data.Add(result.Response.Map());
+                reply.Success = true;
+            }
+            else
+            {
+                result.Errors.ToList().ForEach(err =>
+                {
+                    reply.Errors.Add(new ErrorsDictionary() { Key = err.Property, Value = err.Message });
+                });
+            }
+            _logger.LogInformation($"ListCategory finished {(reply.Success ? "sucessful" : "with errors")}");
+            return reply;
+
         }
 
         #endregion

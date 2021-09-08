@@ -66,6 +66,7 @@ namespace RSoft.Account.GrpcService
             {
                 endpoints.MapGrpcService<AccountGrpcService>();
                 endpoints.MapGrpcService<CategoryGrpcService>();
+                endpoints.MapGrpcService<PaymentMethodGrpcService>();
 
                 endpoints.MapGet("/", async context =>
                 {

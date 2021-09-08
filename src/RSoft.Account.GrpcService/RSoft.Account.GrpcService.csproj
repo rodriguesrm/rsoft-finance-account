@@ -15,6 +15,9 @@
 		<Protobuf Include="..\Protos\account.proto">
 			<Link>Protos\account.proto</Link>
 		</Protobuf>
+		<Protobuf Include="..\Protos\paymentmethod.proto">
+			<Link>Protos\paymentmethod.proto</Link>
+		</Protobuf>
 	</ItemGroup>
 
 	<ItemGroup>

@@ -51,9 +51,7 @@ message CreateCategoryRequest {
 	string name = 1;
 }
 message CreateCategoryReply {
-	bool success = 1;
-	string id = 2;
-	repeated ErrorsDictionary errors = 3;
+	string id = 1;
 }
 
 message UpdateCategoryRequest {
@@ -61,39 +59,29 @@ message UpdateCategoryRequest {
 	string name = 2;
 }
 message UpdateCategoryReply {
-	bool success = 1;
-	repeated ErrorsDictionary errors = 2;
 }
 
 message EnableCategoryRequest {
 	string id = 1;
 }
-message EnableCategoryReply {
-	bool success = 1;
-	repeated ErrorsDictionary errors = 2;
+message EnableCategoryReply { 
 }
 
 message DisableCategoryRequest {
 	string id = 1;
 }
 message DisableCategoryReply {
-	bool success = 1;
-	repeated ErrorsDictionary errors = 2;
 }
 
 message GetCategoryRequest {
 	string id = 1;
 }
 message GetCategoryReply {
-	bool success = 1;
-	CategoryDetail data = 2;
-	repeated ErrorsDictionary errors = 3;
+	CategoryDetail data = 1;
 }
 
 message ListCategoryRequest {
 }
 message ListCategoryReply {
-	bool success = 1;
-	repeated CategoryDetail data = 2;
-	repeated ErrorsDictionary errors = 3;
+	repeated CategoryDetail data = 1;
 }

@@ -57,10 +57,10 @@ namespace RSoft.Account.Application.Handlers
             _logger.LogInformation($"{GetType().Name} START");
             CommandResult<Guid?> result = new();
             Category entity = new() { Name = request.Name };
-
-            entity = await _categoryDomainService.AddAsync(entity);
+            entity.Validate();
             if (entity.Valid)
             {
+                entity = await _categoryDomainService.AddAsync(entity);
                 _ = await _uow.SaveChangesAsync();
                 result.Response = entity.Id;
             }

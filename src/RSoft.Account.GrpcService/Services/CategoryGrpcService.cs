@@ -7,9 +7,8 @@ using RSoft.Account.Contracts.Models;
 using RSoft.Account.Grpc;
 using RSoft.Finance.Contracts.Commands;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
-using Google.Protobuf.WellKnownTypes;
+using System.Text.Json;
 using System.Collections.Generic;
 using RSoft.Account.GrpcService.Extensions;
 
@@ -20,7 +19,7 @@ namespace RSoft.Account.GrpcService.Services
     /// Category gRPC Service
     /// </summary>
     [Authorize]
-    public class CategoryGrpcService : Grpc.Category.CategoryBase
+    public class CategoryGrpcService : Category.CategoryBase
     {
 
         #region Local objects/variables
@@ -45,6 +44,46 @@ namespace RSoft.Account.GrpcService.Services
 
         #endregion
 
+        #region Local methods
+
+        /// <summary>
+        /// Send command via mediator
+        /// </summary>
+        /// <typeparam name="TReply"></typeparam>
+        /// <typeparam name="TCommand"></typeparam>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="methodName"></param>
+        /// <param name="createCommand"></param>
+        /// <param name="successAction"></param>
+        private async Task<TReply> SendCommand<TReply, TCommand, TResult>
+        (
+            string methodName, 
+            Func<TCommand> createCommand, 
+            Action<TReply, CommandResult<TResult>> successAction = null
+        )
+            where TReply : class
+            where TCommand : IRequest<CommandResult<TResult>>
+        {
+            _logger.LogInformation($"Starting {methodName}");
+            TReply reply = Activator.CreateInstance<TReply>();
+            TCommand command = createCommand();
+            CommandResult<TResult> result = await _mediator.Send(command);
+            if (result.Success)
+            {
+                successAction?.Invoke(reply, result);
+            }
+            else
+            {
+                string jsonNotifications = JsonSerializer.Serialize(result.Errors);
+                Status rpcStatus = new(StatusCode.InvalidArgument, jsonNotifications);
+                throw new RpcException(status: rpcStatus, message: "BadRequest");
+            }
+            _logger.LogInformation($"{methodName} finished {(result.Success ? "sucessful" : "with errors")}");
+            return reply;
+        }
+
+        #endregion
+
         #region Overrides
 
         /// <summary>
@@ -53,26 +92,12 @@ namespace RSoft.Account.GrpcService.Services
         /// <param name="request">Category request data</param>
         /// <param name="context">Server call context object</param>
         public override async Task<CreateCategoryReply> CreateCategory(CreateCategoryRequest request, ServerCallContext context)
-        {
-            _logger.LogInformation("Starting CreateCategory");
-            CreateCategoryReply reply = new();
-            CreateCategoryCommand command = new(request.Name);
-            CommandResult<Guid?> result = await _mediator.Send(command);
-            if (result.Response.HasValue)
-            {
-                reply.Success = true;
-                reply.Id = result.Response.Value.ToString();
-            }
-            else
-            {
-                result.Errors.ToList().ForEach(err =>
-                {
-                    reply.Errors.Add(new ErrorsDictionary() { Key = err.Property, Value = err.Message });
-                });
-            }
-            _logger.LogInformation($"CreateCategory finished {(reply.Success ? "sucessful" : "with errors")}");
-            return reply;
-        }
+            => await SendCommand<CreateCategoryReply, CreateCategoryCommand, Guid?>
+            (
+                nameof(CreateCategory), 
+                () => new(request.Name),
+                (reply, result) => reply.Id = result.Response.ToString()
+            );
 
         /// <summary>
         /// Update a existing category
@@ -80,25 +105,11 @@ namespace RSoft.Account.GrpcService.Services
         /// <param name="request">Category request data</param>
         /// <param name="context">Server call context object</param>
         public override async Task<UpdateCategoryReply> UpdateCategory(UpdateCategoryRequest request, ServerCallContext context)
-        {
-            _logger.LogInformation("Starting UpdateCategory");
-            UpdateCategoryReply reply = new();
-            UpdateCategoryCommand command = new(new Guid(request.Id), request.Name);
-            CommandResult<bool> result = await _mediator.Send(command);
-            if (result.Response)
-            {
-                reply.Success = true;
-            }
-            else
-            {
-                result.Errors.ToList().ForEach(err =>
-                {
-                    reply.Errors.Add(new ErrorsDictionary() { Key = err.Property, Value = err.Message });
-                });
-            }
-            _logger.LogInformation($"UpdateCategory finished {(reply.Success ? "sucessful" : "with errors")}");
-            return reply;
-        }
+            => await SendCommand<UpdateCategoryReply, UpdateCategoryCommand, bool>
+            (
+                nameof(UpdateCategory),
+                () => new(new Guid(request.Id), request.Name)
+            );
 
         /// <summary>
         /// Enable a category
@@ -106,25 +117,12 @@ namespace RSoft.Account.GrpcService.Services
         /// <param name="request">Category request data</param>
         /// <param name="context">Server call context object</param>
         public override async Task<EnableCategoryReply> EnableCategory(EnableCategoryRequest request, ServerCallContext context)
-        {
-            _logger.LogInformation("Starting EnableCategory");
-            EnableCategoryReply reply = new();
-            ChangeStatusCategoryCommand command = new(new Guid(request.Id), true);
-            CommandResult<bool> result = await _mediator.Send(command);
-            if (result.Response)
-            {
-                reply.Success = true;
-            }
-            else
-            {
-                result.Errors.ToList().ForEach(err =>
-                {
-                    reply.Errors.Add(new ErrorsDictionary() { Key = err.Property, Value = err.Message });
-                });
-            }
-            _logger.LogInformation($"EnableCategory finished {(reply.Success ? "sucessful" : "with errors")}");
-            return reply;
-        }
+            => await SendCommand<EnableCategoryReply, ChangeStatusCategoryCommand, bool>
+            (
+                nameof(EnableCategory),
+                () => new(new Guid(request.Id), true)
+            );
+
 
         /// <summary>
         /// Disable a category
@@ -132,25 +130,11 @@ namespace RSoft.Account.GrpcService.Services
         /// <param name="request">Category request data</param>
         /// <param name="context">Server call context object</param>
         public override async Task<DisableCategoryReply> DisableCategory(DisableCategoryRequest request, ServerCallContext context)
-        {
-            _logger.LogInformation("Starting EnableCategory");
-            DisableCategoryReply reply = new();
-            ChangeStatusCategoryCommand command = new(new Guid(request.Id), false);
-            CommandResult<bool> result = await _mediator.Send(command);
-            if (result.Response)
-            {
-                reply.Success = true;
-            }
-            else
-            {
-                result.Errors.ToList().ForEach(err =>
-                {
-                    reply.Errors.Add(new ErrorsDictionary() { Key = err.Property, Value = err.Message });
-                });
-            }
-            _logger.LogInformation($"DisableCategory finished {(reply.Success ? "sucessful" : "with errors")}");
-            return reply;
-        }
+            => await SendCommand<DisableCategoryReply, ChangeStatusCategoryCommand, bool>
+            (
+                nameof(DisableCategory),
+                () => new(new Guid(request.Id), false)
+            );
 
         /// <summary>
         /// Get category by id
@@ -158,26 +142,12 @@ namespace RSoft.Account.GrpcService.Services
         /// <param name="request">Category request data</param>
         /// <param name="context">Server call context object</param>
         public override async Task<GetCategoryReply> GetCategory(GetCategoryRequest request, ServerCallContext context)
-        {
-            _logger.LogInformation("Starting GetCategory");
-            GetCategoryReply reply = new();
-            GetCategoryByIdCommand command = new(new Guid(request.Id));
-            CommandResult<CategoryDto> result = await _mediator.Send(command);
-            if (result.Response != null)
-            {
-                reply.Data = result.Response.Map();
-                reply.Success = true;
-            }
-            else
-            {
-                result.Errors.ToList().ForEach(err =>
-                {
-                    reply.Errors.Add(new ErrorsDictionary() { Key = err.Property, Value = err.Message });
-                });
-            }
-            _logger.LogInformation($"GetCategory finished {(reply.Success ? "sucessful" : "with errors")}");
-            return reply;
-        }
+            => await SendCommand<GetCategoryReply, GetCategoryByIdCommand, CategoryDto>
+            (
+                nameof(GetCategory),
+                () => new(new Guid(request.Id)),
+                (reply, result) => reply.Data = result.Response.Map()
+            );
 
         /// <summary>
         /// List all categories
@@ -185,28 +155,12 @@ namespace RSoft.Account.GrpcService.Services
         /// <param name="request">Category request data</param>
         /// <param name="context">Server call context object</param>
         public override async Task<ListCategoryReply> ListCategory(ListCategoryRequest request, ServerCallContext context)
-        {
-
-            _logger.LogInformation("Starting ListCategory");
-            ListCategoryReply reply = new();
-            ListCategoryCommand command = new();
-            CommandResult<IEnumerable<CategoryDto>> result = await _mediator.Send(command);
-            if (result.Response != null)
-            {
-                reply.Data.Add(result.Response.Map());
-                reply.Success = true;
-            }
-            else
-            {
-                result.Errors.ToList().ForEach(err =>
-                {
-                    reply.Errors.Add(new ErrorsDictionary() { Key = err.Property, Value = err.Message });
-                });
-            }
-            _logger.LogInformation($"ListCategory finished {(reply.Success ? "sucessful" : "with errors")}");
-            return reply;
-
-        }
+            => await SendCommand<ListCategoryReply, ListCategoryCommand, IEnumerable<CategoryDto>>
+            (
+                nameof(ListCategory),
+                () => new(),
+                (reply, result) => reply.Data.Add(result.Response.Map())
+            );
 
         #endregion
 

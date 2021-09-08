@@ -52,7 +52,7 @@ namespace RSoft.Account.Application.Handlers
         {
             _logger.LogInformation($"{GetType().Name} START");
             CommandResult<IEnumerable<CategoryDto>> result = new();
-            IEnumerable<Category> entities = _categoryDomainService.GetAllAsync().Result;
+            IEnumerable<Category> entities = _categoryDomainService.GetAllAsync(cancellationToken).Result;
             if (entities != null)
             {
                 result.Response = entities.Map();

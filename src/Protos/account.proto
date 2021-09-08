@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "RSoft.Account.Grpc.Account";
+
+// message contracts
+
+// service definitions
+service Account {
+	rpc CreateAccount (CreateAccountRequest) returns (CreateAccountReply);
+}
+
+// messages contracts
+
+message AuthorDetail {
+	string id = 1;
+	string name = 2;
+}
+message NullableTimestamp {
+  oneof kind {
+    google.protobuf.NullValue null = 1;
+    google.protobuf.Timestamp data = 2;
+  }
+}
+message NullableAuthorDetail {
+  oneof kind {
+    google.protobuf.NullValue null = 1;
+    AuthorDetail data = 2;
+  }
+}
+
+message CreateAccountRequest {
+	string name = 1;
+	string category_id = 2;
+}
+message CreateAccountReply {
+	string id = 1;
+}

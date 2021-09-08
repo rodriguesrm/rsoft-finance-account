@@ -55,11 +55,11 @@ namespace RSoft.Account.Application.Handlers
         /// </summary>
         /// <param name="request">Request command data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public async Task<CommandResult<bool>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+        public Task<CommandResult<bool>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"{GetType().Name} START");
             CommandResult<bool> result = new();
-            Category entity = await _categoryDomainService.GetByKeyAsync(request.Id);
+            Category entity = _categoryDomainService.GetByKeyAsync(request.Id).Result;
             if (entity == null)
             {
                 IStringLocalizer<UpdateCategoryCommandHandler> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<UpdateCategoryCommandHandler>>();
@@ -72,7 +72,7 @@ namespace RSoft.Account.Application.Handlers
                 if (entity.Valid)
                 {
                     _ = _categoryDomainService.Update(entity.Id, entity);
-                    _ = await _uow.SaveChangesAsync();
+                    _ = _uow.SaveChanges();
                     result.Response = true;
                 }
                 else
@@ -81,7 +81,7 @@ namespace RSoft.Account.Application.Handlers
                 }
             }
             _logger.LogInformation($"{GetType().Name} END");
-            return result;
+            return Task.FromResult(result);
         }
 
         #endregion

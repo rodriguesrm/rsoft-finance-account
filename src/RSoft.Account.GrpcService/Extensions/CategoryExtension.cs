@@ -1,6 +1,6 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using RSoft.Account.Contracts.Models;
-using RSoft.Account.Grpc;
+using RSoft.Account.Grpc.Category;
 using System.Collections.Generic;
 using System.Linq;
 

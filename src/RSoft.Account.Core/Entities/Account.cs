@@ -89,7 +89,7 @@ namespace RSoft.Account.Core.Entities
             if (CreatedAuthor != null) AddNotifications(CreatedAuthor.Notifications);
             if (ChangedAuthor != null) AddNotifications(ChangedAuthor.Notifications);
             AddNotifications(new SimpleStringValidationContract(Name, nameof(Name), true, 3, 100).Contract.Notifications);
-            AddNotifications(new RequiredValidationContract<string>(Category?.Name, nameof(Category), localizer["CATEGORY_REQUIRED"]).Contract.Notifications);
+            AddNotifications(new RequiredValidationContract<Guid?>(Category?.Id ?? null, nameof(Category), localizer["CATEGORY_REQUIRED"]).Contract.Notifications);
         }
 
         #endregion

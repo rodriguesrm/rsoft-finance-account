@@ -6,10 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RSoft.Account.Cross.IoC;
+using RSoft.Logs.Interceptors;
 using RSoft.Account.GrpcService.Services;
 using RSoft.Account.Infra.Extensions;
 using RSoft.Lib.Common.Web.Extensions;
 using RSoft.Lib.Web.Extensions;
+using RSoft.Logs.Extensions;
 
 namespace RSoft.Account.GrpcService
 {
@@ -34,10 +36,14 @@ namespace RSoft.Account.GrpcService
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddGrpc();
+            services.AddGrpc(opt =>
+            {
+                opt.Interceptors.Add<RequestResponseInterceptor<Startup>>();
+            });
             services.AddHttpContextAccessor();
             services.AddJwtToken(Configuration);
             services.AddAccountRegister(Configuration);
+            services.AddMiddlewareLoggingOption(Configuration);
             services.AddCultureLanguage(Configuration);
         }
 

@@ -50,14 +50,14 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="cancellationToken">Cancellation token</param>
         public Task<CommandResult<IEnumerable<CategoryDto>>> Handle(ListCategoryCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"{GetType().Name} HANDLER START");
+            _logger.LogInformation($"{GetType().Name} START");
             CommandResult<IEnumerable<CategoryDto>> result = new();
             IEnumerable<Category> entities = _categoryDomainService.GetAllAsync().Result;
             if (entities != null)
             {
                 result.Response = entities.Map();
             }
-            _logger.LogInformation($"{GetType().Name} HANDLER END");
+            _logger.LogInformation($"{GetType().Name} END");
             return Task.FromResult(result);
         }
 

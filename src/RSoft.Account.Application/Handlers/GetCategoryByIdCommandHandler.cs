@@ -54,7 +54,7 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="cancellationToken">Cancellation token</param>
         public Task<CommandResult<CategoryDto>> Handle(GetCategoryByIdCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"{GetType().Name} HANDLER START");
+            _logger.LogInformation($"{GetType().Name} START");
             CommandResult<CategoryDto> result = new();
             Category entity = _categoryDomainService.GetByKeyAsync(request.Id).Result;
             if (entity == null)
@@ -66,7 +66,7 @@ namespace RSoft.Account.Application.Handlers
             {
                 result.Response = entity.Map();
             }
-            _logger.LogInformation($"{GetType().Name} HANDLER END");
+            _logger.LogInformation($"{GetType().Name} END");
             return Task.FromResult(result);
         }
 

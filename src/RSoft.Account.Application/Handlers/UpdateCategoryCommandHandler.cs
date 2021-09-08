@@ -57,7 +57,7 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="cancellationToken">Cancellation token</param>
         public async Task<CommandResult<bool>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"{GetType().Name} HANDLER START");
+            _logger.LogInformation($"{GetType().Name} START");
             CommandResult<bool> result = new();
             Category entity = await _categoryDomainService.GetByKeyAsync(request.Id);
             if (entity == null)
@@ -79,7 +79,7 @@ namespace RSoft.Account.Application.Handlers
                     result.Errors = entity.Notifications.ToGenericNotifications();
                 }
             }
-            _logger.LogInformation($"{GetType().Name} HANDLER END");
+            _logger.LogInformation($"{GetType().Name} END");
             return result;
         }
 

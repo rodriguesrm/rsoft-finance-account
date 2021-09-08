@@ -5,6 +5,7 @@ using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
 using RSoft.Finance.Contracts.Commands;
+using RSoft.Lib.Common.Models;
 using RSoft.Lib.Design.Infra.Data;
 using System;
 using System.Threading;
@@ -53,9 +54,10 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="cancellationToken">Cancellation token</param>
         public async Task<CommandResult<Guid?>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"{GetType().Name} HANDLER START");
+            _logger.LogInformation($"{GetType().Name} START");
             CommandResult<Guid?> result = new();
             Category entity = new() { Name = request.Name };
+
             entity = await _categoryDomainService.AddAsync(entity);
             if (entity.Valid)
             {
@@ -66,7 +68,7 @@ namespace RSoft.Account.Application.Handlers
             {
                 result.Errors = entity.Notifications.ToGenericNotifications();
             }
-            _logger.LogInformation($"{GetType().Name} HANDLER END");
+            _logger.LogInformation($"{GetType().Name} END");
             return result;
         }
 

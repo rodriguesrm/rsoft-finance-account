@@ -3,7 +3,6 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using RSoft.Account.Application.Extensions;
 using RSoft.Account.Contracts.Commands;
-using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
 using RSoft.Finance.Contracts.Commands;
 using RSoft.Lib.Common.Abstractions;
@@ -13,36 +12,37 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using DomainAccount = RSoft.Account.Core.Entities.Account;
 
 namespace RSoft.Account.Application.Handlers
 {
 
     /// <summary>
-    /// Create category command handler
+    /// Change status Account command handler
     /// </summary>
-    public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, CommandResult<bool>>
+    public class ChangeStatusAccountCommandHandler : IRequestHandler<ChangeStatusAccountCommand, CommandResult<bool>>
     {
 
         #region Local objects/variables
 
         private readonly IUnitOfWork _uow;
-        private readonly ICategoryDomainService _categoryDomainService;
-        private readonly ILogger<CreateCategoryCommandHandler> _logger;
+        private readonly IAccountDomainService _accountDomainService;
+        private readonly ILogger<CreateAccountCommandHandler> _logger;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Create a new handler instance
+        /// Create a handler instance
         /// </summary>
-        /// <param name="categoryDomainService">Category domain service object</param>
-        /// <param name="uow">Unit of work controller object</param>
+        /// <param name="uow">Unit of work controller instance</param>
+        /// <param name="accountDomainService">Account domain/core service</param>
         /// <param name="logger">Logger object</param>
-        public UpdateCategoryCommandHandler(ICategoryDomainService categoryDomainService, IUnitOfWork uow, ILogger<CreateCategoryCommandHandler> logger)
+        public ChangeStatusAccountCommandHandler(IUnitOfWork uow, IAccountDomainService accountDomainService, ILogger<CreateAccountCommandHandler> logger)
         {
-            _categoryDomainService = categoryDomainService;
             _uow = uow;
+            _accountDomainService = accountDomainService;
             _logger = logger;
         }
 
@@ -53,25 +53,25 @@ namespace RSoft.Account.Application.Handlers
         /// <summary>
         /// Command handler
         /// </summary>
-        /// <param name="request">Request command data</param>
+        /// <param name="request">Command request data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public Task<CommandResult<bool>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+        public Task<CommandResult<bool>> Handle(ChangeStatusAccountCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"{GetType().Name} START");
             CommandResult<bool> result = new();
-            Category entity = _categoryDomainService.GetByKeyAsync(request.Id, cancellationToken).Result;
+            DomainAccount entity = _accountDomainService.GetByKeyAsync(request.Id, cancellationToken).Result;
             if (entity == null)
             {
-                IStringLocalizer<UpdateCategoryCommandHandler> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<UpdateCategoryCommandHandler>>();
-                result.Errors = new List<GenericNotification>() { new GenericNotification("Category", localizer["CATEGORY_NOTFOUND"]) };
+                IStringLocalizer<ChangeStatusAccountCommandHandler> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<ChangeStatusAccountCommandHandler>>();
+                result.Errors = new List<GenericNotification>() { new GenericNotification("Account", localizer["ACCOUNT_NOTFOUND"]) };
             }
             else
             {
-                entity.Name = request.Name;
+                entity.IsActive = request.IsActive;
                 entity.Validate();
                 if (entity.Valid)
                 {
-                    _ = _categoryDomainService.Update(entity.Id, entity);
+                    _ = _accountDomainService.Update(entity.Id, entity);
                     _ = _uow.SaveChanges();
                     result.Response = true;
                 }

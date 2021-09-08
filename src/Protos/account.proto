@@ -10,19 +10,25 @@ option csharp_namespace = "RSoft.Account.Grpc.Account";
 // service definitions
 service Account {
 	rpc CreateAccount (CreateAccountRequest) returns (CreateAccountReply);
+	rpc UpdateAccount (UpdateAccountRequest) returns (UpdateAccountReply);
+	rpc EnableAccount (ChangeStatusAccountRequest) returns (ChangeStatusAccountReply);
+	rpc DisableAccount (ChangeStatusAccountRequest) returns (ChangeStatusAccountReply);
+	rpc GetAccount (GetAccountRequest) returns (GetAccountReply);
+	rpc ListAccount (ListAccountRequest) returns (ListAccountReply);
 }
 
-// messages contracts
+// messages types
 
-message AuthorDetail {
-	string id = 1;
-	string name = 2;
-}
 message NullableTimestamp {
   oneof kind {
     google.protobuf.NullValue null = 1;
     google.protobuf.Timestamp data = 2;
   }
+}
+
+message AuthorDetail {
+	string id = 1;
+	string name = 2;
 }
 message NullableAuthorDetail {
   oneof kind {
@@ -31,10 +37,61 @@ message NullableAuthorDetail {
   }
 }
 
+message CategoryInfo {
+	string id = 1;
+	string name = 2;
+}
+message NullableCategoryInfo {
+  oneof kind {
+    google.protobuf.NullValue null = 1;
+    CategoryInfo data = 2;
+  }
+}
+
+message AccountDetail {
+	string id = 1;
+	string name = 2;
+	NullableCategoryInfo category = 3;
+	bool is_active = 4;
+	google.protobuf.Timestamp created_on = 5;
+	AuthorDetail created_by = 6;
+	NullableTimestamp changed_on = 7;
+	NullableAuthorDetail changed_by = 8;
+}
+
+// messages contracts
+
 message CreateAccountRequest {
 	string name = 1;
 	string category_id = 2;
 }
 message CreateAccountReply {
 	string id = 1;
+}
+
+message UpdateAccountRequest {
+	string id = 1;
+	string name = 2;
+	string category_id = 3;
+}
+message UpdateAccountReply {
+}
+
+message ChangeStatusAccountRequest {
+	string id = 1;
+}
+message ChangeStatusAccountReply {
+}
+
+message GetAccountRequest {
+	string id = 1;
+}
+message GetAccountReply {
+	AccountDetail data = 1;
+}
+
+message ListAccountRequest {
+}
+message ListAccountReply {
+	repeated AccountDetail data = 1;
 }

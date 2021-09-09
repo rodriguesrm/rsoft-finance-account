@@ -123,6 +123,9 @@
   <data name="AMOUNT_NOZERO" xml:space="preserve">
     <value>The transaction amount must be different from 0 (zero)</value>
   </data>
+  <data name="DATE_REQUIRED" xml:space="preserve">
+    <value>Date is required</value>
+  </data>
   <data name="PAYMENTMETHOD_REQUIRED" xml:space="preserve">
     <value>Payment method is required</value>
   </data>

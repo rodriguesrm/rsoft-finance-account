@@ -9,7 +9,7 @@ using RSoft.Account.Infra;
 namespace RSoft.Account.Infra.Migrations
 {
     [DbContext(typeof(AccountContext))]
-    [Migration("20210906141831_InitialCreate")]
+    [Migration("20210909232208_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -185,7 +185,7 @@ namespace RSoft.Account.Infra.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(65,30)")
+                        .HasColumnType("decimal(16,2)")
                         .HasColumnName("Amount");
 
                     b.Property<string>("Comment")

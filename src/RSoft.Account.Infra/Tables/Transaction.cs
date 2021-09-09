@@ -16,19 +16,13 @@ namespace RSoft.Account.Infra.Tables
         /// <summary>
         /// Create a new table instance
         /// </summary>
-        public Transaction() : base(Guid.NewGuid())
-        {
-            Initialize();
-        }
+        public Transaction() : base(Guid.NewGuid()) { }
 
         /// <summary>
         /// Create a new table instance
         /// </summary>
         /// <param name="id">User id value</param>
-        public Transaction(Guid id) : base(id)
-        {
-            Initialize();
-        }
+        public Transaction(Guid id) : base(id) { }
 
         /// <summary>
         /// Create a new table instance
@@ -64,7 +58,7 @@ namespace RSoft.Account.Infra.Tables
         /// <summary>
         /// Transaction amount
         /// </summary>
-        public decimal Amount { get; set; }
+        public float Amount { get; set; }
 
         /// <summary>
         /// Transaction Comments/Annotations
@@ -99,18 +93,6 @@ namespace RSoft.Account.Infra.Tables
         /// Payment method data
         /// </summary>
         public virtual PaymentMethod PaymentMethod { get; set; }
-
-        #endregion
-
-        #region Local methods
-
-        /// <summary>
-        /// Iniatialize objects/properties/fields with default values
-        /// </summary>
-        private void Initialize()
-        {
-            
-        }
 
         #endregion
 

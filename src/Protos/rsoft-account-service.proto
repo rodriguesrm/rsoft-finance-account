@@ -35,6 +35,11 @@ service PaymentMethod {
 	rpc ListPaymentMethod (ListPaymentMethodRequest) returns (ListPaymentMethodReply);
 }
 
+service Transaction {
+	rpc CreateTransaction (CreateTransactionRequest) returns (CreateTransactionReply);
+	rpc DeleteTransaction (DeleteTransactionRequest) returns (DeleteTransactionReply);
+}
+
 // message types
 // ------------------------------------------------------------------
 
@@ -214,4 +219,26 @@ message ListPaymentMethodRequest {
 }
 message ListPaymentMethodReply {
 	repeated PaymentMethodDetail data = 1;
+}
+
+
+// transaction message contracts
+// ------------------------------------------------------------------
+message CreateTransactionRequest {
+	int32 year = 1;
+	int32 month = 2;
+	google.protobuf.Timestamp date = 3;
+	double amount = 4;
+	string comment = 5;
+	string account_id = 6;
+	string payment_method_id = 7;
+}
+message CreateTransactionReply {
+	string id = 1;
+}
+
+message DeleteTransactionRequest {
+	string id = 1;
+}
+message DeleteTransactionReply {
 }

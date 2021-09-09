@@ -81,7 +81,7 @@ namespace RSoft.Account.Cross.IoC
         private static IServiceCollection AddServicesMediatR(this IServiceCollection services)
         {
 
-            List<string> assembliesNames = new List<string>()
+            List<string> assembliesNames = new()
             {
                 "RSoft.Account.GrpcService",
                 "RSoft.Account.Application"

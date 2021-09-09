@@ -67,7 +67,7 @@ namespace RSoft.Account.Core.Entities
         /// <summary>
         /// Transaction amount
         /// </summary>
-        public decimal Amount { get; set; }
+        public float Amount { get; set; }
 
         /// <summary>
         /// Transaction Comments/Annotations
@@ -111,9 +111,11 @@ namespace RSoft.Account.Core.Entities
         {
             IStringLocalizer<Transaction> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<Transaction>>();
             if (CreatedAuthor != null) AddNotifications(CreatedAuthor.Notifications);
-            
+
             if (Amount == 0)
                 AddNotification(nameof(Amount), localizer["AMOUNT_NOZERO"]);
+
+            AddNotifications(new PastDateValidationContract(Date, nameof(Date), localizer["DATE_REQUIRED"]).Contract.Notifications);
 
             AddNotifications(new RequiredValidationContract<string>(Account?.Name, nameof(Account), localizer["ACCOUNT_REQUIRED"]).Contract.Notifications);
             AddNotifications(new RequiredValidationContract<string>(PaymentMethod?.Name, nameof(PaymentMethod), localizer["PAYMENTMETHOD_REQUIRED"]).Contract.Notifications);

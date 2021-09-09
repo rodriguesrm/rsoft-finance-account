@@ -183,7 +183,7 @@ namespace RSoft.Account.Infra.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(65,30)")
+                        .HasColumnType("decimal(16,2)")
                         .HasColumnName("Amount");
 
                     b.Property<string>("Comment")

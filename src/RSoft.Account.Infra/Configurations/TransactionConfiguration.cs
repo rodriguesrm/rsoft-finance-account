@@ -40,6 +40,7 @@ namespace RSoft.Account.Infra.Configurations
 
             builder.Property(c => c.Amount)
                 .HasColumnName(nameof(Transaction.Amount))
+                .HasColumnType("decimal(16,2)")
                 .IsRequired();
 
             builder.Property(c => c.AccountId)

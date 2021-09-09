@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using RSoft.Finance.Contracts.Commands;
 using RSoft.Lib.Design.Domain.Entities;
 using System.Collections.Generic;
@@ -11,7 +12,8 @@ namespace RSoft.Account.Application.Handlers.Abstractions
     /// <summary>
     /// Lista category command handler
     /// </summary>
-    public abstract class ListCommandHandlerBase<TDto, TEntity>
+    public abstract class ListCommandHandlerBase<TListCommand, TDto, TEntity>
+        where TListCommand : IRequest<CommandResult<IEnumerable<TDto>>>
         where TEntity : EntityBase<TEntity>
     {
 
@@ -39,8 +41,9 @@ namespace RSoft.Account.Application.Handlers.Abstractions
         /// <summary>
         /// Get entity by key
         /// </summary>
+        /// <param name="request">Command request data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        protected abstract Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken);
+        protected abstract Task<IEnumerable<TEntity>> GetAllAsync(TListCommand request, CancellationToken cancellationToken);
 
         /// <summary>
         /// Map entity list to result list
@@ -55,12 +58,13 @@ namespace RSoft.Account.Application.Handlers.Abstractions
         /// <summary>
         /// Command hanlder
         /// </summary>
+        /// <param name="request">Command request data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public async Task<CommandResult<IEnumerable<TDto>>> RunHandler(CancellationToken cancellationToken)
+        public async Task<CommandResult<IEnumerable<TDto>>> RunHandler(TListCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"{GetType().Name} START");
             CommandResult<IEnumerable<TDto>> result = new();
-            IEnumerable<TEntity> entities = await GetAllAsync(cancellationToken);
+            IEnumerable<TEntity> entities = await GetAllAsync(request, cancellationToken);
             if (entities != null)
             {
                 result.Response = MapEntities(entities);

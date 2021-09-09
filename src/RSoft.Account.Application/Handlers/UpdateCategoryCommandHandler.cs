@@ -22,7 +22,6 @@ namespace RSoft.Account.Application.Handlers
 
         private readonly IUnitOfWork _uow;
         private readonly ICategoryDomainService _categoryDomainService;
-        private readonly ILogger<CreateCategoryCommandHandler> _logger;
 
         #endregion
 
@@ -38,7 +37,6 @@ namespace RSoft.Account.Application.Handlers
         {
             _categoryDomainService = categoryDomainService;
             _uow = uow;
-            _logger = logger;
         }
 
         #endregion

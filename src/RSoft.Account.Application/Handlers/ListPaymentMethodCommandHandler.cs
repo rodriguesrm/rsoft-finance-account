@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using RSoft.Account.Application.Extensions;
+using RSoft.Account.Application.Handlers.Abstractions;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Contracts.Models;
 using RSoft.Account.Core.Entities;
@@ -16,13 +17,12 @@ namespace RSoft.Account.Application.Handlers
     /// <summary>
     /// Lista PaymentMethod command handler
     /// </summary>
-    public class ListPaymentMethodCommandHandler : IRequestHandler<ListPaymentMethodCommand, CommandResult<IEnumerable<PaymentMethodDto>>>
+    public class ListPaymentMethodCommandHandler : ListCommandHandlerBase<ListPaymentMethodCommand, PaymentMethodDto, PaymentMethod>, IRequestHandler<ListPaymentMethodCommand, CommandResult<IEnumerable<PaymentMethodDto>>>
     {
 
         #region Local objects/variables
 
-        private readonly IPaymentMethodDomainService _PaymentMethodDomainService;
-        private readonly ILogger<ListPaymentMethodCommandHandler> _logger;
+        private readonly IPaymentMethodDomainService _paymentMethodDomainService;
 
         #endregion
 
@@ -33,11 +33,22 @@ namespace RSoft.Account.Application.Handlers
         /// </summary>
         /// <param name="PaymentMethodDomainService">PaymentMethod domain/core service</param>
         /// <param name="logger">Logger object</param>
-        public ListPaymentMethodCommandHandler(IPaymentMethodDomainService PaymentMethodDomainService, ILogger<ListPaymentMethodCommandHandler> logger)
+        public ListPaymentMethodCommandHandler(IPaymentMethodDomainService PaymentMethodDomainService, ILogger<ListPaymentMethodCommandHandler> logger) : base(logger)
         {
-            _PaymentMethodDomainService = PaymentMethodDomainService;
-            _logger = logger;
+            _paymentMethodDomainService = PaymentMethodDomainService;
         }
+
+        #endregion
+
+        #region Overrides
+
+        ///<inheritdoc/>
+        protected override async Task<IEnumerable<PaymentMethod>> GetAllAsync(ListPaymentMethodCommand request, CancellationToken cancellationToken)
+            => await _paymentMethodDomainService.GetAllAsync(cancellationToken);
+
+        ///<inheritdoc/>
+        protected override IEnumerable<PaymentMethodDto> MapEntities(IEnumerable<PaymentMethod> entities)
+            => entities.Map();
 
         #endregion
 
@@ -48,18 +59,8 @@ namespace RSoft.Account.Application.Handlers
         /// </summary>
         /// <param name="request">Request command data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public Task<CommandResult<IEnumerable<PaymentMethodDto>>> Handle(ListPaymentMethodCommand request, CancellationToken cancellationToken)
-        {
-            _logger.LogInformation($"{GetType().Name} START");
-            CommandResult<IEnumerable<PaymentMethodDto>> result = new();
-            IEnumerable<PaymentMethod> entities = _PaymentMethodDomainService.GetAllAsync(cancellationToken).Result;
-            if (entities != null)
-            {
-                result.Response = entities.Map();
-            }
-            _logger.LogInformation($"{GetType().Name} END");
-            return Task.FromResult(result);
-        }
+        public async Task<CommandResult<IEnumerable<PaymentMethodDto>>> Handle(ListPaymentMethodCommand request, CancellationToken cancellationToken)
+            => await RunHandler(request, cancellationToken);
 
         #endregion
     }

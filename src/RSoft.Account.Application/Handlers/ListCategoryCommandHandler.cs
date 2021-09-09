@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using RSoft.Account.Application.Extensions;
+using RSoft.Account.Application.Handlers.Abstractions;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Contracts.Models;
 using RSoft.Account.Core.Entities;
@@ -14,15 +15,14 @@ namespace RSoft.Account.Application.Handlers
 {
 
     /// <summary>
-    /// Lista category command handler
+    /// List category command handler
     /// </summary>
-    public class ListCategoryCommandHandler : IRequestHandler<ListCategoryCommand, CommandResult<IEnumerable<CategoryDto>>>
+    public class ListCategoryCommandHandler : ListCommandHandlerBase<ListCategoryCommand, CategoryDto, Category>, IRequestHandler<ListCategoryCommand, CommandResult<IEnumerable<CategoryDto>>>
     {
 
         #region Local objects/variables
 
         private readonly ICategoryDomainService _categoryDomainService;
-        private readonly ILogger<ListCategoryCommandHandler> _logger;
 
         #endregion
 
@@ -33,11 +33,22 @@ namespace RSoft.Account.Application.Handlers
         /// </summary>
         /// <param name="categoryDomainService">Category domain/core service</param>
         /// <param name="logger">Logger object</param>
-        public ListCategoryCommandHandler(ICategoryDomainService categoryDomainService, ILogger<ListCategoryCommandHandler> logger)
+        public ListCategoryCommandHandler(ICategoryDomainService categoryDomainService, ILogger<ListCategoryCommandHandler> logger) : base(logger)
         {
             _categoryDomainService = categoryDomainService;
-            _logger = logger;
         }
+
+        #endregion
+
+        #region Overrides
+
+        ///<inheritdoc/>
+        protected override async Task<IEnumerable<Category>> GetAllAsync(ListCategoryCommand request, CancellationToken cancellationToken)
+            => await _categoryDomainService.GetAllAsync(cancellationToken);
+
+        ///<inheritdoc/>
+        protected override IEnumerable<CategoryDto> MapEntities(IEnumerable<Category> entities)
+            => entities.Map();
 
         #endregion
 
@@ -48,18 +59,8 @@ namespace RSoft.Account.Application.Handlers
         /// </summary>
         /// <param name="request">Request command data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public Task<CommandResult<IEnumerable<CategoryDto>>> Handle(ListCategoryCommand request, CancellationToken cancellationToken)
-        {
-            _logger.LogInformation($"{GetType().Name} START");
-            CommandResult<IEnumerable<CategoryDto>> result = new();
-            IEnumerable<Category> entities = _categoryDomainService.GetAllAsync(cancellationToken).Result;
-            if (entities != null)
-            {
-                result.Response = entities.Map();
-            }
-            _logger.LogInformation($"{GetType().Name} END");
-            return Task.FromResult(result);
-        }
+        public async Task<CommandResult<IEnumerable<CategoryDto>>> Handle(ListCategoryCommand request, CancellationToken cancellationToken)
+            => await RunHandler(request, cancellationToken);
 
         #endregion
     }

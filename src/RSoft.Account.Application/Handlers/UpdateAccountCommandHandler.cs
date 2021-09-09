@@ -23,7 +23,6 @@ namespace RSoft.Account.Application.Handlers
 
         private readonly IUnitOfWork _uow;
         private readonly IAccountDomainService _accountDomainService;
-        private readonly ILogger<CreateAccountCommandHandler> _logger;
 
         #endregion
 
@@ -39,7 +38,6 @@ namespace RSoft.Account.Application.Handlers
         {
             _accountDomainService = accountDomainService;
             _uow = uow;
-            _logger = logger;
         }
 
         #endregion

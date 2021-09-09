@@ -29,7 +29,6 @@ namespace RSoft.Account.Application.Handlers
 
         private readonly IUnitOfWork _uow;
         private readonly IPaymentMethodDomainService _paymentMethodDomainService;
-        private readonly ILogger<CreatePaymentMethodCommandHandler> _logger;
 
         #endregion
 
@@ -45,7 +44,6 @@ namespace RSoft.Account.Application.Handlers
         {
             _paymentMethodDomainService = PaymentMethodDomainService;
             _uow = uow;
-            _logger = logger;
         }
 
         #endregion

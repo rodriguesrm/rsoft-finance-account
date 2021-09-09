@@ -22,7 +22,6 @@ namespace RSoft.Account.Application.Handlers
         #region Local objects/variables
 
         private readonly ICategoryDomainService _categoryDomainService;
-        private readonly ILogger<GetCategoryByIdCommandHandler> _logger;
 
         #endregion
 
@@ -36,7 +35,6 @@ namespace RSoft.Account.Application.Handlers
         public GetCategoryByIdCommandHandler(ICategoryDomainService categoryDomainService, ILogger<GetCategoryByIdCommandHandler> logger) : base(logger)
         {
             _categoryDomainService = categoryDomainService;
-            _logger = logger;
         }
 
         #endregion

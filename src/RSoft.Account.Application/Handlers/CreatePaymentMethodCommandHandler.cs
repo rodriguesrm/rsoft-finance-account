@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using RSoft.Account.Application.Handlers.Abstractions;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
-using RSoft.Finance.Contracts.Commands;
 using RSoft.Finance.Domain.Enum;
+using RSoft.Lib.Design.Application.Commands;
+using RSoft.Lib.Design.Application.Handlers;
 using RSoft.Lib.Design.Infra.Data;
 using System;
 using System.Threading;

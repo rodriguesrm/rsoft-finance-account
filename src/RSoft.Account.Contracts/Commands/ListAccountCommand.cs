@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using RSoft.Account.Contracts.Models;
-using RSoft.Finance.Contracts.Commands;
+using RSoft.Lib.Design.Application.Commands;
 using System.Collections.Generic;
 
 namespace RSoft.Account.Contracts.Commands

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using RSoft.Finance.Contracts.Commands;
+using RSoft.Lib.Design.Application.Commands;
 using RSoft.Lib.Common.Abstractions;
 using System;
 using System.Threading.Tasks;

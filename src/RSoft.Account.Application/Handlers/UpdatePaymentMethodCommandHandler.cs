@@ -5,7 +5,7 @@ using RSoft.Account.Application.Extensions;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
-using RSoft.Finance.Contracts.Commands;
+using RSoft.Lib.Design.Application.Commands;
 using RSoft.Lib.Common.Abstractions;
 using RSoft.Lib.Common.Models;
 using RSoft.Lib.Design.Infra.Data;
@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using RSoft.Finance.Domain.Enum;
-using RSoft.Account.Application.Handlers.Abstractions;
+using RSoft.Lib.Design.Application.Handlers;
 
 namespace RSoft.Account.Application.Handlers
 {

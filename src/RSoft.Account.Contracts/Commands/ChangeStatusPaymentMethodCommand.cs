@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using RSoft.Finance.Contracts.Commands;
+using RSoft.Lib.Design.Application.Commands;
 using System;
 
 namespace RSoft.Account.Contracts.Commands

@@ -1,18 +1,14 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Contracts.Models;
 using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
 using RSoft.Finance.Contracts.Commands;
-using RSoft.Lib.Common.Abstractions;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using RSoft.Lib.Common.Models;
 using RSoft.Account.Application.Extensions;
+using RSoft.Account.Application.Handlers.Abstractions;
 
 namespace RSoft.Account.Application.Handlers
 {
@@ -20,7 +16,7 @@ namespace RSoft.Account.Application.Handlers
     /// <summary>
     /// Get Category by id command handler
     /// </summary>
-    public class GetCategoryByIdCommandHandler : IRequestHandler<GetCategoryByIdCommand, CommandResult<CategoryDto>>
+    public class GetCategoryByIdCommandHandler : GetByKeyCommandHandlerBase<GetCategoryByIdCommand, CategoryDto, Category>, IRequestHandler<GetCategoryByIdCommand, CommandResult<CategoryDto>>
     {
 
         #region Local objects/variables
@@ -37,11 +33,23 @@ namespace RSoft.Account.Application.Handlers
         /// </summary>
         /// <param name="categoryDomainService">Category domain/core service</param>
         /// <param name="logger">Logger object</param>
-        public GetCategoryByIdCommandHandler(ICategoryDomainService categoryDomainService, ILogger<GetCategoryByIdCommandHandler> logger)
+        public GetCategoryByIdCommandHandler(ICategoryDomainService categoryDomainService, ILogger<GetCategoryByIdCommandHandler> logger) : base(logger)
         {
             _categoryDomainService = categoryDomainService;
             _logger = logger;
         }
+
+        #endregion
+
+        #region Overrides
+
+        ///<inheritdoc/>
+        protected override async Task<Category> GetEntityByKeyAsync(GetCategoryByIdCommand request, CancellationToken cancellationToken)
+            => await _categoryDomainService.GetByKeyAsync(request.Id);
+
+        ///<inheritdoc/>
+        protected override CategoryDto MapEntity(Category entity)
+            => entity.Map();
 
         #endregion
 
@@ -52,23 +60,8 @@ namespace RSoft.Account.Application.Handlers
         /// </summary>
         /// <param name="request">Command request data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public Task<CommandResult<CategoryDto>> Handle(GetCategoryByIdCommand request, CancellationToken cancellationToken)
-        {
-            _logger.LogInformation($"{GetType().Name} START");
-            CommandResult<CategoryDto> result = new();
-            Category entity = _categoryDomainService.GetByKeyAsync(request.Id).Result;
-            if (entity == null)
-            {
-                IStringLocalizer<GetCategoryByIdCommandHandler> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<GetCategoryByIdCommandHandler>>();
-                result.Errors = new List<GenericNotification>() { new GenericNotification("Category", localizer["CATEGORY_NOTFOUND"]) };
-            }
-            else
-            {
-                result.Response = entity.Map();
-            }
-            _logger.LogInformation($"{GetType().Name} END");
-            return Task.FromResult(result);
-        }
+        public async Task<CommandResult<CategoryDto>> Handle(GetCategoryByIdCommand request, CancellationToken cancellationToken)
+            => await RunHandler(request, cancellationToken);
 
         #endregion
 

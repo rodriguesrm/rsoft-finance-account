@@ -7,7 +7,7 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using RSoft.Account.GrpcService.Extensions;
-using RSoft.Account.Grpc.Category;
+using RSoft.Account.Grpc.Protobuf;
 
 namespace RSoft.Account.GrpcService.Services
 {
@@ -16,7 +16,7 @@ namespace RSoft.Account.GrpcService.Services
     /// Category gRPC Service
     /// </summary>
     [Authorize]
-    public class CategoryGrpcService : Category.CategoryBase
+    public class CategoryGrpcService : Grpc.Protobuf.Category.CategoryBase
     {
 
         #region Local objects/variables

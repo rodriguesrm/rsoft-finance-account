@@ -9,14 +9,8 @@
 		<None Include="..\Protos">
 			<Link>Protos</Link>
 		</None>
-		<Protobuf Include="..\Protos\category.proto">
-			<Link>Protos\category.proto</Link>
-		</Protobuf>
-		<Protobuf Include="..\Protos\account.proto">
-			<Link>Protos\account.proto</Link>
-		</Protobuf>
-		<Protobuf Include="..\Protos\paymentmethod.proto">
-			<Link>Protos\paymentmethod.proto</Link>
+		<Protobuf Include="..\Protos\rsoft-account-service.proto">
+			<Link>Protos\rsoft-account-service.proto</Link>
 		</Protobuf>
 	</ItemGroup>
 

@@ -1,0 +1,217 @@
+syntax = "proto3";
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "RSoft.Account.Grpc.Protobuf";
+
+// service definitions
+// ------------------------------------------------------------------
+
+service Category {
+	rpc CreateCategory (CreateCategoryRequest) returns (CreateCategoryReply);
+	rpc UpdateCategory (UpdateCategoryRequest) returns (UpdateCategoryReply);
+	rpc EnableCategory (EnableCategoryRequest) returns (EnableCategoryReply);
+	rpc DisableCategory (DisableCategoryRequest) returns (DisableCategoryReply);
+	rpc GetCategory (GetCategoryRequest) returns (GetCategoryReply);
+	rpc ListCategory (ListCategoryRequest) returns (ListCategoryReply);
+}
+
+service Account {
+	rpc CreateAccount (CreateAccountRequest) returns (CreateAccountReply);
+	rpc UpdateAccount (UpdateAccountRequest) returns (UpdateAccountReply);
+	rpc EnableAccount (ChangeStatusAccountRequest) returns (ChangeStatusAccountReply);
+	rpc DisableAccount (ChangeStatusAccountRequest) returns (ChangeStatusAccountReply);
+	rpc GetAccount (GetAccountRequest) returns (GetAccountReply);
+	rpc ListAccount (ListAccountRequest) returns (ListAccountReply);
+}
+
+service PaymentMethod {
+	rpc CreatePaymentMethod (CreatePaymentMethodRequest) returns (CreatePaymentMethodReply);
+	rpc UpdatePaymentMethod (UpdatePaymentMethodRequest) returns (UpdatePaymentMethodReply);
+	rpc EnablePaymentMethod (ChangeStatusPaymentMethodRequest) returns (ChangeStatusPaymentMethodReply);
+	rpc DisablePaymentMethod (ChangeStatusPaymentMethodRequest) returns (ChangeStatusPaymentMethodReply);
+	rpc GetPaymentMethod (GetPaymentMethodRequest) returns (GetPaymentMethodReply);
+	rpc ListPaymentMethod (ListPaymentMethodRequest) returns (ListPaymentMethodReply);
+}
+
+// message types
+// ------------------------------------------------------------------
+
+message AuthorDetail {
+	string id = 1;
+	string name = 2;
+}
+message NullableTimestamp {
+  oneof kind {
+    google.protobuf.NullValue null = 1;
+    google.protobuf.Timestamp data = 2;
+  }
+}
+message NullableAuthorDetail {
+  oneof kind {
+    google.protobuf.NullValue null = 1;
+    AuthorDetail data = 2;
+  }
+}
+
+message CategoryInfo {
+	string id = 1;
+	string name = 2;
+}
+message NullableCategoryInfo {
+  oneof kind {
+    google.protobuf.NullValue null = 1;
+    CategoryInfo data = 2;
+  }
+}
+
+message CategoryDetail {
+	string id = 1;
+	string name = 2;
+	bool is_active = 3;
+	google.protobuf.Timestamp created_on = 4;
+	AuthorDetail created_by = 5;
+	NullableTimestamp changed_on = 6;
+	NullableAuthorDetail changed_by = 7;
+}
+
+message AccountDetail {
+	string id = 1;
+	string name = 2;
+	NullableCategoryInfo category = 3;
+	bool is_active = 4;
+	google.protobuf.Timestamp created_on = 5;
+	AuthorDetail created_by = 6;
+	NullableTimestamp changed_on = 7;
+	NullableAuthorDetail changed_by = 8;
+}
+
+message PaymentMethodDetail {
+	string id = 1;
+	string name = 2;
+	int32  payment_type = 3;
+	bool is_active = 4;
+	google.protobuf.Timestamp created_on = 5;
+	AuthorDetail created_by = 6;
+	NullableTimestamp changed_on = 7;
+	NullableAuthorDetail changed_by = 8;
+}
+
+// category message contracts
+// ------------------------------------------------------------------
+
+message CreateCategoryRequest {
+	string name = 1;
+}
+message CreateCategoryReply {
+	string id = 1;
+}
+
+message UpdateCategoryRequest {
+	string id = 1;
+	string name = 2;
+}
+message UpdateCategoryReply {
+}
+
+message EnableCategoryRequest {
+	string id = 1;
+}
+message EnableCategoryReply { 
+}
+
+message DisableCategoryRequest {
+	string id = 1;
+}
+message DisableCategoryReply {
+}
+
+message GetCategoryRequest {
+	string id = 1;
+}
+message GetCategoryReply {
+	CategoryDetail data = 1;
+}
+
+message ListCategoryRequest {
+}
+message ListCategoryReply {
+	repeated CategoryDetail data = 1;
+}
+
+// account message contracts
+// ------------------------------------------------------------------
+
+message CreateAccountRequest {
+	string name = 1;
+	string category_id = 2;
+}
+message CreateAccountReply {
+	string id = 1;
+}
+
+message UpdateAccountRequest {
+	string id = 1;
+	string name = 2;
+	string category_id = 3;
+}
+message UpdateAccountReply {
+}
+
+message ChangeStatusAccountRequest {
+	string id = 1;
+}
+message ChangeStatusAccountReply {
+}
+
+message GetAccountRequest {
+	string id = 1;
+}
+message GetAccountReply {
+	AccountDetail data = 1;
+}
+
+message ListAccountRequest {
+}
+message ListAccountReply {
+	repeated AccountDetail data = 1;
+}
+
+// payment method message contracts
+// ------------------------------------------------------------------
+
+message CreatePaymentMethodRequest {
+	string name = 1;
+	int32 payment_type = 2;
+}
+message CreatePaymentMethodReply {
+	string id = 1;
+}
+
+message UpdatePaymentMethodRequest {
+	string id = 1;
+	string name = 2;
+	int32 payment_type = 3;
+}
+message UpdatePaymentMethodReply {
+}
+
+message ChangeStatusPaymentMethodRequest {
+	string id = 1;
+}
+message ChangeStatusPaymentMethodReply {
+}
+
+message GetPaymentMethodRequest {
+	string id = 1;
+}
+message GetPaymentMethodReply {
+	PaymentMethodDetail data = 1;
+}
+
+message ListPaymentMethodRequest {
+}
+message ListPaymentMethodReply {
+	repeated PaymentMethodDetail data = 1;
+}

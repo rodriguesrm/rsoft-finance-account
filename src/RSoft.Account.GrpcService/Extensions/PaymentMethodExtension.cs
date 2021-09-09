@@ -1,6 +1,6 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using RSoft.Account.Contracts.Models;
-using RSoft.Account.Grpc.PaymentMethod;
+using RSoft.Account.Grpc.Protobuf;
 using System.Collections.Generic;
 using System.Linq;
 

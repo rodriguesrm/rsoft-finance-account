@@ -4,10 +4,10 @@ using Microsoft.Extensions.Logging;
 using RSoft.Account.Contracts.Commands;
 using System;
 using System.Threading.Tasks;
-using RSoft.Account.Grpc.Account;
 using RSoft.Account.Contracts.Models;
 using RSoft.Account.GrpcService.Extensions;
 using System.Collections.Generic;
+using RSoft.Account.Grpc.Protobuf;
 
 namespace RSoft.Account.GrpcService.Services
 {
@@ -16,7 +16,7 @@ namespace RSoft.Account.GrpcService.Services
     /// Account gRPC Service
     /// </summary>
     [Authorize]
-    public class AccountGrpcService : Grpc.Account.Account.AccountBase
+    public class AccountGrpcService : Grpc.Protobuf.Account.AccountBase
     {
 
         #region Local objects/variables

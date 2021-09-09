@@ -1,10 +1,8 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using RSoft.Account.Contracts.Models;
-using RSoft.Account.Grpc.Account;
-using System;
+using RSoft.Account.Grpc.Protobuf;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace RSoft.Account.GrpcService.Extensions
 {

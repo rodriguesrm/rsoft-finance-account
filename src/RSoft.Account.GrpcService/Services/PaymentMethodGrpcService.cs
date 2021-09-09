@@ -7,7 +7,7 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using RSoft.Account.GrpcService.Extensions;
-using RSoft.Account.Grpc.PaymentMethod;
+using RSoft.Account.Grpc.Protobuf;
 
 namespace RSoft.Account.GrpcService.Services
 {
@@ -16,7 +16,7 @@ namespace RSoft.Account.GrpcService.Services
     /// PaymentMethod gRPC Service
     /// </summary>
     [Authorize]
-    public class PaymentMethodGrpcService : PaymentMethod.PaymentMethodBase
+    public class PaymentMethodGrpcService : Grpc.Protobuf.PaymentMethod.PaymentMethodBase
     {
 
         #region Local objects/variables

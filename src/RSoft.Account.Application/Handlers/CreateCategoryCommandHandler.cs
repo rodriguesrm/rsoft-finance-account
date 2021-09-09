@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using RSoft.Account.Application.Extensions;
+using RSoft.Account.Application.Handlers.Abstractions;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
@@ -16,14 +16,13 @@ namespace RSoft.Account.Application.Handlers
     /// <summary>
     /// Create category command handler
     /// </summary>
-    public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, CommandResult<Guid?>>
+    public class CreateCategoryCommandHandler : CreateCommandHandlerBase<CreateCategoryCommand, Guid?, Category>, IRequestHandler<CreateCategoryCommand, CommandResult<Guid?>>
     {
 
         #region Local objects/variables
 
         private readonly IUnitOfWork _uow;
         private readonly ICategoryDomainService _categoryDomainService;
-        private readonly ILogger<CreateCategoryCommandHandler> _logger;
 
         #endregion
 
@@ -35,10 +34,9 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="categoryDomainService">Category domain service object</param>
         /// <param name="logger">Logger object</param>
         /// <param name="uow">Unit of work controller object</param>
-        public CreateCategoryCommandHandler(ICategoryDomainService categoryDomainService, ILogger<CreateCategoryCommandHandler> logger, IUnitOfWork uow)
+        public CreateCategoryCommandHandler(ICategoryDomainService categoryDomainService, ILogger<CreateCategoryCommandHandler> logger, IUnitOfWork uow) : base(logger)
         {
             _categoryDomainService = categoryDomainService;
-            _logger = logger;
             _uow = uow;
         }
 
@@ -52,23 +50,22 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="request">Request command data</param>
         /// <param name="cancellationToken">Cancellation token</param>
         public async Task<CommandResult<Guid?>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+            => await RunHandler(request, cancellationToken);
+
+        #endregion
+
+        #region Overrides
+
+        ///<inheritdoc/>
+        protected override Category PrepareEntity(CreateCategoryCommand request)
+            => new() { Name = request.Name };
+
+        ///<inheritdoc/>
+        protected override async Task<Guid?> SaveAsync(Category entity, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"{GetType().Name} START");
-            CommandResult<Guid?> result = new();
-            Category entity = new() { Name = request.Name };
-            entity.Validate();
-            if (entity.Valid)
-            {
-                entity = await _categoryDomainService.AddAsync(entity, cancellationToken);
-                _ = await _uow.SaveChangesAsync();
-                result.Response = entity.Id;
-            }
-            else
-            {
-                result.Errors = entity.Notifications.ToGenericNotifications();
-            }
-            _logger.LogInformation($"{GetType().Name} END");
-            return result;
+            entity = await _categoryDomainService.AddAsync(entity, cancellationToken);
+            _ = await _uow.SaveChangesAsync();
+            return entity.Id;
         }
 
         #endregion

@@ -1,18 +1,13 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using RSoft.Account.Application.Extensions;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
 using RSoft.Finance.Contracts.Commands;
-using RSoft.Lib.Common.Abstractions;
-using RSoft.Lib.Common.Models;
 using RSoft.Lib.Design.Infra.Data;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+using RSoft.Account.Application.Handlers.Abstractions;
 
 namespace RSoft.Account.Application.Handlers
 {
@@ -20,13 +15,13 @@ namespace RSoft.Account.Application.Handlers
     /// <summary>
     /// Change status PaymentMethod command handler
     /// </summary>
-    public class ChangeStatusPaymentMethodCommandHandler : IRequestHandler<ChangeStatusPaymentMethodCommand, CommandResult<bool>>
+    public class ChangeStatusPaymentMethodCommandHandler : UpdateCommandHandlerBase<ChangeStatusPaymentMethodCommand, bool, PaymentMethod>, IRequestHandler<ChangeStatusPaymentMethodCommand, CommandResult<bool>>
     {
 
         #region Local objects/variables
 
         private readonly IUnitOfWork _uow;
-        private readonly IPaymentMethodDomainService _PaymentMethodDomainService;
+        private readonly IPaymentMethodDomainService _paymentMethodDomainService;
         private readonly ILogger<CreatePaymentMethodCommandHandler> _logger;
 
         #endregion
@@ -37,13 +32,35 @@ namespace RSoft.Account.Application.Handlers
         /// Create a handler instance
         /// </summary>
         /// <param name="uow">Unit of work controller instance</param>
-        /// <param name="PaymentMethodDomainService">PaymentMethod domain/core service</param>
+        /// <param name="paymentMethodDomainService">PaymentMethod domain/core service</param>
         /// <param name="logger">Logger object</param>
-        public ChangeStatusPaymentMethodCommandHandler(IUnitOfWork uow, IPaymentMethodDomainService PaymentMethodDomainService, ILogger<CreatePaymentMethodCommandHandler> logger)
+        public ChangeStatusPaymentMethodCommandHandler(IUnitOfWork uow, IPaymentMethodDomainService paymentMethodDomainService, ILogger<CreatePaymentMethodCommandHandler> logger) : base(logger)
         {
             _uow = uow;
-            _PaymentMethodDomainService = PaymentMethodDomainService;
+            _paymentMethodDomainService = paymentMethodDomainService;
             _logger = logger;
+        }
+
+        #endregion
+
+        #region Overrides
+
+        ///<inheritdoc/>
+        protected override async Task<PaymentMethod> GetEntityByKeyAsync(ChangeStatusPaymentMethodCommand request, CancellationToken cancellationToken)
+            => await _paymentMethodDomainService.GetByKeyAsync(request.Id, cancellationToken);
+
+        ///<inheritdoc/>
+        protected override void PrepareEntity(ChangeStatusPaymentMethodCommand request, PaymentMethod entity)
+        {
+            entity.IsActive = request.IsActive;
+        }
+
+        ///<inheritdoc/>
+        protected override async Task<bool> SaveAsync(PaymentMethod entity, CancellationToken cancellationToken)
+        {
+            _ = _paymentMethodDomainService.Update(entity.Id, entity);
+            _ = await _uow.SaveChangesAsync();
+            return true;
         }
 
         #endregion
@@ -55,34 +72,8 @@ namespace RSoft.Account.Application.Handlers
         /// </summary>
         /// <param name="request">Command request data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public Task<CommandResult<bool>> Handle(ChangeStatusPaymentMethodCommand request, CancellationToken cancellationToken)
-        {
-            _logger.LogInformation($"{GetType().Name} START");
-            CommandResult<bool> result = new();
-            PaymentMethod entity = _PaymentMethodDomainService.GetByKeyAsync(request.Id, cancellationToken).Result;
-            if (entity == null)
-            {
-                IStringLocalizer<ChangeStatusPaymentMethodCommandHandler> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<ChangeStatusPaymentMethodCommandHandler>>();
-                result.Errors = new List<GenericNotification>() { new GenericNotification("PaymentMethod", localizer["PAYMENTMETHOD_NOTFOUND"]) };
-            }
-            else
-            {
-                entity.IsActive = request.IsActive;
-                entity.Validate();
-                if (entity.Valid)
-                {
-                    _ = _PaymentMethodDomainService.Update(entity.Id, entity);
-                    _ = _uow.SaveChanges();
-                    result.Response = true;
-                }
-                else
-                {
-                    result.Errors = entity.Notifications.ToGenericNotifications();
-                }
-            }
-            _logger.LogInformation($"{GetType().Name} END");
-            return Task.FromResult(result);
-        }
+        public async Task<CommandResult<bool>> Handle(ChangeStatusPaymentMethodCommand request, CancellationToken cancellationToken)
+            => await RunHandler(request, cancellationToken);
 
         #endregion
 

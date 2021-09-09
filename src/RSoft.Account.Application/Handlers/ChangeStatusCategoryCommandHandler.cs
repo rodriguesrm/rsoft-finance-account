@@ -1,18 +1,13 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using RSoft.Account.Application.Extensions;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
 using RSoft.Finance.Contracts.Commands;
-using RSoft.Lib.Common.Abstractions;
-using RSoft.Lib.Common.Models;
 using RSoft.Lib.Design.Infra.Data;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+using RSoft.Account.Application.Handlers.Abstractions;
 
 namespace RSoft.Account.Application.Handlers
 {
@@ -20,7 +15,7 @@ namespace RSoft.Account.Application.Handlers
     /// <summary>
     /// Change status category command handler
     /// </summary>
-    public class ChangeStatusCategoryCommandHandler : IRequestHandler<ChangeStatusCategoryCommand, CommandResult<bool>>
+    public class ChangeStatusCategoryCommandHandler : UpdateCommandHandlerBase<ChangeStatusCategoryCommand, bool, Category>, IRequestHandler<ChangeStatusCategoryCommand, CommandResult<bool>>
     {
 
         #region Local objects/variables
@@ -39,11 +34,33 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="uow">Unit of work controller instance</param>
         /// <param name="categoryDomainService">Category domain/core service</param>
         /// <param name="logger">Logger object</param>
-        public ChangeStatusCategoryCommandHandler(IUnitOfWork uow, ICategoryDomainService categoryDomainService, ILogger<CreateCategoryCommandHandler> logger)
+        public ChangeStatusCategoryCommandHandler(IUnitOfWork uow, ICategoryDomainService categoryDomainService, ILogger<CreateCategoryCommandHandler> logger) : base(logger)
         {
             _uow = uow;
             _categoryDomainService = categoryDomainService;
             _logger = logger;
+        }
+
+        #endregion
+
+        #region Overrides
+
+        ///<inheritdoc/>
+        protected override async Task<Category> GetEntityByKeyAsync(ChangeStatusCategoryCommand request, CancellationToken cancellationToken)
+            => await _categoryDomainService.GetByKeyAsync(request.Id, cancellationToken);
+
+        ///<inheritdoc/>
+        protected override void PrepareEntity(ChangeStatusCategoryCommand request, Category entity)
+        {
+            entity.IsActive = request.IsActive;
+        }
+
+        ///<inheritdoc/>
+        protected override Task<bool> SaveAsync(Category entity, CancellationToken cancellationToken)
+        {
+            _ = _categoryDomainService.Update(entity.Id, entity);
+            _ = _uow.SaveChanges();
+            return Task.FromResult(true);
         }
 
         #endregion
@@ -55,34 +72,8 @@ namespace RSoft.Account.Application.Handlers
         /// </summary>
         /// <param name="request">Command request data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public Task<CommandResult<bool>> Handle(ChangeStatusCategoryCommand request, CancellationToken cancellationToken)
-        {
-            _logger.LogInformation($"{GetType().Name} START");
-            CommandResult<bool> result = new();
-            Category entity = _categoryDomainService.GetByKeyAsync(request.Id, cancellationToken).Result;
-            if (entity == null)
-            {
-                IStringLocalizer<ChangeStatusCategoryCommandHandler> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<ChangeStatusCategoryCommandHandler>>();
-                result.Errors = new List<GenericNotification>() { new GenericNotification("Category", localizer["CATEGORY_NOTFOUND"]) };
-            }
-            else
-            {
-                entity.IsActive = request.IsActive;
-                entity.Validate();
-                if (entity.Valid)
-                {
-                    _ = _categoryDomainService.Update(entity.Id, entity);
-                    _ = _uow.SaveChanges();
-                    result.Response = true;
-                }
-                else
-                {
-                    result.Errors = entity.Notifications.ToGenericNotifications();
-                }
-            }
-            _logger.LogInformation($"{GetType().Name} END");
-            return Task.FromResult(result);
-        }
+        public async Task<CommandResult<bool>> Handle(ChangeStatusCategoryCommand request, CancellationToken cancellationToken)
+            => await RunHandler(request, cancellationToken);
 
         #endregion
 

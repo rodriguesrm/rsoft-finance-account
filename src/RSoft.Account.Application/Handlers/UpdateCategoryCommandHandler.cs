@@ -1,18 +1,13 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using RSoft.Account.Application.Extensions;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
 using RSoft.Finance.Contracts.Commands;
-using RSoft.Lib.Common.Abstractions;
-using RSoft.Lib.Common.Models;
 using RSoft.Lib.Design.Infra.Data;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+using RSoft.Account.Application.Handlers.Abstractions;
 
 namespace RSoft.Account.Application.Handlers
 {
@@ -20,7 +15,7 @@ namespace RSoft.Account.Application.Handlers
     /// <summary>
     /// Create category command handler
     /// </summary>
-    public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, CommandResult<bool>>
+    public class UpdateCategoryCommandHandler : UpdateCommandHandlerBase<UpdateCategoryCommand, bool, Category>, IRequestHandler<UpdateCategoryCommand, CommandResult<bool>>
     {
 
         #region Local objects/variables
@@ -39,11 +34,33 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="categoryDomainService">Category domain service object</param>
         /// <param name="uow">Unit of work controller object</param>
         /// <param name="logger">Logger object</param>
-        public UpdateCategoryCommandHandler(ICategoryDomainService categoryDomainService, IUnitOfWork uow, ILogger<CreateCategoryCommandHandler> logger)
+        public UpdateCategoryCommandHandler(ICategoryDomainService categoryDomainService, IUnitOfWork uow, ILogger<CreateCategoryCommandHandler> logger) : base(logger)
         {
             _categoryDomainService = categoryDomainService;
             _uow = uow;
             _logger = logger;
+        }
+
+        #endregion
+
+        #region Overrides
+
+        ///<inheritdoc/>
+        protected override async Task<Category> GetEntityByKeyAsync(UpdateCategoryCommand request, CancellationToken cancellationToken)
+            => await _categoryDomainService.GetByKeyAsync(request.Id, cancellationToken);
+
+        ///<inheritdoc/>
+        protected override void PrepareEntity(UpdateCategoryCommand request, Category entity)
+        {
+            entity.Name = request.Name;
+        }
+
+        ///<inheritdoc/>
+        protected override Task<bool> SaveAsync(Category entity, CancellationToken cancellationToken)
+        {
+            _ = _categoryDomainService.Update(entity.Id, entity);
+            _ = _uow.SaveChanges();
+            return Task.FromResult(true);
         }
 
         #endregion
@@ -55,34 +72,8 @@ namespace RSoft.Account.Application.Handlers
         /// </summary>
         /// <param name="request">Request command data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public Task<CommandResult<bool>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
-        {
-            _logger.LogInformation($"{GetType().Name} START");
-            CommandResult<bool> result = new();
-            Category entity = _categoryDomainService.GetByKeyAsync(request.Id, cancellationToken).Result;
-            if (entity == null)
-            {
-                IStringLocalizer<UpdateCategoryCommandHandler> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<UpdateCategoryCommandHandler>>();
-                result.Errors = new List<GenericNotification>() { new GenericNotification("Category", localizer["CATEGORY_NOTFOUND"]) };
-            }
-            else
-            {
-                entity.Name = request.Name;
-                entity.Validate();
-                if (entity.Valid)
-                {
-                    _ = _categoryDomainService.Update(entity.Id, entity);
-                    _ = _uow.SaveChanges();
-                    result.Response = true;
-                }
-                else
-                {
-                    result.Errors = entity.Notifications.ToGenericNotifications();
-                }
-            }
-            _logger.LogInformation($"{GetType().Name} END");
-            return Task.FromResult(result);
-        }
+        public async Task<CommandResult<bool>> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+            => await RunHandler(request, cancellationToken);
 
         #endregion
 

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using RSoft.Account.Application.Extensions;
+using RSoft.Account.Application.Handlers.Abstractions;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
@@ -17,14 +17,13 @@ namespace RSoft.Account.Application.Handlers
     /// <summary>
     /// Create PaymentMethod command handler
     /// </summary>
-    public class CreatePaymentMethodCommandHandler : IRequestHandler<CreatePaymentMethodCommand, CommandResult<Guid?>>
+    public class CreatePaymentMethodCommandHandler : CreateCommandHandlerBase<CreatePaymentMethodCommand, Guid?, PaymentMethod>, IRequestHandler<CreatePaymentMethodCommand, CommandResult<Guid?>>
     {
 
         #region Local objects/variables
 
         private readonly IUnitOfWork _uow;
         private readonly IPaymentMethodDomainService _PaymentMethodDomainService;
-        private readonly ILogger<CreatePaymentMethodCommandHandler> _logger;
 
         #endregion
 
@@ -36,10 +35,9 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="PaymentMethodDomainService">PaymentMethod domain service object</param>
         /// <param name="logger">Logger object</param>
         /// <param name="uow">Unit of work controller object</param>
-        public CreatePaymentMethodCommandHandler(IPaymentMethodDomainService PaymentMethodDomainService, ILogger<CreatePaymentMethodCommandHandler> logger, IUnitOfWork uow)
+        public CreatePaymentMethodCommandHandler(IPaymentMethodDomainService PaymentMethodDomainService, ILogger<CreatePaymentMethodCommandHandler> logger, IUnitOfWork uow) : base(logger)
         {
             _PaymentMethodDomainService = PaymentMethodDomainService;
-            _logger = logger;
             _uow = uow;
         }
 
@@ -53,26 +51,28 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="request">Request command data</param>
         /// <param name="cancellationToken">Cancellation token</param>
         public async Task<CommandResult<Guid?>> Handle(CreatePaymentMethodCommand request, CancellationToken cancellationToken)
+            => await RunHandler(request, cancellationToken);
+
+        #endregion
+
+        #region Overrides
+        
+        ///<inheritdoc/>
+        protected override PaymentMethod PrepareEntity(CreatePaymentMethodCommand request)
         {
-            _logger.LogInformation($"{GetType().Name} START");
-            CommandResult<Guid?> result = new();
             PaymentTypeEnum? paymentType = null;
             if (request.PaymentType.HasValue)
                 paymentType = (PaymentTypeEnum)request.PaymentType.Value;
             PaymentMethod entity = new() { Name = request.Name, PaymentType = paymentType };
-            entity.Validate();
-            if (entity.Valid)
-            {
-                entity = await _PaymentMethodDomainService.AddAsync(entity, cancellationToken);
-                _ = await _uow.SaveChangesAsync();
-                result.Response = entity.Id;
-            }
-            else
-            {
-                result.Errors = entity.Notifications.ToGenericNotifications();
-            }
-            _logger.LogInformation($"{GetType().Name} END");
-            return result;
+            return entity;
+        }
+
+        ///<inheritdoc/>
+        protected override async Task<Guid?> SaveAsync(PaymentMethod entity, CancellationToken cancellationToken)
+        {
+            entity = await _PaymentMethodDomainService.AddAsync(entity, cancellationToken);
+            _ = await _uow.SaveChangesAsync(cancellationToken);
+            return entity.Id;
         }
 
         #endregion

@@ -14,6 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using RSoft.Finance.Domain.Enum;
+using RSoft.Account.Application.Handlers.Abstractions;
 
 namespace RSoft.Account.Application.Handlers
 {
@@ -21,13 +22,13 @@ namespace RSoft.Account.Application.Handlers
     /// <summary>
     /// Create PaymentMethod command handler
     /// </summary>
-    public class UpdatePaymentMethodCommandHandler : IRequestHandler<UpdatePaymentMethodCommand, CommandResult<bool>>
+    public class UpdatePaymentMethodCommandHandler : UpdateCommandHandlerBase<UpdatePaymentMethodCommand, bool, PaymentMethod>, IRequestHandler<UpdatePaymentMethodCommand, CommandResult<bool>>
     {
 
         #region Local objects/variables
 
         private readonly IUnitOfWork _uow;
-        private readonly IPaymentMethodDomainService _PaymentMethodDomainService;
+        private readonly IPaymentMethodDomainService _paymentMethodDomainService;
         private readonly ILogger<CreatePaymentMethodCommandHandler> _logger;
 
         #endregion
@@ -40,11 +41,35 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="PaymentMethodDomainService">PaymentMethod domain service object</param>
         /// <param name="uow">Unit of work controller object</param>
         /// <param name="logger">Logger object</param>
-        public UpdatePaymentMethodCommandHandler(IPaymentMethodDomainService PaymentMethodDomainService, IUnitOfWork uow, ILogger<CreatePaymentMethodCommandHandler> logger)
+        public UpdatePaymentMethodCommandHandler(IPaymentMethodDomainService PaymentMethodDomainService, IUnitOfWork uow, ILogger<CreatePaymentMethodCommandHandler> logger) : base(logger)
         {
-            _PaymentMethodDomainService = PaymentMethodDomainService;
+            _paymentMethodDomainService = PaymentMethodDomainService;
             _uow = uow;
             _logger = logger;
+        }
+
+        #endregion
+
+        #region Overrides
+
+        ///<inheritdoc/>
+        protected override async Task<PaymentMethod> GetEntityByKeyAsync(UpdatePaymentMethodCommand request, CancellationToken cancellationToken)
+            => await _paymentMethodDomainService.GetByKeyAsync(request.Id, cancellationToken);
+
+        ///<inheritdoc/>
+        protected override void PrepareEntity(UpdatePaymentMethodCommand request, PaymentMethod entity)
+        {
+            entity.Name = request.Name;
+            if (request.PaymentType.HasValue)
+                entity.PaymentType = (PaymentTypeEnum)request.PaymentType.Value;
+        }
+
+        ///<inheritdoc/>
+        protected override Task<bool> SaveAsync(PaymentMethod entity, CancellationToken cancellationToken)
+        {
+            _ = _paymentMethodDomainService.Update(entity.Id, entity);
+            _ = _uow.SaveChanges();
+            return Task.FromResult(true);
         }
 
         #endregion
@@ -56,36 +81,8 @@ namespace RSoft.Account.Application.Handlers
         /// </summary>
         /// <param name="request">Request command data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public Task<CommandResult<bool>> Handle(UpdatePaymentMethodCommand request, CancellationToken cancellationToken)
-        {
-            _logger.LogInformation($"{GetType().Name} START");
-            CommandResult<bool> result = new();
-            PaymentMethod entity = _PaymentMethodDomainService.GetByKeyAsync(request.Id, cancellationToken).Result;
-            if (entity == null)
-            {
-                IStringLocalizer<UpdatePaymentMethodCommandHandler> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<UpdatePaymentMethodCommandHandler>>();
-                result.Errors = new List<GenericNotification>() { new GenericNotification("PaymentMethod", localizer["PAYMENTMETHOD_NOTFOUND"]) };
-            }
-            else
-            {
-                entity.Name = request.Name;
-                if (request.PaymentType.HasValue)
-                    entity.PaymentType = (PaymentTypeEnum)request.PaymentType.Value;
-                entity.Validate();
-                if (entity.Valid)
-                {
-                    _ = _PaymentMethodDomainService.Update(entity.Id, entity);
-                    _ = _uow.SaveChanges();
-                    result.Response = true;
-                }
-                else
-                {
-                    result.Errors = entity.Notifications.ToGenericNotifications();
-                }
-            }
-            _logger.LogInformation($"{GetType().Name} END");
-            return Task.FromResult(result);
-        }
+        public async Task<CommandResult<bool>> Handle(UpdatePaymentMethodCommand request, CancellationToken cancellationToken)
+            => await RunHandler(request, cancellationToken);
 
         #endregion
 

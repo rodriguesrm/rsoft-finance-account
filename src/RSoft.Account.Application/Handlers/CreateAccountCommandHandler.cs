@@ -1,16 +1,14 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using RSoft.Account.Application.Extensions;
+using RSoft.Account.Application.Handlers.Abstractions;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Core.Ports;
 using RSoft.Finance.Contracts.Commands;
 using RSoft.Lib.Design.Infra.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using DomainAccount = RSoft.Account.Core.Entities.Account;
 
 namespace RSoft.Account.Application.Handlers
 {
@@ -18,14 +16,13 @@ namespace RSoft.Account.Application.Handlers
     /// <summary>
     /// Create account command handler
     /// </summary>
-    public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand, CommandResult<Guid?>>
+    public class CreateAccountCommandHandler : CreateCommandHandlerBase<CreateAccountCommand, Guid?, DomainAccount>, IRequestHandler<CreateAccountCommand, CommandResult<Guid?>>
     {
 
         #region Local objects/variables
 
         private readonly IUnitOfWork _uow;
         private readonly IAccountDomainService _accountDomainService;
-        private readonly ILogger<CreateAccountCommandHandler> _logger;
 
         #endregion
 
@@ -37,14 +34,15 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="accountDomainService">Account domain service object</param>
         /// <param name="logger">Logger object</param>
         /// <param name="uow">Unit of work controller object</param>
-        public CreateAccountCommandHandler(IUnitOfWork uow, IAccountDomainService accountDomainService, ILogger<CreateAccountCommandHandler> logger)
+        public CreateAccountCommandHandler(IUnitOfWork uow, IAccountDomainService accountDomainService, ILogger<CreateAccountCommandHandler> logger) : base(logger)
         {
             _uow = uow;
             _accountDomainService = accountDomainService;
-            _logger = logger;
         }
 
         #endregion
+
+        #region Handlers
 
         /// <summary>
         /// Command handler
@@ -52,26 +50,31 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="request">Request command data</param>
         /// <param name="cancellationToken">Cancellation token</param>
         public async Task<CommandResult<Guid?>> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
+            => await RunHandler(request, cancellationToken);
+
+        #endregion
+
+        #region Overrides
+
+        ///<inheritdoc/>
+        protected override DomainAccount PrepareEntity(CreateAccountCommand request)
         {
-            _logger.LogInformation($"{GetType().Name} START");
-            CommandResult<Guid?> result = new();
-            Core.Entities.Account entity = new();
+            DomainAccount entity = new();
             entity.Name = request.Name;
             if (request.CategoryId.HasValue)
                 entity.Category = new(request.CategoryId.Value);
-            entity.Validate();
-            if (entity.Valid)
-            {
-                entity = await _accountDomainService.AddAsync(entity, cancellationToken);
-                _ = await _uow.SaveChangesAsync();
-                result.Response = entity.Id;
-            }
-            else
-            {
-                result.Errors = entity.Notifications.ToGenericNotifications();
-            }
-            _logger.LogInformation($"{GetType().Name} END");
-            return result;
+            return entity;
         }
+
+        ///<inheritdoc/>
+        protected override async Task<Guid?> SaveAsync(DomainAccount entity, CancellationToken cancellationToken)
+        {
+            entity = await _accountDomainService.AddAsync(entity, cancellationToken);
+            _ = await _uow.SaveChangesAsync(cancellationToken);
+            return entity.Id;
+        }
+
+        #endregion
+
     }
 }

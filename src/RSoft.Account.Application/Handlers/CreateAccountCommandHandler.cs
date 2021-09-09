@@ -1,7 +1,9 @@
-﻿using MediatR;
+﻿using MassTransit;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Core.Ports;
+using RSoft.Finance.Contracts.Events;
 using RSoft.Lib.Design.Application.Commands;
 using RSoft.Lib.Design.Application.Handlers;
 using RSoft.Lib.Design.Infra.Data;
@@ -23,6 +25,7 @@ namespace RSoft.Account.Application.Handlers
 
         private readonly IUnitOfWork _uow;
         private readonly IAccountDomainService _accountDomainService;
+        private readonly IBusControl _bus;
 
         #endregion
 
@@ -34,10 +37,12 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="accountDomainService">Account domain service object</param>
         /// <param name="logger">Logger object</param>
         /// <param name="uow">Unit of work controller object</param>
-        public CreateAccountCommandHandler(IUnitOfWork uow, IAccountDomainService accountDomainService, ILogger<CreateAccountCommandHandler> logger) : base(logger)
+        /// <param name="bus">Message bus control</param>
+        public CreateAccountCommandHandler(IUnitOfWork uow, IAccountDomainService accountDomainService, ILogger<CreateAccountCommandHandler> logger, IBusControl bus) : base(logger)
         {
             _uow = uow;
             _accountDomainService = accountDomainService;
+            _bus = bus;
         }
 
         #endregion
@@ -71,6 +76,7 @@ namespace RSoft.Account.Application.Handlers
         {
             entity = await _accountDomainService.AddAsync(entity, cancellationToken);
             _ = await _uow.SaveChangesAsync(cancellationToken);
+            await _bus.Publish(new AccountCreatedEvent(entity.Id, entity.Name, entity.Category.Id));
             return entity.Id;
         }
 

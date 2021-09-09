@@ -1,8 +1,10 @@
-﻿using MediatR;
+﻿using MassTransit;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
+using RSoft.Finance.Contracts.Events;
 using RSoft.Lib.Design.Application.Commands;
 using RSoft.Lib.Design.Application.Handlers;
 using RSoft.Lib.Design.Infra.Data;
@@ -23,6 +25,7 @@ namespace RSoft.Account.Application.Handlers
 
         private readonly IUnitOfWork _uow;
         private readonly ICategoryDomainService _categoryDomainService;
+        private readonly IBusControl _bus;
 
         #endregion
 
@@ -34,10 +37,12 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="categoryDomainService">Category domain service object</param>
         /// <param name="logger">Logger object</param>
         /// <param name="uow">Unit of work controller object</param>
-        public CreateCategoryCommandHandler(ICategoryDomainService categoryDomainService, ILogger<CreateCategoryCommandHandler> logger, IUnitOfWork uow) : base(logger)
+        /// <param name="bus">Message bus control</param>
+        public CreateCategoryCommandHandler(ICategoryDomainService categoryDomainService, ILogger<CreateCategoryCommandHandler> logger, IUnitOfWork uow, IBusControl bus) : base(logger)
         {
             _categoryDomainService = categoryDomainService;
             _uow = uow;
+            _bus = bus;
         }
 
         #endregion
@@ -65,6 +70,7 @@ namespace RSoft.Account.Application.Handlers
         {
             entity = await _categoryDomainService.AddAsync(entity, cancellationToken);
             _ = await _uow.SaveChangesAsync();
+            await _bus.Publish(new CategoryCreatedEvent(entity.Id, entity.Name), cancellationToken);
             return entity.Id;
         }
 

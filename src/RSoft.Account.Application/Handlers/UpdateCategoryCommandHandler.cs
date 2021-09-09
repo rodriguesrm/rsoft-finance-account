@@ -8,6 +8,8 @@ using RSoft.Lib.Design.Infra.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using RSoft.Lib.Design.Application.Handlers;
+using MassTransit;
+using RSoft.Finance.Contracts.Events;
 
 namespace RSoft.Account.Application.Handlers
 {
@@ -22,6 +24,7 @@ namespace RSoft.Account.Application.Handlers
 
         private readonly IUnitOfWork _uow;
         private readonly ICategoryDomainService _categoryDomainService;
+        private readonly IBusControl _bus;
 
         #endregion
 
@@ -33,10 +36,12 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="categoryDomainService">Category domain service object</param>
         /// <param name="uow">Unit of work controller object</param>
         /// <param name="logger">Logger object</param>
-        public UpdateCategoryCommandHandler(ICategoryDomainService categoryDomainService, IUnitOfWork uow, ILogger<CreateCategoryCommandHandler> logger) : base(logger)
+        /// <param name="bus">Messaging bus control</param>
+        public UpdateCategoryCommandHandler(ICategoryDomainService categoryDomainService, IUnitOfWork uow, ILogger<CreateCategoryCommandHandler> logger, IBusControl bus) : base(logger)
         {
             _categoryDomainService = categoryDomainService;
             _uow = uow;
+            _bus = bus;
         }
 
         #endregion
@@ -54,11 +59,12 @@ namespace RSoft.Account.Application.Handlers
         }
 
         ///<inheritdoc/>
-        protected override Task<bool> SaveAsync(Category entity, CancellationToken cancellationToken)
+        protected override async Task<bool> SaveAsync(Category entity, CancellationToken cancellationToken)
         {
             _ = _categoryDomainService.Update(entity.Id, entity);
-            _ = _uow.SaveChanges();
-            return Task.FromResult(true);
+            await _ = _uow.SaveChangesAsync();
+            await _bus.Publish(new CategoryChangedEvent(entity.Id, entity.Name));
+            return true;
         }
 
         #endregion

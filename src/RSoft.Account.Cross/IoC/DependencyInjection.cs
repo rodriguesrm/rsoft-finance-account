@@ -10,6 +10,8 @@ using RSoft.Lib.Design.Infra.Data;
 using RSoft.Lib.Design.IoC;
 using System;
 using System.Collections.Generic;
+using RSoft.Lib.Messaging.Abstractions;
+using RSoft.Lib.Messaging.Options;
 
 namespace RSoft.Account.Cross.IoC
 {
@@ -33,8 +35,11 @@ namespace RSoft.Account.Cross.IoC
             #region Options
 
             services.Configure<CultureOptions>(options => configuration.GetSection("Application:Culture").Bind(options));
+            services.Configure<MessagingOption>(options => configuration.GetSection("Messaging:Server").Bind(options));
 
             #endregion
+
+            services.AddMassTransitUsingRabbitMq(configuration);
 
             #region Infra
 

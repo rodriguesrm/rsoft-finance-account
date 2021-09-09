@@ -1,20 +1,16 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using RSoft.Account.Application.Extensions;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
 using RSoft.Lib.Design.Application.Commands;
-using RSoft.Lib.Common.Abstractions;
-using RSoft.Lib.Common.Models;
 using RSoft.Lib.Design.Infra.Data;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using RSoft.Finance.Domain.Enum;
 using RSoft.Lib.Design.Application.Handlers;
+using MassTransit;
+using RSoft.Finance.Contracts.Events;
 
 namespace RSoft.Account.Application.Handlers
 {
@@ -29,6 +25,7 @@ namespace RSoft.Account.Application.Handlers
 
         private readonly IUnitOfWork _uow;
         private readonly IPaymentMethodDomainService _paymentMethodDomainService;
+        private readonly IBusControl _bus;
 
         #endregion
 
@@ -40,10 +37,12 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="PaymentMethodDomainService">PaymentMethod domain service object</param>
         /// <param name="uow">Unit of work controller object</param>
         /// <param name="logger">Logger object</param>
-        public UpdatePaymentMethodCommandHandler(IPaymentMethodDomainService PaymentMethodDomainService, IUnitOfWork uow, ILogger<CreatePaymentMethodCommandHandler> logger) : base(logger)
+        /// <param name="bus">Messaging bus control</param>
+        public UpdatePaymentMethodCommandHandler(IPaymentMethodDomainService PaymentMethodDomainService, IUnitOfWork uow, ILogger<CreatePaymentMethodCommandHandler> logger, IBusControl bus) : base(logger)
         {
             _paymentMethodDomainService = PaymentMethodDomainService;
             _uow = uow;
+            _bus = bus;
         }
 
         #endregion
@@ -63,11 +62,12 @@ namespace RSoft.Account.Application.Handlers
         }
 
         ///<inheritdoc/>
-        protected override Task<bool> SaveAsync(PaymentMethod entity, CancellationToken cancellationToken)
+        protected override async Task<bool> SaveAsync(PaymentMethod entity, CancellationToken cancellationToken)
         {
             _ = _paymentMethodDomainService.Update(entity.Id, entity);
-            _ = _uow.SaveChanges();
-            return Task.FromResult(true);
+            _ = await _uow.SaveChangesAsync();
+            await _bus.Publish(new PaymentMethodChangedEvent(entity.Id, entity.Name, (int)entity.PaymentType));
+            return true;
         }
 
         #endregion

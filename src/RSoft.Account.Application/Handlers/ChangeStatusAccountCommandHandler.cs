@@ -8,6 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using DomainAccount = RSoft.Account.Core.Entities.Account;
 using RSoft.Lib.Design.Application.Handlers;
+using MassTransit;
+using RSoft.Finance.Contracts.Events;
 
 namespace RSoft.Account.Application.Handlers
 {
@@ -22,7 +24,7 @@ namespace RSoft.Account.Application.Handlers
 
         private readonly IUnitOfWork _uow;
         private readonly IAccountDomainService _accountDomainService;
-        private readonly ILogger<CreateAccountCommandHandler> _logger;
+        private readonly IBusControl _bus;
 
         #endregion
 
@@ -34,11 +36,12 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="uow">Unit of work controller instance</param>
         /// <param name="accountDomainService">Account domain/core service</param>
         /// <param name="logger">Logger object</param>
-        public ChangeStatusAccountCommandHandler(IUnitOfWork uow, IAccountDomainService accountDomainService, ILogger<CreateAccountCommandHandler> logger) : base(logger)
+        /// <param name="bus">Messaging bus control</param>
+        public ChangeStatusAccountCommandHandler(IUnitOfWork uow, IAccountDomainService accountDomainService, ILogger<CreateAccountCommandHandler> logger, IBusControl bus) : base(logger)
         {
             _uow = uow;
             _accountDomainService = accountDomainService;
-            _logger = logger;
+            _bus = bus;
         }
 
         #endregion
@@ -56,11 +59,12 @@ namespace RSoft.Account.Application.Handlers
         }
 
         ///<inheritdoc/>
-        protected override Task<bool> SaveAsync(DomainAccount entity, CancellationToken cancellationToken)
+        protected override async Task<bool> SaveAsync(DomainAccount entity, CancellationToken cancellationToken)
         {
             _ = _accountDomainService.Update(entity.Id, entity);
-            _ = _uow.SaveChanges();
-            return Task.FromResult(true);
+            _ = await _uow.SaveChangesAsync();
+            await _bus.Publish(new AccountStatusChangedEvent(entity.Id, entity.IsActive));
+            return true;
         }
 
         #endregion

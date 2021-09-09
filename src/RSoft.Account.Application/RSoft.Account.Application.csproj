@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit" Version="7.2.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\finance-lib\src\RSoft.Finance.Contracts\RSoft.Finance.Contracts.csproj" />
     <ProjectReference Include="..\..\..\finance-lib\src\RSoft.Finance.Domain\RSoft.Finance.Domain.csproj" />
     <ProjectReference Include="..\RSoft.Account.Contracts\RSoft.Account.Contracts.csproj" />
     <ProjectReference Include="..\RSoft.Account.Core\RSoft.Account.Core.csproj" />

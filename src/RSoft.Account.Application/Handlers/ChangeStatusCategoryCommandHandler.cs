@@ -8,6 +8,8 @@ using RSoft.Lib.Design.Infra.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using RSoft.Lib.Design.Application.Handlers;
+using MassTransit;
+using RSoft.Finance.Contracts.Events;
 
 namespace RSoft.Account.Application.Handlers
 {
@@ -22,7 +24,7 @@ namespace RSoft.Account.Application.Handlers
 
         private readonly IUnitOfWork _uow;
         private readonly ICategoryDomainService _categoryDomainService;
-        private readonly ILogger<CreateCategoryCommandHandler> _logger;
+        private readonly IBusControl _bus;
 
         #endregion
 
@@ -34,11 +36,12 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="uow">Unit of work controller instance</param>
         /// <param name="categoryDomainService">Category domain/core service</param>
         /// <param name="logger">Logger object</param>
-        public ChangeStatusCategoryCommandHandler(IUnitOfWork uow, ICategoryDomainService categoryDomainService, ILogger<CreateCategoryCommandHandler> logger) : base(logger)
+        /// <param name="bus">Messaging bus control</param>
+        public ChangeStatusCategoryCommandHandler(IUnitOfWork uow, ICategoryDomainService categoryDomainService, ILogger<CreateCategoryCommandHandler> logger, IBusControl bus) : base(logger)
         {
             _uow = uow;
             _categoryDomainService = categoryDomainService;
-            _logger = logger;
+            _bus = bus;
         }
 
         #endregion
@@ -56,11 +59,12 @@ namespace RSoft.Account.Application.Handlers
         }
 
         ///<inheritdoc/>
-        protected override Task<bool> SaveAsync(Category entity, CancellationToken cancellationToken)
+        protected override async Task<bool> SaveAsync(Category entity, CancellationToken cancellationToken)
         {
             _ = _categoryDomainService.Update(entity.Id, entity);
-            _ = _uow.SaveChanges();
-            return Task.FromResult(true);
+            _ = await _uow.SaveChangesAsync(cancellationToken);
+            await _bus.Publish(new CategoryStatusChangedEvent(entity.Id, entity.IsActive));
+            return true;
         }
 
         #endregion

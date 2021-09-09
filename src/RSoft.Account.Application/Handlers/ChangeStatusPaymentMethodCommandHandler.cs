@@ -8,6 +8,8 @@ using RSoft.Lib.Design.Infra.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using RSoft.Lib.Design.Application.Handlers;
+using RSoft.Finance.Contracts.Events;
+using MassTransit;
 
 namespace RSoft.Account.Application.Handlers
 {
@@ -22,7 +24,7 @@ namespace RSoft.Account.Application.Handlers
 
         private readonly IUnitOfWork _uow;
         private readonly IPaymentMethodDomainService _paymentMethodDomainService;
-        private readonly ILogger<CreatePaymentMethodCommandHandler> _logger;
+        private readonly IBusControl _bus;
 
         #endregion
 
@@ -34,11 +36,12 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="uow">Unit of work controller instance</param>
         /// <param name="paymentMethodDomainService">PaymentMethod domain/core service</param>
         /// <param name="logger">Logger object</param>
-        public ChangeStatusPaymentMethodCommandHandler(IUnitOfWork uow, IPaymentMethodDomainService paymentMethodDomainService, ILogger<CreatePaymentMethodCommandHandler> logger) : base(logger)
+        /// <param name="bus">Messaging bus control</param>
+        public ChangeStatusPaymentMethodCommandHandler(IUnitOfWork uow, IPaymentMethodDomainService paymentMethodDomainService, ILogger<CreatePaymentMethodCommandHandler> logger, IBusControl bus) : base(logger)
         {
             _uow = uow;
             _paymentMethodDomainService = paymentMethodDomainService;
-            _logger = logger;
+            _bus = bus;
         }
 
         #endregion
@@ -60,6 +63,7 @@ namespace RSoft.Account.Application.Handlers
         {
             _ = _paymentMethodDomainService.Update(entity.Id, entity);
             _ = await _uow.SaveChangesAsync();
+            await _bus.Publish(new PaymentMethodStatusChangedEvent(entity.Id, entity.IsActive));
             return true;
         }
 

@@ -1,4 +1,4 @@
-﻿using RSoft.Finance.Domain.Enum;
+﻿using RSoft.Finance.Contracts.Enum;
 using RSoft.Lib.Common.Contracts.Entities;
 using RSoft.Lib.Design.Infra.Data;
 using RSoft.Lib.Design.Infra.Data.Tables;

@@ -32,6 +32,7 @@ namespace RSoft.Account.Infra.Migrations
         /// Seed initial data
         /// </summary>
         /// <param name="migrationBuilder">A MicrationBuilder object instance</param>
+#pragma warning disable CA1822 // Mark members as static
         protected void Seed(MigrationBuilder migrationBuilder)
         {
 
@@ -55,6 +56,7 @@ namespace RSoft.Account.Infra.Migrations
             migrationBuilder.Sql("set foreign_key_checks=1");
 
         }
+#pragma warning restore CA1822 // Mark members as static
 
     }
 }

@@ -28,7 +28,7 @@ namespace RSoft.Account.Application.Extensions
                     Id = entity.Id,
                     Name = entity.Name,
                     IsActive = entity.IsActive,
-                    PaymentType = (int)entity.PaymentType,
+                    PaymentType = entity.PaymentType.Value,
                     CreatedBy = new AuditAuthor<Guid>(entity.CreatedOn, entity.CreatedAuthor.Id, entity.CreatedAuthor.Name)
                 };
 

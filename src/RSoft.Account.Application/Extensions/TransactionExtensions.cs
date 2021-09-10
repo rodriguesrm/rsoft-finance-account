@@ -1,6 +1,8 @@
 ﻿using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Core.Entities;
+using RSoft.Finance.Contracts.Enum;
 using RSoft.Finance.Contracts.Events;
+using DomainAccount = RSoft.Account.Core.Entities.Account;
 
 namespace RSoft.Account.Application.Extensions
 {
@@ -17,7 +19,23 @@ namespace RSoft.Account.Application.Extensions
         /// <param name="command">Command object instance</param>
         public static Transaction Map(this CreateTransactionCommand command)
         {
-            Transaction result = null;
+
+            DomainAccount account = null;
+            if (command.AccountId.HasValue)
+                account = new DomainAccount(command.AccountId.Value);
+            PaymentMethod paymentMethod = null;
+            if (command.PaymentMethodId.HasValue)
+                paymentMethod = new PaymentMethod(command.PaymentMethodId.Value);
+
+            Transaction result = new()
+            {
+                Date = command.Date,
+                TransactionType = (TransactionTypeEnum)command.TransactionType,
+                Amount = command.Amount,
+                Comment = command.Comment,
+                Account = account,
+                PaymentMethod = paymentMethod
+            };
 
             return result;
         }
@@ -33,7 +51,7 @@ namespace RSoft.Account.Application.Extensions
                 entity.Year,
                 entity.Month,
                 entity.Date,
-                (int)entity.TransactionType.Value,
+                entity.TransactionType.Value,
                 entity.Amount,
                 entity.Account.Id,
                 entity.PaymentMethod.Id

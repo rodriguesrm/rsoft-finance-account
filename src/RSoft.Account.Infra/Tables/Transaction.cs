@@ -1,4 +1,4 @@
-﻿using RSoft.Finance.Domain.Enum;
+﻿using RSoft.Finance.Contracts.Enum;
 using RSoft.Lib.Design.Infra.Data;
 using RSoft.Lib.Design.Infra.Data.Tables;
 using System;
@@ -44,12 +44,12 @@ namespace RSoft.Account.Infra.Tables
         /// <summary>
         /// Transaction year
         /// </summary>
-        public short Year { get; set; }
+        public int Year { get; set; }
 
         /// <summary>
         /// Transaction month
         /// </summary>
-        public byte Month { get; set; }
+        public int Month { get; set; }
 
         /// <summary>
         /// Transaction date

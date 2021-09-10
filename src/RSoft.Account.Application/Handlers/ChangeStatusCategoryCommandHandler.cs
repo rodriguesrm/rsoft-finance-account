@@ -63,7 +63,7 @@ namespace RSoft.Account.Application.Handlers
         {
             _ = _categoryDomainService.Update(entity.Id, entity);
             _ = await _uow.SaveChangesAsync(cancellationToken);
-            await _bus.Publish(new CategoryStatusChangedEvent(entity.Id, entity.IsActive));
+            await _bus.Publish(new CategoryStatusChangedEvent(entity.Id, entity.IsActive), cancellationToken);
             return true;
         }
 

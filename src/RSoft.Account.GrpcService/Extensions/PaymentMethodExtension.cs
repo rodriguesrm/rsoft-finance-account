@@ -1,6 +1,7 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using RSoft.Account.Contracts.Models;
 using RSoft.Account.Grpc.Protobuf;
+using RSoft.Helpers.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,7 +28,11 @@ namespace RSoft.Account.GrpcService.Extensions
                     Id = dto.Id.ToString(),
                     Name = dto.Name,
                     IsActive = dto.IsActive,
-                    PaymentType = dto.PaymentType,
+                    PaymentType = new SimpleIdName()
+                    {
+                        Id = ((int)dto.PaymentType).ToString(),
+                        Name = dto.PaymentType.GetDescription()
+                    },
                     CreatedOn = Timestamp.FromDateTime(dto.CreatedBy.Date.ToUniversalTime()),
                     CreatedBy = new AuthorDetail()
                     {

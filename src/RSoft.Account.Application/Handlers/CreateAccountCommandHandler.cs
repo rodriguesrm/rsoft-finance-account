@@ -74,10 +74,10 @@ namespace RSoft.Account.Application.Handlers
         ///<inheritdoc/>
         protected override async Task<Guid?> SaveAsync(DomainAccount entity, CancellationToken cancellationToken)
         {
-            AccountCreatedEvent accountCreatedEvent = new AccountCreatedEvent(entity.Id, entity.Name, entity.Category.Id);
+            AccountCreatedEvent accountCreatedEvent = new(entity.Id, entity.Name, entity.Category.Id);
             entity = await _accountDomainService.AddAsync(entity, cancellationToken);
             _ = await _uow.SaveChangesAsync(cancellationToken);
-            await _bus.Publish(accountCreatedEvent);
+            await _bus.Publish(accountCreatedEvent, cancellationToken);
             return entity.Id;
         }
 

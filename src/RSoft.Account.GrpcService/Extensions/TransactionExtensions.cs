@@ -26,16 +26,7 @@ namespace RSoft.Account.GrpcService.Extensions
             if (Guid.TryParse(request.PaymentMethodId, out id))
                 paymentMethodId = id;
 
-            CreateTransactionCommand command = new()
-            {
-                Year = request.Year,
-                Month = request.Month,
-                Date = request.Date.ToDateTime(),
-                Amount = (float)request.Amount,
-                Comment = request.Comment,
-                AccountId = accountId,
-                PaymentMethodId = paymentMethodId
-            };
+            CreateTransactionCommand command = new(request.Date.ToDateTime(), request.TransactionType, (float)request.Amount, request.Comment, accountId, paymentMethodId);
             return command;
 
         }

@@ -1,4 +1,5 @@
-﻿using RSoft.Lib.Common.Contracts.Dtos;
+﻿using RSoft.Finance.Contracts.Enum;
+using RSoft.Lib.Common.Contracts.Dtos;
 using RSoft.Lib.Common.Dtos;
 using System;
 
@@ -26,7 +27,7 @@ namespace RSoft.Account.Contracts.Models
         /// <summary>
         /// Payment type code (number)
         /// </summary>
-        public int PaymentType { get; set; }
+        public PaymentTypeEnum PaymentType { get; set; }
 
         #endregion
 

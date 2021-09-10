@@ -4,8 +4,8 @@ using Microsoft.Extensions.Logging;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
+using RSoft.Finance.Contracts.Enum;
 using RSoft.Finance.Contracts.Events;
-using RSoft.Finance.Domain.Enum;
 using RSoft.Lib.Design.Application.Commands;
 using RSoft.Lib.Design.Application.Handlers;
 using RSoft.Lib.Design.Infra.Data;
@@ -77,7 +77,7 @@ namespace RSoft.Account.Application.Handlers
         {
             entity = await _paymentMethodDomainService.AddAsync(entity, cancellationToken);
             _ = await _uow.SaveChangesAsync(cancellationToken);
-            await _bus.Publish(new PaymentMethodCreatedEvent(entity.Id, entity.Name, (int)entity.PaymentType));
+            await _bus.Publish(new PaymentMethodCreatedEvent(entity.Id, entity.Name, entity.PaymentType.Value), cancellationToken);
             return entity.Id;
         }
 

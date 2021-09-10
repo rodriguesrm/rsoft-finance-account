@@ -1,12 +1,9 @@
-﻿using Microsoft.Extensions.Localization;
-using Microsoft.Extensions.DependencyInjection;
-using RSoft.Lib.Common.Abstractions;
-using RSoft.Lib.Common.Contracts;
+﻿using RSoft.Lib.Common.Contracts;
 using RSoft.Lib.Common.Contracts.Entities;
 using RSoft.Lib.Design.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using RSoft.Finance.Domain.Enum;
+using RSoft.Finance.Contracts.Enum;
 
 namespace RSoft.Account.Core.Entities
 {

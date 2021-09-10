@@ -43,6 +43,16 @@ service Transaction {
 // message types
 // ------------------------------------------------------------------
 
+message SimpleIdName {
+	string id = 1;
+	string name = 2;
+}
+message NullableSimpleIdName {
+oneof kind {
+    google.protobuf.NullValue null = 1;
+    SimpleIdName data = 2;
+  }
+}
 message AuthorDetail {
 	string id = 1;
 	string name = 2;
@@ -60,17 +70,6 @@ message NullableAuthorDetail {
   }
 }
 
-message CategoryInfo {
-	string id = 1;
-	string name = 2;
-}
-message NullableCategoryInfo {
-  oneof kind {
-    google.protobuf.NullValue null = 1;
-    CategoryInfo data = 2;
-  }
-}
-
 message CategoryDetail {
 	string id = 1;
 	string name = 2;
@@ -84,7 +83,7 @@ message CategoryDetail {
 message AccountDetail {
 	string id = 1;
 	string name = 2;
-	NullableCategoryInfo category = 3;
+	NullableSimpleIdName category = 3;
 	bool is_active = 4;
 	google.protobuf.Timestamp created_on = 5;
 	AuthorDetail created_by = 6;
@@ -95,7 +94,7 @@ message AccountDetail {
 message PaymentMethodDetail {
 	string id = 1;
 	string name = 2;
-	int32  payment_type = 3;
+	SimpleIdName payment_type = 3;
 	bool is_active = 4;
 	google.protobuf.Timestamp created_on = 5;
 	AuthorDetail created_by = 6;
@@ -225,13 +224,12 @@ message ListPaymentMethodReply {
 // transaction message contracts
 // ------------------------------------------------------------------
 message CreateTransactionRequest {
-	int32 year = 1;
-	int32 month = 2;
-	google.protobuf.Timestamp date = 3;
-	double amount = 4;
-	string comment = 5;
-	string account_id = 6;
-	string payment_method_id = 7;
+	google.protobuf.Timestamp date = 1;
+	int32 transaction_type = 2;
+	double amount = 3;
+	string comment = 4;
+	string account_id = 5;
+	string payment_method_id = 6;
 }
 message CreateTransactionReply {
 	string id = 1;

@@ -7,10 +7,10 @@ using RSoft.Lib.Design.Application.Commands;
 using RSoft.Lib.Design.Infra.Data;
 using System.Threading;
 using System.Threading.Tasks;
-using RSoft.Finance.Domain.Enum;
 using RSoft.Lib.Design.Application.Handlers;
 using MassTransit;
 using RSoft.Finance.Contracts.Events;
+using RSoft.Finance.Contracts.Enum;
 
 namespace RSoft.Account.Application.Handlers
 {

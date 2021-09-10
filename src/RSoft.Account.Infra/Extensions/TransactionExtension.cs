@@ -32,8 +32,6 @@ namespace RSoft.Account.Infra.Extensions
                 result = new TransactionDomain(table.Id)
                 {
                     CreatedOn = table.CreatedOn,
-                    Year = table.Year,
-                    Month = table.Month,
                     Date = table.Date,
                     TransactionType = table.TransactionType,
                     Amount = table.Amount,
@@ -98,8 +96,6 @@ namespace RSoft.Account.Infra.Extensions
 
             if (entity != null && table != null)
             {
-                table.Year = entity.Year;
-                table.Month = entity.Month;
                 table.Date = entity.Date;
                 table.TransactionType = entity.TransactionType;
                 table.Amount = entity.Amount;

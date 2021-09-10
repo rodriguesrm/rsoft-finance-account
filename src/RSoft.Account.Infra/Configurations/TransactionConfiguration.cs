@@ -27,10 +27,12 @@ namespace RSoft.Account.Infra.Configurations
 
             builder.Property(c => c.Year)
                 .HasColumnName(nameof(Transaction.Year))
+                .HasColumnType("tinyint(4)")
                 .IsRequired();
 
             builder.Property(c => c.Month)
                 .HasColumnName(nameof(Transaction.Month))
+                .HasColumnType("tinyint(2)")
                 .IsRequired();
 
             builder.Property(c => c.Date)
@@ -40,7 +42,7 @@ namespace RSoft.Account.Infra.Configurations
 
             builder.Property(nameof(Transaction.TransactionType))
                 .HasColumnName(nameof(Transaction.TransactionType))
-                .HasColumnName("tinyint(3)")
+                .HasColumnType("tinyint(3)")
                 .IsRequired();
 
             builder.Property(c => c.Amount)

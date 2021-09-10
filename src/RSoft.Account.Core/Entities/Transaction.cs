@@ -4,7 +4,7 @@ using RSoft.Lib.Common.Abstractions;
 using RSoft.Lib.Design.Domain.Entities;
 using System;
 using RSoft.Lib.Common.Contracts;
-using RSoft.Finance.Domain.Enum;
+using RSoft.Finance.Contracts.Enum;
 
 namespace RSoft.Account.Core.Entities
 {
@@ -53,12 +53,12 @@ namespace RSoft.Account.Core.Entities
         /// <summary>
         /// Transaction year
         /// </summary>
-        public short Year { get; set; }
+        public int Year { get { return Date.Year; } }
 
         /// <summary>
         /// Transaction month
         /// </summary>
-        public byte Month { get; set; }
+        public int Month { get { return Date.Month; }  }
 
         /// <summary>
         /// Transaction date
@@ -122,12 +122,13 @@ namespace RSoft.Account.Core.Entities
                 AddNotification(nameof(Amount), localizer["GREATER_THAN_ZERO"]);
 
             AddNotifications(new PastDateValidationContract(Date, nameof(Date), localizer["DATE_REQUIRED"]).Contract.Notifications);
+            //BACKLOG: Validate based on active period
 
             int? transactionType = TransactionType.HasValue ? (int)TransactionType : null;
             AddNotifications(new EnumCastFromIntegerValidationContract<TransactionTypeEnum>(transactionType, nameof(transactionType), true).Contract.Notifications);
 
-            AddNotifications(new RequiredValidationContract<string>(Account?.Name, nameof(Account), localizer["ACCOUNT_REQUIRED"]).Contract.Notifications);
-            AddNotifications(new RequiredValidationContract<string>(PaymentMethod?.Name, nameof(PaymentMethod), localizer["PAYMENTMETHOD_REQUIRED"]).Contract.Notifications);
+            AddNotifications(new RequiredValidationContract<Guid?>(Account?.Id, nameof(Account), localizer["ACCOUNT_REQUIRED"]).Contract.Notifications);
+            AddNotifications(new RequiredValidationContract<Guid?>(PaymentMethod?.Id, nameof(PaymentMethod), localizer["PAYMENTMETHOD_REQUIRED"]).Contract.Notifications);
         }
 
         #endregion

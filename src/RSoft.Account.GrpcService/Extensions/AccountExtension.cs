@@ -38,9 +38,9 @@ namespace RSoft.Account.GrpcService.Extensions
 
                 if (dto.Category != null)
                 {
-                    result.Category = new NullableCategoryInfo()
+                    result.Category = new NullableSimpleIdName()
                     {
-                        Data = new CategoryInfo()
+                        Data = new SimpleIdName()
                         {
                             Id = dto.Category.Id.ToString(),
                             Name = dto.Category.Name

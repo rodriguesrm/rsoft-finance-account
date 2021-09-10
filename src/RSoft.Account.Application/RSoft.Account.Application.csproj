@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\finance-lib\src\RSoft.Finance.Contracts\RSoft.Finance.Contracts.csproj" />
-    <ProjectReference Include="..\..\..\finance-lib\src\RSoft.Finance.Domain\RSoft.Finance.Domain.csproj" />
     <ProjectReference Include="..\RSoft.Account.Contracts\RSoft.Account.Contracts.csproj" />
     <ProjectReference Include="..\RSoft.Account.Core\RSoft.Account.Core.csproj" />
   </ItemGroup>

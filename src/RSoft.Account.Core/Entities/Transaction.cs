@@ -4,6 +4,7 @@ using RSoft.Lib.Common.Abstractions;
 using RSoft.Lib.Design.Domain.Entities;
 using System;
 using RSoft.Lib.Common.Contracts;
+using RSoft.Finance.Domain.Enum;
 
 namespace RSoft.Account.Core.Entities
 {
@@ -65,6 +66,11 @@ namespace RSoft.Account.Core.Entities
         public DateTime Date { get; set; }
 
         /// <summary>
+        /// Transaction type
+        /// </summary>
+        public TransactionTypeEnum? TransactionType { get; set; }
+
+        /// <summary>
         /// Transaction amount
         /// </summary>
         public float Amount { get; set; }
@@ -112,10 +118,13 @@ namespace RSoft.Account.Core.Entities
             IStringLocalizer<Transaction> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<Transaction>>();
             if (CreatedAuthor != null) AddNotifications(CreatedAuthor.Notifications);
 
-            if (Amount == 0)
-                AddNotification(nameof(Amount), localizer["AMOUNT_NOZERO"]);
+            if (Amount <= 0)
+                AddNotification(nameof(Amount), localizer["GREATER_THAN_ZERO"]);
 
             AddNotifications(new PastDateValidationContract(Date, nameof(Date), localizer["DATE_REQUIRED"]).Contract.Notifications);
+
+            int? transactionType = TransactionType.HasValue ? (int)TransactionType : null;
+            AddNotifications(new EnumCastFromIntegerValidationContract<TransactionTypeEnum>(transactionType, nameof(transactionType), true).Contract.Notifications);
 
             AddNotifications(new RequiredValidationContract<string>(Account?.Name, nameof(Account), localizer["ACCOUNT_REQUIRED"]).Contract.Notifications);
             AddNotifications(new RequiredValidationContract<string>(PaymentMethod?.Name, nameof(PaymentMethod), localizer["PAYMENTMETHOD_REQUIRED"]).Contract.Notifications);

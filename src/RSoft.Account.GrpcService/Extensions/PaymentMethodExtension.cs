@@ -60,7 +60,7 @@ namespace RSoft.Account.GrpcService.Extensions
         /// <param name="dtos">PaymentMethod dtos list</param>
         public static IEnumerable<PaymentMethodDetail> Map(this IEnumerable<PaymentMethodDto> dtos)
         {
-            IEnumerable<PaymentMethodDetail> result = null;
+            IEnumerable<PaymentMethodDetail> result = new List<PaymentMethodDetail>();
             if (dtos?.Count() > 0)
                 result = dtos.Select(d => d.Map());
             return result;

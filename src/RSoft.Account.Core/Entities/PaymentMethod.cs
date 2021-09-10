@@ -92,11 +92,12 @@ namespace RSoft.Account.Core.Entities
         /// </summary>
         public override void Validate()
         {
-            IStringLocalizer<PaymentMethod> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<PaymentMethod>>();
             if (CreatedAuthor != null) AddNotifications(CreatedAuthor.Notifications);
             if (ChangedAuthor != null) AddNotifications(ChangedAuthor.Notifications);
             AddNotifications(new SimpleStringValidationContract(Name, nameof(Name), true, 3, 50).Contract.Notifications);
-            AddNotifications(new RequiredValidationContract<PaymentTypeEnum?>(PaymentType, nameof(PaymentType), localizer["PAYMENTTYPE_REQUIRED"]).Contract.Notifications);
+
+            int? paymentType = PaymentType.HasValue ? (int)PaymentType : null;
+            AddNotifications(new EnumCastFromIntegerValidationContract<PaymentTypeEnum>(paymentType, nameof(paymentType), true).Contract.Notifications);
         }
 
         #endregion

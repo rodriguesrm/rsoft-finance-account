@@ -35,6 +35,7 @@ namespace RSoft.Account.Infra.Extensions
                     Year = table.Year,
                     Month = table.Month,
                     Date = table.Date,
+                    TransactionType = table.TransactionType,
                     Amount = table.Amount,
                     Comment = table.Comment
                 };
@@ -73,6 +74,7 @@ namespace RSoft.Account.Infra.Extensions
                     Year = entity.Year,
                     Month = entity.Month,
                     Date = entity.Date,
+                    TransactionType = entity.TransactionType,
                     Amount = entity.Amount,
                     Comment = entity.Comment,
                     AccountId = entity.Account.Id,
@@ -99,6 +101,7 @@ namespace RSoft.Account.Infra.Extensions
                 table.Year = entity.Year;
                 table.Month = entity.Month;
                 table.Date = entity.Date;
+                table.TransactionType = entity.TransactionType;
                 table.Amount = entity.Amount;
                 table.Comment = entity.Comment;
                 table.AccountId = entity.Account.Id;

@@ -120,11 +120,11 @@
   <data name="ACCOUNT_REQUIRED" xml:space="preserve">
     <value>The transaction account is required</value>
   </data>
-  <data name="AMOUNT_NOZERO" xml:space="preserve">
-    <value>The transaction amount must be different from 0 (zero)</value>
-  </data>
   <data name="DATE_REQUIRED" xml:space="preserve">
     <value>Date is required</value>
+  </data>
+  <data name="GREATER_THAN_ZERO" xml:space="preserve">
+    <value>The transaction amount must be greater than 0 (zero)</value>
   </data>
   <data name="PAYMENTMETHOD_REQUIRED" xml:space="preserve">
     <value>Payment method is required</value>

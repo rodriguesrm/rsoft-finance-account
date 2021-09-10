@@ -44,7 +44,7 @@ namespace RSoft.Account.Application.Extensions
         /// <param name="entities">Entities list</param>
         public static IEnumerable<CategoryDto> Map(this IEnumerable<Category> entities)
         {
-            IEnumerable<CategoryDto> result = null;
+            IEnumerable<CategoryDto> result = new List<CategoryDto>();
             if (entities?.Count() > 0)
                 result = entities.Select(e => e.Map());
             return result;

@@ -38,6 +38,11 @@ namespace RSoft.Account.Infra.Configurations
                 .HasColumnType("date")
                 .IsRequired();
 
+            builder.Property(nameof(Transaction.TransactionType))
+                .HasColumnName(nameof(Transaction.TransactionType))
+                .HasColumnName("tinyint(3)")
+                .IsRequired();
+
             builder.Property(c => c.Amount)
                 .HasColumnName(nameof(Transaction.Amount))
                 .HasColumnType("decimal(16,2)")

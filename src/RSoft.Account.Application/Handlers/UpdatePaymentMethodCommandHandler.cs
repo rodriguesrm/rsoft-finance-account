@@ -65,8 +65,8 @@ namespace RSoft.Account.Application.Handlers
         protected override async Task<bool> SaveAsync(PaymentMethod entity, CancellationToken cancellationToken)
         {
             _ = _paymentMethodDomainService.Update(entity.Id, entity);
-            _ = await _uow.SaveChangesAsync();
-            await _bus.Publish(new PaymentMethodChangedEvent(entity.Id, entity.Name, (int)entity.PaymentType));
+            _ = await _uow.SaveChangesAsync(cancellationToken);
+            await _bus.Publish(new PaymentMethodChangedEvent(entity.Id, entity.Name, (int)entity.PaymentType), cancellationToken);
             return true;
         }
 

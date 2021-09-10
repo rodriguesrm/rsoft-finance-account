@@ -120,11 +120,11 @@
   <data name="ACCOUNT_REQUIRED" xml:space="preserve">
     <value>A conta de transação deve ser informada</value>
   </data>
-  <data name="AMOUNT_NOZERO" xml:space="preserve">
-    <value>O valor da transação deve ser diferente de 0 (zero)</value>
-  </data>
   <data name="DATE_REQUIRED" xml:space="preserve">
     <value>A data de registro deve ser informada</value>
+  </data>
+  <data name="GREATER_THAN_ZERO" xml:space="preserve">
+    <value>O valor da transação deve ser maior de 0 (zero)</value>
   </data>
   <data name="PAYMENTMETHOD_REQUIRED" xml:space="preserve">
     <value>O método de pagamento deve ser informado</value>

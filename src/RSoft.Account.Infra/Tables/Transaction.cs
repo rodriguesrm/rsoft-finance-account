@@ -1,4 +1,5 @@
-﻿using RSoft.Lib.Design.Infra.Data;
+﻿using RSoft.Finance.Domain.Enum;
+using RSoft.Lib.Design.Infra.Data;
 using RSoft.Lib.Design.Infra.Data.Tables;
 using System;
 
@@ -54,6 +55,11 @@ namespace RSoft.Account.Infra.Tables
         /// Transaction date
         /// </summary>
         public DateTime Date { get; set; }
+
+        /// <summary>
+        /// Transaction type
+        /// </summary>
+        public TransactionTypeEnum? TransactionType { get; set; }
 
         /// <summary>
         /// Transaction amount

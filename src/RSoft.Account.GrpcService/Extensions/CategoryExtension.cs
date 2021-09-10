@@ -59,7 +59,7 @@ namespace RSoft.Account.GrpcService.Extensions
         /// <param name="dtos">Category dtos list</param>
         public static IEnumerable<CategoryDetail> Map(this IEnumerable<CategoryDto> dtos)
         {
-            IEnumerable<CategoryDetail> result = null;
+            IEnumerable<CategoryDetail> result = new List<CategoryDetail>();
             if (dtos?.Count() > 0)
                 result = dtos.Select(d => d.Map());
             return result;

@@ -62,8 +62,8 @@ namespace RSoft.Account.Application.Handlers
         protected override async Task<bool> SaveAsync(Category entity, CancellationToken cancellationToken)
         {
             _ = _categoryDomainService.Update(entity.Id, entity);
-            _ = await _uow.SaveChangesAsync();
-            await _bus.Publish(new CategoryChangedEvent(entity.Id, entity.Name));
+            _ = await _uow.SaveChangesAsync(cancellationToken);
+            await _bus.Publish(new CategoryChangedEvent(entity.Id, entity.Name), cancellationToken);
             return true;
         }
 

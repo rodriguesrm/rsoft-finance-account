@@ -22,12 +22,12 @@ namespace RSoft.Account.Contracts.Commands
         /// <summary>
         /// Transaction year
         /// </summary>
-        public short Year { get; set; }
+        public int Year { get; set; }
 
         /// <summary>
         /// Transaction month
         /// </summary>
-        public byte Month { get; set; }
+        public int Month { get; set; }
 
         /// <summary>
         /// Transaction date

@@ -5,41 +5,6 @@ import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "RSoft.Account.Grpc.Protobuf";
 
-// service definitions
-// ------------------------------------------------------------------
-
-service Category {
-	rpc CreateCategory (CreateCategoryRequest) returns (CreateCategoryReply);
-	rpc UpdateCategory (UpdateCategoryRequest) returns (UpdateCategoryReply);
-	rpc EnableCategory (EnableCategoryRequest) returns (EnableCategoryReply);
-	rpc DisableCategory (DisableCategoryRequest) returns (DisableCategoryReply);
-	rpc GetCategory (GetCategoryRequest) returns (GetCategoryReply);
-	rpc ListCategory (ListCategoryRequest) returns (ListCategoryReply);
-}
-
-service Account {
-	rpc CreateAccount (CreateAccountRequest) returns (CreateAccountReply);
-	rpc UpdateAccount (UpdateAccountRequest) returns (UpdateAccountReply);
-	rpc EnableAccount (ChangeStatusAccountRequest) returns (ChangeStatusAccountReply);
-	rpc DisableAccount (ChangeStatusAccountRequest) returns (ChangeStatusAccountReply);
-	rpc GetAccount (GetAccountRequest) returns (GetAccountReply);
-	rpc ListAccount (ListAccountRequest) returns (ListAccountReply);
-}
-
-service PaymentMethod {
-	rpc CreatePaymentMethod (CreatePaymentMethodRequest) returns (CreatePaymentMethodReply);
-	rpc UpdatePaymentMethod (UpdatePaymentMethodRequest) returns (UpdatePaymentMethodReply);
-	rpc EnablePaymentMethod (ChangeStatusPaymentMethodRequest) returns (ChangeStatusPaymentMethodReply);
-	rpc DisablePaymentMethod (ChangeStatusPaymentMethodRequest) returns (ChangeStatusPaymentMethodReply);
-	rpc GetPaymentMethod (GetPaymentMethodRequest) returns (GetPaymentMethodReply);
-	rpc ListPaymentMethod (ListPaymentMethodRequest) returns (ListPaymentMethodReply);
-}
-
-service Transaction {
-	rpc CreateTransaction (CreateTransactionRequest) returns (CreateTransactionReply);
-	rpc GetTransaction (GetTransactionRequest) returns (TransactionDetail);
-}
-
 // message types
 // ------------------------------------------------------------------
 
@@ -68,6 +33,18 @@ message NullableAuthorDetail {
     google.protobuf.NullValue null = 1;
     AuthorDetail data = 2;
   }
+}
+
+// category service definitions
+// ------------------------------------------------------------------
+
+service Category {
+	rpc CreateCategory (CreateCategoryRequest) returns (CreateCategoryReply);
+	rpc UpdateCategory (UpdateCategoryRequest) returns (UpdateCategoryReply);
+	rpc EnableCategory (EnableCategoryRequest) returns (EnableCategoryReply);
+	rpc DisableCategory (DisableCategoryRequest) returns (DisableCategoryReply);
+	rpc GetCategory (GetCategoryRequest) returns (GetCategoryReply);
+	rpc ListCategory (ListCategoryRequest) returns (ListCategoryReply);
 }
 
 // category message contracts
@@ -122,6 +99,18 @@ message ListCategoryReply {
 	repeated CategoryDetail data = 1;
 }
 
+// account service definitions
+// ------------------------------------------------------------------
+
+service Account {
+	rpc CreateAccount (CreateAccountRequest) returns (CreateAccountReply);
+	rpc UpdateAccount (UpdateAccountRequest) returns (UpdateAccountReply);
+	rpc EnableAccount (ChangeStatusAccountRequest) returns (ChangeStatusAccountReply);
+	rpc DisableAccount (ChangeStatusAccountRequest) returns (ChangeStatusAccountReply);
+	rpc GetAccount (GetAccountRequest) returns (GetAccountReply);
+	rpc ListAccount (ListAccountRequest) returns (ListAccountReply);
+}
+
 // account message contracts
 // ------------------------------------------------------------------
 
@@ -169,6 +158,18 @@ message ListAccountRequest {
 }
 message ListAccountReply {
 	repeated AccountDetail data = 1;
+}
+
+// payment method service definitions
+// ------------------------------------------------------------------
+
+service PaymentMethod {
+	rpc CreatePaymentMethod (CreatePaymentMethodRequest) returns (CreatePaymentMethodReply);
+	rpc UpdatePaymentMethod (UpdatePaymentMethodRequest) returns (UpdatePaymentMethodReply);
+	rpc EnablePaymentMethod (ChangeStatusPaymentMethodRequest) returns (ChangeStatusPaymentMethodReply);
+	rpc DisablePaymentMethod (ChangeStatusPaymentMethodRequest) returns (ChangeStatusPaymentMethodReply);
+	rpc GetPaymentMethod (GetPaymentMethodRequest) returns (GetPaymentMethodReply);
+	rpc ListPaymentMethod (ListPaymentMethodRequest) returns (ListPaymentMethodReply);
 }
 
 // payment method message contracts
@@ -220,6 +221,13 @@ message ListPaymentMethodReply {
 	repeated PaymentMethodDetail data = 1;
 }
 
+// transaction service definitions
+// ------------------------------------------------------------------
+
+service Transaction {
+	rpc CreateTransaction (CreateTransactionRequest) returns (CreateTransactionReply);
+	rpc GetTransaction (GetTransactionRequest) returns (TransactionDetail);
+}
 
 // transaction message contracts
 // ------------------------------------------------------------------

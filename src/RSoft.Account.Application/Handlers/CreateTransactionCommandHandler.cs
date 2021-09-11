@@ -75,7 +75,7 @@ namespace RSoft.Account.Application.Handlers
         ///<inheritdoc/>
         protected override async Task<Guid?> SaveAsync(Transaction entity, CancellationToken cancellationToken)
         {
-            TransactionCreatedEvent transactionCreatedEvent = entity.Map();
+            TransactionCreatedEvent transactionCreatedEvent = entity.MapToEvent();
             entity = await _transactionDomainService.AddAsync(entity, cancellationToken);
             _ = await _uow.SaveChangesAsync(cancellationToken);
             await _bus.Publish(transactionCreatedEvent, cancellationToken);

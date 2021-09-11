@@ -1,7 +1,11 @@
 ﻿using RSoft.Account.Contracts.Commands;
+using RSoft.Account.Contracts.Models;
 using RSoft.Account.Core.Entities;
 using RSoft.Finance.Contracts.Enum;
 using RSoft.Finance.Contracts.Events;
+using RSoft.Helpers.Extensions;
+using RSoft.Lib.Common.Models;
+using System;
 using DomainAccount = RSoft.Account.Core.Entities.Account;
 
 namespace RSoft.Account.Application.Extensions
@@ -41,10 +45,34 @@ namespace RSoft.Account.Application.Extensions
         }
 
         /// <summary>
+        /// Map transaction entity to transaction dto
+        /// </summary>
+        /// <param name="entity">Entity to map</param>
+        public static TransactionDto Map(this Transaction entity)
+        {
+            TransactionDto result = null;
+            if (entity != null)
+            {
+                result = new TransactionDto()
+                {
+                    Id = entity.Id,
+                    Date = entity.Date,
+                    TransactionType = new SimpleIdentification<int>((int)entity.TransactionType.Value, entity.TransactionType.Value.GetDescription()),
+                    Amount = entity.Amount,
+                    Comment = entity.Comment,
+                    Account = new SimpleIdentification<Guid>(entity.Account.Id, entity.Account.Name),
+                    PaymentMethod = new SimpleIdentification<Guid>(entity.PaymentMethod.Id, entity.PaymentMethod.Name),
+                    CreatedBy = new AuditAuthor<Guid>(entity.CreatedOn, entity.CreatedAuthor.Id, entity.CreatedAuthor.Name)
+                };
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Map entity to event
         /// </summary>
         /// <param name="entity">Entity to map</param>
-        public static TransactionCreatedEvent Map(this Transaction entity)
+        public static TransactionCreatedEvent MapToEvent(this Transaction entity)
             => new
             (
                 entity.Id,

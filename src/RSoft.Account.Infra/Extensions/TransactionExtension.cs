@@ -1,4 +1,6 @@
 ﻿using RSoft.Account.Infra.Tables;
+using RSoft.Lib.Common.ValueObjects;
+using System;
 using TransactionDomain = RSoft.Account.Core.Entities.Transaction;
 
 namespace RSoft.Account.Infra.Extensions
@@ -40,7 +42,7 @@ namespace RSoft.Account.Infra.Extensions
 
                 if (useLazy)
                 {
-                    //result.MapAuthor(table);
+                    result.CreatedAuthor = new Author<Guid>(table.CreatedAuthor.Id, table.CreatedAuthor.GetFullName());
                     result.PaymentMethod = table.PaymentMethod?.Map(false);
                     result.Account = table.Account?.Map(false);
                 }

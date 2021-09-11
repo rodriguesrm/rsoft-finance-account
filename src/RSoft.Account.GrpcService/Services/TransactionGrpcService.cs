@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using RSoft.Account.GrpcService.Extensions;
 using RSoft.Account.Grpc.Protobuf;
 using proto = RSoft.Account.Grpc.Protobuf;
+using RSoft.Account.Contracts.Models;
 
 namespace RSoft.Account.GrpcService.Services
 {
@@ -54,14 +55,18 @@ namespace RSoft.Account.GrpcService.Services
             );
 
         /// <summary>
-        /// Delete a transaction
+        /// Get transaction by id
         /// </summary>
         /// <param name="request">Transaction request data</param>
         /// <param name="context">Server call context object</param>
-        public override Task<DeleteTransactionReply> DeleteTransaction(DeleteTransactionRequest request, ServerCallContext context)
-        {
-            return base.DeleteTransaction(request, context);
-        }
+        public override async Task<TransactionDetail> GetTransaction(GetTransactionRequest request, ServerCallContext context)
+            => await GrpcServiceHelpers.SendCommand<TransactionDetail, GetTransactionByIdCommand, TransactionDto>
+            (
+                nameof(GetTransaction),
+                () => new(new Guid(request.Id)),
+                (reply, result) => { result.Response.Map(reply); },
+                logger: _logger
+            );
 
         #endregion
 

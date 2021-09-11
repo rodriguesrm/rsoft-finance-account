@@ -8,6 +8,7 @@ using RSoft.Account.Contracts.Models;
 using RSoft.Account.GrpcService.Extensions;
 using System.Collections.Generic;
 using RSoft.Account.Grpc.Protobuf;
+using Google.Protobuf.WellKnownTypes;
 
 namespace RSoft.Account.GrpcService.Services
 {
@@ -65,8 +66,8 @@ namespace RSoft.Account.GrpcService.Services
         /// </summary>
         /// <param name="request">Account request data</param>
         /// <param name="context">Server call context object</param>
-        public override Task<UpdateAccountReply> UpdateAccount(UpdateAccountRequest request, ServerCallContext context)
-            => GrpcServiceHelpers.SendCommand<UpdateAccountReply, UpdateAccountCommand, bool>
+        public override Task<Empty> UpdateAccount(UpdateAccountRequest request, ServerCallContext context)
+            => GrpcServiceHelpers.SendCommand<Empty, UpdateAccountCommand, bool>
             (
                 nameof(UpdateAccount),
                 () =>
@@ -84,8 +85,8 @@ namespace RSoft.Account.GrpcService.Services
         /// </summary>
         /// <param name="request">Account request data</param>
         /// <param name="context">Server call context object</param>
-        public override Task<ChangeStatusAccountReply> EnableAccount(ChangeStatusAccountRequest request, ServerCallContext context)
-            => GrpcServiceHelpers.SendCommand<ChangeStatusAccountReply, ChangeStatusAccountCommand, bool>
+        public override Task<Empty> EnableAccount(ChangeStatusAccountRequest request, ServerCallContext context)
+            => GrpcServiceHelpers.SendCommand<Empty, ChangeStatusAccountCommand, bool>
             (
                 nameof(DisableAccount),
                 () => new(new Guid(request.Id), true),
@@ -97,8 +98,8 @@ namespace RSoft.Account.GrpcService.Services
         /// </summary>
         /// <param name="request">Account request data</param>
         /// <param name="context">Server call context object</param>
-        public override Task<ChangeStatusAccountReply> DisableAccount(ChangeStatusAccountRequest request, ServerCallContext context)
-            => GrpcServiceHelpers.SendCommand<ChangeStatusAccountReply, ChangeStatusAccountCommand, bool>
+        public override Task<Empty> DisableAccount(ChangeStatusAccountRequest request, ServerCallContext context)
+            => GrpcServiceHelpers.SendCommand<Empty, ChangeStatusAccountCommand, bool>
             (
                 nameof(DisableAccount),
                 () => new(new Guid(request.Id), false),
@@ -110,12 +111,12 @@ namespace RSoft.Account.GrpcService.Services
         /// </summary>
         /// <param name="request">Account request data</param>
         /// <param name="context">Server call context object</param>
-        public override Task<GetAccountReply> GetAccount(GetAccountRequest request, ServerCallContext context)
-            => GrpcServiceHelpers.SendCommand<GetAccountReply, GetAccountByIdCommand, AccountDto>
+        public override Task<AccountDetail> GetAccount(GetAccountRequest request, ServerCallContext context)
+            => GrpcServiceHelpers.SendCommand<AccountDetail, GetAccountByIdCommand, AccountDto>
             (
                 nameof(GetAccount),
                 () => new(new Guid(request.Id)),
-                (reply, result) => reply.Data = result.Response.Map(),
+                (reply, result) => result.Response.Map(reply),
                 logger: _logger
             );
 
@@ -124,7 +125,7 @@ namespace RSoft.Account.GrpcService.Services
         /// </summary>
         /// <param name="request">Account request data</param>
         /// <param name="context">Server call context object</param>
-        public override Task<ListAccountReply> ListAccount(ListAccountRequest request, ServerCallContext context)
+        public override Task<ListAccountReply> ListAccount(Empty request, ServerCallContext context)
             => GrpcServiceHelpers.SendCommand<ListAccountReply, ListAccountCommand, IEnumerable<AccountDto>>
             (
                 nameof(ListAccount),

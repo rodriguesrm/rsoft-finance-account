@@ -2,6 +2,7 @@ syntax = "proto3";
 
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 
 option csharp_namespace = "RSoft.Account.Grpc.Protobuf";
 
@@ -40,11 +41,11 @@ message NullableAuthorDetail {
 
 service Category {
 	rpc CreateCategory (CreateCategoryRequest) returns (CreateCategoryReply);
-	rpc UpdateCategory (UpdateCategoryRequest) returns (UpdateCategoryReply);
-	rpc EnableCategory (EnableCategoryRequest) returns (EnableCategoryReply);
-	rpc DisableCategory (DisableCategoryRequest) returns (DisableCategoryReply);
-	rpc GetCategory (GetCategoryRequest) returns (GetCategoryReply);
-	rpc ListCategory (ListCategoryRequest) returns (ListCategoryReply);
+	rpc UpdateCategory (UpdateCategoryRequest) returns (google.protobuf.Empty);
+	rpc EnableCategory (EnableCategoryRequest) returns (google.protobuf.Empty);
+	rpc DisableCategory (DisableCategoryRequest) returns (google.protobuf.Empty);
+	rpc GetCategory (GetCategoryRequest) returns (CategoryDetail);
+	rpc ListCategory (google.protobuf.Empty) returns (ListCategoryReply);
 }
 
 // category message contracts
@@ -71,30 +72,19 @@ message UpdateCategoryRequest {
 	string id = 1;
 	string name = 2;
 }
-message UpdateCategoryReply {
-}
 
 message EnableCategoryRequest {
 	string id = 1;
-}
-message EnableCategoryReply { 
 }
 
 message DisableCategoryRequest {
 	string id = 1;
 }
-message DisableCategoryReply {
-}
 
 message GetCategoryRequest {
 	string id = 1;
 }
-message GetCategoryReply {
-	CategoryDetail data = 1;
-}
 
-message ListCategoryRequest {
-}
 message ListCategoryReply {
 	repeated CategoryDetail data = 1;
 }
@@ -104,11 +94,11 @@ message ListCategoryReply {
 
 service Account {
 	rpc CreateAccount (CreateAccountRequest) returns (CreateAccountReply);
-	rpc UpdateAccount (UpdateAccountRequest) returns (UpdateAccountReply);
-	rpc EnableAccount (ChangeStatusAccountRequest) returns (ChangeStatusAccountReply);
-	rpc DisableAccount (ChangeStatusAccountRequest) returns (ChangeStatusAccountReply);
-	rpc GetAccount (GetAccountRequest) returns (GetAccountReply);
-	rpc ListAccount (ListAccountRequest) returns (ListAccountReply);
+	rpc UpdateAccount (UpdateAccountRequest) returns (google.protobuf.Empty);
+	rpc EnableAccount (ChangeStatusAccountRequest) returns (google.protobuf.Empty);
+	rpc DisableAccount (ChangeStatusAccountRequest) returns (google.protobuf.Empty);
+	rpc GetAccount (GetAccountRequest) returns (AccountDetail);
+	rpc ListAccount (google.protobuf.Empty) returns (ListAccountReply);
 }
 
 // account message contracts
@@ -144,18 +134,11 @@ message UpdateAccountReply {
 message ChangeStatusAccountRequest {
 	string id = 1;
 }
-message ChangeStatusAccountReply {
-}
 
 message GetAccountRequest {
 	string id = 1;
 }
-message GetAccountReply {
-	AccountDetail data = 1;
-}
 
-message ListAccountRequest {
-}
 message ListAccountReply {
 	repeated AccountDetail data = 1;
 }
@@ -165,11 +148,11 @@ message ListAccountReply {
 
 service PaymentMethod {
 	rpc CreatePaymentMethod (CreatePaymentMethodRequest) returns (CreatePaymentMethodReply);
-	rpc UpdatePaymentMethod (UpdatePaymentMethodRequest) returns (UpdatePaymentMethodReply);
-	rpc EnablePaymentMethod (ChangeStatusPaymentMethodRequest) returns (ChangeStatusPaymentMethodReply);
-	rpc DisablePaymentMethod (ChangeStatusPaymentMethodRequest) returns (ChangeStatusPaymentMethodReply);
+	rpc UpdatePaymentMethod (UpdatePaymentMethodRequest) returns (google.protobuf.Empty);
+	rpc EnablePaymentMethod (ChangeStatusPaymentMethodRequest) returns (google.protobuf.Empty);
+	rpc DisablePaymentMethod (ChangeStatusPaymentMethodRequest) returns (google.protobuf.Empty);
 	rpc GetPaymentMethod (GetPaymentMethodRequest) returns (GetPaymentMethodReply);
-	rpc ListPaymentMethod (ListPaymentMethodRequest) returns (ListPaymentMethodReply);
+	rpc ListPaymentMethod (google.protobuf.Empty) returns (ListPaymentMethodReply);
 }
 
 // payment method message contracts
@@ -205,8 +188,6 @@ message UpdatePaymentMethodReply {
 message ChangeStatusPaymentMethodRequest {
 	string id = 1;
 }
-message ChangeStatusPaymentMethodReply {
-}
 
 message GetPaymentMethodRequest {
 	string id = 1;
@@ -215,8 +196,6 @@ message GetPaymentMethodReply {
 	PaymentMethodDetail data = 1;
 }
 
-message ListPaymentMethodRequest {
-}
 message ListPaymentMethodReply {
 	repeated PaymentMethodDetail data = 1;
 }

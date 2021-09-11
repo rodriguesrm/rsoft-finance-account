@@ -20,12 +20,14 @@ namespace RSoft.Account.GrpcService.Services
         /// <summary>
         /// Send command via mediator
         /// </summary>
-        /// <typeparam name="TReply"></typeparam>
-        /// <typeparam name="TCommand"></typeparam>
-        /// <typeparam name="TResult"></typeparam>
-        /// <param name="methodName"></param>
-        /// <param name="createCommand"></param>
-        /// <param name="successAction"></param>
+        /// <typeparam name="TReply">Type of reply</typeparam>
+        /// <typeparam name="TCommand">Type of command</typeparam>
+        /// <typeparam name="TResult">Type of result</typeparam>
+        /// <param name="methodName">Method name for logger</param>
+        /// <param name="createCommand">Action to create command</param>
+        /// <param name="successAction">Action to perfom when get success from command</param>
+        /// <param name="logger">Logger object</param>
+        /// <param name="mediator">Command mediator</param>
         internal static async Task<TReply> SendCommand<TReply, TCommand, TResult>
         (
             string methodName,

@@ -19,26 +19,36 @@ namespace RSoft.Account.GrpcService.Extensions
         /// <param name="dto">Account dto instance</param>
         public static AccountDetail Map(this AccountDto dto)
         {
-            AccountDetail result = null;
+            if (dto == null) return null;
+            AccountDetail reply = new();
+            dto.Map(reply);
+            return reply;
+        }
+
+        /// <summary>
+        /// Map Account dto to Account-detail (grpc-model)
+        /// </summary>
+        /// <param name="dto">Account dto instance</param>
+        /// <param name="reply">Account detail instance</param>
+        public static void Map(this AccountDto dto, AccountDetail reply)
+        {
+            
             if (dto != null)
             {
 
-                result = new AccountDetail()
+                reply.Id = dto.Id.ToString();
+                reply.Name = dto.Name;
+                reply.IsActive = dto.IsActive;
+                reply.CreatedOn = Timestamp.FromDateTime(dto.CreatedBy.Date.ToUniversalTime());
+                reply.CreatedBy = new AuthorDetail()
                 {
-                    Id = dto.Id.ToString(),
-                    Name = dto.Name,
-                    IsActive = dto.IsActive,
-                    CreatedOn = Timestamp.FromDateTime(dto.CreatedBy.Date.ToUniversalTime()),
-                    CreatedBy = new AuthorDetail()
-                    {
-                        Id = dto.CreatedBy.Id.ToString(),
-                        Name = dto.CreatedBy.Name
-                    }
+                    Id = dto.CreatedBy.Id.ToString(),
+                    Name = dto.CreatedBy.Name
                 };
 
                 if (dto.Category != null)
                 {
-                    result.Category = new NullableSimpleIdName()
+                    reply.Category = new NullableSimpleIdName()
                     {
                         Data = new SimpleIdName()
                         {
@@ -50,11 +60,11 @@ namespace RSoft.Account.GrpcService.Extensions
 
                 if (dto.ChangedBy != null)
                 {
-                    result.ChangedOn = new NullableTimestamp()
+                    reply.ChangedOn = new NullableTimestamp()
                     {
                         Data = Timestamp.FromDateTime(dto.ChangedBy.Date.ToUniversalTime())
                     };
-                    result.ChangedBy = new NullableAuthorDetail()
+                    reply.ChangedBy = new NullableAuthorDetail()
                     {
                         Data = new AuthorDetail()
                         {
@@ -65,7 +75,6 @@ namespace RSoft.Account.GrpcService.Extensions
                 }
 
             }
-            return result;
         }
 
         /// <summary>

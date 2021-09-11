@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using RSoft.Account.GrpcService.Extensions;
 using RSoft.Account.Grpc.Protobuf;
+using Google.Protobuf.WellKnownTypes;
 
 namespace RSoft.Account.GrpcService.Services
 {
@@ -59,21 +60,22 @@ namespace RSoft.Account.GrpcService.Services
         /// </summary>
         /// <param name="request">Category request data</param>
         /// <param name="context">Server call context object</param>
-        public override async Task<UpdateCategoryReply> UpdateCategory(UpdateCategoryRequest request, ServerCallContext context)
-            => await GrpcServiceHelpers.SendCommand<UpdateCategoryReply, UpdateCategoryCommand, bool>
+        public override async Task<Empty> UpdateCategory(UpdateCategoryRequest request, ServerCallContext context)
+            => await GrpcServiceHelpers.SendCommand<Empty, UpdateCategoryCommand, bool>
             (
                 nameof(UpdateCategory),
                 () => new(new Guid(request.Id), request.Name),
                 logger: _logger
             );
 
+
         /// <summary>
         /// Enable a category
         /// </summary>
         /// <param name="request">Category request data</param>
         /// <param name="context">Server call context object</param>
-        public override async Task<EnableCategoryReply> EnableCategory(EnableCategoryRequest request, ServerCallContext context)
-            => await GrpcServiceHelpers.SendCommand<EnableCategoryReply, ChangeStatusCategoryCommand, bool>
+        public override async Task<Empty> EnableCategory(EnableCategoryRequest request, ServerCallContext context)
+            => await GrpcServiceHelpers.SendCommand<Empty, ChangeStatusCategoryCommand, bool>
             (
                 nameof(EnableCategory),
                 () => new(new Guid(request.Id), true),
@@ -86,8 +88,8 @@ namespace RSoft.Account.GrpcService.Services
         /// </summary>
         /// <param name="request">Category request data</param>
         /// <param name="context">Server call context object</param>
-        public override async Task<DisableCategoryReply> DisableCategory(DisableCategoryRequest request, ServerCallContext context)
-            => await GrpcServiceHelpers.SendCommand<DisableCategoryReply, ChangeStatusCategoryCommand, bool>
+        public override async Task<Empty> DisableCategory(DisableCategoryRequest request, ServerCallContext context)
+            => await GrpcServiceHelpers.SendCommand<Empty, ChangeStatusCategoryCommand, bool>
             (
                 nameof(DisableCategory),
                 () => new(new Guid(request.Id), false),
@@ -99,12 +101,12 @@ namespace RSoft.Account.GrpcService.Services
         /// </summary>
         /// <param name="request">Category request data</param>
         /// <param name="context">Server call context object</param>
-        public override async Task<GetCategoryReply> GetCategory(GetCategoryRequest request, ServerCallContext context)
-            => await GrpcServiceHelpers.SendCommand<GetCategoryReply, GetCategoryByIdCommand, CategoryDto>
+        public override async Task<CategoryDetail> GetCategory(GetCategoryRequest request, ServerCallContext context)
+            => await GrpcServiceHelpers.SendCommand<CategoryDetail, GetCategoryByIdCommand, CategoryDto>
             (
                 nameof(GetCategory),
                 () => new(new Guid(request.Id)),
-                (reply, result) => reply.Data = result.Response.Map(),
+                (reply, result) => result.Response.Map(reply),
                 logger: _logger
             );
 
@@ -113,7 +115,7 @@ namespace RSoft.Account.GrpcService.Services
         /// </summary>
         /// <param name="request">Category request data</param>
         /// <param name="context">Server call context object</param>
-        public override async Task<ListCategoryReply> ListCategory(ListCategoryRequest request, ServerCallContext context)
+        public override async Task<ListCategoryReply> ListCategory(Empty request, ServerCallContext context)
             => await GrpcServiceHelpers.SendCommand<ListCategoryReply, ListCategoryCommand, IEnumerable<CategoryDto>>
             (
                 nameof(ListCategory),

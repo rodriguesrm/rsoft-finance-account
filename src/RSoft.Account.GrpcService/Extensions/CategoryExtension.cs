@@ -19,28 +19,39 @@ namespace RSoft.Account.GrpcService.Extensions
         /// <param name="dto">Category dto instance</param>
         public static CategoryDetail Map(this CategoryDto dto)
         {
-            CategoryDetail result = null;
+            if (dto == null)
+                return null;
+            CategoryDetail reply = new();
+            dto.Map(reply);
+            return reply;
+        }
+
+        /// <summary>
+        /// Map category dto to category-detail (grpc-model)
+        /// </summary>
+        /// <param name="dto">Category dto instance</param>
+        /// <param name="reply">Reply object intance</param>
+        public static void Map(this CategoryDto dto, CategoryDetail reply)
+        {
             if (dto != null)
             {
-                result = new CategoryDetail()
+                reply.Id = dto.Id.ToString();
+                reply.Name = dto.Name;
+                reply.IsActive = dto.IsActive;
+                reply.CreatedOn = Timestamp.FromDateTime(dto.CreatedBy.Date.ToUniversalTime());
+                reply.CreatedBy = new AuthorDetail()
                 {
-                    Id = dto.Id.ToString(),
-                    Name = dto.Name,
-                    IsActive = dto.IsActive,
-                    CreatedOn = Timestamp.FromDateTime(dto.CreatedBy.Date.ToUniversalTime()),
-                    CreatedBy = new AuthorDetail()
-                    {
-                        Id = dto.CreatedBy.Id.ToString(),
-                        Name = dto.CreatedBy.Name
-                    }
+                    Id = dto.CreatedBy.Id.ToString(),
+                    Name = dto.CreatedBy.Name
                 };
+
                 if (dto.ChangedBy != null)
                 {
-                    result.ChangedOn = new NullableTimestamp()
+                    reply.ChangedOn = new NullableTimestamp()
                     {
                         Data = Timestamp.FromDateTime(dto.ChangedBy.Date.ToUniversalTime())
                     };
-                    result.ChangedBy = new NullableAuthorDetail()
+                    reply.ChangedBy = new NullableAuthorDetail()
                     {
                         Data = new AuthorDetail()
                         {
@@ -50,7 +61,6 @@ namespace RSoft.Account.GrpcService.Extensions
                     };
                 }
             }
-            return result;
         }
 
         /// <summary>

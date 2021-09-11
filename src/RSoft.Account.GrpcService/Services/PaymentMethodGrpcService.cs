@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using RSoft.Account.GrpcService.Extensions;
 using RSoft.Account.Grpc.Protobuf;
+using Google.Protobuf.WellKnownTypes;
 
 namespace RSoft.Account.GrpcService.Services
 {
@@ -59,8 +60,8 @@ namespace RSoft.Account.GrpcService.Services
         /// </summary>
         /// <param name="request">PaymentMethod request data</param>
         /// <param name="context">Server call context object</param>
-        public override async Task<UpdatePaymentMethodReply> UpdatePaymentMethod(UpdatePaymentMethodRequest request, ServerCallContext context)
-            => await GrpcServiceHelpers.SendCommand<UpdatePaymentMethodReply, UpdatePaymentMethodCommand, bool>
+        public override async Task<Empty> UpdatePaymentMethod(UpdatePaymentMethodRequest request, ServerCallContext context)
+            => await GrpcServiceHelpers.SendCommand<Empty, UpdatePaymentMethodCommand, bool>
             (
                 nameof(UpdatePaymentMethod),
                 () => new(new Guid(request.Id), request.Name, request.PaymentType),
@@ -72,8 +73,8 @@ namespace RSoft.Account.GrpcService.Services
         /// </summary>
         /// <param name="request">PaymentMethod request data</param>
         /// <param name="context">Server call context object</param>
-        public override async Task<ChangeStatusPaymentMethodReply> EnablePaymentMethod(ChangeStatusPaymentMethodRequest request, ServerCallContext context)
-            => await GrpcServiceHelpers.SendCommand<ChangeStatusPaymentMethodReply, ChangeStatusPaymentMethodCommand, bool>
+        public override async Task<Empty> EnablePaymentMethod(ChangeStatusPaymentMethodRequest request, ServerCallContext context)
+            => await GrpcServiceHelpers.SendCommand<Empty, ChangeStatusPaymentMethodCommand, bool>
             (
                 nameof(EnablePaymentMethod),
                 () => new(new Guid(request.Id), true),
@@ -85,8 +86,8 @@ namespace RSoft.Account.GrpcService.Services
         /// </summary>
         /// <param name="request">PaymentMethod request data</param>
         /// <param name="context">Server call context object</param>
-        public override async Task<ChangeStatusPaymentMethodReply> DisablePaymentMethod(ChangeStatusPaymentMethodRequest request, ServerCallContext context)
-            => await GrpcServiceHelpers.SendCommand<ChangeStatusPaymentMethodReply, ChangeStatusPaymentMethodCommand, bool>
+        public override async Task<Empty> DisablePaymentMethod(ChangeStatusPaymentMethodRequest request, ServerCallContext context)
+            => await GrpcServiceHelpers.SendCommand<Empty, ChangeStatusPaymentMethodCommand, bool>
             (
                 nameof(DisablePaymentMethod),
                 () => new(new Guid(request.Id), false),
@@ -112,7 +113,7 @@ namespace RSoft.Account.GrpcService.Services
         /// </summary>
         /// <param name="request">PaymentMethod request data</param>
         /// <param name="context">Server call context object</param>
-        public override async Task<ListPaymentMethodReply> ListPaymentMethod(ListPaymentMethodRequest request, ServerCallContext context)
+        public override async Task<ListPaymentMethodReply> ListPaymentMethod(Empty request, ServerCallContext context)
             => await GrpcServiceHelpers.SendCommand<ListPaymentMethodReply, ListPaymentMethodCommand, IEnumerable<PaymentMethodDto>>
             (
                 nameof(ListPaymentMethod),

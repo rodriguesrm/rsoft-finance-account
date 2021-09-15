@@ -3,6 +3,7 @@ syntax = "proto3";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
 
 option csharp_namespace = "RSoft.Account.Grpc.Protobuf";
 
@@ -23,6 +24,15 @@ message AuthorDetail {
 	string id = 1;
 	string name = 2;
 }
+message PeriodDate {
+	NullableTimestamp start_at = 1;
+	NullableTimestamp end_at = 2;
+}
+message PeriodeYearMonth {
+	int32 year = 1;
+	int32 month = 2;
+}
+
 message NullableTimestamp {
   oneof kind {
     google.protobuf.NullValue null = 1;
@@ -33,6 +43,18 @@ message NullableAuthorDetail {
   oneof kind {
     google.protobuf.NullValue null = 1;
     AuthorDetail data = 2;
+  }
+}
+message NullablePeriodDate {
+  oneof kind {
+    google.protobuf.NullValue null = 1;
+    PeriodDate data = 2;
+  }
+}
+message NullablePeriodeYearMonth {
+  oneof kind {
+    google.protobuf.NullValue null = 1;
+    PeriodeYearMonth data = 2;
   }
 }
 
@@ -206,6 +228,7 @@ message ListPaymentMethodReply {
 service Transaction {
 	rpc CreateTransaction (CreateTransactionRequest) returns (CreateTransactionReply);
 	rpc GetTransaction (GetTransactionRequest) returns (TransactionDetail);
+	rpc ListTransaction (ListTransactionRequest) returns (ListTransactionReply);
 }
 
 // transaction message contracts
@@ -238,4 +261,15 @@ message CreateTransactionReply {
 
 message GetTransactionRequest {
 	string id = 1;
+}
+
+message ListTransactionRequest {
+	NullablePeriodDate period_date = 1;
+	NullablePeriodeYearMonth period_year_month = 2;
+	string account_id = 3;
+	google.protobuf.Int32Value transaction_type_id = 4;
+	string payment_method_id = 5;
+}
+message ListTransactionReply {
+	repeated TransactionDetail data = 1;
 }

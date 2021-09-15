@@ -1,4 +1,5 @@
-﻿using RSoft.Account.Contracts.Commands;
+﻿using RSoft.Account.Application.Arguments;
+using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Contracts.Models;
 using RSoft.Account.Core.Entities;
 using RSoft.Finance.Contracts.Enum;
@@ -6,6 +7,8 @@ using RSoft.Finance.Contracts.Events;
 using RSoft.Helpers.Extensions;
 using RSoft.Lib.Common.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using DomainAccount = RSoft.Account.Core.Entities.Account;
 
 namespace RSoft.Account.Application.Extensions
@@ -69,6 +72,13 @@ namespace RSoft.Account.Application.Extensions
         }
 
         /// <summary>
+        /// Map transaction entity list to transaction dto list
+        /// </summary>
+        /// <param name="entities">Entity list</param>
+        public static IEnumerable<TransactionDto> Map(this IEnumerable<Transaction> entities)
+            => entities.Select(e => e.Map());
+
+        /// <summary>
         /// Map entity to event
         /// </summary>
         /// <param name="entity">Entity to map</param>
@@ -84,6 +94,22 @@ namespace RSoft.Account.Application.Extensions
                 entity.Account.Id,
                 entity.PaymentMethod.Id
             );
+
+        /// <summary>
+        /// Map command to filter object
+        /// </summary>
+        /// <param name="command">Command to map</param>
+        public static ListTransactionFilter Map(this ListTransactionCommand command)
+            => new()
+            {
+                StartAt = command.PeriodDate?.StartAt ?? null,
+                EndAt = command.PeriodDate?.EndAt ?? null,
+                Year = command .PeriodYearMonth?.Year ?? null,
+                Month = command.PeriodYearMonth?.Month ?? null,
+                AccountId = command.AccountId ?? null,
+                TransactionType = command.TransactionType ?? null,
+                PaymentMethodId = command.PaymentMethodId ?? null
+            };
 
     }
 

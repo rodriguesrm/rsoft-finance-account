@@ -3,6 +3,8 @@ using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Contracts.Models;
 using RSoft.Account.Grpc.Protobuf;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RSoft.Account.GrpcService.Extensions
 {
@@ -34,9 +36,20 @@ namespace RSoft.Account.GrpcService.Extensions
         }
 
         /// <summary>
-        /// Map transaction-dto from request
+        /// Map transaction-dto from dto
         /// </summary>
-        /// <param name="dto">Request to map</param>
+        /// <param name="dto">Dto to map</param>
+        public static TransactionDetail Map(this TransactionDto dto)
+        {
+            TransactionDetail result = new();
+            Map(dto, result);
+            return result;
+        }
+
+        /// <summary>
+        /// Map transaction-dto from dto
+        /// </summary>
+        /// <param name="dto">Dto to map</param>
         /// <param name="reply">Reply to recieve map</param>
         public static void Map(this TransactionDto dto, TransactionDetail reply)
         {
@@ -53,6 +66,17 @@ namespace RSoft.Account.GrpcService.Extensions
                 reply.PaymentMethodId = new SimpleIdName() { Id = dto.PaymentMethod.Id.ToString(), Name = dto.PaymentMethod.Name };
                 reply.TransactionAuthor = new AuthorDetail() { Id = dto.CreatedBy.Id.ToString(), Name = dto.CreatedBy.Name };
             }
+        }
+
+        /// <summary>
+        /// Map list result (dto) to list reply 
+        /// </summary>
+        /// <param name="result">Result dto object</param>
+        /// <param name="reply">Reply object</param>
+        public static void Map(this IEnumerable<TransactionDto>  result, ListTransactionReply reply)
+        {
+            IEnumerable<TransactionDetail> details = result.Select(r => r.Map());
+            reply.Data.AddRange(details);
         }
 
     }

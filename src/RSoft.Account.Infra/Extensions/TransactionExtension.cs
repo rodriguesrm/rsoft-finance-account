@@ -17,14 +17,15 @@ namespace RSoft.Account.Infra.Extensions
         /// </summary>
         /// <param name="table">Table entity to map</param>
         public static TransactionDomain Map(this Transaction table)
-            => Map(table, true);
+            => Map(table, true, false);
 
         /// <summary>
         /// Maps table to entity
         /// </summary>
         /// <param name="table">Table entity to map</param>
         /// <param name="useLazy">Load related data</param>
-        public static TransactionDomain Map(this Transaction table, bool useLazy)
+        /// <param name="forceLoadNameForLevelUp">Load name for entities in level up (as Category, Payment Method, etc)</param>
+        public static TransactionDomain Map(this Transaction table, bool useLazy, bool forceLoadNameForLevelUp)
         {
             TransactionDomain result = null;
 
@@ -51,6 +52,12 @@ namespace RSoft.Account.Infra.Extensions
                     result.PaymentMethod = new Core.Entities.PaymentMethod(table.PaymentMethodId);
                     result.Account = new Core.Entities.Account(table.AccountId);
                 }
+                if (forceLoadNameForLevelUp)
+                {
+                    result.Account.Name = table.Account?.Name;
+                    result.PaymentMethod.Name = table.PaymentMethod?.Name;
+                }
+                result.CreatedAuthor = new Author<Guid>(table.CreatedBy, (table.CreatedAuthor?.GetFullName() ?? "***" ));
 
             }
 

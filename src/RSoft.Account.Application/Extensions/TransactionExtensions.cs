@@ -100,16 +100,23 @@ namespace RSoft.Account.Application.Extensions
         /// </summary>
         /// <param name="command">Command to map</param>
         public static ListTransactionFilter Map(this ListTransactionCommand command)
-            => new()
-            {
-                StartAt = command.PeriodDate?.StartAt ?? null,
-                EndAt = command.PeriodDate?.EndAt ?? null,
-                Year = command .PeriodYearMonth?.Year ?? null,
-                Month = command.PeriodYearMonth?.Month ?? null,
-                AccountId = command.AccountId ?? null,
-                TransactionType = command.TransactionType ?? null,
-                PaymentMethodId = command.PaymentMethodId ?? null
-            };
+        {
+            ListTransactionFilter result = new()
+               {
+                   StartAt = command.PeriodDate?.StartAt ?? null,
+                   EndAt = command.PeriodDate?.EndAt ?? null,
+                   Year = command.PeriodYearMonth?.Year ?? null,
+                   Month = command.PeriodYearMonth?.Month ?? null,
+                   AccountId = command.AccountId ?? null,
+                   TransactionType = command.TransactionType ?? null,
+                   PaymentMethodId = command.PaymentMethodId ?? null
+               };
+            if (result.StartAt.HasValue)
+                result.StartAt = result.StartAt.Value.ToUniversalTime().Date;
+            if (result.EndAt.HasValue)
+                result.EndAt = result.EndAt.Value.ToUniversalTime().Date;
+            return result;
+        }
 
     }
 

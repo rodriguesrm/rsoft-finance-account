@@ -267,7 +267,7 @@ message ListTransactionRequest {
 	NullablePeriodDate period_date = 1;
 	NullablePeriodeYearMonth period_year_month = 2;
 	string account_id = 3;
-	google.protobuf.Int32Value transaction_type_id = 4;
+	google.protobuf.Int32Value transaction_type = 4;
 	string payment_method_id = 5;
 }
 message ListTransactionReply {

@@ -1,4 +1,5 @@
-﻿using RSoft.Account.Core.Entities;
+﻿using Microsoft.Extensions.Localization;
+using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
 using RSoft.Lib.Common.Contracts.Web;
 using RSoft.Lib.Common.ValueObjects;
@@ -17,6 +18,12 @@ namespace RSoft.Account.Core.Services
     public class TransactionDomainService : DomainServiceBase<Transaction, Guid, ITransactionProvider>, ITransactionDomainService
     {
 
+        #region Local objects/variables
+
+        private readonly IStringLocalizer<TransactionDomainService> _localizer;
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
@@ -24,7 +31,11 @@ namespace RSoft.Account.Core.Services
         /// </summary>
         /// <param name="provider">Transaction provier</param>
         /// <param name="authenticatedTransaction">Authenticated Transaction object</param>
-        public TransactionDomainService(ITransactionProvider provider, IAuthenticatedUser authenticatedTransaction) : base(provider, authenticatedTransaction) { }
+        /// <param name="localizer">String localizar object</param>
+        public TransactionDomainService(ITransactionProvider provider, IAuthenticatedUser authenticatedTransaction, IStringLocalizer<TransactionDomainService> localizer) : base(provider, authenticatedTransaction)
+        {
+            _localizer = localizer;
+        }
 
         #endregion
 
@@ -43,8 +54,7 @@ namespace RSoft.Account.Core.Services
         ///<inheritdoc/>
         public async Task<IEnumerable<Transaction>> GetByFilterAsync(IListTransactionFilter filter, CancellationToken cancellationToken)
         {
-            //TODO: Language
-            if (!filter.IsValid()) throw new ArgumentException("Arguments entered conflict or are invalid", nameof(filter));
+            if (!filter.IsValid()) throw new ArgumentException(_localizer["LIST_FILTER_INVALID_ARGS"], nameof(filter));
             return await _repository.GetByFilterAsync(filter, cancellationToken);
         }
 

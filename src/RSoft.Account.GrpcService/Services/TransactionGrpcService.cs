@@ -109,8 +109,8 @@ namespace RSoft.Account.GrpcService.Services
                             accountId = idParsed;
 
                         TransactionTypeEnum? transactionType = null;
-                        if (request.TransactionTypeId.HasValue)
-                            transactionType = (TransactionTypeEnum)request.TransactionTypeId.Value;
+                        if (request.TransactionType.HasValue)
+                            transactionType = (TransactionTypeEnum)request.TransactionType.Value;
 
                         Guid? paymentMethodId = null;
                         if (Guid.TryParse(request.PaymentMethodId, out idParsed))

@@ -5,12 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+	<PackageReference Include="RSoft.Finance.Contracts" Version="1.0.0" />
 	<PackageReference Include="RSoft.Lib.Common" Version="1.5.0" />
     <PackageReference Include="RSoft.Lib.Design" Version="1.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\finance-lib\src\RSoft.Finance.Contracts\RSoft.Finance.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

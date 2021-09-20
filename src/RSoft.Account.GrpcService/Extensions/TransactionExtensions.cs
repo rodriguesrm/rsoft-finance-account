@@ -1,7 +1,9 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using RSoft.Account.Contracts.Commands;
+using RSoft.Account.Contracts.FilterArguments;
 using RSoft.Account.Contracts.Models;
 using RSoft.Account.Grpc.Protobuf;
+using RSoft.Finance.Contracts.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,6 +79,47 @@ namespace RSoft.Account.GrpcService.Extensions
         {
             IEnumerable<TransactionDetail> details = result.Select(r => r.Map());
             reply.Data.AddRange(details);
+        }
+
+        /// <summary>
+        /// Map list-transaction request to list-transaction command
+        /// </summary>
+        /// <param name="request">Request to map</param>
+        public static ListTransactionCommand Map(this ListTransactionRequest request)
+        {
+            
+            PeriodDateFilter periodDate = null;
+            if (request.PeriodDate?.Data != null)
+            {
+
+                DateTime? startAt = null;
+                DateTime? endAt = null;
+                if (request.PeriodDate.Data != null && request.PeriodDate.Data.StartAt.Data != null)
+                    startAt = request.PeriodDate.Data.StartAt.Data.ToDateTime();
+                if (request.PeriodDate.Data != null && request.PeriodDate.Data.EndAt.Data != null)
+                    endAt = request.PeriodDate.Data.EndAt.Data.ToDateTime();
+
+                periodDate = new PeriodDateFilter() { StartAt = startAt, EndAt = endAt };
+            }
+
+            PeriodYearMonthFilter periodYearMonth = null;
+            if (request.PeriodYearMonth?.Data != null)
+                periodYearMonth = new PeriodYearMonthFilter(request.PeriodYearMonth.Data.Year, request.PeriodYearMonth.Data.Month);
+
+            Guid? accountId = null;
+            if (Guid.TryParse(request.AccountId, out Guid idParsed))
+                accountId = idParsed;
+
+            TransactionTypeEnum? transactionType = null;
+            if (request.TransactionType.HasValue)
+                transactionType = (TransactionTypeEnum)request.TransactionType.Value;
+
+            Guid? paymentMethodId = null;
+            if (Guid.TryParse(request.PaymentMethodId, out idParsed))
+                paymentMethodId = idParsed;
+
+            return new ListTransactionCommand(periodDate, periodYearMonth, accountId, transactionType, paymentMethodId);
+
         }
 
     }

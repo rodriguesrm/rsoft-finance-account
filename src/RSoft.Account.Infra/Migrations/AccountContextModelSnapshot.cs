@@ -200,18 +200,18 @@ namespace RSoft.Account.Infra.Migrations
                         .HasColumnName("Date");
 
                     b.Property<sbyte>("Month")
-                        .HasColumnType("tinyint(2)")
+                        .HasColumnType("tinyint")
                         .HasColumnName("Month");
 
                     b.Property<Guid>("PaymentMethodId")
                         .HasColumnType("char(36)");
 
                     b.Property<sbyte>("TransactionType")
-                        .HasColumnType("tinyint(3)")
+                        .HasColumnType("tinyint")
                         .HasColumnName("TransactionType");
 
                     b.Property<sbyte>("Year")
-                        .HasColumnType("tinyint(4)")
+                        .HasColumnType("smallint")
                         .HasColumnName("Year");
 
                     b.HasKey("Id");

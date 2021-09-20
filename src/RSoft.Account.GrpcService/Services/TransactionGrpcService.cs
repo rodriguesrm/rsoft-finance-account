@@ -9,8 +9,6 @@ using RSoft.Account.Grpc.Protobuf;
 using proto = RSoft.Account.Grpc.Protobuf;
 using RSoft.Account.Contracts.Models;
 using System.Collections.Generic;
-using RSoft.Account.Contracts.FilterArguments;
-using RSoft.Finance.Contracts.Enum;
 
 namespace RSoft.Account.GrpcService.Services
 {
@@ -18,7 +16,7 @@ namespace RSoft.Account.GrpcService.Services
     /// <summary>
     /// Transaction gRPC Service
     /// </summary>
-    //[Authorize]
+    [Authorize]
     public class TransactionGrpcService : proto.Transaction.TransactionBase
     {
 
@@ -83,41 +81,7 @@ namespace RSoft.Account.GrpcService.Services
                 return await GrpcServiceHelpers.SendCommand<ListTransactionReply, ListTransactionCommand, IEnumerable<TransactionDto>>
                 (
                     nameof(ListTransaction),
-                    () =>
-                    {
-
-                        PeriodDateFilter periodDate = null;
-                        if (request.PeriodDate?.Data != null)
-                        {
-
-                            DateTime? startAt = null;
-                            DateTime? endAt = null;
-                            if (request.PeriodDate.Data != null && request.PeriodDate.Data.StartAt.Data != null)
-                                startAt = request.PeriodDate.Data.StartAt.Data.ToDateTime();
-                            if (request.PeriodDate.Data != null && request.PeriodDate.Data.EndAt.Data != null)
-                                endAt = request.PeriodDate.Data.EndAt.Data.ToDateTime();
-
-                            periodDate = new PeriodDateFilter() { StartAt = startAt, EndAt = endAt };
-                        }
-
-                        PeriodYearMonthFilter periodYearMonth = null;
-                        if (request.PeriodYearMonth?.Data != null)
-                            periodYearMonth = new PeriodYearMonthFilter(request.PeriodYearMonth.Data.Year, request.PeriodYearMonth.Data.Month);
-
-                        Guid? accountId = null;
-                        if (Guid.TryParse(request.AccountId, out Guid idParsed))
-                            accountId = idParsed;
-
-                        TransactionTypeEnum? transactionType = null;
-                        if (request.TransactionType.HasValue)
-                            transactionType = (TransactionTypeEnum)request.TransactionType.Value;
-
-                        Guid? paymentMethodId = null;
-                        if (Guid.TryParse(request.PaymentMethodId, out idParsed))
-                            paymentMethodId = idParsed;
-
-                        return new ListTransactionCommand(periodDate, periodYearMonth, accountId, transactionType, paymentMethodId);
-                    },
+                    () => request.Map(),
                     (reply, result) => result.Response.Map(reply),
                     logger: _logger
                 );
@@ -129,6 +93,22 @@ namespace RSoft.Account.GrpcService.Services
             catch (Exception) { throw; }
 
         }
+
+        /// <summary>
+        /// Create a reversed transaction from an existing transaction
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        /// <param name="request">Transaction request data</param>
+        /// <param name="context">Server call context object</param>
+        public override async Task<RollbackTransactionReply> RollbackTransaction(RollbackTransactionRequest request, ServerCallContext context)
+            => await GrpcServiceHelpers.SendCommand<RollbackTransactionReply, RollbackTransactionCommand, Guid?>
+            (
+                nameof(CreateTransaction),
+                () => new RollbackTransactionCommand(new Guid(request.Id), request.Comment),
+                (reply, result) => reply.Id = result.Response.ToString(),
+                logger: _logger
+            );
 
         #endregion
 

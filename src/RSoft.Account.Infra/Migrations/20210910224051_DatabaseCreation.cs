@@ -133,10 +133,10 @@ namespace RSoft.Account.Infra.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Year = table.Column<sbyte>(type: "tinyint(4)", nullable: false),
-                    Month = table.Column<sbyte>(type: "tinyint(2)", nullable: false),
+                    Year = table.Column<sbyte>(type: "smallint", nullable: false),
+                    Month = table.Column<sbyte>(type: "tinyint", nullable: false),
                     Date = table.Column<DateTime>(type: "date", nullable: false),
-                    TransactionType = table.Column<sbyte>(type: "tinyint(3)", nullable: false),
+                    TransactionType = table.Column<sbyte>(type: "tinyint", nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(16,2)", nullable: false),
                     Comment = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),

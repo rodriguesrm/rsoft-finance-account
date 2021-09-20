@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Web", "1-Web", "{16970498
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Account.Core", "RSoft.Account.Core\RSoft.Account.Core.csproj", "{48EE250F-1947-4A0F-BEAF-98A7A1A38F15}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9-XFinance-Libs", "9-XFinance-Libs", "{F5EADA71-E0DC-4676-A106-EC6A50035808}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Account.Infra", "RSoft.Account.Infra\RSoft.Account.Infra.csproj", "{D0AA2BC7-55D4-4EC4-BD8B-A7A46B5696DC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Account.Application", "RSoft.Account.Application\RSoft.Account.Application.csproj", "{768F2021-B6FA-4617-AC61-86ECC5A9BE45}"

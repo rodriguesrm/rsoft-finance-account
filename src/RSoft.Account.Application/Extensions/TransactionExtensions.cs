@@ -118,6 +118,21 @@ namespace RSoft.Account.Application.Extensions
             return result;
         }
 
+        /// <summary>
+        /// Map original transaction to new transaction (for reverse operation)
+        /// </summary>
+        /// <param name="originalTransaction">Original transaction to map</param>
+        /// <param name="request">Reserve transaction command</param>
+        public static Transaction Map(this Transaction originalTransaction, RollbackTransactionCommand request)
+            => new()
+            {
+                Date = DateTime.UtcNow,
+                TransactionType = originalTransaction.TransactionType == TransactionTypeEnum.Debt ? TransactionTypeEnum.Credit : TransactionTypeEnum.Debt,
+                Amount = originalTransaction.Amount,
+                Comment = request.Comment,
+                Account = originalTransaction.Account,
+                PaymentMethod = originalTransaction.PaymentMethod
+            };
     }
 
 }

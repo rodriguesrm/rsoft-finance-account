@@ -9,7 +9,7 @@ namespace RSoft.Account.Infra.Extensions
     /// <summary>
     /// Transaction extesions
     /// </summary>
-    public static class TransactionExtension
+    public static class TransactionExtensions
     {
 
         /// <summary>
@@ -43,7 +43,6 @@ namespace RSoft.Account.Infra.Extensions
 
                 if (useLazy)
                 {
-                    result.CreatedAuthor = new Author<Guid>(table.CreatedAuthor.Id, table.CreatedAuthor.GetFullName());
                     result.PaymentMethod = table.PaymentMethod?.Map(false);
                     result.Account = table.Account?.Map(false);
                 }
@@ -57,7 +56,7 @@ namespace RSoft.Account.Infra.Extensions
                     result.Account.Name = table.Account?.Name;
                     result.PaymentMethod.Name = table.PaymentMethod?.Name;
                 }
-                result.CreatedAuthor = new Author<Guid>(table.CreatedBy, (table.CreatedAuthor?.GetFullName() ?? "***" ));
+                result.CreatedAuthor = new Author<Guid>(table.CreatedBy, (table.CreatedAuthor?.GetFullName() ?? "***"));
 
             }
 
@@ -85,7 +84,7 @@ namespace RSoft.Account.Infra.Extensions
                     Amount = entity.Amount,
                     Comment = entity.Comment,
                     AccountId = entity.Account.Id,
-                    PaymentMethodId= entity.PaymentMethod.Id,
+                    PaymentMethodId = entity.PaymentMethod.Id,
                     CreatedOn = entity.CreatedOn,
                     CreatedBy = entity.CreatedAuthor.Id
                 };

@@ -227,6 +227,7 @@ message ListPaymentMethodReply {
 
 service Transaction {
 	rpc CreateTransaction (CreateTransactionRequest) returns (CreateTransactionReply);
+	rpc RollbackTransaction (RollbackTransactionRequest) returns (RollbackTransactionReply);
 	rpc GetTransaction (GetTransactionRequest) returns (TransactionDetail);
 	rpc ListTransaction (ListTransactionRequest) returns (ListTransactionReply);
 }
@@ -256,6 +257,14 @@ message CreateTransactionRequest {
 	string payment_method_id = 6;
 }
 message CreateTransactionReply {
+	string id = 1;
+}
+
+message RollbackTransactionRequest {
+	string id = 1;
+	string comment = 2;
+}
+message RollbackTransactionReply {
 	string id = 1;
 }
 

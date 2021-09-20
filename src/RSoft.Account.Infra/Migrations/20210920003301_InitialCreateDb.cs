@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RSoft.Account.Infra.Migrations
 {
-    public partial class DatabaseCreation : InitialSeed
+    public partial class InitialCreateDb : InitialSeed
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -133,7 +133,7 @@ namespace RSoft.Account.Infra.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    Year = table.Column<sbyte>(type: "smallint", nullable: false),
+                    Year = table.Column<short>(type: "smallint", nullable: false),
                     Month = table.Column<sbyte>(type: "tinyint", nullable: false),
                     Date = table.Column<DateTime>(type: "date", nullable: false),
                     TransactionType = table.Column<sbyte>(type: "tinyint", nullable: false),

@@ -9,8 +9,8 @@ using RSoft.Account.Infra;
 namespace RSoft.Account.Infra.Migrations
 {
     [DbContext(typeof(AccountContext))]
-    [Migration("20210910224051_DatabaseCreation")]
-    partial class DatabaseCreation
+    [Migration("20210920003301_InitialCreateDb")]
+    partial class InitialCreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -212,8 +212,8 @@ namespace RSoft.Account.Infra.Migrations
                         .HasColumnType("tinyint")
                         .HasColumnName("TransactionType");
 
-                    b.Property<sbyte>("Year")
-                        .HasColumnType("tinyint")
+                    b.Property<short>("Year")
+                        .HasColumnType("smallint")
                         .HasColumnName("Year");
 
                     b.HasKey("Id");

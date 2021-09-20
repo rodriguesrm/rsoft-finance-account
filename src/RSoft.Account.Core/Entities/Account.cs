@@ -80,9 +80,7 @@ namespace RSoft.Account.Core.Entities
 
         #region Public Methods
 
-        /// <summary>
-        /// Validate entity
-        /// </summary>
+        ///<inheritdoc/>
         public override void Validate()
         {
             IStringLocalizer<Account> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<Account>>();

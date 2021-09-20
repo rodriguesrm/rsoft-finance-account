@@ -210,7 +210,7 @@ namespace RSoft.Account.Infra.Migrations
                         .HasColumnType("tinyint")
                         .HasColumnName("TransactionType");
 
-                    b.Property<sbyte>("Year")
+                    b.Property<short>("Year")
                         .HasColumnType("smallint")
                         .HasColumnName("Year");
 

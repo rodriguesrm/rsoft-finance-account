@@ -43,7 +43,7 @@ namespace RSoft.Account.Application.Handlers
 
         ///<inheritdoc/>
         protected override async Task<Category> GetEntityByKeyAsync(GetCategoryByIdCommand request, CancellationToken cancellationToken)
-            => await _categoryDomainService.GetByKeyAsync(request.Id);
+            => await _categoryDomainService.GetByKeyAsync(request.Id, cancellationToken);
 
         ///<inheritdoc/>
         protected override CategoryDto MapEntity(Category entity)

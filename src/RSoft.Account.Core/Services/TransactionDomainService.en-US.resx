@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ACCRUAL_PERIOD_IS_CLOSED" xml:space="preserve">
+    <value>Accrual period is closed and cannot receive new entries</value>
+  </data>
+  <data name="ACCRUAL_PERIOD_NOT_FOUND" xml:space="preserve">
+    <value>The accrual period is not active or has not been registered</value>
+  </data>
   <data name="LIST_FILTER_INVALID_ARGS" xml:space="preserve">
     <value>Arguments entered conflict or are invalid</value>
   </data>

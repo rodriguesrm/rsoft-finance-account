@@ -60,6 +60,12 @@ namespace RSoft.Account.Infra.Configurations
 
             #region FKs
 
+            builder.HasOne(o => o.AccrualPeriod)
+                .WithMany(d => d.Transactions)
+                .HasForeignKey(fk => new { fk.Year, fk.Month })
+                .OnDelete(DeleteBehavior.Restrict)
+                .HasConstraintName($"FK_{nameof(AccrualPeriod)}_{nameof(Transaction)}_{nameof(Transaction.Year)}{nameof(Transaction.Month)}");
+
             builder.HasOne(o => o.CreatedAuthor)
                 .WithMany(d => d.CreatedTransactions)
                 .HasForeignKey(fk => fk.CreatedBy)

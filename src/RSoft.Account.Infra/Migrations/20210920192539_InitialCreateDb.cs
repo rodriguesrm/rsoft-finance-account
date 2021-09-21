@@ -28,6 +28,46 @@ namespace RSoft.Account.Infra.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "AccrualPeriod",
+                columns: table => new
+                {
+                    Year = table.Column<short>(type: "smallint", nullable: false),
+                    Month = table.Column<sbyte>(type: "tinyint", nullable: false),
+                    OpeningBalance = table.Column<float>(type: "float", nullable: false),
+                    TotalCredits = table.Column<float>(type: "float", nullable: false),
+                    TotalDebts = table.Column<float>(type: "float", nullable: false),
+                    IsClosed = table.Column<ulong>(type: "bit", nullable: false, defaultValue: 0ul),
+                    UserIdClosed = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    ChangedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ChangedBy = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccrualPeriod", x => new { x.Year, x.Month });
+                    table.ForeignKey(
+                        name: "FK_User_AccrualPeriod_ChangedBy",
+                        column: x => x.ChangedBy,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_User_AccrualPeriod_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_User_AccrualPeriod_UserIdClosed",
+                        column: x => x.UserIdClosed,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Category",
                 columns: table => new
                 {
@@ -149,6 +189,12 @@ namespace RSoft.Account.Infra.Migrations
                 {
                     table.PrimaryKey("PK_Transaction", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_AccrualPeriod_Transaction_YearMonth",
+                        columns: x => new { x.Year, x.Month },
+                        principalTable: "AccrualPeriod",
+                        principalColumns: new[] { "Year", "Month" },
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_User_Transaction_AccountId",
                         column: x => x.AccountId,
                         principalTable: "Account",
@@ -199,6 +245,31 @@ namespace RSoft.Account.Infra.Migrations
                 name: "IX_Account_CreatedOn",
                 table: "Account",
                 column: "CreatedOn");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccrualPeriod_ChangedBy",
+                table: "AccrualPeriod",
+                column: "ChangedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccrualPeriod_ChangedOn",
+                table: "AccrualPeriod",
+                column: "ChangedOn");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccrualPeriod_CreatedBy",
+                table: "AccrualPeriod",
+                column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccrualPeriod_CreatedOn",
+                table: "AccrualPeriod",
+                column: "CreatedOn");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccrualPeriod_UserIdClosed",
+                table: "AccrualPeriod",
+                column: "UserIdClosed");
 
             migrationBuilder.CreateIndex(
                 name: "AK_Category_Name",
@@ -288,6 +359,11 @@ namespace RSoft.Account.Infra.Migrations
                 column: "Year");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Transaction_Year_Month",
+                table: "Transaction",
+                columns: new[] { "Year", "Month" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_User_FullName",
                 table: "User",
                 columns: new[] { "FirstName", "LastName" });
@@ -300,6 +376,9 @@ namespace RSoft.Account.Infra.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Transaction");
+
+            migrationBuilder.DropTable(
+                name: "AccrualPeriod");
 
             migrationBuilder.DropTable(
                 name: "Account");

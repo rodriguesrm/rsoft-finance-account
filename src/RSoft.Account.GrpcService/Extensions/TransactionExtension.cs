@@ -14,7 +14,7 @@ namespace RSoft.Account.GrpcService.Extensions
     /// <summary>
     /// Transaction exteionsons
     /// </summary>
-    public static class TransactionExtensions
+    public static class TransactionExtension
     {
 
         /// <summary>

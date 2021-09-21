@@ -86,6 +86,11 @@ namespace RSoft.Account.Infra.Tables
         #region Navigation/Lazy
 
         /// <summary>
+        /// Accrual period data
+        /// </summary>
+        public virtual AccrualPeriod AccrualPeriod { get; set; }
+
+        /// <summary>
         /// Created author data
         /// </summary>
         public virtual User CreatedAuthor { get; set; }

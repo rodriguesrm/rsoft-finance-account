@@ -7,7 +7,7 @@ import "google/protobuf/wrappers.proto";
 
 option csharp_namespace = "RSoft.Account.Grpc.Protobuf";
 
-// message types
+// common message types
 // ------------------------------------------------------------------
 
 message SimpleIdName {
@@ -220,6 +220,39 @@ message GetPaymentMethodReply {
 
 message ListPaymentMethodReply {
 	repeated PaymentMethodDetail data = 1;
+}
+
+// accrual period service definitions
+// ------------------------------------------------------------------
+service AccrualPeriod {
+	rpc StartPeriod (PeriodRequest) returns (google.protobuf.Empty);
+	rpc ClosePeriod (PeriodRequest) returns (google.protobuf.Empty);
+	rpc ListPeriod (google.protobuf.Empty) returns (ListPeriodReply);
+}
+
+// accrual period message contracts
+// ------------------------------------------------------------------
+message PeriodRequest {
+	int32 year = 1;
+	int32 month = 2;
+}
+message AccrualPeriodDetail {
+	int32 year = 1;
+	int32 month = 2;
+	float opening_balance = 3;
+	float total_credits = 4;
+	float total_debts = 5;
+	float accrual_period_balance = 6;
+	float closing_balance = 7;
+	bool is_closed = 8;
+	NullableAuthorDetail closed_author = 9;
+	google.protobuf.Timestamp created_on = 10;
+	AuthorDetail created_by = 11;
+	NullableTimestamp changed_on = 12;
+	NullableAuthorDetail changed_by = 13;
+}
+message ListPeriodReply {
+	repeated AccrualPeriodDetail data = 1;
 }
 
 // transaction service definitions

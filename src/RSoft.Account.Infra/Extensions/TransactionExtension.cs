@@ -9,7 +9,7 @@ namespace RSoft.Account.Infra.Extensions
     /// <summary>
     /// Transaction extesions
     /// </summary>
-    public static class TransactionExtensions
+    public static class TransactionExtension
     {
 
         /// <summary>

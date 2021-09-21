@@ -19,6 +19,12 @@ namespace RSoft.Account.Core.Ports
         /// </summary>
         Task<IEnumerable<Transaction>> GetByFilterAsync(IListTransactionFilter filter, CancellationToken cancellationToken);
 
+        /// <summary>
+        /// Perform validate accrual period
+        /// </summary>
+        /// <param name="transaction">Transaction entity object instance</param>
+        void ValidateAccrualPeriod(Transaction transaction);
+
     }
 
 }

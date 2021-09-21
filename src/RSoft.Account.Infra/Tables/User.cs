@@ -101,6 +101,21 @@ namespace RSoft.Account.Infra.Tables
         /// </summary>
         public virtual ICollection<Transaction> CreatedTransactions { get; set; }
 
+        /// <summary>
+        /// Accrual periods created by this user
+        /// </summary>
+        public virtual ICollection<AccrualPeriod> CreatedAccrualPeriods { get; set; }
+
+        /// <summary>
+        /// Accrual periods changed by this user
+        /// </summary>
+        public virtual ICollection<AccrualPeriod> ChangedAccrualPeriods { get; set; }
+
+        /// <summary>
+        /// Accrual periods closed by this user
+        /// </summary>
+        public virtual ICollection<AccrualPeriod> ClosedAccrualPeriods { get; set; }
+
         #endregion
 
         #region Local methods
@@ -118,6 +133,9 @@ namespace RSoft.Account.Infra.Tables
             CreatedAccounts = new HashSet<Account>();
             ChangedAccounts = new HashSet<Account>();
             CreatedTransactions = new HashSet<Transaction>();
+            CreatedAccrualPeriods = new HashSet<AccrualPeriod>();
+            ChangedAccrualPeriods = new HashSet<AccrualPeriod>();
+            ClosedAccrualPeriods = new HashSet<AccrualPeriod>();
         }
 
         #endregion

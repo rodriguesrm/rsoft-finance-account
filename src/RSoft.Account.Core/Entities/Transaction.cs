@@ -122,7 +122,6 @@ namespace RSoft.Account.Core.Entities
                 AddNotification(nameof(Amount), localizer["GREATER_THAN_ZERO"]);
 
             AddNotifications(new PastDateValidationContract(Date, nameof(Date), localizer["DATE_REQUIRED"]).Contract.Notifications);
-            //BACKLOG: Validate based on active period
 
             int? transactionType = TransactionType.HasValue ? (int)TransactionType : null;
             AddNotifications(new EnumCastFromIntegerValidationContract<TransactionTypeEnum>(transactionType, nameof(transactionType), true).Contract.Notifications);

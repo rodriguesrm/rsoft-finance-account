@@ -22,12 +22,10 @@ namespace RSoft.Account.Infra.Extensions
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
             {
-                using (var context = serviceScope.ServiceProvider.GetService<AccountContext>())
-                {
-                    logger.LogInformation($"Migrating database {nameof(AccountContext)}");
-                    context.Database.Migrate();
-                    logger.LogInformation($"Database migrated");
-                }
+                using var context = serviceScope.ServiceProvider.GetService<AccountContext>();
+                logger.LogInformation($"Migrating database {nameof(AccountContext)}");
+                context.Database.Migrate();
+                logger.LogInformation($"Database migrated");
             }
 
             return app;

@@ -117,13 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ACCRUAL_PERIOD_IS_CLOSED" xml:space="preserve">
-    <value>O período de competência está fechado e não pode receber novos lançamentos</value>
+  <data name="INVALID_MONTH" xml:space="preserve">
+    <value>O mês informado é inválido</value>
   </data>
-  <data name="ACCRUAL_PERIOD_NOT_FOUND" xml:space="preserve">
-    <value>O período de competência não está ativo ou não foi cadastrado</value>
-  </data>
-  <data name="LIST_FILTER_INVALID_ARGS" xml:space="preserve">
-    <value>Os parâmetros de filtragem estão em conflito ou são inválidos.</value>
+  <data name="INVALID_YEAR" xml:space="preserve">
+    <value>O ano informado é inválido</value>
   </data>
 </root>

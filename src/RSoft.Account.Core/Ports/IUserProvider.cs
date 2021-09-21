@@ -5,6 +5,9 @@ using System;
 namespace RSoft.Account.Core.Ports
 {
 
+    /// <summary>
+    /// User provider ports contract
+    /// </summary>
     public interface IUserProvider : IRepositoryBase<User, Guid>
     {
     }

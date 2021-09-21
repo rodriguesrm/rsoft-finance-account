@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 namespace RSoft.Account.Core.Ports
 {
 
+    /// <summary>
+    /// Transaction provider ports contract
+    /// </summary>
     public interface ITransactionProvider : IRepositoryBase<Transaction, Guid>
     {
 

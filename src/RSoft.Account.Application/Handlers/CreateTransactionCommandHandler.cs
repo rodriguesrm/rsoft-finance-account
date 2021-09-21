@@ -62,7 +62,10 @@ namespace RSoft.Account.Application.Handlers
         /// <param name="request">Request command data</param>
         /// <param name="cancellationToken">Cancellation token</param>
         public async Task<CommandResult<Guid?>> Handle(CreateTransactionCommand request, CancellationToken cancellationToken)
-            => await RunHandler(request, cancellationToken);
+            => await RunHandler(request, cancellationToken, (command, transaction) =>
+            {
+                _transactionDomainService.ValidateAccrualPeriod(transaction);
+            });
 
         #endregion
 
@@ -77,6 +80,8 @@ namespace RSoft.Account.Application.Handlers
         {
             TransactionCreatedEvent transactionCreatedEvent = entity.MapToEvent();
             entity = await _transactionDomainService.AddAsync(entity, cancellationToken);
+            if (entity.Invalid)
+                throw new InvalidOperationException("Entity is invalid");
             _ = await _uow.SaveChangesAsync(cancellationToken);
             await _bus.Publish(transactionCreatedEvent, cancellationToken);
             return entity.Id;

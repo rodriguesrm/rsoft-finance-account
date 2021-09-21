@@ -71,6 +71,69 @@ namespace RSoft.Account.Infra.Migrations
                     b.ToTable("Account");
                 });
 
+            modelBuilder.Entity("RSoft.Account.Infra.Tables.AccrualPeriod", b =>
+                {
+                    b.Property<short>("Year")
+                        .HasColumnType("smallint")
+                        .HasColumnName("Year");
+
+                    b.Property<sbyte>("Month")
+                        .HasColumnType("tinyint")
+                        .HasColumnName("Month");
+
+                    b.Property<Guid?>("ChangedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime?>("ChangedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<ulong>("IsClosed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(0ul)
+                        .HasColumnName("IsClosed");
+
+                    b.Property<float>("OpeningBalance")
+                        .HasColumnType("float")
+                        .HasColumnName("OpeningBalance");
+
+                    b.Property<float>("TotalCredits")
+                        .HasColumnType("float")
+                        .HasColumnName("TotalCredits");
+
+                    b.Property<float>("TotalDebts")
+                        .HasColumnType("float")
+                        .HasColumnName("TotalDebts");
+
+                    b.Property<Guid?>("UserIdClosed")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Year", "Month");
+
+                    b.HasIndex("ChangedBy")
+                        .HasDatabaseName("IX_AccrualPeriod_ChangedBy");
+
+                    b.HasIndex("ChangedOn")
+                        .HasDatabaseName("IX_AccrualPeriod_ChangedOn");
+
+                    b.HasIndex("CreatedBy")
+                        .HasDatabaseName("IX_AccrualPeriod_CreatedBy");
+
+                    b.HasIndex("CreatedOn")
+                        .HasDatabaseName("IX_AccrualPeriod_CreatedOn");
+
+                    b.HasIndex("UserIdClosed")
+                        .HasDatabaseName("IX_AccrualPeriod_UserIdClosed");
+
+                    b.ToTable("AccrualPeriod");
+                });
+
             modelBuilder.Entity("RSoft.Account.Infra.Tables.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -235,6 +298,8 @@ namespace RSoft.Account.Infra.Migrations
                     b.HasIndex("Year")
                         .HasDatabaseName("IX_Transaction_Year");
 
+                    b.HasIndex("Year", "Month");
+
                     b.ToTable("Transaction");
                 });
 
@@ -294,6 +359,34 @@ namespace RSoft.Account.Infra.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("ChangedAuthor");
+
+                    b.Navigation("CreatedAuthor");
+                });
+
+            modelBuilder.Entity("RSoft.Account.Infra.Tables.AccrualPeriod", b =>
+                {
+                    b.HasOne("RSoft.Account.Infra.Tables.User", "ChangedAuthor")
+                        .WithMany("ChangedAccrualPeriods")
+                        .HasForeignKey("ChangedBy")
+                        .HasConstraintName("FK_User_AccrualPeriod_ChangedBy")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("RSoft.Account.Infra.Tables.User", "CreatedAuthor")
+                        .WithMany("CreatedAccrualPeriods")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_User_AccrualPeriod_CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("RSoft.Account.Infra.Tables.User", "ClosedAuthor")
+                        .WithMany("ClosedAccrualPeriods")
+                        .HasForeignKey("UserIdClosed")
+                        .HasConstraintName("FK_User_AccrualPeriod_UserIdClosed")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("ChangedAuthor");
+
+                    b.Navigation("ClosedAuthor");
 
                     b.Navigation("CreatedAuthor");
                 });
@@ -361,7 +454,16 @@ namespace RSoft.Account.Infra.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("RSoft.Account.Infra.Tables.AccrualPeriod", "AccrualPeriod")
+                        .WithMany("Transactions")
+                        .HasForeignKey("Year", "Month")
+                        .HasConstraintName("FK_AccrualPeriod_Transaction_YearMonth")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Account");
+
+                    b.Navigation("AccrualPeriod");
 
                     b.Navigation("CreatedAuthor");
 
@@ -369,6 +471,11 @@ namespace RSoft.Account.Infra.Migrations
                 });
 
             modelBuilder.Entity("RSoft.Account.Infra.Tables.Account", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("RSoft.Account.Infra.Tables.AccrualPeriod", b =>
                 {
                     b.Navigation("Transactions");
                 });
@@ -387,11 +494,17 @@ namespace RSoft.Account.Infra.Migrations
                 {
                     b.Navigation("ChangedAccounts");
 
+                    b.Navigation("ChangedAccrualPeriods");
+
                     b.Navigation("ChangedCategories");
 
                     b.Navigation("ChangedPaymentMethods");
 
+                    b.Navigation("ClosedAccrualPeriods");
+
                     b.Navigation("CreatedAccounts");
+
+                    b.Navigation("CreatedAccrualPeriods");
 
                     b.Navigation("CreatedCategories");
 

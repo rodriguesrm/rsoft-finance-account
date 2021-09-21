@@ -28,6 +28,7 @@ namespace RSoft.Account.Infra
         protected override void SetTableConfiguration(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AccountConfiguration());
+            modelBuilder.ApplyConfiguration(new AccrualPeriodConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new PaymentMethodConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
@@ -42,6 +43,11 @@ namespace RSoft.Account.Infra
         /// Account dbset
         /// </summary>
         public virtual DbSet<Tables.Account> Accounts { get; set; }
+
+        /// <summary>
+        /// Accrual periods dbset
+        /// </summary>
+        public virtual DbSet<AccrualPeriod> AccrualPeriods { get; set; }
 
         /// <summary>
         /// Categories dbset

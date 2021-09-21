@@ -45,6 +45,7 @@ namespace RSoft.Account.Cross.IoC
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAccountProvider, AccountProvider>();
+            services.AddScoped<IAccrualPeriodProvider, AccrualPeriodProvider>();
             services.AddScoped<ICategoryProvider, CategoryProvider>();
             services.AddScoped<IPaymentMethodProvider, PaymentMethodProvider>();
             services.AddScoped<ITransactionProvider, TransactionProvider>();
@@ -55,6 +56,7 @@ namespace RSoft.Account.Cross.IoC
             #region Domain
 
             services.AddScoped<IAccountDomainService, AccountDomainService>();
+            services.AddScoped<IAccrualPeriodDomainService, AccrualPeriodDomainService>();
             services.AddScoped<ICategoryDomainService, CategoryDomainService>();
             services.AddScoped<IPaymentMethodDomainService, PaymentMethodDomainService>();
             services.AddScoped<ITransactionDomainService, TransactionDomainService>();
@@ -64,11 +66,9 @@ namespace RSoft.Account.Cross.IoC
 
             #region Application
 
-            //services.AddScoped<IScopeAppService, ScopeAppService>();
+            services.AddServicesMediatR();
 
             #endregion
-
-            services.AddServicesMediatR();
 
             return services;
 

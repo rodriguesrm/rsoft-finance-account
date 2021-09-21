@@ -17,7 +17,7 @@ namespace RSoft.Account.Application.Extensions
     /// <summary>
     /// Transaction extensions
     /// </summary>
-    public static class TransactionExtensions
+    public static class TransactionExtension
     {
 
         /// <summary>

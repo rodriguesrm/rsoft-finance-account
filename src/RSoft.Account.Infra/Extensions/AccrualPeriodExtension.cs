@@ -106,6 +106,8 @@ namespace RSoft.Account.Infra.Extensions
                 table.UserIdClosed = entity.ClosedAuthor?.Id;
             }
 
+            table.MapAuthor(entity);
+
             return table;
 
         }

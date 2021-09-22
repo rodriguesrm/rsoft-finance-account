@@ -26,7 +26,7 @@ namespace RSoft.Account.Application.Handlers
         #region Local objects/variables
 
         private readonly IUnitOfWork _uow;
-        private readonly IAccrualPeriodDomainService _AccrualPeriodDomainService;
+        private readonly IAccrualPeriodDomainService _accrualPeriodDomainService;
         private readonly IBusControl _bus;
 
         #endregion
@@ -36,13 +36,13 @@ namespace RSoft.Account.Application.Handlers
         /// <summary>
         /// Create a new handler instance
         /// </summary>
-        /// <param name="AccrualPeriodDomainService">AccrualPeriod domain service object</param>
+        /// <param name="accrualPeriodDomainService">AccrualPeriod domain service object</param>
         /// <param name="logger">Logger object</param>
         /// <param name="uow">Unit of work controller object</param>
         /// <param name="bus">Message bus control</param>
-        public StartAccrualPeriodCommandHandler(IAccrualPeriodDomainService AccrualPeriodDomainService, ILogger<StartAccrualPeriodCommandHandler> logger, IUnitOfWork uow, IBusControl bus) : base(logger)
+        public StartAccrualPeriodCommandHandler(IAccrualPeriodDomainService accrualPeriodDomainService, ILogger<StartAccrualPeriodCommandHandler> logger, IUnitOfWork uow, IBusControl bus) : base(logger)
         {
-            _AccrualPeriodDomainService = AccrualPeriodDomainService;
+            _accrualPeriodDomainService = accrualPeriodDomainService;
             _uow = uow;
             _bus = bus;
         }
@@ -65,31 +65,14 @@ namespace RSoft.Account.Application.Handlers
 
         ///<inheritdoc/>
         protected override AccrualPeriod PrepareEntity(StartAccrualPeriodCommand request)
-        {
-            float closingBalance = 0.0f;
-            DateTime lastPeriodDate = (new DateTime(request.Year, request.Month, 1)).AddMonths(-1);
-            AccrualPeriod lastAccrualDate = _AccrualPeriodDomainService.GetByKeyAsync(lastPeriodDate.Year, lastPeriodDate.Month).Result ;
-            if (lastAccrualDate != null & lastAccrualDate.IsClosed)
-                closingBalance = lastAccrualDate.ClosingBalance;
-
-            AccrualPeriod result = new()
-            {
-                Year = request.Year,
-                Month = request.Month,
-                OpeningBalance = closingBalance
-            };
-
-            return result;
-
-        }
+            => new(request.Year, request.Month);
 
         ///<inheritdoc/>
         protected override async Task<bool> SaveAsync(AccrualPeriod entity, CancellationToken cancellationToken)
         {
-            entity = await _AccrualPeriodDomainService.AddAsync(entity, cancellationToken);
+            entity = await _accrualPeriodDomainService.AddAsync(entity, cancellationToken);
             _ = await _uow.SaveChangesAsync(cancellationToken);
-            //TODO: Publish Event
-            //await _bus.Publish(new AccrualPeriodCreatedEvent(entity.Id, entity.Name), cancellationToken);
+            await _bus.Publish(new AccrualPeriodStartedEvent(entity.Year, entity.Month), cancellationToken);
             return true;
         }
 

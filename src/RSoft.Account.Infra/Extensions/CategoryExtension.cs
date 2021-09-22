@@ -40,7 +40,6 @@ namespace RSoft.Account.Infra.Extensions
                 if (useLazy)
                 {
                     result.MapAuthor(table);
-                    //TODO: Verify if load accounts
                 }
 
             }

@@ -12,6 +12,10 @@ using System;
 using System.Collections.Generic;
 using RSoft.Lib.Messaging.Abstractions;
 using RSoft.Lib.Messaging.Options;
+using RSoft.Lib.Messaging.Extensions;
+using RSoft.Finance.Contracts.Events;
+using RSoft.Account.Application.Consumers;
+using MassTransit;
 
 namespace RSoft.Account.Cross.IoC
 {
@@ -39,7 +43,13 @@ namespace RSoft.Account.Cross.IoC
 
             #endregion
 
-            services.AddMassTransitUsingRabbitMq(configuration);
+            services.AddMassTransitUsingRabbitMq(configuration, cfg =>
+            {
+                //BACKLOG: Add retries
+                //BACKLOG: Move consumer to worker
+                // Events consumers
+                cfg.AddEventConsumerEndpoint<AccrualPeriodStartedEvent, AccrualPeriodStartedEventConsumer>($"{nameof(AccrualPeriodStartedEvent)}.AccountService");
+            });
 
             #region Infra
 

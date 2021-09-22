@@ -18,9 +18,20 @@ namespace RSoft.Account.Core.Entities
         #region Constructors
 
         /// <summary>
-        /// Create a new Account instance
+        /// Create a new Accrual Period instance
         /// </summary>
         public AccrualPeriod() : base() { }
+
+        /// <summary>
+        /// Create a new Accrual Period instance
+        /// </summary>
+        /// <param name="year">Year number</param>
+        /// <param name="month">Month number</param>
+        public AccrualPeriod(int year, int month)
+        {
+            Year = year;
+            Month = month;
+        }
 
         #endregion
 
@@ -61,7 +72,7 @@ namespace RSoft.Account.Core.Entities
         /// Closing Balance for the period (OpeningBalance + TotalCredits - TotalDebts)
         /// </summary>
         public float ClosingBalance
-            => IsClosed ? 0 : OpeningBalance + TotalCredits - TotalDebts;
+            => IsClosed ? OpeningBalance + TotalCredits - TotalDebts : 0;
 
         /// <summary>
         /// Closed status flag
@@ -103,10 +114,13 @@ namespace RSoft.Account.Core.Entities
         /// <param name="totalDebts">Total amount of debt</param>
         public void CloseAccrualPeriod(Guid userId, float totalCredits, float totalDebts)
         {
-            IsClosed = true;
-            TotalCredits = totalCredits;
-            TotalDebts = totalDebts;
-            ClosedAuthor = new AuthorNullable<Guid>(userId, "***");
+            if (!IsClosed)
+            {
+                IsClosed = true;
+                TotalCredits = totalCredits;
+                TotalDebts = totalDebts;
+                ClosedAuthor = new AuthorNullable<Guid>(userId, "***");
+            }
         }
 
         #endregion

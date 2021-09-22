@@ -22,7 +22,15 @@ namespace RSoft.Account.Infra.Extensions
         {
             entity.CreatedAuthor = new Author<Guid>(table.CreatedBy, table.CreatedAuthor?.GetFullName());
             if (table.ChangedBy != null)
-                entity.ChangedAuthor = new AuthorNullable<Guid>(table.ChangedBy.Value, table.ChangedAuthor.GetFullName());
+                entity.ChangedAuthor = new AuthorNullable<Guid>(table.ChangedBy.Value, table.ChangedAuthor?.GetFullName() ?? "***");
+        }
+
+        public static void MapAuthor(this IAuditNavigation<Guid, User> table, IAuditAuthor<Guid> entity)
+        {
+            if (table.CreatedBy == Guid.Empty && entity.CreatedAuthor != null)
+                table.CreatedBy = entity.CreatedAuthor.Id;
+            if (entity.ChangedAuthor != null && entity.ChangedAuthor.Id.HasValue)
+                table.ChangedBy = entity.ChangedAuthor.Id.Value;
         }
 
     }

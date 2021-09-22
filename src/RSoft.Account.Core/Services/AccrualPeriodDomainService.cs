@@ -44,12 +44,20 @@ namespace RSoft.Account.Core.Services
             }
         }
 
+#pragma warning disable CS0809 // Obsolete member overrides non-obsolete member
+
         ///<inheritdoc/>
         ///<see cref="GetByKeyAsync(int, int, CancellationToken)"/>
         [Obsolete("This method should not be used for composite primary key entities. Use GetByKeyAsync(int, int, CancellationToken)", true)]
-#pragma warning disable CS0809 // Obsolete member overrides non-obsolete member
         public override Task<AccrualPeriod> GetByKeyAsync(Guid key, CancellationToken cancellationToken = default)
-        => throw new InvalidOperationException("This method should not be used for composite primary key entities.");
+            => throw new InvalidOperationException("This method should not be used for composite primary key entities.");
+
+        ///<inheritdoc/>
+        ///<see cref="Update(int, int, AccrualPeriod)"/>
+        [Obsolete("This method should not be used for composite primary key entities. Use Update(int, int, AccrualPeriod)", true)]
+        public override AccrualPeriod Update(Guid key, AccrualPeriod entity)
+            => throw new InvalidOperationException("This method should not be used for composite primary key entities.");
+
 #pragma warning restore CS0809 // Obsolete member overrides non-obsolete member
 
         #endregion
@@ -59,6 +67,16 @@ namespace RSoft.Account.Core.Services
         ///<inheritdoc/>
         public async Task<AccrualPeriod> GetByKeyAsync(int year, int month, CancellationToken cancellationToken = default)
             => await _repository.GetByKeyAsync(year, month, cancellationToken);
+
+
+        /// <summary>
+        /// Update entity on context
+        /// </summary>
+        /// <param name="year">Year number</param>
+        /// <param name="month">Month number</param>
+        /// <param name="entity">Entity to update</param>
+        public AccrualPeriod Update(int year, int month, AccrualPeriod entity)
+            => _repository.Update(year, month, entity);
 
         #endregion
 

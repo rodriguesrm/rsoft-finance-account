@@ -37,6 +37,7 @@ namespace RSoft.Account.Infra.Migrations
         {
 
             Guid userId = new("745991cc-c21f-4512-ba8f-9533435b64ab");
+            Guid serviceId = new("3f3b94db-d868-4cb3-8098-214a53eccc35");
 
             migrationBuilder.Sql("set foreign_key_checks=0");
 
@@ -51,6 +52,19 @@ namespace RSoft.Account.Infra.Migrations
                     nameof(User.IsActive)
                 },
                 new object[] { userId, "Admin", "RSoft", true }
+            );
+
+            migrationBuilder.InsertData
+            (
+                nameof(User),
+                new string[]
+                {
+                    nameof(User.Id),
+                    nameof(User.FirstName),
+                    nameof(User.LastName),
+                    nameof(User.IsActive)
+                },
+                new object[] { serviceId, "Account", "Service", true }
             );
 
             migrationBuilder.Sql("set foreign_key_checks=1");

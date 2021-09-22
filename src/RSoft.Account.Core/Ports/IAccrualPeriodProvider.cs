@@ -21,5 +21,13 @@ namespace RSoft.Account.Core.Ports
         /// <param name="cancellationToken">A System.Threading.CancellationToken to observe while waiting for the task to complete</param>
         Task<AccrualPeriod> GetByKeyAsync(int year, int month, CancellationToken cancellationToken = default);
 
+        /// <summary>
+        /// Update entity on context
+        /// </summary>
+        /// <param name="year">Year number</param>
+        /// <param name="month">Month number</param>
+        /// <param name="entity">Entity to update</param>
+        AccrualPeriod Update(int year, int month, AccrualPeriod entity);
+
     }
 }

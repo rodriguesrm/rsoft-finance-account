@@ -33,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6-SDK", "6-SDK", "{EB50D5E5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Account.GrpcClient", "RSoft.Account.GrpcClient\RSoft.Account.GrpcClient.csproj", "{777ED72D-08AA-4E6E-A480-A35FC68CF8B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSoft.Account.Test", "RSoft.Account.Test\RSoft.Account.Test.csproj", "{8DFB7366-1C5D-4AAF-B5D3-D0BEC0869246}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{777ED72D-08AA-4E6E-A480-A35FC68CF8B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{777ED72D-08AA-4E6E-A480-A35FC68CF8B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{777ED72D-08AA-4E6E-A480-A35FC68CF8B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DFB7366-1C5D-4AAF-B5D3-D0BEC0869246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DFB7366-1C5D-4AAF-B5D3-D0BEC0869246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DFB7366-1C5D-4AAF-B5D3-D0BEC0869246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DFB7366-1C5D-4AAF-B5D3-D0BEC0869246}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -79,6 +85,7 @@ Global
 		{17B787D5-55AF-4DD3-9E5A-85A2F4C2A71F} = {79F116F0-AA3E-4AC2-BFCD-9C579F1328C7}
 		{7E7B5B79-61E9-4366-ACE2-5420C22AAF75} = {16970498-0A2A-4027-8886-75FE8C80355A}
 		{777ED72D-08AA-4E6E-A480-A35FC68CF8B8} = {EB50D5E5-53E8-499B-988D-A05D6FFDEC28}
+		{8DFB7366-1C5D-4AAF-B5D3-D0BEC0869246} = {812B13B2-617E-4D48-84DC-72E41BF214B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E96B579E-924A-4DDC-BF92-AFB65D5E1E88}

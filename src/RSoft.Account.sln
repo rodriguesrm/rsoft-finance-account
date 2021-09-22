@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6-SDK", "6-SDK", "{EB50D5E5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Account.GrpcClient", "RSoft.Account.GrpcClient\RSoft.Account.GrpcClient.csproj", "{777ED72D-08AA-4E6E-A480-A35FC68CF8B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSoft.Account.Test", "RSoft.Account.Test\RSoft.Account.Test.csproj", "{8DFB7366-1C5D-4AAF-B5D3-D0BEC0869246}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSoft.Account.Tests", "RSoft.Account.Tests\RSoft.Account.Tests.csproj", "{8DFB7366-1C5D-4AAF-B5D3-D0BEC0869246}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

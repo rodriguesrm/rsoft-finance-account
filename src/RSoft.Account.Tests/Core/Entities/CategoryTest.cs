@@ -1,11 +1,6 @@
 ﻿using System;
 using Xunit;
 using RSoft.Account.Test.DependencyInjection;
-using RSoft.Lib.Common.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Localization;
-using RSoft.Account.Test.Stubs;
-using RSoft.Lib.Common.Contracts;
 using RSoft.Account.Core.Entities;
 
 namespace RSoft.Account.Test.Core.Entities
@@ -21,13 +16,7 @@ namespace RSoft.Account.Test.Core.Entities
 
         public CategoryTest()
         {
-            ServicesInjection.ServiceCollection
-                .AddSingleton<IStringLocalizer<Category>, StringLocalizerStub<Category>>()
-                .AddSingleton<IStringLocalizer<SimpleStringValidationContract>, StringLocalizerStub<SimpleStringValidationContract>>()
-            ;
-
-            ServicesInjection.BuildProvider();
-            ServiceActivator.Configure(ServicesInjection.GetServiceProvider);
+            ServiceInjection.BuildProvider();
         }
 
         #endregion

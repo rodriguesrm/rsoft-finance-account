@@ -60,7 +60,8 @@ namespace RSoft.Account.Core.Entities
         /// </summary>
         public override void Validate()
         {
-            AddNotifications(Name.Notifications);
+            if (Name != null && Name.Invalid)
+                AddNotifications(Name.Notifications);
         }
 
         #endregion

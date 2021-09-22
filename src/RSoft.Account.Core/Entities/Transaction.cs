@@ -53,17 +53,17 @@ namespace RSoft.Account.Core.Entities
         /// <summary>
         /// Transaction year
         /// </summary>
-        public int Year { get { return Date.Year; } }
+        public int Year { get { return Date?.Year ?? 0; } }
 
         /// <summary>
         /// Transaction month
         /// </summary>
-        public int Month { get { return Date.Month; }  }
+        public int Month { get { return Date?.Month ?? 0; }  }
 
         /// <summary>
         /// Transaction date
         /// </summary>
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
 
         /// <summary>
         /// Transaction type

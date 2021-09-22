@@ -59,7 +59,7 @@ namespace RSoft.Account.Application.Extensions
                 result = new TransactionDto()
                 {
                     Id = entity.Id,
-                    Date = entity.Date,
+                    Date = entity.Date.Value,
                     TransactionType = new SimpleIdentification<int>((int)entity.TransactionType.Value, entity.TransactionType.Value.GetDescription()),
                     Amount = entity.Amount,
                     Comment = entity.Comment,
@@ -88,7 +88,7 @@ namespace RSoft.Account.Application.Extensions
                 entity.Id,
                 entity.Year,
                 entity.Month,
-                entity.Date,
+                entity.Date.Value,
                 entity.TransactionType.Value,
                 entity.Amount,
                 entity.Account.Id,

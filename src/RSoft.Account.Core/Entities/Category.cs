@@ -56,15 +56,6 @@ namespace RSoft.Account.Core.Entities
 
         #endregion
 
-        #region Navigation/Lazy
-
-        /// <summary>
-        /// Accounts list
-        /// </summary>
-        public virtual ICollection<Account> Accounts { get; set; }
-
-        #endregion
-
         #region Local Methods
 
         /// <summary>

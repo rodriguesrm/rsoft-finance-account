@@ -79,7 +79,7 @@ namespace RSoft.Account.Infra.Extensions
                 {
                     Year = entity.Year,
                     Month = entity.Month,
-                    Date = entity.Date,
+                    Date = entity.Date.Value,
                     TransactionType = entity.TransactionType,
                     Amount = entity.Amount,
                     Comment = entity.Comment,
@@ -104,7 +104,7 @@ namespace RSoft.Account.Infra.Extensions
 
             if (entity != null && table != null)
             {
-                table.Date = entity.Date;
+                table.Date = entity.Date.Value;
                 table.TransactionType = entity.TransactionType;
                 table.Amount = entity.Amount;
                 table.Comment = entity.Comment;

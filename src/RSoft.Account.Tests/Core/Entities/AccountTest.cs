@@ -3,11 +3,6 @@ using AccountDomain = RSoft.Account.Core.Entities.Account;
 using CategoryDomain = RSoft.Account.Core.Entities.Category;
 using Xunit;
 using RSoft.Account.Test.DependencyInjection;
-using RSoft.Lib.Common.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Localization;
-using RSoft.Account.Test.Stubs;
-using RSoft.Lib.Common.Contracts;
 
 namespace RSoft.Account.Test.Core.Entities
 {
@@ -22,14 +17,7 @@ namespace RSoft.Account.Test.Core.Entities
 
         public AccountTest()
         {
-            ServicesInjection.ServiceCollection
-                .AddSingleton<IStringLocalizer<AccountDomain>, StringLocalizerStub<AccountDomain>>()
-                .AddSingleton<IStringLocalizer<SimpleStringValidationContract>, StringLocalizerStub<SimpleStringValidationContract>>()
-                .AddSingleton<IStringLocalizer<RequiredValidationContract<Guid?>>, StringLocalizerStub<RequiredValidationContract<Guid?>>>()
-            ;
-
-            ServicesInjection.BuildProvider();
-            ServiceActivator.Configure(ServicesInjection.GetServiceProvider);
+            ServiceInjection.BuildProvider();
         }
 
         #endregion

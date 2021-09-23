@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
-using RSoft.Account.Test.DependencyInjection;
 using RSoft.Account.Core.Entities;
+using RSoft.Account.Tests;
 
 namespace RSoft.Account.Test.Core.Entities
 {
@@ -9,15 +9,12 @@ namespace RSoft.Account.Test.Core.Entities
     /// <summary>
     /// Category entity tests
     /// </summary>
-    public class CategoryTest
+    public class CategoryTest : TestBase
     {
 
         #region Constructors
 
-        public CategoryTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public CategoryTest() : base() { }
 
         #endregion
 

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using RSoft.Lib.Design.Application.Commands;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Contracts.Commands
 {
@@ -7,6 +8,7 @@ namespace RSoft.Account.Contracts.Commands
     /// <summary>
     /// Close Accrual Period command contract 
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
     public class CloseAccrualPeriodCommand : IRequest<CommandResult<bool>>
     {
 

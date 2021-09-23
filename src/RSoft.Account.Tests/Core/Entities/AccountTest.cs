@@ -2,7 +2,7 @@
 using AccountDomain = RSoft.Account.Core.Entities.Account;
 using CategoryDomain = RSoft.Account.Core.Entities.Category;
 using Xunit;
-using RSoft.Account.Test.DependencyInjection;
+using RSoft.Account.Tests;
 
 namespace RSoft.Account.Test.Core.Entities
 {
@@ -10,15 +10,12 @@ namespace RSoft.Account.Test.Core.Entities
     /// <summary>
     /// Account entity tests
     /// </summary>
-    public class AccountTest
+    public class AccountTest : TestBase
     {
 
         #region Constructors
 
-        public AccountTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public AccountTest() : base() { }
 
         #endregion
 

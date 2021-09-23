@@ -2,8 +2,6 @@
 using RSoft.Lib.Common.Contracts.Entities;
 using RSoft.Lib.Design.Domain.Entities;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace RSoft.Account.Core.Entities
 {

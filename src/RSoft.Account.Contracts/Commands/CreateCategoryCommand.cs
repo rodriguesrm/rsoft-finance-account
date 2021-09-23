@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using RSoft.Lib.Design.Application.Commands;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Contracts.Commands
 {
@@ -8,6 +9,7 @@ namespace RSoft.Account.Contracts.Commands
     /// <summary>
     /// Create category command contract 
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
     public class CreateCategoryCommand : IRequest<CommandResult<Guid?>>
     {
 

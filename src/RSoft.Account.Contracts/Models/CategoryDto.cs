@@ -1,6 +1,7 @@
 ﻿using RSoft.Lib.Common.Contracts.Dtos;
 using RSoft.Lib.Common.Dtos;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Contracts.Models
 {
@@ -8,6 +9,7 @@ namespace RSoft.Account.Contracts.Models
     /// <summary>
     /// Category data transport object
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
     public class CategoryDto : AppDtoIdAuditBase<Guid>, IAuditDto<Guid>
     {
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
-using RSoft.Account.Test.DependencyInjection;
 using RSoft.Account.Core.Entities;
+using RSoft.Account.Tests;
 
 namespace RSoft.Account.Test.Core.Entities
 {
@@ -9,15 +9,12 @@ namespace RSoft.Account.Test.Core.Entities
     /// <summary>
     /// AccrualPeriod entity tests
     /// </summary>
-    public class AccrualPeriodTest
+    public class AccrualPeriodTest : TestBase
     {
 
         #region Constructors
 
-        public AccrualPeriodTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public AccrualPeriodTest() : base() { }
 
         #endregion
 

@@ -2,6 +2,7 @@
 using RSoft.Lib.Common.Contracts.Dtos;
 using RSoft.Lib.Common.Dtos;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Contracts.Models
 {
@@ -9,6 +10,7 @@ namespace RSoft.Account.Contracts.Models
     /// <summary>
     /// PaymentMethod data transport object
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
     public class PaymentMethodDto : AppDtoIdAuditBase<Guid>, IAuditDto<Guid>
     {
 

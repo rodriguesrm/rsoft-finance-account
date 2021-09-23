@@ -1,9 +1,9 @@
 ﻿using System;
 using Xunit;
-using RSoft.Account.Test.DependencyInjection;
 using RSoft.Account.Core.Entities;
 using RSoft.Finance.Contracts.Enum;
 using System.Linq;
+using RSoft.Account.Tests;
 
 namespace RSoft.Account.Test.Core.Entities
 {
@@ -11,15 +11,12 @@ namespace RSoft.Account.Test.Core.Entities
     /// <summary>
     /// PaymentMethod entity tests
     /// </summary>
-    public class PaymentMethodTest
+    public class PaymentMethodTest : TestBase
     {
 
         #region Constructors
 
-        public PaymentMethodTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public PaymentMethodTest() : base() { }
 
         #endregion
 

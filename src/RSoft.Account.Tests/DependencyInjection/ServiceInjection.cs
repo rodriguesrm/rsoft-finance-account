@@ -10,6 +10,7 @@ using AccountDomain = RSoft.Account.Core.Entities.Account;
 using AccrualPeriodDomain = RSoft.Account.Core.Entities.AccrualPeriod;
 using TransactionDomain = RSoft.Account.Core.Entities.Transaction;
 using UserDomain = RSoft.Account.Core.Entities.User;
+using RSoft.Account.Core.Services;
 
 namespace RSoft.Account.Test.DependencyInjection
 {
@@ -49,10 +50,12 @@ namespace RSoft.Account.Test.DependencyInjection
                         .AddScoped<IStringLocalizer<EnumCastFromIntegerValidationContract<TransactionTypeEnum>>, StringLocalizerStub<EnumCastFromIntegerValidationContract<TransactionTypeEnum>>>()
                         .AddScoped<IStringLocalizer<UserDomain>, StringLocalizerStub<UserDomain>>()
                         .AddScoped<IStringLocalizer<FullNameValidationContract>, StringLocalizerStub<FullNameValidationContract>>()
+                        .AddScoped<IStringLocalizer<TransactionDomainService>, StringLocalizerStub<TransactionDomainService>>()
 
                         .AddLogging();
                 }
                 return _serviceCollection;
+
             }
         }
 

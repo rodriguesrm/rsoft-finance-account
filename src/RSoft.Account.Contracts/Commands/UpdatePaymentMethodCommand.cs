@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using RSoft.Lib.Design.Application.Commands;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Contracts.Commands
 {
@@ -8,6 +9,8 @@ namespace RSoft.Account.Contracts.Commands
     /// <summary>
     /// Update PaymentMethod command contract 
     /// </summary>
+
+    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
     public class UpdatePaymentMethodCommand : IRequest<CommandResult<bool>>
     {
 

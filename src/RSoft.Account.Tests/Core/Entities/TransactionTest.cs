@@ -1,9 +1,9 @@
 ﻿using System;
 using Xunit;
-using RSoft.Account.Test.DependencyInjection;
 using RSoft.Account.Core.Entities;
 using RSoft.Finance.Contracts.Enum;
 using AccountDomain = RSoft.Account.Core.Entities.Account;
+using RSoft.Account.Tests;
 
 namespace RSoft.Account.Test.Core.Entities
 {
@@ -11,15 +11,12 @@ namespace RSoft.Account.Test.Core.Entities
     /// <summary>
     /// Transaction entity tests
     /// </summary>
-    public class TransactionTest
+    public class TransactionTest : TestBase
     {
 
         #region Constructors
 
-        public TransactionTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public TransactionTest() : base() { }
 
         #endregion
 

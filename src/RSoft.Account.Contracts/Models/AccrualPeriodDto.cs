@@ -2,6 +2,7 @@
 using RSoft.Lib.Common.Dtos;
 using RSoft.Lib.Common.Models;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Contracts.Models
 {
@@ -9,6 +10,7 @@ namespace RSoft.Account.Contracts.Models
     /// <summary>
     /// AccrualPeriod data transport object
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
     public class AccrualPeriodDto : AppDtoAuditBase<Guid>, IAuditDto<Guid>
     {
 

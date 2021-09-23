@@ -15,7 +15,6 @@ using RSoft.Lib.Messaging.Options;
 using RSoft.Lib.Messaging.Extensions;
 using RSoft.Finance.Contracts.Events;
 using RSoft.Account.Application.Consumers;
-using MassTransit;
 
 namespace RSoft.Account.Cross.IoC
 {

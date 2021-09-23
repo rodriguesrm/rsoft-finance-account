@@ -3,6 +3,7 @@ using Xunit;
 using RSoft.Account.Test.DependencyInjection;
 using RSoft.Account.Core.Entities;
 using RSoft.Lib.Common.ValueObjects;
+using RSoft.Account.Tests;
 
 namespace RSoft.Account.Test.Core.Entities
 {
@@ -10,15 +11,12 @@ namespace RSoft.Account.Test.Core.Entities
     /// <summary>
     /// User entity tests
     /// </summary>
-    public class UserTest
+    public class UserTest : TestBase
     {
 
         #region Constructors
 
-        public UserTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public UserTest() : base() { }
 
         #endregion
 

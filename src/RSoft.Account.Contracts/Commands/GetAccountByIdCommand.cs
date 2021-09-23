@@ -2,6 +2,7 @@
 using RSoft.Account.Contracts.Models;
 using RSoft.Lib.Design.Application.Commands;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Contracts.Commands
 {
@@ -9,6 +10,7 @@ namespace RSoft.Account.Contracts.Commands
     /// <summary>
     /// Update Account command contract 
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
     public class GetAccountByIdCommand : IRequest<CommandResult<AccountDto>>
     {
 

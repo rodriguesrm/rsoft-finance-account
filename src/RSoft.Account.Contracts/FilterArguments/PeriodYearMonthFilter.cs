@@ -1,9 +1,12 @@
-﻿namespace RSoft.Account.Contracts.FilterArguments
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace RSoft.Account.Contracts.FilterArguments
 {
 
     /// <summary>
     /// Period year/month filter model
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
     public class PeriodYearMonthFilter
     {
 

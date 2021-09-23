@@ -2,6 +2,7 @@
 using RSoft.Lib.Design.Infra.Data;
 using RSoft.Lib.Design.Infra.Data.Tables;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Infra.Tables
 {
@@ -9,6 +10,7 @@ namespace RSoft.Account.Infra.Tables
     /// <summary>
     /// Transaction table entity
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Class to map database table in EntityFramework")]
     public class Transaction : TableIdCreatedAuthorBase<Guid, Transaction>, ITable, ICreatedAuthor<Guid>
     {
 

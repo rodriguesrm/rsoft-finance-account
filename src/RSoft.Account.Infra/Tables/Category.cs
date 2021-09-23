@@ -3,6 +3,7 @@ using RSoft.Lib.Design.Infra.Data;
 using RSoft.Lib.Design.Infra.Data.Tables;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Infra.Tables
 {
@@ -10,6 +11,7 @@ namespace RSoft.Account.Infra.Tables
     /// <summary>
     /// Category table entity
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Class to map database table in EntityFramework")]
     public class Category : TableIdNameAuditBase<Guid, Category>, ITable, IAuditNavigation<Guid, User>, IActive
     {
 

@@ -1,28 +1,19 @@
-﻿using System;
-using Xunit;
-using RSoft.Account.Test.DependencyInjection;
+﻿using AutoFixture;
+using NUnit.Framework;
 using RSoft.Account.Core.Entities;
 using RSoft.Lib.Common.ValueObjects;
-using RSoft.Account.Tests;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
-namespace RSoft.Account.Test.Core.Entities
+namespace RSoft.Account.NTests.Core.Entities
 {
 
-    /// <summary>
-    /// User entity tests
-    /// </summary>
-    public class UserTest : TestBase
+    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
+    public class UserTest : TestFor<User>
     {
 
-        #region Constructors
-
-        public UserTest() : base() { }
-
-        #endregion
-
-        #region Tests
-
-        [Fact]
+        [Test]
         public void CreateUserInstance_ResultSuccess()
         {
 
@@ -36,7 +27,7 @@ namespace RSoft.Account.Test.Core.Entities
 
         }
 
-        [Fact]
+        [Test]
         public void ValidateUserWhenDataIsInvalid_ResultInvalidTrue()
         {
             User user = new()
@@ -45,23 +36,21 @@ namespace RSoft.Account.Test.Core.Entities
             };
             user.Validate();
             Assert.True(user.Invalid);
-            Assert.Equal(2, user.Notifications.Count);
-            Assert.Contains(user.Notifications, n => n.Message == "FIRST_NAME_REQUIRED");
-            Assert.Contains(user.Notifications, n => n.Message == "LAST_NAME_REQUIRED");
+            Assert.AreEqual(2, user.Notifications.Count);
+            Assert.True(user.Notifications.Any(n => n.Property == "First name"));
+            Assert.True(user.Notifications.Any(n => n.Property == "Last name"));
         }
 
-        [Fact]
+        [Test]
         public void ValidateUserWhenDataIsValid_ResultValidTrue()
         {
-            User user = new()
-            {
-                Name = new Name("Name", "Test")
-            };
+            User user = _fixture
+                .Build<User>()
+                .With(x => x.Name, new Name("Name", "Test"))
+                .Create();
             user.Validate();
             Assert.True(user.Valid);
         }
-
-        #endregion
 
     }
 }

@@ -1,27 +1,30 @@
-﻿using System;
+﻿using NUnit.Framework;
+using RSoft.Account.NTests.DependencyInjection;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using AccountDomain = RSoft.Account.Core.Entities.Account;
 using CategoryDomain = RSoft.Account.Core.Entities.Category;
-using Xunit;
-using RSoft.Account.Tests;
 
-namespace RSoft.Account.Test.Core.Entities
+namespace RSoft.Account.NTests.Core.Entities
 {
 
-    /// <summary>
-    /// Account entity tests
-    /// </summary>
-    public class AccountTest : TestBase
+    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
+    public class AccountTest : TestFor<AccountDomain>
     {
 
         #region Constructors
 
-        public AccountTest() : base() { }
+        public AccountTest()
+        {
+            ServiceInjection.BuildProvider();
+        }
 
         #endregion
 
         #region Tests
 
-        [Fact]
+        [Test]
         public void CreateAccountInstance_ResultSuccess()
         {
 
@@ -35,25 +38,23 @@ namespace RSoft.Account.Test.Core.Entities
 
         }
 
-        [Fact]
+        [Test]
         public void ValidateAccountWhenDataIsInvalid_ResultInvalidTrue()
         {
             AccountDomain account = new();
             account.Validate();
             Assert.True(account.Invalid);
-            Assert.Equal(2, account.Notifications.Count);
-            Assert.Contains(account.Notifications, n => n.Message == "FIELD_REQUIRED");
-            Assert.Contains(account.Notifications, n => n.Message == "CATEGORY_REQUIRED");
+            Assert.AreEqual(2, account.Notifications.Count);
+            Assert.True(account.Notifications.Any(n => n.Message == "FIELD_REQUIRED"));
+            Assert.True(account.Notifications.Any(n => n.Message == "CATEGORY_REQUIRED"));
         }
 
-        [Fact]
+        [Test]
         public void ValidateAccountWhenDataIsValid_ResultValidTrue()
         {
-            AccountDomain account = new()
-            {
-                Category = new CategoryDomain(Guid.NewGuid()) { Name = "**" },
-                Name = "CategoryName"
-            };
+            AccountDomain account = One<AccountDomain>();
+            account.Category = new CategoryDomain(Guid.NewGuid()) { Name = "**" };
+            account.Name = "CategoryName";
             account.Validate();
             Assert.True(account.Valid);
         }

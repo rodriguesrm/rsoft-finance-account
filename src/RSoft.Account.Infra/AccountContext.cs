@@ -3,6 +3,7 @@ using RSoft.Account.Infra.Configurations;
 using RSoft.Account.Infra.Tables;
 using RSoft.Lib.Design.Infra.Data;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Infra
 {
@@ -10,6 +11,7 @@ namespace RSoft.Account.Infra
     /// <summary>
     /// Account database context
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "DbContext does not contains rules")]
     public class AccountContext : DbContextBase<Guid>
     {
 

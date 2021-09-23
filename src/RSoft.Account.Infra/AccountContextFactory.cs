@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Infra
 {
@@ -7,6 +8,7 @@ namespace RSoft.Account.Infra
     /// <summary>
     /// Account context factory
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Config class used only for generate migration")]
     public class AccountContextFactory : IDesignTimeDbContextFactory<AccountContext>
     {
 

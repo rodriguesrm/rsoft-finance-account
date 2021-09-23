@@ -1,4 +1,5 @@
 ﻿using RSoft.Lib.Design.Infra.Data;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Infra
 {
@@ -6,6 +7,7 @@ namespace RSoft.Account.Infra
     /// <summary>
     /// Unit of work object to maintain the integrity of transactional operations
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
     public class UnitOfWork : UnitOfWorkBase, IUnitOfWork
     {
 

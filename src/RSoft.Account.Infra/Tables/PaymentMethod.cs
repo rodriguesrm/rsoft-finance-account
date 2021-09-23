@@ -4,6 +4,7 @@ using RSoft.Lib.Design.Infra.Data;
 using RSoft.Lib.Design.Infra.Data.Tables;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Infra.Tables
 {
@@ -11,6 +12,7 @@ namespace RSoft.Account.Infra.Tables
     /// <summary>
     /// PaymentMethod table entity
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Class to map database table in EntityFramework")]
     public class PaymentMethod : TableIdNameAuditBase<Guid, PaymentMethod>, ITable, IAuditNavigation<Guid, User>, IActive
     {
 

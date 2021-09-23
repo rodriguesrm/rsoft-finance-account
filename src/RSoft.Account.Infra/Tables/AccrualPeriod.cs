@@ -2,6 +2,7 @@
 using RSoft.Lib.Design.Infra.Data.Tables;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Infra.Tables
 {
@@ -9,6 +10,7 @@ namespace RSoft.Account.Infra.Tables
     /// <summary>
     /// Accrual period posting record table class
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Class to map database table in EntityFramework")]
     public class AccrualPeriod : TableAuditBase<AccrualPeriod, Guid>, ITable, IAuditNavigation<Guid, User>
     {
 

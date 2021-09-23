@@ -1,26 +1,17 @@
-﻿using System;
-using Xunit;
+﻿using NUnit.Framework;
 using RSoft.Account.Core.Entities;
-using RSoft.Account.Tests;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
-namespace RSoft.Account.Test.Core.Entities
+namespace RSoft.Account.NTests.Core.Entities
 {
 
-    /// <summary>
-    /// Category entity tests
-    /// </summary>
-    public class CategoryTest : TestBase
+    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
+    public class CategoryTest : TestFor<Category>
     {
 
-        #region Constructors
-
-        public CategoryTest() : base() { }
-
-        #endregion
-
-        #region Tests
-
-        [Fact]
+        [Test]
         public void CreateCategoryInstance_ResultSuccess()
         {
 
@@ -34,17 +25,17 @@ namespace RSoft.Account.Test.Core.Entities
 
         }
 
-        [Fact]
+        [Test]
         public void ValidateCategoryWhenDataIsInvalid_ResultInvalidTrue()
         {
             Category category = new();
             category.Validate();
             Assert.True(category.Invalid);
-            Assert.Equal(1, category.Notifications.Count);
-            Assert.Contains(category.Notifications, n => n.Message == "FIELD_REQUIRED");
+            Assert.AreEqual(1, category.Notifications.Count);
+            Assert.True(category.Notifications.Any(n => n.Property == nameof(Category.Name)));
         }
 
-        [Fact]
+        [Test]
         public void ValidateCategoryWhenDataIsValid_ResultValidTrue()
         {
             Category Category = new()
@@ -55,7 +46,6 @@ namespace RSoft.Account.Test.Core.Entities
             Assert.True(Category.Valid);
         }
 
-        #endregion
 
     }
 }

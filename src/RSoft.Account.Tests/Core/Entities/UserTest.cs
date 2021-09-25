@@ -5,7 +5,7 @@ using RSoft.Lib.Common.ValueObjects;
 using System;
 using System.Linq;
 
-namespace RSoft.Account.NTests.Core.Entities
+namespace RSoft.Account.Tests.Core.Entities
 {
 
     public class UserTest : TestFor<User>

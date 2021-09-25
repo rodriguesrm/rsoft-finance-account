@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RSoft.Account.NTests.Core.Entities
+namespace RSoft.Account.Tests.Core.Entities
 {
 
     public class PaymentMethodTest : TestFor<PaymentMethod>

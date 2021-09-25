@@ -6,8 +6,8 @@ using RSoft.Account.Core.Ports;
 using RSoft.Account.Core.Services;
 using RSoft.Account.Infra;
 using RSoft.Account.Infra.Providers;
-using RSoft.Account.NTests.DependencyInjection;
-using RSoft.Account.NTests.Extensions;
+using RSoft.Account.Tests.DependencyInjection;
+using RSoft.Account.Tests.Extensions;
 using RSoft.Finance.Contracts.Enum;
 using RSoft.Lib.Common.ValueObjects;
 using System;
@@ -16,7 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PaymentMethodTable = RSoft.Account.Infra.Tables.PaymentMethod;
 
-namespace RSoft.Account.NTests.Core.Services
+namespace RSoft.Account.Tests.Core.Services
 {
 
     public class PaymentMethodDomainServiceTest : TestFor<PaymentMethodDomainService>

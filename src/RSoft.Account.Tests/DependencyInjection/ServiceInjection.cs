@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using RSoft.Account.Test.Stubs;
 using System;
 using RSoft.Lib.Common.Contracts;
 using RSoft.Lib.Common.Abstractions;
@@ -11,8 +10,10 @@ using AccrualPeriodDomain = RSoft.Account.Core.Entities.AccrualPeriod;
 using TransactionDomain = RSoft.Account.Core.Entities.Transaction;
 using UserDomain = RSoft.Account.Core.Entities.User;
 using RSoft.Account.Core.Services;
+using RSoft.Account.Tests.Stubs;
+using RSoft.Lib.Common.Contracts.Web;
 
-namespace RSoft.Account.Test.DependencyInjection
+namespace RSoft.Account.Tests.DependencyInjection
 {
 
     /// <summary>
@@ -32,7 +33,8 @@ namespace RSoft.Account.Test.DependencyInjection
         #region Properties
 
 
-        public static IServiceCollection ServiceCollection {
+        public static IServiceCollection ServiceCollection
+        {
             get
             {
                 if (_serviceCollection == null)
@@ -51,6 +53,7 @@ namespace RSoft.Account.Test.DependencyInjection
                         .AddScoped<IStringLocalizer<UserDomain>, StringLocalizerStub<UserDomain>>()
                         .AddScoped<IStringLocalizer<FullNameValidationContract>, StringLocalizerStub<FullNameValidationContract>>()
                         .AddScoped<IStringLocalizer<TransactionDomainService>, StringLocalizerStub<TransactionDomainService>>()
+                        .AddScoped<IAuthenticatedUser, AuthenticatedUserStub>()
 
                         .AddLogging();
                 }

@@ -1,7 +1,7 @@
 ﻿using AutoFixture;
 using Microsoft.EntityFrameworkCore;
 using RSoft.Account.Infra;
-using RSoft.Account.NTests.Stubs;
+using RSoft.Account.Tests.Stubs;
 using RSoft.Lib.Design.Infra.Data.Tables;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ using PaymentMethodTable = RSoft.Account.Infra.Tables.PaymentMethod;
 using AccrualPeriodTable = RSoft.Account.Infra.Tables.AccrualPeriod;
 using TransactionTable = RSoft.Account.Infra.Tables.Transaction;
 
-namespace RSoft.Account.NTests.Extensions
+namespace RSoft.Account.Tests.Extensions
 {
 
     /// <summary>

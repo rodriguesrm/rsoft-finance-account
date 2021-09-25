@@ -1,11 +1,11 @@
 ﻿using NUnit.Framework;
 using RSoft.Account.Core.Entities;
-using RSoft.Account.NTests.DependencyInjection;
+using RSoft.Account.Tests.DependencyInjection;
 using RSoft.Lib.Common.ValueObjects;
 using System;
 using System.Linq;
 
-namespace RSoft.Account.NTests.Core.Entities
+namespace RSoft.Account.Tests.Core.Entities
 {
 
     public class AccrualPeriodTest : TestFor<AccrualPeriod>

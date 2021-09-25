@@ -4,10 +4,12 @@ using System.Collections.Generic;
 
 namespace RSoft.Account.Tests.Stubs
 {
-
     public class AuthenticatedUserStub : IAuthenticatedUser
     {
-        public Guid? Id { get; } = new Guid("745991cc-c21f-4512-ba8f-9533435b64ab");
+
+        public static Guid UserAdminId => new("745991cc-c21f-4512-ba8f-9533435b64ab");
+
+        public Guid? Id { get => UserAdminId; }
         public string FirstName { get => "Admin"; }
         public string LastName { get => "RSoft"; }
         public string Login { get => "admin"; }

@@ -5,8 +5,8 @@ using RSoft.Account.Core.Ports;
 using RSoft.Account.Core.Services;
 using RSoft.Account.Infra;
 using RSoft.Account.Infra.Providers;
-using RSoft.Account.NTests.DependencyInjection;
-using RSoft.Account.NTests.Extensions;
+using RSoft.Account.Tests.DependencyInjection;
+using RSoft.Account.Tests.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ using AccountTable = RSoft.Account.Infra.Tables.Account;
 using AccountDomain = RSoft.Account.Core.Entities.Account;
 using CategoryDomain = RSoft.Account.Core.Entities.Category;
 
-namespace RSoft.Account.NTests.Core.Services
+namespace RSoft.Account.Tests.Core.Services
 {
 
     public class AccountDomainServiceTest : TestFor<AccountDomainService>

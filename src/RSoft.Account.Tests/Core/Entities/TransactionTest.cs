@@ -5,10 +5,10 @@ using System.Linq;
 using NUnit.Framework;
 using RSoft.Finance.Contracts.Enum;
 using RSoft.Account.Core.Entities;
-using RSoft.Account.NTests.DependencyInjection;
+using RSoft.Account.Tests.DependencyInjection;
 using RSoft.Lib.Common.ValueObjects;
 
-namespace RSoft.Account.NTests.Core.Entities
+namespace RSoft.Account.Tests.Core.Entities
 {
 
     public class TransactionTest : TestFor<TransactionDomain>

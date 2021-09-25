@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using System;
 
-namespace RSoft.Account.NTests
+namespace RSoft.Account.Tests
 {
 
     /// <summary>

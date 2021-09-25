@@ -1,35 +1,26 @@
 ﻿using AutoFixture;
-using RSoft.Account.Test.DependencyInjection;
+using AutoFixture.AutoMoq;
+using AutoFixture.Kernel;
+using NUnit.Framework;
+using RSoft.Account.Tests.Stubs;
+using RSoft.Lib.Common.Contracts.Web;
 
 namespace RSoft.Account.Tests
 {
 
     /// <summary>
-    /// Abstract class base
+    /// Test abstract base class
     /// </summary>
     public abstract class TestBase
     {
 
         #region Local objects/variables
 
-        protected readonly IFixture _fixture;
+        protected IFixture _fixture;
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        /// Create a new test instance
-        /// </summary>
-        public TestBase()
-        {
-            _fixture = new Fixture();
-            ServiceInjection.BuildProvider();
-        }
-
-        #endregion
-
-        #region Helpers
+        #region Local methods
 
         /// <summary>
         /// Create a mock instance
@@ -37,6 +28,26 @@ namespace RSoft.Account.Tests
         /// <typeparam name="T">Object type</typeparam>
         protected T One<T>()
             => _fixture.Create<T>();
+
+        #endregion
+
+        #region Public methods
+
+        /// <summary>
+        /// Setup test
+        /// </summary>
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            _fixture = new Fixture()
+                .Customize(new AutoMoqCustomization());
+
+            _fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
+            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
+            _fixture.Customizations.Add(new TypeRelay(typeof(IAuthenticatedUser), typeof(AuthenticatedUserStub)));
+
+        }
 
         #endregion
 

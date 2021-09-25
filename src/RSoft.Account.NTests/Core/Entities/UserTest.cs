@@ -3,13 +3,11 @@ using NUnit.Framework;
 using RSoft.Account.Core.Entities;
 using RSoft.Lib.Common.ValueObjects;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace RSoft.Account.NTests.Core.Entities
 {
 
-    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
     public class UserTest : TestFor<User>
     {
 
@@ -30,10 +28,7 @@ namespace RSoft.Account.NTests.Core.Entities
         [Test]
         public void ValidateUserWhenDataIsInvalid_ResultInvalidTrue()
         {
-            User user = new()
-            {
-                Name = new Name(string.Empty, string.Empty)
-            };
+            User user = new();
             user.Validate();
             Assert.True(user.Invalid);
             Assert.AreEqual(2, user.Notifications.Count);

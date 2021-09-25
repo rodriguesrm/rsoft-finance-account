@@ -12,7 +12,6 @@ using UserDomain = RSoft.Account.Core.Entities.User;
 using RSoft.Account.Core.Services;
 using RSoft.Account.NTests.Stubs;
 using RSoft.Lib.Common.Contracts.Web;
-using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.NTests.DependencyInjection
 {
@@ -20,7 +19,6 @@ namespace RSoft.Account.NTests.DependencyInjection
     /// <summary>
     /// Services injection static class
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
     public static class ServiceInjection
     {
 

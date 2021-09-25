@@ -1,14 +1,13 @@
 ﻿using NUnit.Framework;
 using RSoft.Account.Core.Entities;
 using RSoft.Account.NTests.DependencyInjection;
+using RSoft.Lib.Common.ValueObjects;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace RSoft.Account.NTests.Core.Entities
 {
 
-    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
     public class AccrualPeriodTest : TestFor<AccrualPeriod>
     {
 
@@ -46,7 +45,10 @@ namespace RSoft.Account.NTests.Core.Entities
         [Test]
         public void ValidateAccrualPeriodWhenDataIsValid_ResultValidTrue()
         {
-            AccrualPeriod accrualPeriod = new(DateTime.UtcNow.Year, DateTime.UtcNow.Month);
+            AccrualPeriod accrualPeriod = new(DateTime.UtcNow.Year, DateTime.UtcNow.Month)
+            {
+                CreatedAuthor = One<Author<Guid>>()
+            };
             accrualPeriod.Validate();
             Assert.True(accrualPeriod.Valid);
         }
@@ -64,6 +66,8 @@ namespace RSoft.Account.NTests.Core.Entities
             {
                 OpeningBalance = openingBalance
             };
+            Assert.False(accrualPeriod.IsClosed);
+            Assert.AreEqual(0, accrualPeriod.ClosingBalance);
             accrualPeriod.CloseAccrualPeriod(userId, totalCredits, totalDebts);
             Assert.True(accrualPeriod.IsClosed);
             Assert.True(accrualPeriod.Valid);

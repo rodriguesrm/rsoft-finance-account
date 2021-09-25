@@ -1,7 +1,9 @@
 ﻿using AutoFixture;
 using AutoFixture.AutoMoq;
+using AutoFixture.Kernel;
 using NUnit.Framework;
-using System.Diagnostics.CodeAnalysis;
+using RSoft.Account.NTests.Stubs;
+using RSoft.Lib.Common.Contracts.Web;
 
 namespace RSoft.Account.NTests
 {
@@ -9,7 +11,6 @@ namespace RSoft.Account.NTests
     /// <summary>
     /// Test abstract base class
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
     public abstract class TestBase
     {
 
@@ -20,14 +21,6 @@ namespace RSoft.Account.NTests
         #endregion
 
         #region Local methods
-
-        /// <summary>
-        /// One time setup fixture
-        /// </summary>
-        /// <param name="fixture">Fixture object</param>
-        protected virtual void OnetimeSetupFixture(IFixture fixture)
-        {
-        }
 
         /// <summary>
         /// Create a mock instance
@@ -48,6 +41,12 @@ namespace RSoft.Account.NTests
         {
             _fixture = new Fixture()
                 .Customize(new AutoMoqCustomization());
+
+            _fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
+            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+
+            _fixture.Customizations.Add(new TypeRelay(typeof(IAuthenticatedUser), typeof(AuthenticatedUserStub)));
+
         }
 
         #endregion

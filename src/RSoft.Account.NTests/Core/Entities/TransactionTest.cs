@@ -6,12 +6,11 @@ using NUnit.Framework;
 using RSoft.Finance.Contracts.Enum;
 using RSoft.Account.Core.Entities;
 using RSoft.Account.NTests.DependencyInjection;
-using System.Diagnostics.CodeAnalysis;
+using RSoft.Lib.Common.ValueObjects;
 
 namespace RSoft.Account.NTests.Core.Entities
 {
 
-    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
     public class TransactionTest : TestFor<TransactionDomain>
     {
 
@@ -37,6 +36,10 @@ namespace RSoft.Account.NTests.Core.Entities
             Assert.NotNull(transaction1);
             Assert.NotNull(transaction2);
             Assert.NotNull(transaction3);
+
+            Assert.Null(transaction1.Comment);
+            Assert.AreEqual(0, transaction1.Year);
+            Assert.AreEqual(0, transaction1.Month);
 
         }
 
@@ -67,7 +70,8 @@ namespace RSoft.Account.NTests.Core.Entities
                 Amount = amount,
                 Comment = comment,
                 PaymentMethod = new PaymentMethod(Guid.NewGuid()) { Name = "PAYMENT_METHOD_NAME" },
-                Account = new AccountDomain(Guid.NewGuid()) { Name = "ACCOUNT_NAME" }
+                Account = new AccountDomain(Guid.NewGuid()) { Name = "ACCOUNT_NAME" },
+                CreatedAuthor = One<Author<Guid>>()
             };
             transaction.Validate();
             Assert.True(transaction.Valid);

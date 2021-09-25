@@ -1,11 +1,9 @@
 ﻿using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.NTests.Stubs
 {
-    
-    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
+
     public class StringLocalizerStub<T> : IStringLocalizer<T>
     {
         ///<inheritdoc/>

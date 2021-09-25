@@ -29,5 +29,12 @@ namespace RSoft.Account.Core.Ports
         /// <param name="entity">Entity to update</param>
         AccrualPeriod Update(int year, int month, AccrualPeriod entity);
 
+        /// <summary>
+        /// Delete entity from context
+        /// </summary>
+        /// <param name="year">Year number</param>
+        /// <param name="month">Month number</param>
+        void Delete(int year, int month);
+
     }
 }

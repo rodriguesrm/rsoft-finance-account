@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using RSoft.Account.NTests.DependencyInjection;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using AccountDomain = RSoft.Account.Core.Entities.Account;
 using CategoryDomain = RSoft.Account.Core.Entities.Category;
@@ -9,7 +8,6 @@ using CategoryDomain = RSoft.Account.Core.Entities.Category;
 namespace RSoft.Account.NTests.Core.Entities
 {
 
-    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
     public class AccountTest : TestFor<AccountDomain>
     {
 

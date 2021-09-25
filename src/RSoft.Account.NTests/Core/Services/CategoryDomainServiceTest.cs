@@ -8,11 +8,9 @@ using RSoft.Account.Infra;
 using RSoft.Account.Infra.Providers;
 using RSoft.Account.NTests.DependencyInjection;
 using RSoft.Account.NTests.Extensions;
-using RSoft.Account.NTests.Stubs;
-using RSoft.Lib.Common.Contracts.Web;
+using RSoft.Lib.Common.ValueObjects;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using CategoryTable = RSoft.Account.Infra.Tables.Category;
@@ -20,14 +18,13 @@ using CategoryTable = RSoft.Account.Infra.Tables.Category;
 namespace RSoft.Account.NTests.Core.Services
 {
 
-    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
     public class CategoryDomainServiceTest : TestFor<CategoryDomainService>
     {
 
         #region Local objects/variables
 
-        private const string _categoryAName = "SUPERMARKET";
-        private const string _categoryBName = "TRAVEL";
+        private const string _categoryAName = "VEHICLES";
+        private const string _categoryBName = "LEISURE";
 
         private AccountContext _dbContext;
 
@@ -46,12 +43,8 @@ namespace RSoft.Account.NTests.Core.Services
 
         protected override void Setup(IFixture fixture)
         {
-
-            _fixture.Behaviors.Remove(new ThrowingRecursionBehavior());
-            _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
             _fixture.WithInMemoryDatabase(out _dbContext);
             _fixture.Customizations.Add(new TypeRelay(typeof(ICategoryProvider), typeof(CategoryProvider)));
-            _fixture.Customizations.Add(new TypeRelay(typeof(IAuthenticatedUser), typeof(AuthenticatedUserStub)));
 
         }
 
@@ -59,39 +52,23 @@ namespace RSoft.Account.NTests.Core.Services
 
         #region Local methods
 
-
-        /// <summary>
-        /// Create a new nock of CategoryTable
-        /// </summary>
-        /// <param name="categoryName"></param>
-        private CategoryTable CreateCategory(string categoryName)
-            => _fixture.Build<CategoryTable>()
-                    .With(c => c.Name, categoryName)
-                    .With(c => c.CreatedOn, DateTime.UtcNow.AddDays(-1))
-                    .With(c => c.CreatedBy, AuthenticatedUserStub.UserAdminId)
-                    .Without(c => c.Accounts)
-                    .Without(c => c.ChangedOn)
-                    .Without(c => c.ChangedBy)
-                    .Without(c => c.CreatedAuthor)
-                    .Without(c => c.ChangedAuthor)
-                    .Create();
-
         /// <summary>
         /// Load initial categories
         /// </summary>
-        /// <param name="categoryId"></param>
+        /// <param name="categoryId">Category id output</param>
         private void LoadInitialCategory(out Guid categoryId)
         {
-            if (_dbContext.Categories.Count() == 0)
+            CategoryTable table = _dbContext.Categories.Where(c => c.Name == _categoryAName).FirstOrDefault();
+            if (table == null)
             {
-                CategoryTable rowA = CreateCategory(_categoryAName);
-                CategoryTable rowB = CreateCategory(_categoryBName);
+                CategoryTable rowA = _fixture.CreateCategory(_categoryAName);
+                CategoryTable rowB = _fixture.CreateCategory(_categoryBName);
                 _fixture.WithSeedData(_dbContext, new List<CategoryTable>() { rowA, rowB });
                 categoryId = rowA.Id;
             }
             else
             {
-                categoryId = _dbContext.Categories.First().Id;
+                categoryId = table.Id;
             }
         }
 
@@ -104,6 +81,8 @@ namespace RSoft.Account.NTests.Core.Services
         {
             Category category = _fixture.Build<Category>()
                 .With(c => c.Name, "CATEGORY TEST")
+                .With(c => c.CreatedAuthor, One<Author<Guid>>())
+                .With(c => c.ChangedAuthor, One<AuthorNullable<Guid>>())
                 .Create();
             Category result = await Sut.AddAsync(category, default);
             Assert.IsTrue(result.Valid);
@@ -140,7 +119,7 @@ namespace RSoft.Account.NTests.Core.Services
         {
             string oldName = "Category X";
             string newName = "New Category";
-            CategoryTable oldTableRow = CreateCategory(oldName);
+            CategoryTable oldTableRow = _fixture.CreateCategory(oldName);
             _fixture.WithSeedData(_dbContext, new CategoryTable[] { oldTableRow });
             Category category = new(oldTableRow.Id) { Name = newName };
             category = Sut.Update(category.Id, category);
@@ -155,7 +134,7 @@ namespace RSoft.Account.NTests.Core.Services
         [Test]
         public void DeleteCategory_SuccessOnDelete()
         {
-            CategoryTable tableRow = CreateCategory("CATEGORY TO_REMOVE");
+            CategoryTable tableRow = _fixture.CreateCategory("CATEGORY TO_REMOVE");
             Guid categoryId = tableRow.Id;
             _fixture.WithSeedData(_dbContext, new CategoryTable[] { tableRow });
             Sut.Delete(categoryId);

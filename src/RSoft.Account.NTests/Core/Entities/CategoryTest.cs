@@ -1,13 +1,12 @@
 ﻿using NUnit.Framework;
 using RSoft.Account.Core.Entities;
+using RSoft.Lib.Common.ValueObjects;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace RSoft.Account.NTests.Core.Entities
 {
 
-    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
     public class CategoryTest : TestFor<Category>
     {
 
@@ -28,7 +27,11 @@ namespace RSoft.Account.NTests.Core.Entities
         [Test]
         public void ValidateCategoryWhenDataIsInvalid_ResultInvalidTrue()
         {
-            Category category = new();
+            Category category = new()
+            {
+                CreatedAuthor = One<Author<Guid>>(),
+                ChangedAuthor = One<AuthorNullable<Guid>>()
+            };
             category.Validate();
             Assert.True(category.Invalid);
             Assert.AreEqual(1, category.Notifications.Count);

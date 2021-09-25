@@ -1,7 +1,6 @@
 ﻿using AutoFixture;
 using NUnit.Framework;
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.NTests
 {
@@ -10,7 +9,6 @@ namespace RSoft.Account.NTests
     /// Abstract class to test objects
     /// </summary>
     /// <typeparam name="TSut">Object type to test</typeparam>
-    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
     public abstract class TestFor<TSut> : TestBase
         where TSut : class
     {

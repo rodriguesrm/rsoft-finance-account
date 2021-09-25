@@ -4,6 +4,7 @@ using RSoft.Lib.Common.Contracts.Web;
 using RSoft.Lib.Common.ValueObjects;
 using RSoft.Lib.Design.Domain.Services;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -49,13 +50,22 @@ namespace RSoft.Account.Core.Services
         ///<inheritdoc/>
         ///<see cref="GetByKeyAsync(int, int, CancellationToken)"/>
         [Obsolete("This method should not be used for composite primary key entities. Use GetByKeyAsync(int, int, CancellationToken)", true)]
+        [ExcludeFromCodeCoverage(Justification = "Obsolete method")]
         public override Task<AccrualPeriod> GetByKeyAsync(Guid key, CancellationToken cancellationToken = default)
             => throw new InvalidOperationException("This method should not be used for composite primary key entities.");
 
         ///<inheritdoc/>
         ///<see cref="Update(int, int, AccrualPeriod)"/>
         [Obsolete("This method should not be used for composite primary key entities. Use Update(int, int, AccrualPeriod)", true)]
+        [ExcludeFromCodeCoverage(Justification = "Obsolete method")]
         public override AccrualPeriod Update(Guid key, AccrualPeriod entity)
+            => throw new InvalidOperationException("This method should not be used for composite primary key entities.");
+
+        ///<inheritdoc/>
+        ///<see cref="Delete(int, int)"/>
+        [Obsolete("This method should not be used for composite primary key entities. Use Delete(int, int)", true)]
+        [ExcludeFromCodeCoverage(Justification = "Obsolete method")]
+        public override void Delete(Guid key)
             => throw new InvalidOperationException("This method should not be used for composite primary key entities.");
 
 #pragma warning restore CS0809 // Obsolete member overrides non-obsolete member
@@ -76,7 +86,17 @@ namespace RSoft.Account.Core.Services
         /// <param name="month">Month number</param>
         /// <param name="entity">Entity to update</param>
         public AccrualPeriod Update(int year, int month, AccrualPeriod entity)
-            => _repository.Update(year, month, entity);
+        {
+            entity.Validate();
+            if (entity.Invalid) return entity;
+            PrepareSave(entity, true);
+            AccrualPeriod savedEntity = _repository.Update(year, month, entity);
+            return savedEntity;
+        }
+
+        ///<inheritdoc/>
+        public void Delete(int year, int month)
+            => _repository.Delete(year, month);
 
         #endregion
 

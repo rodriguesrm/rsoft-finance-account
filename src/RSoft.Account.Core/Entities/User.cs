@@ -44,7 +44,7 @@ namespace RSoft.Account.Core.Entities
         /// <summary>
         /// User full name
         /// </summary>
-        public Name Name { get; set; }
+        public Name Name { get; set; } = new Name(string.Empty, string.Empty);
 
         /// <summary>
         /// Indicate if entity is active
@@ -60,8 +60,7 @@ namespace RSoft.Account.Core.Entities
         /// </summary>
         public override void Validate()
         {
-            if (Name != null && Name.Invalid)
-                AddNotifications(Name.Notifications);
+            AddNotifications(Name.Notifications);
         }
 
         #endregion

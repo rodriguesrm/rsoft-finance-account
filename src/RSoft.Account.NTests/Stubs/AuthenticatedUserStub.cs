@@ -1,12 +1,9 @@
 ﻿using RSoft.Lib.Common.Contracts.Web;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.NTests.Stubs
 {
-
-    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
     public class AuthenticatedUserStub : IAuthenticatedUser
     {
 

@@ -1,15 +1,14 @@
 ﻿using NUnit.Framework;
 using RSoft.Account.Core.Entities;
 using RSoft.Finance.Contracts.Enum;
+using RSoft.Lib.Common.ValueObjects;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace RSoft.Account.NTests.Core.Entities
 {
 
-    [ExcludeFromCodeCoverage(Justification = "Test class should not be considered in test coverage.")]
     public class PaymentMethodTest : TestFor<PaymentMethod>
     {
 
@@ -50,7 +49,9 @@ namespace RSoft.Account.NTests.Core.Entities
             PaymentMethod PaymentMethod = new()
             {
                 Name = "PaymentMethodName",
-                PaymentType = PaymentTypeEnum.Money
+                PaymentType = PaymentTypeEnum.Money,
+                CreatedAuthor = One<Author<Guid>>(),
+                ChangedAuthor = One<AuthorNullable<Guid>>()
             };
             PaymentMethod.Validate();
             Assert.True(PaymentMethod.Valid);

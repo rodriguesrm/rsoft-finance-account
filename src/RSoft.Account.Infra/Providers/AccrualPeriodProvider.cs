@@ -4,6 +4,7 @@ using RSoft.Account.Infra.Tables;
 using RSoft.Lib.Design.Exceptions;
 using RSoft.Lib.Design.Infra.Data;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using AccrualPeriodDomain = RSoft.Account.Core.Entities.AccrualPeriod;
@@ -43,14 +44,22 @@ namespace RSoft.Account.Infra.Providers
         ///<inheritdoc/>
         ///<see cref="GetByKeyAsync(int, int, CancellationToken)"/>
         [Obsolete("This method should not be used for composite primary key entities. Use GetByKeyAsync(int, int, CancellationToken)", true)]
-
+        [ExcludeFromCodeCoverage(Justification = "Obsolete method")]
         public override Task<AccrualPeriodDomain> GetByKeyAsync(Guid key, CancellationToken cancellationToken = default)
             => throw new InvalidOperationException("This method should not be used for composite primary key entities.");
 
         ///<inheritdoc/>
         ///<see cref="Update(int, int, AccrualPeriodDomain)"/>
         [Obsolete("This method should not be used for composite primary key entities. Use GetByKeyAsync(int, int, AccrualPeriod)", true)]
+        [ExcludeFromCodeCoverage(Justification = "Obsolete method")]
         public override AccrualPeriodDomain Update(Guid key, AccrualPeriodDomain entity)
+            => throw new InvalidOperationException("This method should not be used for composite primary key entities.");
+
+        ///<inheritdoc/>
+        ///<see cref="Delete(int, int)"/>
+        [Obsolete("This method should not be used for composite primary key entities. Use Delete(int, int)", true)]
+        [ExcludeFromCodeCoverage(Justification = "Obsolete method")]
+        public override void Delete(Guid key)
             => throw new InvalidOperationException("This method should not be used for composite primary key entities.");
 
 #pragma warning restore CS0809 // Obsolete member overrides non-obsolete member
@@ -62,18 +71,9 @@ namespace RSoft.Account.Infra.Providers
         ///<inheritdoc/>
         public async Task<AccrualPeriodDomain> GetByKeyAsync(int year, int month, CancellationToken cancellationToken = default)
         {
-
-            if (cancellationToken.IsCancellationRequested)
-                return null;
-
             AccrualPeriod table = await Task.Run(() => _dbSet.Find(year, month));
             AccrualPeriodDomain entity = Map(table);
-
-            if (cancellationToken.IsCancellationRequested)
-                return null;
-
             return entity;
-
         }
 
         ///<inheritdoc/>
@@ -93,6 +93,13 @@ namespace RSoft.Account.Infra.Providers
             entity = Map(table);
             return entity;
 
+        }
+
+        ///<inheritdoc/>
+        public void Delete(int year, int month)
+        {
+            AccrualPeriod table = _dbSet.Find(year, month);
+            _dbSet.Remove(table);
         }
 
         #endregion

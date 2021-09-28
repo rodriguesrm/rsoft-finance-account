@@ -146,6 +146,15 @@ namespace RSoft.Account.Tests.Core.Services
         }
 
         [Test]
+        public void UpdateAccrualPeriod_WithInvalidEntity_ReturnNotifications()
+        {
+            AccrualPeriod entity = One<AccrualPeriod>();
+            Sut.Update(entity.Year, entity.Month, entity);
+            Assert.True(entity.Invalid);
+            Assert.True(entity.Notifications.Count > 0);
+        }
+
+        [Test]
         public void UpdateNonExistingAccrualPeriod_ThrowException()
         {
             DateTime date = DateTime.UtcNow.AddMonths(-10);

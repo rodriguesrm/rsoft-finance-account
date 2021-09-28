@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Account.Infra.Extensions
 {
@@ -16,6 +17,7 @@ namespace RSoft.Account.Infra.Extensions
         /// Create/Update database by migration tool
         /// </summary>
         /// <param name="app">Application builder object instance</param>
+        [ExcludeFromCodeCoverage(Justification = "Migrations class are not tested")]
         public static IApplicationBuilder MigrateDatabase(this IApplicationBuilder app, ILogger logger)
         {
             using (var serviceScope = app.ApplicationServices

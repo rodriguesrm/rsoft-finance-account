@@ -3,23 +3,23 @@ using Moq;
 using NUnit.Framework;
 using RSoft.Account.Application.Handlers;
 using RSoft.Account.Contracts.Commands;
+using DomainAccount = RSoft.Account.Core.Entities.Account;
 using RSoft.Account.Core.Ports;
 using RSoft.Account.Tests.DependencyInjection;
 using RSoft.Lib.Design.Application.Commands;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DomainAccount = RSoft.Account.Core.Entities.Account;
 
 namespace RSoft.Account.Tests.Application.Handlers
 {
-
-    public class ChangeStatusAccountCommandHandlerTest : TestFor<ChangeStatusAccountCommandHandler>
+    
+    public class CreateAccountCommandHandlerTest : TestFor<CreateAccountCommandHandler>
     {
 
         #region Constructors
 
-        public ChangeStatusAccountCommandHandlerTest()
+        public CreateAccountCommandHandlerTest()
         {
             ServiceInjection.BuildProvider();
         }
@@ -30,18 +30,10 @@ namespace RSoft.Account.Tests.Application.Handlers
 
         protected override void Setup(IFixture fixture)
         {
-            var domainService = new Mock<IAccountDomainService>();
-
+            Mock<IAccountDomainService> domainService = new();
             domainService
-                .Setup(m => m.GetByKeyAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync((Guid id, CancellationToken token) =>
-                {
-                    _fixture.Customize<DomainAccount>(c => c.FromFactory(() => new DomainAccount(id)));
-                    DomainAccount entity = One<DomainAccount>();
-                    return entity;
-                });
-
-
+                .Setup(m => m.AddAsync(It.IsAny<DomainAccount>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((DomainAccount entity, CancellationToken token) => entity);
             _fixture.Inject(domainService.Object);
         }
 
@@ -52,8 +44,8 @@ namespace RSoft.Account.Tests.Application.Handlers
         [Test]
         public async Task HandleMediatorCommand_ProcessSuccess()
         {
-            ChangeStatusAccountCommand command = new(Guid.NewGuid(), true);
-            CommandResult<bool> result = await Sut.Handle(command, default);
+            CreateAccountCommand command = new("ACCOUNT_NAME", Guid.NewGuid());
+            CommandResult<Guid?> result = await Sut.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
         }

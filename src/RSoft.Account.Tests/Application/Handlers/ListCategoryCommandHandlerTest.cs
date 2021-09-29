@@ -3,23 +3,24 @@ using Moq;
 using NUnit.Framework;
 using RSoft.Account.Application.Handlers;
 using RSoft.Account.Contracts.Commands;
+using RSoft.Account.Contracts.Models;
+using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
 using RSoft.Account.Tests.DependencyInjection;
 using RSoft.Lib.Design.Application.Commands;
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DomainAccount = RSoft.Account.Core.Entities.Account;
 
 namespace RSoft.Account.Tests.Application.Handlers
 {
-
-    public class ChangeStatusAccountCommandHandlerTest : TestFor<ChangeStatusAccountCommandHandler>
+    public class ListCategoryCommandHandlerTest : TestFor<ListCategoryCommandHandler>
     {
 
         #region Constructors
 
-        public ChangeStatusAccountCommandHandlerTest()
+        public ListCategoryCommandHandlerTest()
         {
             ServiceInjection.BuildProvider();
         }
@@ -30,18 +31,15 @@ namespace RSoft.Account.Tests.Application.Handlers
 
         protected override void Setup(IFixture fixture)
         {
-            var domainService = new Mock<IAccountDomainService>();
-
+            Mock<ICategoryDomainService> domainService = new();
             domainService
-                .Setup(m => m.GetByKeyAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync((Guid id, CancellationToken token) =>
+                .Setup(m => m.GetAllAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() =>
                 {
-                    _fixture.Customize<DomainAccount>(c => c.FromFactory(() => new DomainAccount(id)));
-                    DomainAccount entity = One<DomainAccount>();
-                    return entity;
+
+                    IEnumerable<Category> entities = new List<Category>() { One<Category>(), One<Category>(), One<Category>()};
+                    return entities;
                 });
-
-
             _fixture.Inject(domainService.Object);
         }
 
@@ -52,10 +50,14 @@ namespace RSoft.Account.Tests.Application.Handlers
         [Test]
         public async Task HandleMediatorCommand_ProcessSuccess()
         {
-            ChangeStatusAccountCommand command = new(Guid.NewGuid(), true);
-            CommandResult<bool> result = await Sut.Handle(command, default);
+
+            ListCategoryCommand command = new();
+            CommandResult<IEnumerable<CategoryDto>> result = await Sut.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
+            IEnumerable<CategoryDto> dtos = result.Response;
+            Assert.NotNull(dtos);
+            Assert.AreEqual(3, dtos.Count());
         }
 
         #endregion

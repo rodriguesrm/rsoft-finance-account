@@ -3,46 +3,25 @@ using Moq;
 using NUnit.Framework;
 using RSoft.Account.Application.Handlers;
 using RSoft.Account.Contracts.Commands;
+using RSoft.Account.Contracts.Models;
+using RSoft.Account.Core.Entities;
 using RSoft.Account.Core.Ports;
 using RSoft.Account.Tests.DependencyInjection;
 using RSoft.Lib.Design.Application.Commands;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DomainAccount = RSoft.Account.Core.Entities.Account;
 
 namespace RSoft.Account.Tests.Application.Handlers
 {
-
-    public class ChangeStatusAccountCommandHandlerTest : TestFor<ChangeStatusAccountCommandHandler>
+    public class GetCategoryByIdCommandHandlerTest : TestFor<GetCategoryByIdCommandHandler>
     {
 
         #region Constructors
 
-        public ChangeStatusAccountCommandHandlerTest()
+        public GetCategoryByIdCommandHandlerTest()
         {
             ServiceInjection.BuildProvider();
-        }
-
-        #endregion
-
-        #region Overrides
-
-        protected override void Setup(IFixture fixture)
-        {
-            var domainService = new Mock<IAccountDomainService>();
-
-            domainService
-                .Setup(m => m.GetByKeyAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync((Guid id, CancellationToken token) =>
-                {
-                    _fixture.Customize<DomainAccount>(c => c.FromFactory(() => new DomainAccount(id)));
-                    DomainAccount entity = One<DomainAccount>();
-                    return entity;
-                });
-
-
-            _fixture.Inject(domainService.Object);
         }
 
         #endregion
@@ -52,10 +31,28 @@ namespace RSoft.Account.Tests.Application.Handlers
         [Test]
         public async Task HandleMediatorCommand_ProcessSuccess()
         {
-            ChangeStatusAccountCommand command = new(Guid.NewGuid(), true);
-            CommandResult<bool> result = await Sut.Handle(command, default);
+
+            Category entity = null;
+
+            Mock<ICategoryDomainService> domainService = new();
+            domainService
+                .Setup(m => m.GetByKeyAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Guid id, CancellationToken token) =>
+                {
+                    _fixture.Customize<Category>(c => c.FromFactory(() => new Category(id)));
+                    entity = One<Category>();
+                    return entity;
+                });
+            _fixture.Inject(domainService.Object);
+
+            GetCategoryByIdCommand command = new(Guid.NewGuid());
+            CommandResult<CategoryDto> result = await Sut.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
+            CategoryDto dto = result.Response;
+            Assert.NotNull(dto);
+            Assert.AreEqual(entity.Id, dto.Id);
+            Assert.AreEqual(entity.Name, dto.Name);
         }
 
         #endregion

@@ -23,7 +23,7 @@ namespace RSoft.Account.Application.Handlers
 
         #region Local objects/variables
 
-        private readonly ITransactionDomainService _TransactionDomainService;
+        private readonly ITransactionDomainService _transactionDomainService;
 
         #endregion
 
@@ -32,11 +32,11 @@ namespace RSoft.Account.Application.Handlers
         /// <summary>
         /// Create a new command handler instance
         /// </summary>
-        /// <param name="TransactionDomainService">Transaction domain/core service</param>
+        /// <param name="transactionDomainService">Transaction domain/core service</param>
         /// <param name="logger">Logger object</param>
-        public ListTransactionCommandHandler(ITransactionDomainService TransactionDomainService, ILogger<ListTransactionCommandHandler> logger) : base(logger)
+        public ListTransactionCommandHandler(ITransactionDomainService transactionDomainService, ILogger<ListTransactionCommandHandler> logger) : base(logger)
         {
-            _TransactionDomainService = TransactionDomainService;
+            _transactionDomainService = transactionDomainService;
         }
 
         #endregion
@@ -47,7 +47,7 @@ namespace RSoft.Account.Application.Handlers
         protected override async Task<IEnumerable<Transaction>> GetAllAsync(ListTransactionCommand request, CancellationToken cancellationToken)
         {
             ListTransactionFilter filter = request.Map();
-            IEnumerable<Transaction> result = await _TransactionDomainService.GetByFilterAsync(filter, cancellationToken);
+            IEnumerable<Transaction> result = await _transactionDomainService.GetByFilterAsync(filter, cancellationToken);
             return result;
         }
 

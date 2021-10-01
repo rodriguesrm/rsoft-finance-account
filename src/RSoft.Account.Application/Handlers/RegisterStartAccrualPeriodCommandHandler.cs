@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using DomainAccrualPeriod = RSoft.Account.Core.Entities.AccrualPeriod;
 using System;
-using RSoft.Lib.Common.ValueObjects;
 using RSoft.Account.Application.Extensions;
 
 namespace RSoft.Account.Application.Handlers
@@ -65,7 +64,7 @@ namespace RSoft.Account.Application.Handlers
                 float closingBalance = 0.0f;
                 DateTime lastPeriodDate = (new DateTime(request.Year, request.Month, 1)).AddMonths(-1);
                 DomainAccrualPeriod lastAccrualDate = await _accrualPeriodDomainService.GetByKeyAsync(lastPeriodDate.Year, lastPeriodDate.Month);
-                if (lastAccrualDate != null & lastAccrualDate.IsClosed)
+                if (lastAccrualDate != null && lastAccrualDate.IsClosed)
                     closingBalance = lastAccrualDate.ClosingBalance;
                 entity.OpeningBalance = closingBalance;
                 entity.SetServiceAuthor(true);

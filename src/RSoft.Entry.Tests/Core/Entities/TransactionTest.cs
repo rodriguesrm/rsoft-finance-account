@@ -70,7 +70,7 @@ namespace RSoft.Entry.Tests.Core.Entities
                 Amount = amount,
                 Comment = comment,
                 PaymentMethod = new PaymentMethod(Guid.NewGuid()) { Name = "PAYMENT_METHOD_NAME" },
-                Entries = new AccountDomain(Guid.NewGuid()) { Name = "ACCOUNT_NAME" },
+                Entry = new AccountDomain(Guid.NewGuid()) { Name = "ACCOUNT_NAME" },
                 CreatedAuthor = One<Author<Guid>>()
             };
             transaction.Validate();

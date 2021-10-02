@@ -15,14 +15,14 @@ namespace RSoft.Entry.Application.Handlers
 {
 
     /// <summary>
-    /// Lista Account command handler
+    /// Lista entry command handler
     /// </summary>
-    public class ListAccountCommandHandler : ListCommandHandlerBase<ListEntryCommand, EntryDto, DomainEntry>, IRequestHandler<ListEntryCommand, CommandResult<IEnumerable<EntryDto>>>
+    public class ListEntryCommandHandler : ListCommandHandlerBase<ListEntryCommand, EntryDto, DomainEntry>, IRequestHandler<ListEntryCommand, CommandResult<IEnumerable<EntryDto>>>
     {
 
         #region Local objects/variables
 
-        private readonly IEntryDomainService _accountDomainService;
+        private readonly IEntryDomainService _entryDomainService;
 
         #endregion
 
@@ -31,11 +31,11 @@ namespace RSoft.Entry.Application.Handlers
         /// <summary>
         /// Create a new command handler instance
         /// </summary>
-        /// <param name="accountDomainService">Account domain/core service</param>
+        /// <param name="entryDomainService">Entry domain/core service</param>
         /// <param name="logger">Logger object</param>
-        public ListAccountCommandHandler(IEntryDomainService accountDomainService, ILogger<ListAccountCommandHandler> logger) : base(logger)
+        public ListEntryCommandHandler(IEntryDomainService entryDomainService, ILogger<ListEntryCommandHandler> logger) : base(logger)
         {
-            _accountDomainService = accountDomainService;
+            _entryDomainService = entryDomainService;
         }
 
         #endregion
@@ -44,7 +44,7 @@ namespace RSoft.Entry.Application.Handlers
 
         ///<inheritdoc/>
         protected override async Task<IEnumerable<DomainEntry>> GetAllAsync(ListEntryCommand request, CancellationToken cancellationToken)
-            => await _accountDomainService.GetAllAsync(cancellationToken);
+            => await _entryDomainService.GetAllAsync(cancellationToken);
 
         ///<inheritdoc/>
         protected override IEnumerable<EntryDto> MapEntities(IEnumerable<DomainEntry> entities)

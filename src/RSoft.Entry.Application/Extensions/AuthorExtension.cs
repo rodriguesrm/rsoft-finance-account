@@ -19,7 +19,7 @@ namespace RSoft.Entry.Application.Extensions
         public static void SetServiceAuthor(this IAuditAuthor<Guid> entity, bool isUpdate = false)
         {
             Guid userId = new("3f3b94db-d868-4cb3-8098-214a53eccc35");
-            string userName = "Account Service";
+            string userName = "Entry Service";
 
             if (isUpdate)
                 entity.ChangedAuthor = new AuthorNullable<Guid>(userId, userName);

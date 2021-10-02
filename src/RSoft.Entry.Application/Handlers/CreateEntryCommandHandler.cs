@@ -16,15 +16,15 @@ namespace RSoft.Entry.Application.Handlers
 {
 
     /// <summary>
-    /// Create account command handler
+    /// Create entry command handler
     /// </summary>
-    public class CreateAccountCommandHandler : CreateCommandHandlerBase<CreateEntryCommand, Guid?, DomainEntry>, IRequestHandler<CreateEntryCommand, CommandResult<Guid?>>
+    public class CreateEntryCommandHandler : CreateCommandHandlerBase<CreateEntryCommand, Guid?, DomainEntry>, IRequestHandler<CreateEntryCommand, CommandResult<Guid?>>
     {
 
         #region Local objects/variables
 
         private readonly IUnitOfWork _uow;
-        private readonly IEntryDomainService _accountDomainService;
+        private readonly IEntryDomainService _entryDomainService;
         private readonly IBusControl _bus;
 
         #endregion
@@ -34,14 +34,14 @@ namespace RSoft.Entry.Application.Handlers
         /// <summary>
         /// Create a command handler object instance
         /// </summary>
-        /// <param name="accountDomainService">Account domain service object</param>
+        /// <param name="entryDomainService">Entry domain service object</param>
         /// <param name="logger">Logger object</param>
         /// <param name="uow">Unit of work controller object</param>
         /// <param name="bus">Message bus control</param>
-        public CreateAccountCommandHandler(IUnitOfWork uow, IEntryDomainService accountDomainService, ILogger<CreateAccountCommandHandler> logger, IBusControl bus) : base(logger)
+        public CreateEntryCommandHandler(IUnitOfWork uow, IEntryDomainService entryDomainService, ILogger<CreateEntryCommandHandler> logger, IBusControl bus) : base(logger)
         {
             _uow = uow;
-            _accountDomainService = accountDomainService;
+            _entryDomainService = entryDomainService;
             _bus = bus;
         }
 
@@ -74,10 +74,10 @@ namespace RSoft.Entry.Application.Handlers
         ///<inheritdoc/>
         protected override async Task<Guid?> SaveAsync(DomainEntry entity, CancellationToken cancellationToken)
         {
-            AccountCreatedEvent accountCreatedEvent = new(entity.Id, entity.Name, entity.Category.Id);
-            entity = await _accountDomainService.AddAsync(entity, cancellationToken);
+            AccountCreatedEvent entryCreatedEvent = new(entity.Id, entity.Name, entity.Category.Id);
+            entity = await _entryDomainService.AddAsync(entity, cancellationToken);
             _ = await _uow.SaveChangesAsync(cancellationToken);
-            await _bus.Publish(accountCreatedEvent, cancellationToken);
+            await _bus.Publish(entryCreatedEvent, cancellationToken);
             return entity.Id;
         }
 

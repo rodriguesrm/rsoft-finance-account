@@ -94,7 +94,7 @@ namespace RSoft.Entry.Tests.Core.Services
                 TransactionType = TransactionTypeEnum.Credit,
                 Amount = 300,
                 Comment = "Transaction test",
-                Entries = new AccountDomain(MockBuilder.InitialAccountId) { Name = "***" },
+                Entry = new AccountDomain(MockBuilder.InitialAccountId) { Name = "***" },
                 PaymentMethod = new PaymentMethod(MockBuilder.InitialPaymentId) { Name = "***" }
             };
             Transaction result = await Sut.AddAsync(transaction, default);
@@ -148,7 +148,7 @@ namespace RSoft.Entry.Tests.Core.Services
                 TransactionType = TransactionTypeEnum.Debt,
                 Amount = newAmount,
                 Comment = oldTableRow.Comment,
-                Entries = new AccountDomain(oldTableRow.EntryId) { Name = "***" },
+                Entry = new AccountDomain(oldTableRow.EntryId) { Name = "***" },
                 PaymentMethod = new PaymentMethod(oldTableRow.PaymentMethodId) { Name = "***" },
                 CreatedAuthor = new Author<Guid>(oldTableRow.CreatedAuthor.Id, oldTableRow.CreatedAuthor.GetFullName())
             };

@@ -87,7 +87,7 @@ namespace RSoft.Entry.Core.Entities
         /// <summary>
         /// Entry data
         /// </summary>
-        public Entry Entries { get; set; }
+        public Entry Entry { get; set; }
 
         /// <summary>
         /// Payment method data
@@ -126,7 +126,7 @@ namespace RSoft.Entry.Core.Entities
             int? transactionType = TransactionType.HasValue ? (int)TransactionType : null;
             AddNotifications(new EnumCastFromIntegerValidationContract<TransactionTypeEnum>(transactionType, nameof(transactionType), true).Contract.Notifications);
 
-            AddNotifications(new RequiredValidationContract<Guid?>(Entries?.Id, nameof(Entries), localizer["ENTRY_REQUIRED"]).Contract.Notifications);
+            AddNotifications(new RequiredValidationContract<Guid?>(Entry?.Id, nameof(Entry), localizer["ENTRY_REQUIRED"]).Contract.Notifications);
             AddNotifications(new RequiredValidationContract<Guid?>(PaymentMethod?.Id, nameof(PaymentMethod), localizer["PAYMENTMETHOD_REQUIRED"]).Contract.Notifications);
         }
 

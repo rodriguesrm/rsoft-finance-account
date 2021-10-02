@@ -15,15 +15,15 @@ namespace RSoft.Entry.Application.Handlers
 {
 
     /// <summary>
-    /// Change status Account command handler
+    /// Change status Entry command handler
     /// </summary>
-    public class ChangeStatusAccountCommandHandler : UpdateCommandHandlerBase<ChangeStatusEntryCommand, bool, DomainEntry>, IRequestHandler<ChangeStatusEntryCommand, CommandResult<bool>>
+    public class ChangeStatusEntryCommandHandler : UpdateCommandHandlerBase<ChangeStatusEntryCommand, bool, DomainEntry>, IRequestHandler<ChangeStatusEntryCommand, CommandResult<bool>>
     {
 
         #region Local objects/variables
 
         private readonly IUnitOfWork _uow;
-        private readonly IEntryDomainService _accountDomainService;
+        private readonly IEntryDomainService _entryDomainService;
         private readonly IBusControl _bus;
 
         #endregion
@@ -34,13 +34,13 @@ namespace RSoft.Entry.Application.Handlers
         /// Create a handler instance
         /// </summary>
         /// <param name="uow">Unit of work controller instance</param>
-        /// <param name="accountDomainService">Account domain/core service</param>
+        /// <param name="entryDomainService">Entry domain/core service</param>
         /// <param name="logger">Logger object</param>
         /// <param name="bus">Messaging bus control</param>
-        public ChangeStatusAccountCommandHandler(IUnitOfWork uow, IEntryDomainService accountDomainService, ILogger<CreateAccountCommandHandler> logger, IBusControl bus) : base(logger)
+        public ChangeStatusEntryCommandHandler(IUnitOfWork uow, IEntryDomainService entryDomainService, ILogger<CreateEntryCommandHandler> logger, IBusControl bus) : base(logger)
         {
             _uow = uow;
-            _accountDomainService = accountDomainService;
+            _entryDomainService = entryDomainService;
             _bus = bus;
         }
 
@@ -50,7 +50,7 @@ namespace RSoft.Entry.Application.Handlers
 
         ///<inheritdoc/>
         protected override async Task<DomainEntry> GetEntityByKeyAsync(ChangeStatusEntryCommand request, CancellationToken cancellationToken)
-            => await _accountDomainService.GetByKeyAsync(request.Id, cancellationToken);
+            => await _entryDomainService.GetByKeyAsync(request.Id, cancellationToken);
 
         ///<inheritdoc/>
         protected override void PrepareEntity(ChangeStatusEntryCommand request, DomainEntry entity)
@@ -61,7 +61,7 @@ namespace RSoft.Entry.Application.Handlers
         ///<inheritdoc/>
         protected override async Task<bool> SaveAsync(DomainEntry entity, CancellationToken cancellationToken)
         {
-            _ = _accountDomainService.Update(entity.Id, entity);
+            _ = _entryDomainService.Update(entity.Id, entity);
             _ = await _uow.SaveChangesAsync(cancellationToken);
             await _bus.Publish(new AccountStatusChangedEvent(entity.Id, entity.IsActive), cancellationToken);
             return true;

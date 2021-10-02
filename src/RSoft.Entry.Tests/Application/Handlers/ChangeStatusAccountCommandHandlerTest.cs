@@ -14,7 +14,7 @@ using DomainEntry = RSoft.Entry.Core.Entities.Entry;
 namespace RSoft.Entry.Tests.Application.Handlers
 {
 
-    public class ChangeStatusAccountCommandHandlerTest : TestFor<ChangeStatusAccountCommandHandler>
+    public class ChangeStatusAccountCommandHandlerTest : TestFor<ChangeStatusEntryCommandHandler>
     {
 
         #region Constructors

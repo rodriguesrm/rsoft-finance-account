@@ -44,16 +44,16 @@ namespace RSoft.Entry.Infra.Extensions
                 if (useLazy)
                 {
                     result.PaymentMethod = table.PaymentMethod?.Map(false);
-                    result.Entries = table.Entry?.Map(false);
+                    result.Entry = table.Entry?.Map(false);
                 }
                 else
                 {
                     result.PaymentMethod = new Core.Entities.PaymentMethod(table.PaymentMethodId);
-                    result.Entries = new Core.Entities.Entry(table.EntryId);
+                    result.Entry = new Core.Entities.Entry(table.EntryId);
                 }
                 if (forceLoadNameForLevelUp)
                 {
-                    result.Entries.Name = table.Entry?.Name;
+                    result.Entry.Name = table.Entry?.Name;
                     result.PaymentMethod.Name = table.PaymentMethod?.Name;
                 }
                 result.CreatedAuthor = new Author<Guid>(table.CreatedBy, (table.CreatedAuthor?.GetFullName() ?? "***"));
@@ -83,7 +83,7 @@ namespace RSoft.Entry.Infra.Extensions
                     TransactionType = entity.TransactionType,
                     Amount = entity.Amount,
                     Comment = entity.Comment,
-                    EntryId = entity.Entries.Id,
+                    EntryId = entity.Entry.Id,
                     PaymentMethodId = entity.PaymentMethod.Id,
                     CreatedOn = entity.CreatedOn,
                     CreatedBy = entity.CreatedAuthor.Id
@@ -108,7 +108,7 @@ namespace RSoft.Entry.Infra.Extensions
                 table.TransactionType = entity.TransactionType;
                 table.Amount = entity.Amount;
                 table.Comment = entity.Comment;
-                table.EntryId = entity.Entries.Id;
+                table.EntryId = entity.Entry.Id;
                 table.PaymentMethodId = entity.PaymentMethod.Id;
                 table.CreatedOn = entity.CreatedOn;
                 table.CreatedBy = entity.CreatedAuthor.Id;

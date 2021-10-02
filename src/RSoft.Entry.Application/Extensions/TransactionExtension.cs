@@ -27,9 +27,9 @@ namespace RSoft.Entry.Application.Extensions
         public static Transaction Map(this CreateTransactionCommand command)
         {
 
-            DomainEntry account = null;
+            DomainEntry entry = null;
             if (command.EntryId.HasValue)
-                account = new DomainEntry(command.EntryId.Value);
+                entry = new DomainEntry(command.EntryId.Value);
             PaymentMethod paymentMethod = null;
             if (command.PaymentMethodId.HasValue)
                 paymentMethod = new PaymentMethod(command.PaymentMethodId.Value);
@@ -40,7 +40,7 @@ namespace RSoft.Entry.Application.Extensions
                 TransactionType = (TransactionTypeEnum)command.TransactionType,
                 Amount = command.Amount,
                 Comment = command.Comment,
-                Entries = account,
+                Entry = entry,
                 PaymentMethod = paymentMethod
             };
 
@@ -63,7 +63,7 @@ namespace RSoft.Entry.Application.Extensions
                     TransactionType = new SimpleIdentification<int>((int)entity.TransactionType.Value, entity.TransactionType.Value.GetDescription()),
                     Amount = entity.Amount,
                     Comment = entity.Comment,
-                    Entry = new SimpleIdentification<Guid>(entity.Entries.Id, entity.Entries.Name),
+                    Entry = new SimpleIdentification<Guid>(entity.Entry.Id, entity.Entry.Name),
                     PaymentMethod = new SimpleIdentification<Guid>(entity.PaymentMethod.Id, entity.PaymentMethod.Name),
                     CreatedBy = new AuditAuthor<Guid>(entity.CreatedOn, entity.CreatedAuthor.Id, entity.CreatedAuthor.Name)
                 };
@@ -91,7 +91,7 @@ namespace RSoft.Entry.Application.Extensions
                 entity.Date.Value,
                 entity.TransactionType.Value,
                 entity.Amount,
-                entity.Entries.Id,
+                entity.Entry.Id,
                 entity.PaymentMethod.Id
             );
 
@@ -130,7 +130,7 @@ namespace RSoft.Entry.Application.Extensions
                 TransactionType = originalTransaction.TransactionType == TransactionTypeEnum.Debt ? TransactionTypeEnum.Credit : TransactionTypeEnum.Debt,
                 Amount = originalTransaction.Amount,
                 Comment = request.Comment,
-                Entries = originalTransaction.Entries,
+                Entry = originalTransaction.Entry,
                 PaymentMethod = originalTransaction.PaymentMethod
             };
     }

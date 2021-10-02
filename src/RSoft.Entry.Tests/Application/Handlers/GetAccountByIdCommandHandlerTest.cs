@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace RSoft.Entry.Tests.Application.Handlers
 {
-    public class GetAccountByIdCommandHandlerTest : TestFor<GetAccountByIdCommandHandler>
+    public class GetAccountByIdCommandHandlerTest : TestFor<GetEntryByIdCommandHandler>
     {
 
         #region Constructors

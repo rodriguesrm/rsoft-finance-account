@@ -9,7 +9,7 @@ namespace RSoft.Entry.Application.Extensions
 {
 
     /// <summary>
-    /// Account extensions
+    /// Entry extensions
     /// </summary>
     public static class EntryExtension
     {
@@ -17,7 +17,7 @@ namespace RSoft.Entry.Application.Extensions
         /// <summary>
         /// Map entity to dto
         /// </summary>
-        /// <param name="entity">Account entity instance</param>
+        /// <param name="entity">Entry entity instance</param>
         public static EntryDto Map(this DomainEntry entity)
         {
             EntryDto result = null;

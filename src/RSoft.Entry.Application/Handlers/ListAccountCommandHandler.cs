@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using RSoft.Entry.Application.Extensions;
 using RSoft.Entry.Contracts.Commands;
 using RSoft.Entry.Contracts.Models;
-using EntryAccount = RSoft.Entry.Core.Entities.Entry;
+using DomainEntry = RSoft.Entry.Core.Entities.Entry;
 using RSoft.Entry.Core.Ports;
 using RSoft.Lib.Design.Application.Commands;
 using System.Collections.Generic;
@@ -17,12 +17,12 @@ namespace RSoft.Entry.Application.Handlers
     /// <summary>
     /// Lista Account command handler
     /// </summary>
-    public class ListAccountCommandHandler : ListCommandHandlerBase<ListAccountCommand, AccountDto, EntryAccount>, IRequestHandler<ListAccountCommand, CommandResult<IEnumerable<AccountDto>>>
+    public class ListAccountCommandHandler : ListCommandHandlerBase<ListAccountCommand, AccountDto, DomainEntry>, IRequestHandler<ListAccountCommand, CommandResult<IEnumerable<AccountDto>>>
     {
 
         #region Local objects/variables
 
-        private readonly IAccountDomainService _accountDomainService;
+        private readonly IEntryDomainService _accountDomainService;
 
         #endregion
 
@@ -33,7 +33,7 @@ namespace RSoft.Entry.Application.Handlers
         /// </summary>
         /// <param name="accountDomainService">Account domain/core service</param>
         /// <param name="logger">Logger object</param>
-        public ListAccountCommandHandler(IAccountDomainService accountDomainService, ILogger<ListAccountCommandHandler> logger) : base(logger)
+        public ListAccountCommandHandler(IEntryDomainService accountDomainService, ILogger<ListAccountCommandHandler> logger) : base(logger)
         {
             _accountDomainService = accountDomainService;
         }
@@ -43,11 +43,11 @@ namespace RSoft.Entry.Application.Handlers
         #region Overrides
 
         ///<inheritdoc/>
-        protected override async Task<IEnumerable<EntryAccount>> GetAllAsync(ListAccountCommand request, CancellationToken cancellationToken)
+        protected override async Task<IEnumerable<DomainEntry>> GetAllAsync(ListAccountCommand request, CancellationToken cancellationToken)
             => await _accountDomainService.GetAllAsync(cancellationToken);
 
         ///<inheritdoc/>
-        protected override IEnumerable<AccountDto> MapEntities(IEnumerable<EntryAccount> entities)
+        protected override IEnumerable<AccountDto> MapEntities(IEnumerable<DomainEntry> entities)
             => entities.Map();
 
         #endregion

@@ -1,4 +1,4 @@
-﻿using EntryAccount = RSoft.Entry.Core.Entities.Entry;
+﻿using DomainEntry = RSoft.Entry.Core.Entities.Entry;
 using RSoft.Entry.Core.Ports;
 using RSoft.Lib.Common.Contracts.Web;
 using RSoft.Lib.Common.ValueObjects;
@@ -9,9 +9,9 @@ namespace RSoft.Entry.Core.Services
 {
 
     /// <summary>
-    /// Account domain service operations
+    /// Entry domain service operations
     /// </summary>
-    public class AccountDomainService : DomainServiceBase<EntryAccount, Guid, IEntryProvider>, IAccountDomainService
+    public class EntryDomainService : DomainServiceBase<DomainEntry, Guid, IEntryProvider>, IEntryDomainService
     {
 
         #region Constructors
@@ -19,16 +19,16 @@ namespace RSoft.Entry.Core.Services
         /// <summary>
         /// Create a new scopde domain service instance
         /// </summary>
-        /// <param name="provider">Account provier</param>
-        /// <param name="authenticatedAccount">Authenticated Account object</param>
-        public AccountDomainService(IEntryProvider provider, IAuthenticatedUser authenticatedAccount) : base(provider, authenticatedAccount) { }
+        /// <param name="provider">Entry provider</param>
+        /// <param name="authenticatedUser">Authenticated user object</param>
+        public EntryDomainService(IEntryProvider provider, IAuthenticatedUser authenticatedUser) : base(provider, authenticatedUser) { }
 
         #endregion
 
         #region Overrides
 
         ///<inheritdoc/>
-        public override void PrepareSave(EntryAccount entity, bool isUpdate) 
+        public override void PrepareSave(DomainEntry entity, bool isUpdate) 
         {
             if (isUpdate)
             {

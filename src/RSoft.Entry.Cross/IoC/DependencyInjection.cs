@@ -64,7 +64,7 @@ namespace RSoft.Entry.Cross.IoC
 
             #region Domain
 
-            services.AddScoped<IAccountDomainService, AccountDomainService>();
+            services.AddScoped<IEntryDomainService, EntryDomainService>();
             services.AddScoped<IAccrualPeriodDomainService, AccrualPeriodDomainService>();
             services.AddScoped<ICategoryDomainService, CategoryDomainService>();
             services.AddScoped<IPaymentMethodDomainService, PaymentMethodDomainService>();

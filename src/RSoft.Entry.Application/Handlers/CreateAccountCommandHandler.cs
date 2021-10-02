@@ -10,7 +10,7 @@ using RSoft.Lib.Design.Infra.Data;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using EntryAccount = RSoft.Entry.Core.Entities.Entry;
+using DomainEntry = RSoft.Entry.Core.Entities.Entry;
 
 namespace RSoft.Entry.Application.Handlers
 {
@@ -18,13 +18,13 @@ namespace RSoft.Entry.Application.Handlers
     /// <summary>
     /// Create account command handler
     /// </summary>
-    public class CreateAccountCommandHandler : CreateCommandHandlerBase<CreateAccountCommand, Guid?, EntryAccount>, IRequestHandler<CreateAccountCommand, CommandResult<Guid?>>
+    public class CreateAccountCommandHandler : CreateCommandHandlerBase<CreateAccountCommand, Guid?, DomainEntry>, IRequestHandler<CreateAccountCommand, CommandResult<Guid?>>
     {
 
         #region Local objects/variables
 
         private readonly IUnitOfWork _uow;
-        private readonly IAccountDomainService _accountDomainService;
+        private readonly IEntryDomainService _accountDomainService;
         private readonly IBusControl _bus;
 
         #endregion
@@ -38,7 +38,7 @@ namespace RSoft.Entry.Application.Handlers
         /// <param name="logger">Logger object</param>
         /// <param name="uow">Unit of work controller object</param>
         /// <param name="bus">Message bus control</param>
-        public CreateAccountCommandHandler(IUnitOfWork uow, IAccountDomainService accountDomainService, ILogger<CreateAccountCommandHandler> logger, IBusControl bus) : base(logger)
+        public CreateAccountCommandHandler(IUnitOfWork uow, IEntryDomainService accountDomainService, ILogger<CreateAccountCommandHandler> logger, IBusControl bus) : base(logger)
         {
             _uow = uow;
             _accountDomainService = accountDomainService;
@@ -62,9 +62,9 @@ namespace RSoft.Entry.Application.Handlers
         #region Overrides
 
         ///<inheritdoc/>
-        protected override EntryAccount PrepareEntity(CreateAccountCommand request)
+        protected override DomainEntry PrepareEntity(CreateAccountCommand request)
         {
-            EntryAccount entity = new();
+            DomainEntry entity = new();
             entity.Name = request.Name;
             if (request.CategoryId.HasValue)
                 entity.Category = new(request.CategoryId.Value);
@@ -72,7 +72,7 @@ namespace RSoft.Entry.Application.Handlers
         }
 
         ///<inheritdoc/>
-        protected override async Task<Guid?> SaveAsync(EntryAccount entity, CancellationToken cancellationToken)
+        protected override async Task<Guid?> SaveAsync(DomainEntry entity, CancellationToken cancellationToken)
         {
             AccountCreatedEvent accountCreatedEvent = new(entity.Id, entity.Name, entity.Category.Id);
             entity = await _accountDomainService.AddAsync(entity, cancellationToken);

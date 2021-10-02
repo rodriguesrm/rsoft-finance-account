@@ -4,7 +4,7 @@ using NUnit.Framework;
 using RSoft.Entry.Application.Handlers;
 using RSoft.Entry.Contracts.Commands;
 using RSoft.Entry.Contracts.Models;
-using EntryAccount = RSoft.Entry.Core.Entities.Entry;
+using DomainEntry = RSoft.Entry.Core.Entities.Entry;
 using RSoft.Entry.Core.Ports;
 using RSoft.Entry.Tests.DependencyInjection;
 using RSoft.Lib.Design.Application.Commands;
@@ -31,13 +31,13 @@ namespace RSoft.Entry.Tests.Application.Handlers
 
         protected override void Setup(IFixture fixture)
         {
-            Mock<IAccountDomainService> domainService = new();
+            Mock<IEntryDomainService> domainService = new();
             domainService
                 .Setup(m => m.GetAllAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() =>
                 {
 
-                    IEnumerable<EntryAccount> entities = new List<EntryAccount>() { One<EntryAccount>(), One<EntryAccount>(), One<EntryAccount>()};
+                    IEnumerable<DomainEntry> entities = new List<DomainEntry>() { One<DomainEntry>(), One<DomainEntry>(), One<DomainEntry>()};
                     return entities;
                 });
             _fixture.Inject(domainService.Object);

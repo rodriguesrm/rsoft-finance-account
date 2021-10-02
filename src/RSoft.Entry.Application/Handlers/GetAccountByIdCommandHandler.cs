@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RSoft.Entry.Contracts.Commands;
 using RSoft.Entry.Contracts.Models;
-using EntryAccount = RSoft.Entry.Core.Entities.Entry;
+using DomainEntry = RSoft.Entry.Core.Entities.Entry;
 using RSoft.Entry.Core.Ports;
 using RSoft.Lib.Design.Application.Commands;
 using System.Threading;
@@ -16,12 +16,12 @@ namespace RSoft.Entry.Application.Handlers
     /// <summary>
     /// Get Account by id command handler
     /// </summary>
-    public class GetAccountByIdCommandHandler : GetByKeyCommandHandlerBase<GetAccountByIdCommand, AccountDto, EntryAccount>, IRequestHandler<GetAccountByIdCommand, CommandResult<AccountDto>>
+    public class GetAccountByIdCommandHandler : GetByKeyCommandHandlerBase<GetAccountByIdCommand, AccountDto, DomainEntry>, IRequestHandler<GetAccountByIdCommand, CommandResult<AccountDto>>
     {
 
         #region Local objects/variables
 
-        private readonly IAccountDomainService _accountDomainService;
+        private readonly IEntryDomainService _accountDomainService;
 
         #endregion
 
@@ -32,7 +32,7 @@ namespace RSoft.Entry.Application.Handlers
         /// </summary>
         /// <param name="accountDomainService">Account domain/core service</param>
         /// <param name="logger">Logger object</param>
-        public GetAccountByIdCommandHandler(IAccountDomainService accountDomainService, ILogger<GetAccountByIdCommandHandler> logger) : base(logger)
+        public GetAccountByIdCommandHandler(IEntryDomainService accountDomainService, ILogger<GetAccountByIdCommandHandler> logger) : base(logger)
         {
             _accountDomainService = accountDomainService;
         }
@@ -42,11 +42,11 @@ namespace RSoft.Entry.Application.Handlers
         #region Overrides
 
         ///<inheritdoc/>
-        protected override async Task<EntryAccount> GetEntityByKeyAsync(GetAccountByIdCommand request, CancellationToken cancellationToken)
+        protected override async Task<DomainEntry> GetEntityByKeyAsync(GetAccountByIdCommand request, CancellationToken cancellationToken)
             => await _accountDomainService.GetByKeyAsync(request.Id, cancellationToken);
 
         ///<inheritdoc/>
-        protected override AccountDto MapEntity(EntryAccount entity)
+        protected override AccountDto MapEntity(DomainEntry entity)
             => entity.Map();
 
         #endregion

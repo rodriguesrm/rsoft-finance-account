@@ -18,7 +18,7 @@ using CategoryDomain = RSoft.Entry.Core.Entities.Category;
 namespace RSoft.Entry.Tests.Core.Services
 {
 
-    public class AccountDomainServiceTest : TestFor<AccountDomainService>
+    public class AccountDomainServiceTest : TestFor<EntryDomainService>
     {
 
         #region Local objects/variables

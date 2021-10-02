@@ -28,7 +28,7 @@ namespace RSoft.Entry.Core.Entities
         /// <summary>
         /// Create a new Transaction instance
         /// </summary>
-        /// <param name="id">Account id value</param>
+        /// <param name="id">Entry id value</param>
         public Transaction(Guid id) : base(id)
         {
             Initialize();
@@ -37,7 +37,7 @@ namespace RSoft.Entry.Core.Entities
         /// <summary>
         /// Create a new Transaction instance
         /// </summary>
-        /// <param name="id">Account id text</param>
+        /// <param name="id">Entry id text</param>
         /// <exception cref="System.ArgumentNullException"></exception>
         /// <exception cref="System.FormatException"></exception>
         /// <exception cref="System.OverflowException"></exception>
@@ -85,7 +85,7 @@ namespace RSoft.Entry.Core.Entities
         #region Navigation/Lazy
 
         /// <summary>
-        /// Account data
+        /// Entry data
         /// </summary>
         public Entry Entries { get; set; }
 
@@ -126,7 +126,7 @@ namespace RSoft.Entry.Core.Entities
             int? transactionType = TransactionType.HasValue ? (int)TransactionType : null;
             AddNotifications(new EnumCastFromIntegerValidationContract<TransactionTypeEnum>(transactionType, nameof(transactionType), true).Contract.Notifications);
 
-            AddNotifications(new RequiredValidationContract<Guid?>(Entries?.Id, nameof(Entries), localizer["ACCOUNT_REQUIRED"]).Contract.Notifications);
+            AddNotifications(new RequiredValidationContract<Guid?>(Entries?.Id, nameof(Entries), localizer["ENTRY_REQUIRED"]).Contract.Notifications);
             AddNotifications(new RequiredValidationContract<Guid?>(PaymentMethod?.Id, nameof(PaymentMethod), localizer["PAYMENTMETHOD_REQUIRED"]).Contract.Notifications);
         }
 

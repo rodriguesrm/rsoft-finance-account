@@ -9,7 +9,7 @@ using RSoft.Lib.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EntryAccount = RSoft.Entry.Core.Entities.Entry;
+using DomainEntry = RSoft.Entry.Core.Entities.Entry;
 
 namespace RSoft.Entry.Application.Extensions
 {
@@ -27,9 +27,9 @@ namespace RSoft.Entry.Application.Extensions
         public static Transaction Map(this CreateTransactionCommand command)
         {
 
-            EntryAccount account = null;
+            DomainEntry account = null;
             if (command.AccountId.HasValue)
-                account = new EntryAccount(command.AccountId.Value);
+                account = new DomainEntry(command.AccountId.Value);
             PaymentMethod paymentMethod = null;
             if (command.PaymentMethodId.HasValue)
                 paymentMethod = new PaymentMethod(command.PaymentMethodId.Value);

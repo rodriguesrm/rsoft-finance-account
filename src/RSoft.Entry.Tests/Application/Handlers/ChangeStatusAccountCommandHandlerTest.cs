@@ -9,7 +9,7 @@ using RSoft.Lib.Design.Application.Commands;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using EntryAccount = RSoft.Entry.Core.Entities.Entry;
+using DomainEntry = RSoft.Entry.Core.Entities.Entry;
 
 namespace RSoft.Entry.Tests.Application.Handlers
 {
@@ -30,14 +30,14 @@ namespace RSoft.Entry.Tests.Application.Handlers
 
         protected override void Setup(IFixture fixture)
         {
-            var domainService = new Mock<IAccountDomainService>();
+            var domainService = new Mock<IEntryDomainService>();
 
             domainService
                 .Setup(m => m.GetByKeyAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync((Guid id, CancellationToken token) =>
                 {
-                    _fixture.Customize<EntryAccount>(c => c.FromFactory(() => new EntryAccount(id)));
-                    EntryAccount entity = One<EntryAccount>();
+                    _fixture.Customize<DomainEntry>(c => c.FromFactory(() => new DomainEntry(id)));
+                    DomainEntry entity = One<DomainEntry>();
                     return entity;
                 });
 

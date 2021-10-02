@@ -6,7 +6,7 @@ using RSoft.Lib.Design.Application.Commands;
 using RSoft.Lib.Design.Infra.Data;
 using System.Threading;
 using System.Threading.Tasks;
-using EntryAccount = RSoft.Entry.Core.Entities.Entry;
+using DomainEntry = RSoft.Entry.Core.Entities.Entry;
 using RSoft.Lib.Design.Application.Handlers;
 using MassTransit;
 using RSoft.Finance.Contracts.Events;
@@ -17,13 +17,13 @@ namespace RSoft.Entry.Application.Handlers
     /// <summary>
     /// Change status Account command handler
     /// </summary>
-    public class ChangeStatusAccountCommandHandler : UpdateCommandHandlerBase<ChangeStatusAccountCommand, bool, EntryAccount>, IRequestHandler<ChangeStatusAccountCommand, CommandResult<bool>>
+    public class ChangeStatusAccountCommandHandler : UpdateCommandHandlerBase<ChangeStatusAccountCommand, bool, DomainEntry>, IRequestHandler<ChangeStatusAccountCommand, CommandResult<bool>>
     {
 
         #region Local objects/variables
 
         private readonly IUnitOfWork _uow;
-        private readonly IAccountDomainService _accountDomainService;
+        private readonly IEntryDomainService _accountDomainService;
         private readonly IBusControl _bus;
 
         #endregion
@@ -37,7 +37,7 @@ namespace RSoft.Entry.Application.Handlers
         /// <param name="accountDomainService">Account domain/core service</param>
         /// <param name="logger">Logger object</param>
         /// <param name="bus">Messaging bus control</param>
-        public ChangeStatusAccountCommandHandler(IUnitOfWork uow, IAccountDomainService accountDomainService, ILogger<CreateAccountCommandHandler> logger, IBusControl bus) : base(logger)
+        public ChangeStatusAccountCommandHandler(IUnitOfWork uow, IEntryDomainService accountDomainService, ILogger<CreateAccountCommandHandler> logger, IBusControl bus) : base(logger)
         {
             _uow = uow;
             _accountDomainService = accountDomainService;
@@ -49,17 +49,17 @@ namespace RSoft.Entry.Application.Handlers
         #region Overrides
 
         ///<inheritdoc/>
-        protected override async Task<EntryAccount> GetEntityByKeyAsync(ChangeStatusAccountCommand request, CancellationToken cancellationToken)
+        protected override async Task<DomainEntry> GetEntityByKeyAsync(ChangeStatusAccountCommand request, CancellationToken cancellationToken)
             => await _accountDomainService.GetByKeyAsync(request.Id, cancellationToken);
 
         ///<inheritdoc/>
-        protected override void PrepareEntity(ChangeStatusAccountCommand request, EntryAccount entity)
+        protected override void PrepareEntity(ChangeStatusAccountCommand request, DomainEntry entity)
         {
             entity.IsActive = request.IsActive;
         }
 
         ///<inheritdoc/>
-        protected override async Task<bool> SaveAsync(EntryAccount entity, CancellationToken cancellationToken)
+        protected override async Task<bool> SaveAsync(DomainEntry entity, CancellationToken cancellationToken)
         {
             _ = _accountDomainService.Update(entity.Id, entity);
             _ = await _uow.SaveChangesAsync(cancellationToken);

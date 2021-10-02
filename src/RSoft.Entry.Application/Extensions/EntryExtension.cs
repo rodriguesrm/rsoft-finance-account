@@ -1,5 +1,5 @@
 ﻿using RSoft.Entry.Contracts.Models;
-using EntryAccount = RSoft.Entry.Core.Entities.Entry;
+using DomainEntry = RSoft.Entry.Core.Entities.Entry;
 using RSoft.Lib.Common.Models;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace RSoft.Entry.Application.Extensions
         /// Map entity to dto
         /// </summary>
         /// <param name="entity">Account entity instance</param>
-        public static AccountDto Map(this EntryAccount entity)
+        public static AccountDto Map(this DomainEntry entity)
         {
             AccountDto result = null;
             if (entity != null)
@@ -46,7 +46,7 @@ namespace RSoft.Entry.Application.Extensions
         /// Map entity list to dto list
         /// </summary>
         /// <param name="entities">Entities list</param>
-        public static IEnumerable<AccountDto> Map(this IEnumerable<EntryAccount> entities)
+        public static IEnumerable<AccountDto> Map(this IEnumerable<DomainEntry> entities)
         {
             IEnumerable<AccountDto> result = new List<AccountDto>();
             if (entities?.Count() > 0)

@@ -10,7 +10,7 @@ namespace RSoft.Entry.Core.Entities
 {
 
     /// <summary>
-    /// Account entity
+    /// Entry entity
     /// </summary>
     public class Entry : EntityIdNameAuditBase<Guid, Entry>, IEntity, IAuditAuthor<Guid>, IActive
     {
@@ -18,7 +18,7 @@ namespace RSoft.Entry.Core.Entities
         #region Constructors
 
         /// <summary>
-        /// Create a new Account instance
+        /// Create a new Entry instance
         /// </summary>
         public Entry() : base(Guid.NewGuid(), null)
         {
@@ -26,18 +26,18 @@ namespace RSoft.Entry.Core.Entities
         }
 
         /// <summary>
-        /// Create a new Account instance
+        /// Create a new Entry instance
         /// </summary>
-        /// <param name="id">Account id value</param>
+        /// <param name="id">Entry id value</param>
         public Entry(Guid id) : base(id, null)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Create a new Account instance
+        /// Create a new Entry instance
         /// </summary>
-        /// <param name="id">Account id text</param>
+        /// <param name="id">Entry id text</param>
         /// <exception cref="System.ArgumentNullException"></exception>
         /// <exception cref="System.FormatException"></exception>
         /// <exception cref="System.OverflowException"></exception>

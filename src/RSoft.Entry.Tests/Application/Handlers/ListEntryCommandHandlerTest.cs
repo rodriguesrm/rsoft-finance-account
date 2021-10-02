@@ -15,12 +15,12 @@ using System.Threading.Tasks;
 
 namespace RSoft.Entry.Tests.Application.Handlers
 {
-    public class ListAccountCommandHandlerTest : TestFor<ListEntryCommandHandler>
+    public class ListEntryCommandHandlerTest : TestFor<ListEntryCommandHandler>
     {
 
         #region Constructors
 
-        public ListAccountCommandHandlerTest()
+        public ListEntryCommandHandlerTest()
         {
             ServiceInjection.BuildProvider();
         }

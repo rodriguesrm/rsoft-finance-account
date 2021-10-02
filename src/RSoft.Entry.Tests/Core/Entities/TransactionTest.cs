@@ -1,5 +1,5 @@
 ﻿using TransactionDomain = RSoft.Entry.Core.Entities.Transaction;
-using AccountDomain = RSoft.Entry.Core.Entities.Entry;
+using EntryDomain = RSoft.Entry.Core.Entities.Entry;
 using System;
 using System.Linq;
 using NUnit.Framework;
@@ -53,7 +53,7 @@ namespace RSoft.Entry.Tests.Core.Entities
             Assert.True(transaction.Notifications.Any(n => n.Message == "GREATER_THAN_ZERO"));
             Assert.True(transaction.Notifications.Any(n => n.Message == "DATE_REQUIRED"));
             Assert.True(transaction.Notifications.Any(n => n.Message == "FIELD_REQUIRED"));
-            Assert.True(transaction.Notifications.Any(n => n.Message == "ACCOUNT_REQUIRED"));
+            Assert.True(transaction.Notifications.Any(n => n.Message == "ENTRY_REQUIRED"));
             Assert.True(transaction.Notifications.Any(n => n.Message == "PAYMENTMETHOD_REQUIRED"));
         }
 
@@ -70,7 +70,7 @@ namespace RSoft.Entry.Tests.Core.Entities
                 Amount = amount,
                 Comment = comment,
                 PaymentMethod = new PaymentMethod(Guid.NewGuid()) { Name = "PAYMENT_METHOD_NAME" },
-                Entry = new AccountDomain(Guid.NewGuid()) { Name = "ACCOUNT_NAME" },
+                Entry = new EntryDomain(Guid.NewGuid()) { Name = "ENTRY_NAME" },
                 CreatedAuthor = One<Author<Guid>>()
             };
             transaction.Validate();

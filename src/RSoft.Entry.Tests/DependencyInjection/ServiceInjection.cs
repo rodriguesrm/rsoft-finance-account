@@ -5,7 +5,7 @@ using RSoft.Lib.Common.Contracts;
 using RSoft.Lib.Common.Abstractions;
 using RSoft.Finance.Contracts.Enum;
 using CategoryDomain = RSoft.Entry.Core.Entities.Category;
-using AccountDomain = RSoft.Entry.Core.Entities.Entry;
+using EntryDomain = RSoft.Entry.Core.Entities.Entry;
 using AccrualPeriodDomain = RSoft.Entry.Core.Entities.AccrualPeriod;
 using TransactionDomain = RSoft.Entry.Core.Entities.Transaction;
 using UserDomain = RSoft.Entry.Core.Entities.User;
@@ -42,7 +42,7 @@ namespace RSoft.Entry.Tests.DependencyInjection
                     _serviceCollection = new ServiceCollection()
 
                         .AddScoped<IStringLocalizer<CategoryDomain>, StringLocalizerStub<CategoryDomain>>()
-                        .AddScoped<IStringLocalizer<AccountDomain>, StringLocalizerStub<AccountDomain>>()
+                        .AddScoped<IStringLocalizer<EntryDomain>, StringLocalizerStub<EntryDomain>>()
                         .AddScoped<IStringLocalizer<SimpleStringValidationContract>, StringLocalizerStub<SimpleStringValidationContract>>()
                         .AddScoped<IStringLocalizer<RequiredValidationContract<Guid?>>, StringLocalizerStub<RequiredValidationContract<Guid?>>>()
                         .AddScoped<IStringLocalizer<AccrualPeriodDomain>, StringLocalizerStub<AccrualPeriodDomain>>()

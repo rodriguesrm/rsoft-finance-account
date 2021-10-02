@@ -74,7 +74,7 @@ namespace RSoft.Entry.Application.Handlers
         ///<inheritdoc/>
         protected override async Task<Guid?> SaveAsync(DomainEntry entity, CancellationToken cancellationToken)
         {
-            AccountCreatedEvent entryCreatedEvent = new(entity.Id, entity.Name, entity.Category.Id);
+            EntryCreatedEvent entryCreatedEvent = new(entity.Id, entity.Name, entity.Category.Id);
             entity = await _entryDomainService.AddAsync(entity, cancellationToken);
             _ = await _uow.SaveChangesAsync(cancellationToken);
             await _bus.Publish(entryCreatedEvent, cancellationToken);

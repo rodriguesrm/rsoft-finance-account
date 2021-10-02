@@ -4,11 +4,11 @@
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<Authors>Rodrigo Rodrigues</Authors>
 		<Company>RSoft</Company>
-		<Description>Account gRPC client package</Description>
+		<Description>Entry gRPC client package</Description>
 		<PackageLicenseFile>license.txt</PackageLicenseFile>
-		<RepositoryUrl>https://github.com/rodriguesrm/rsoft-finance-account</RepositoryUrl>
-		<PackageTags>rsoft grpc account client</PackageTags>
-		<PackageIcon>rsoft-account-grpcclient-icon-32x32.png</PackageIcon>
+		<RepositoryUrl>https://github.com/rodriguesrm/rsoft-finance-entry</RepositoryUrl>
+		<PackageTags>rsoft grpc entry client</PackageTags>
+		<PackageIcon>rsoft-entry-grpcclient-icon-32x32.png</PackageIcon>
 		<PackageIconUrl />
 	</PropertyGroup>
 
@@ -17,7 +17,7 @@
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>
-		<None Include="rsoft-account-grpcclient-icon-32x32.png">
+		<None Include="rsoft-entry-grpcclient-icon-32x32.png">
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>
@@ -33,8 +33,8 @@
 		<None Include="..\Protos">
 			<Link>Protos</Link>
 		</None>
-		<Protobuf Include="..\Protos\rsoft-account-service.proto" GrpcServices="Client">
-			<Link>Protos\rsoft-account-service.proto</Link>
+		<Protobuf Include="..\Protos\rsoft-entry-service.proto" GrpcServices="Client">
+			<Link>Protos\rsoft-entry-service.proto</Link>
 		</Protobuf>
 	</ItemGroup>
 

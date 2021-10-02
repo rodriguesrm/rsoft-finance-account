@@ -9,7 +9,7 @@ using System.Linq;
 using RSoft.Finance.Contracts.Enum;
 using CategoryTable = RSoft.Entry.Infra.Tables.Category;
 using UserTable = RSoft.Entry.Infra.Tables.User;
-using AccountTable = RSoft.Entry.Infra.Tables.Entry;
+using EntryTable = RSoft.Entry.Infra.Tables.Entry;
 using PaymentMethodTable = RSoft.Entry.Infra.Tables.PaymentMethod;
 using AccrualPeriodTable = RSoft.Entry.Infra.Tables.AccrualPeriod;
 using TransactionTable = RSoft.Entry.Infra.Tables.Transaction;
@@ -28,8 +28,8 @@ namespace RSoft.Entry.Tests.Extensions
         private static Guid _initialCategoryId;
         private static string _initialCategoryName = "INITIAL CATEGORY";
 
-        private static Guid _initialAccountId;
-        private static string _initialAccountName = "INITIAL ACCOUNT";
+        private static Guid _initialEntryId;
+        private static string _initialEntryName = "INITIAL ENTRY";
 
         private static Guid _initialPaymentId;
         private static string _initialPaymentName = "INITIAL PAYMENTMETHOD";
@@ -41,7 +41,7 @@ namespace RSoft.Entry.Tests.Extensions
 
         public static Guid InitialCategoryId => _initialCategoryId;
 
-        public static Guid InitialAccountId => _initialAccountId;
+        public static Guid InitialEntryId => _initialEntryId;
 
         public static Guid InitialPaymentId => _initialPaymentId;
 
@@ -59,7 +59,7 @@ namespace RSoft.Entry.Tests.Extensions
 
             DateTime date = DateTime.UtcNow.Date.AddMonths(-1);
 
-            UserTable userAdmin = context?.Users.FirstOrDefault(u => u.FirstName == "Account");
+            UserTable userAdmin = context?.Users.FirstOrDefault(u => u.FirstName == "Entry");
             if (userAdmin == null)
             {
                 userAdmin = new(AuthenticatedUserStub.UserAdminId) { FirstName = "Admin", LastName = "RSoft" };
@@ -74,12 +74,12 @@ namespace RSoft.Entry.Tests.Extensions
                 context?.Categories.Add(category);
             }
 
-            AccountTable account = context?.Entries.FirstOrDefault(a => a.Name == _initialAccountName);
-            if (account == null)
+            EntryTable entry = context?.Entries.FirstOrDefault(a => a.Name == _initialEntryName);
+            if (entry == null)
             {
-                account = fixture.CreateAccount(_initialAccountName);
-                _initialAccountId = account.Id;
-                context?.Entries.Add(account);
+                entry = fixture.CreateEntry(_initialEntryName);
+                _initialEntryId = entry.Id;
+                context?.Entries.Add(entry);
             }
 
             PaymentMethodTable payment = context?.PaymentMethods.FirstOrDefault(p => p.Name == _initialPaymentName);
@@ -185,12 +185,12 @@ namespace RSoft.Entry.Tests.Extensions
                 .Create();
 
         /// <summary>
-        /// Create a new mock of AccountTable
+        /// Create a new mock of EntryTable
         /// </summary>
         /// <param name="fixture">Fixture object instance</param>
-        public static AccountTable CreateAccount(this IFixture fixture, string accountName)
-            => fixture.Build<AccountTable>()
-                .With(a => a.Name, accountName)
+        public static EntryTable CreateEntry(this IFixture fixture, string entryName)
+            => fixture.Build<EntryTable>()
+                .With(a => a.Name, entryName)
                 .With(a => a.IsActive, true)
                 .With(a => a.CategoryId, _initialCategoryId)
                 .With(a => a.CreatedOn, DateTime.UtcNow.AddDays(-1))
@@ -241,7 +241,7 @@ namespace RSoft.Entry.Tests.Extensions
                 .With(t => t.Date, new DateTime(year, month, DateTime.UtcNow.Day, 12, 0, 0))
                 .With(t => t.Amount, amount)
                 .With(t => t.TransactionType, type)
-                .With(t => t.EntryId, _initialAccountId)
+                .With(t => t.EntryId, _initialEntryId)
                 .With(t => t.PaymentMethodId, _initialPaymentId)
                 .With(t => t.CreatedOn, DateTime.UtcNow.AddDays(-35))
                 .With(t => t.CreatedBy, AuthenticatedUserStub.UserAdminId)

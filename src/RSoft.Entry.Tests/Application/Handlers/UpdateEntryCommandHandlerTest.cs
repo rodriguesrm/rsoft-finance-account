@@ -3,7 +3,6 @@ using Moq;
 using NUnit.Framework;
 using RSoft.Entry.Application.Handlers;
 using RSoft.Entry.Contracts.Commands;
-using RSoft.Entry.Contracts.Models;
 using DomainEntry = RSoft.Entry.Core.Entities.Entry;
 using RSoft.Entry.Core.Ports;
 using RSoft.Entry.Tests.DependencyInjection;
@@ -14,14 +13,41 @@ using System.Threading.Tasks;
 
 namespace RSoft.Entry.Tests.Application.Handlers
 {
-    public class GetAccountByIdCommandHandlerTest : TestFor<GetEntryByIdCommandHandler>
+
+    public class UpdateEntryCommandHandlerTest : TestFor<UpdateEntryCommandHandler>
     {
 
         #region Constructors
 
-        public GetAccountByIdCommandHandlerTest()
+        public UpdateEntryCommandHandlerTest()
         {
             ServiceInjection.BuildProvider();
+        }
+
+        #endregion
+
+        #region Overrides
+
+        protected override void Setup(IFixture fixture)
+        {
+
+            Mock<IEntryDomainService> domainService = new();
+
+            domainService
+                .Setup(m => m.Update(It.IsAny<Guid>(), It.IsAny<DomainEntry>()))
+                .Returns((Guid id, DomainEntry entity) => entity);
+
+            domainService
+                .Setup(m => m.GetByKeyAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Guid id, CancellationToken token) =>
+                {
+                    _fixture.Customize<DomainEntry>(c => c.FromFactory(() => new DomainEntry(id)));
+                    DomainEntry entity = One<DomainEntry>();
+                    return entity;
+                });
+
+            _fixture.Inject(domainService.Object);
+
         }
 
         #endregion
@@ -31,30 +57,10 @@ namespace RSoft.Entry.Tests.Application.Handlers
         [Test]
         public async Task HandleMediatorCommand_ProcessSuccess()
         {
-
-            DomainEntry entity = null;
-
-            Mock<IEntryDomainService> domainService = new();
-            domainService
-                .Setup(m => m.GetByKeyAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync((Guid id, CancellationToken token) =>
-                {
-                    _fixture.Customize<DomainEntry>(c => c.FromFactory(() => new DomainEntry(id)));
-                    entity = One<DomainEntry>();
-                    return entity;
-                });
-            _fixture.Inject(domainService.Object);
-
-            GetEntryByIdCommand command = new(Guid.NewGuid());
-            CommandResult<EntryDto> result = await Sut.Handle(command, default);
+            UpdateEntryCommand command = new(Guid.NewGuid(), "ENTRY_NAME_UPDTED", Guid.NewGuid());
+            CommandResult<bool> result = await Sut.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
-            EntryDto dto = result.Response;
-            Assert.NotNull(dto);
-            Assert.AreEqual(entity.Id, dto.Id);
-            Assert.AreEqual(entity.Name, dto.Name);
-            Assert.AreEqual(entity.Category.Id, dto.Category.Id);
-            Assert.AreEqual(entity.Category.Name, dto.Category.Name);
         }
 
         #endregion

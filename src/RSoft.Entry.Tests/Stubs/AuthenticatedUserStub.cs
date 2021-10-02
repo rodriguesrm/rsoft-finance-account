@@ -14,7 +14,7 @@ namespace RSoft.Entry.Tests.Stubs
         public string LastName { get => "RSoft"; }
         public string Login { get => "admin"; }
         public string Email { get => "master@server.com"; }
-        public IEnumerable<string> Scopes { get => new List<string>() { "Account Service", "Authentication Service" }; }
+        public IEnumerable<string> Scopes { get => new List<string>() { "Entry Service", "Authentication Service" }; }
         public IEnumerable<string> Roles { get => new List<string>() { "service" }; }
     }
 }

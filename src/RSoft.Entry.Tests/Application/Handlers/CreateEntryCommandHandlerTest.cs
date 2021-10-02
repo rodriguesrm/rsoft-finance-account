@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 namespace RSoft.Entry.Tests.Application.Handlers
 {
     
-    public class CreateAccountCommandHandlerTest : TestFor<CreateEntryCommandHandler>
+    public class CreateEntryCommandHandlerTest : TestFor<CreateEntryCommandHandler>
     {
 
         #region Constructors
 
-        public CreateAccountCommandHandlerTest()
+        public CreateEntryCommandHandlerTest()
         {
             ServiceInjection.BuildProvider();
         }
@@ -44,7 +44,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
         [Test]
         public async Task HandleMediatorCommand_ProcessSuccess()
         {
-            CreateEntryCommand command = new("ACCOUNT_NAME", Guid.NewGuid());
+            CreateEntryCommand command = new("ENTRY_NAME", Guid.NewGuid());
             CommandResult<Guid?> result = await Sut.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);

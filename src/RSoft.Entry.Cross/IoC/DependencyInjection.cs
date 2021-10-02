@@ -47,7 +47,7 @@ namespace RSoft.Entry.Cross.IoC
                 //BACKLOG: Add retries
                 //BACKLOG: Move consumer to worker
                 // Events consumers
-                cfg.AddEventConsumerEndpoint<AccrualPeriodStartedEvent, AccrualPeriodStartedEventConsumer>($"{nameof(AccrualPeriodStartedEvent)}.AccountService");
+                cfg.AddEventConsumerEndpoint<AccrualPeriodStartedEvent, AccrualPeriodStartedEventConsumer>($"{nameof(AccrualPeriodStartedEvent)}.EntryService");
             });
 
             #region Infra

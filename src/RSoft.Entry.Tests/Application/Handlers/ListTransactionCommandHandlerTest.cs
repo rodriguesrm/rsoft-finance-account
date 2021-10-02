@@ -6,7 +6,6 @@ using RSoft.Entry.Contracts.Commands;
 using RSoft.Entry.Contracts.Models;
 using RSoft.Entry.Core.Entities;
 using RSoft.Entry.Core.Ports;
-using RSoft.Entry.Tests.DependencyInjection;
 using RSoft.Lib.Design.Application.Commands;
 using System;
 using System.Collections.Generic;
@@ -21,10 +20,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
 
         #region Constructors
 
-        public ListTransactionCommandHandlerTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public ListTransactionCommandHandlerTest() : base() { }
 
         #endregion
 

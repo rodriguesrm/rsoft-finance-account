@@ -49,7 +49,7 @@ namespace RSoft.Entry.GrpcService.Services
             => await GrpcServiceHelpers.SendCommand<Empty, StartAccrualPeriodCommand, bool>
             (
                 nameof(StartPeriod),
-                () => new() { Year = request.Year, Month = request.Month },
+                () => new(request.Year, request.Month),
                 (reply, result) => { },
                 logger: _logger
             );

@@ -6,7 +6,6 @@ using RSoft.Entry.Contracts.Commands;
 using RSoft.Entry.Contracts.Models;
 using DomainEntry = RSoft.Entry.Core.Entities.Entry;
 using RSoft.Entry.Core.Ports;
-using RSoft.Entry.Tests.DependencyInjection;
 using RSoft.Lib.Design.Application.Commands;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +19,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
 
         #region Constructors
 
-        public ListEntryCommandHandlerTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public ListEntryCommandHandlerTest() : base() { }
 
         #endregion
 

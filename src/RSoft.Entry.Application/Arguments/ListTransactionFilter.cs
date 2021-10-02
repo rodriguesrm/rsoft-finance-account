@@ -64,7 +64,7 @@ namespace RSoft.Entry.Application.Arguments
         {
             bool valid =
                 (StartAt.HasValue && EndAt.HasValue) ||
-                (Year.HasValue || (Month.HasValue && Month.Value >= 1 && Month.Value <= 12)) ||
+                (Year.HasValue && (Month.HasValue && Month.Value >= 1 && Month.Value <= 12)) ||
                 (EntryId.HasValue) ||
                 (TransactionType.HasValue) ||
                 (PaymentMethodId.HasValue);

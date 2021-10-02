@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using RSoft.Entry.Core.Entities;
-using RSoft.Entry.Tests.DependencyInjection;
 using RSoft.Lib.Common.ValueObjects;
 using System;
 using System.Linq;
@@ -13,10 +12,7 @@ namespace RSoft.Entry.Tests.Core.Entities
 
         #region Constructors
 
-        public AccrualPeriodTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public AccrualPeriodTest() : base() { }
 
         #endregion
 

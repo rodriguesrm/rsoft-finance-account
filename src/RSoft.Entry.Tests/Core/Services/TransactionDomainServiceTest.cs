@@ -6,7 +6,6 @@ using RSoft.Entry.Core.Ports;
 using RSoft.Entry.Core.Services;
 using RSoft.Entry.Infra;
 using RSoft.Entry.Infra.Providers;
-using RSoft.Entry.Tests.DependencyInjection;
 using RSoft.Entry.Tests.Extensions;
 using RSoft.Finance.Contracts.Enum;
 using RSoft.Lib.Common.ValueObjects;
@@ -38,10 +37,7 @@ namespace RSoft.Entry.Tests.Core.Services
 
         #region Constructors
 
-        public TransactionDomainServiceTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public TransactionDomainServiceTest() : base() { }
 
         #endregion
 

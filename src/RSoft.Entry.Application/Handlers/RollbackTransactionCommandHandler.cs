@@ -80,6 +80,7 @@ namespace RSoft.Entry.Application.Handlers
             Transaction originalTransaction = _transactionDomainService.GetByKeyAsync(request.TransactionId).Result;
             if (originalTransaction == null)
             {
+                originalTransaction = new Transaction(request.TransactionId);
                 originalTransaction.AddNotification(new Notification(nameof(Transaction), _localizer["TRANSACTION_NOT_FOUND"]));
                 return originalTransaction;
             }

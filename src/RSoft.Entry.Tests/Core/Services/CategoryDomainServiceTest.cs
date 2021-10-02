@@ -6,7 +6,6 @@ using RSoft.Entry.Core.Ports;
 using RSoft.Entry.Core.Services;
 using RSoft.Entry.Infra;
 using RSoft.Entry.Infra.Providers;
-using RSoft.Entry.Tests.DependencyInjection;
 using RSoft.Entry.Tests.Extensions;
 using RSoft.Lib.Common.ValueObjects;
 using System;
@@ -32,10 +31,7 @@ namespace RSoft.Entry.Tests.Core.Services
 
         #region Constructors
 
-        public CategoryDomainServiceTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public CategoryDomainServiceTest() : base() { }
 
         #endregion
 

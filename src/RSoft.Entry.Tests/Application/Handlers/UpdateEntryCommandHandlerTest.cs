@@ -5,7 +5,6 @@ using RSoft.Entry.Application.Handlers;
 using RSoft.Entry.Contracts.Commands;
 using DomainEntry = RSoft.Entry.Core.Entities.Entry;
 using RSoft.Entry.Core.Ports;
-using RSoft.Entry.Tests.DependencyInjection;
 using RSoft.Lib.Design.Application.Commands;
 using System;
 using System.Threading;
@@ -19,10 +18,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
 
         #region Constructors
 
-        public UpdateEntryCommandHandlerTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public UpdateEntryCommandHandlerTest() : base() { }
 
         #endregion
 

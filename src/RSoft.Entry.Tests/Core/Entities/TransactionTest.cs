@@ -5,7 +5,6 @@ using System.Linq;
 using NUnit.Framework;
 using RSoft.Finance.Contracts.Enum;
 using RSoft.Entry.Core.Entities;
-using RSoft.Entry.Tests.DependencyInjection;
 using RSoft.Lib.Common.ValueObjects;
 
 namespace RSoft.Entry.Tests.Core.Entities
@@ -16,10 +15,7 @@ namespace RSoft.Entry.Tests.Core.Entities
 
         #region Constructors
 
-        public TransactionTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public TransactionTest() : base() { }
 
         #endregion
 

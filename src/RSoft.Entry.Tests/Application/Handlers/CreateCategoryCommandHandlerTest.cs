@@ -5,7 +5,6 @@ using RSoft.Entry.Application.Handlers;
 using RSoft.Entry.Contracts.Commands;
 using RSoft.Entry.Core.Entities;
 using RSoft.Entry.Core.Ports;
-using RSoft.Entry.Tests.DependencyInjection;
 using RSoft.Lib.Design.Application.Commands;
 using System;
 using System.Threading;
@@ -13,16 +12,13 @@ using System.Threading.Tasks;
 
 namespace RSoft.Entry.Tests.Application.Handlers
 {
-    
+
     public class CreateCategoryCommandHandlerTest : TestFor<CreateCategoryCommandHandler>
     {
 
         #region Constructors
 
-        public CreateCategoryCommandHandlerTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public CreateCategoryCommandHandlerTest() : base() { }
 
         #endregion
 

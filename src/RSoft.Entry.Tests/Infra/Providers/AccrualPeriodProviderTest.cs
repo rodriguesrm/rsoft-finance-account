@@ -1,7 +1,6 @@
 ﻿using AutoFixture;
 using NUnit.Framework;
 using RSoft.Entry.Infra.Providers;
-using RSoft.Entry.Tests.DependencyInjection;
 using RSoft.Entry.Tests.Extensions;
 using RSoft.Lib.Design.Exceptions;
 
@@ -15,10 +14,7 @@ namespace RSoft.Entry.Tests.Infra.Providers
 
         #region Constructors
 
-        public AccrualPeriodProviderTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public AccrualPeriodProviderTest() : base() { }
 
         #endregion
 

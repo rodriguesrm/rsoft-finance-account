@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using NUnit.Framework;
+using RSoft.Entry.Tests.DependencyInjection;
 using System;
 
 namespace RSoft.Entry.Tests
@@ -16,6 +17,15 @@ namespace RSoft.Entry.Tests
         #region Local objects/variables
 
         private Lazy<TSut> _lazySut;
+
+        #endregion
+
+        #region Constructors
+
+        public TestFor()
+        {
+            ServiceInjection.BuildProvider();
+        }
 
         #endregion
 

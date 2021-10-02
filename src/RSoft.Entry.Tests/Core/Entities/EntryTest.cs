@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using RSoft.Entry.Tests.DependencyInjection;
 using System;
 using System.Linq;
 using EntryDomain = RSoft.Entry.Core.Entities.Entry;
@@ -13,10 +12,7 @@ namespace RSoft.Entry.Tests.Core.Entities
 
         #region Constructors
 
-        public EntryTest()
-        {
-            ServiceInjection.BuildProvider();
-        }
+        public EntryTest() : base() { }
 
         #endregion
 

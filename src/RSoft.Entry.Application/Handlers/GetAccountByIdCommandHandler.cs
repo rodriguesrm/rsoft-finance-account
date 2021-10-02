@@ -16,7 +16,7 @@ namespace RSoft.Entry.Application.Handlers
     /// <summary>
     /// Get Account by id command handler
     /// </summary>
-    public class GetAccountByIdCommandHandler : GetByKeyCommandHandlerBase<GetAccountByIdCommand, AccountDto, DomainEntry>, IRequestHandler<GetAccountByIdCommand, CommandResult<AccountDto>>
+    public class GetAccountByIdCommandHandler : GetByKeyCommandHandlerBase<GetEntryByIdCommand, EntryDto, DomainEntry>, IRequestHandler<GetEntryByIdCommand, CommandResult<EntryDto>>
     {
 
         #region Local objects/variables
@@ -42,11 +42,11 @@ namespace RSoft.Entry.Application.Handlers
         #region Overrides
 
         ///<inheritdoc/>
-        protected override async Task<DomainEntry> GetEntityByKeyAsync(GetAccountByIdCommand request, CancellationToken cancellationToken)
+        protected override async Task<DomainEntry> GetEntityByKeyAsync(GetEntryByIdCommand request, CancellationToken cancellationToken)
             => await _accountDomainService.GetByKeyAsync(request.Id, cancellationToken);
 
         ///<inheritdoc/>
-        protected override AccountDto MapEntity(DomainEntry entity)
+        protected override EntryDto MapEntity(DomainEntry entity)
             => entity.Map();
 
         #endregion
@@ -58,7 +58,7 @@ namespace RSoft.Entry.Application.Handlers
         /// </summary>
         /// <param name="request">Command request data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public async Task<CommandResult<AccountDto>> Handle(GetAccountByIdCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResult<EntryDto>> Handle(GetEntryByIdCommand request, CancellationToken cancellationToken)
             => await RunHandler(request, cancellationToken);
 
         #endregion

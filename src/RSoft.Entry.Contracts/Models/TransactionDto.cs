@@ -47,9 +47,9 @@ namespace RSoft.Entry.Contracts.Models
         public string Comment { get; set; }
 
         /// <summary>
-        /// Account detail
+        /// Entry detail
         /// </summary>
-        public SimpleIdentification<Guid> Account { get; set; }
+        public SimpleIdentification<Guid> Entry { get; set; }
 
         /// <summary>
         /// Payment method detail

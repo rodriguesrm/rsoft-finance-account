@@ -45,11 +45,11 @@ namespace RSoft.Entry.Tests.Application.Handlers
                 });
             _fixture.Inject(domainService.Object);
 
-            GetAccountByIdCommand command = new(Guid.NewGuid());
-            CommandResult<AccountDto> result = await Sut.Handle(command, default);
+            GetEntryByIdCommand command = new(Guid.NewGuid());
+            CommandResult<EntryDto> result = await Sut.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
-            AccountDto dto = result.Response;
+            EntryDto dto = result.Response;
             Assert.NotNull(dto);
             Assert.AreEqual(entity.Id, dto.Id);
             Assert.AreEqual(entity.Name, dto.Name);

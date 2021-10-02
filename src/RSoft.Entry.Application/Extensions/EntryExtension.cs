@@ -18,13 +18,13 @@ namespace RSoft.Entry.Application.Extensions
         /// Map entity to dto
         /// </summary>
         /// <param name="entity">Account entity instance</param>
-        public static AccountDto Map(this DomainEntry entity)
+        public static EntryDto Map(this DomainEntry entity)
         {
-            AccountDto result = null;
+            EntryDto result = null;
             if (entity != null)
             {
 
-                result = new AccountDto()
+                result = new EntryDto()
                 {
                     Id = entity.Id,
                     Name = entity.Name,
@@ -46,9 +46,9 @@ namespace RSoft.Entry.Application.Extensions
         /// Map entity list to dto list
         /// </summary>
         /// <param name="entities">Entities list</param>
-        public static IEnumerable<AccountDto> Map(this IEnumerable<DomainEntry> entities)
+        public static IEnumerable<EntryDto> Map(this IEnumerable<DomainEntry> entities)
         {
-            IEnumerable<AccountDto> result = new List<AccountDto>();
+            IEnumerable<EntryDto> result = new List<EntryDto>();
             if (entities?.Count() > 0)
                 result = entities.Select(e => e.Map());
             return result;

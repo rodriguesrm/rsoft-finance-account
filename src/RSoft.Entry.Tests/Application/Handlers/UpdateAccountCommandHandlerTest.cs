@@ -57,7 +57,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
         [Test]
         public async Task HandleMediatorCommand_ProcessSuccess()
         {
-            UpdateAccountCommand command = new(Guid.NewGuid(), "ACCOUNT_NAME_UPDTED", Guid.NewGuid());
+            UpdateEntryCommand command = new(Guid.NewGuid(), "ACCOUNT_NAME_UPDTED", Guid.NewGuid());
             CommandResult<bool> result = await Sut.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);

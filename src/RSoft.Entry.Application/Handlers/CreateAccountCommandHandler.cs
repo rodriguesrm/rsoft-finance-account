@@ -18,7 +18,7 @@ namespace RSoft.Entry.Application.Handlers
     /// <summary>
     /// Create account command handler
     /// </summary>
-    public class CreateAccountCommandHandler : CreateCommandHandlerBase<CreateAccountCommand, Guid?, DomainEntry>, IRequestHandler<CreateAccountCommand, CommandResult<Guid?>>
+    public class CreateAccountCommandHandler : CreateCommandHandlerBase<CreateEntryCommand, Guid?, DomainEntry>, IRequestHandler<CreateEntryCommand, CommandResult<Guid?>>
     {
 
         #region Local objects/variables
@@ -54,7 +54,7 @@ namespace RSoft.Entry.Application.Handlers
         /// </summary>
         /// <param name="request">Request command data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public async Task<CommandResult<Guid?>> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResult<Guid?>> Handle(CreateEntryCommand request, CancellationToken cancellationToken)
             => await RunHandler(request, cancellationToken);
 
         #endregion
@@ -62,7 +62,7 @@ namespace RSoft.Entry.Application.Handlers
         #region Overrides
 
         ///<inheritdoc/>
-        protected override DomainEntry PrepareEntity(CreateAccountCommand request)
+        protected override DomainEntry PrepareEntity(CreateEntryCommand request)
         {
             DomainEntry entity = new();
             entity.Name = request.Name;

@@ -8,10 +8,10 @@ namespace RSoft.Entry.Contracts.Models
 {
 
     /// <summary>
-    /// Account data transport object
+    /// Entry data transport object
     /// </summary>
     [ExcludeFromCodeCoverage(Justification = "Anemic class")]
-    public class AccountDto : AppDtoIdAuditBase<Guid>, IAuditDto<Guid>
+    public class EntryDto : AppDtoIdAuditBase<Guid>, IAuditDto<Guid>
     {
 
         #region Properties

@@ -51,11 +51,11 @@ namespace RSoft.Entry.Tests.Application.Handlers
         public async Task HandleMediatorCommand_ProcessSuccess()
         {
 
-            ListAccountCommand command = new();
-            CommandResult<IEnumerable<AccountDto>> result = await Sut.Handle(command, default);
+            ListEntryCommand command = new();
+            CommandResult<IEnumerable<EntryDto>> result = await Sut.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
-            IEnumerable<AccountDto> dtos = result.Response;
+            IEnumerable<EntryDto> dtos = result.Response;
             Assert.NotNull(dtos);
             Assert.AreEqual(3, dtos.Count());
         }

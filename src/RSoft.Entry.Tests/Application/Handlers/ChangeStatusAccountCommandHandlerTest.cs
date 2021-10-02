@@ -52,7 +52,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
         [Test]
         public async Task HandleMediatorCommand_ProcessSuccess()
         {
-            ChangeStatusAccountCommand command = new(Guid.NewGuid(), true);
+            ChangeStatusEntryCommand command = new(Guid.NewGuid(), true);
             CommandResult<bool> result = await Sut.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);

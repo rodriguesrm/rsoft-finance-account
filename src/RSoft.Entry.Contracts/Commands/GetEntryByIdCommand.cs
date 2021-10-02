@@ -8,19 +8,19 @@ namespace RSoft.Entry.Contracts.Commands
 {
 
     /// <summary>
-    /// Update Account command contract 
+    /// Update Entry command contract 
     /// </summary>
     [ExcludeFromCodeCoverage(Justification = "Anemic class")]
-    public class GetAccountByIdCommand : IRequest<CommandResult<AccountDto>>
+    public class GetEntryByIdCommand : IRequest<CommandResult<EntryDto>>
     {
 
         #region Constructors
 
         /// <summary>
-        /// Get Account by id
+        /// Get Entry by id
         /// </summary>
-        /// <param name="id">Account id</param>
-        public GetAccountByIdCommand(Guid id)
+        /// <param name="id">Entry id</param>
+        public GetEntryByIdCommand(Guid id)
         {
             Id = id;
         }
@@ -30,7 +30,7 @@ namespace RSoft.Entry.Contracts.Commands
         #region Request Data
 
         /// <summary>
-        /// Account id
+        /// Entry id
         /// </summary>
         public Guid Id { get; set; }
 
@@ -41,7 +41,7 @@ namespace RSoft.Entry.Contracts.Commands
         /// <summary>
         /// Response data 
         /// </summary>
-        public CommandResult<AccountDto> Response { get; set; }
+        public CommandResult<EntryDto> Response { get; set; }
 
         #endregion
 

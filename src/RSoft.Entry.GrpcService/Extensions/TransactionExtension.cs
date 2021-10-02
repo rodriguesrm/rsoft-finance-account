@@ -64,7 +64,7 @@ namespace RSoft.Entry.GrpcService.Extensions
                 reply.TransactionType = new SimpleIdName() { Id = dto.TransactionType.Id.ToString(), Name = dto.TransactionType.Name };
                 reply.Amount = dto.Amount;
                 reply.Comment = dto.Comment;
-                reply.AccountId = new SimpleIdName() { Id = dto.Account.Id.ToString(), Name = dto.Account.Name };
+                reply.AccountId = new SimpleIdName() { Id = dto.Entry.Id.ToString(), Name = dto.Entry.Name };
                 reply.PaymentMethodId = new SimpleIdName() { Id = dto.PaymentMethod.Id.ToString(), Name = dto.PaymentMethod.Name };
                 reply.TransactionAuthor = new AuthorDetail() { Id = dto.CreatedBy.Id.ToString(), Name = dto.CreatedBy.Name };
             }

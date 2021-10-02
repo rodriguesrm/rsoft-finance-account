@@ -17,7 +17,7 @@ namespace RSoft.Entry.Application.Handlers
     /// <summary>
     /// Lista Account command handler
     /// </summary>
-    public class ListAccountCommandHandler : ListCommandHandlerBase<ListAccountCommand, AccountDto, DomainEntry>, IRequestHandler<ListAccountCommand, CommandResult<IEnumerable<AccountDto>>>
+    public class ListAccountCommandHandler : ListCommandHandlerBase<ListEntryCommand, EntryDto, DomainEntry>, IRequestHandler<ListEntryCommand, CommandResult<IEnumerable<EntryDto>>>
     {
 
         #region Local objects/variables
@@ -43,11 +43,11 @@ namespace RSoft.Entry.Application.Handlers
         #region Overrides
 
         ///<inheritdoc/>
-        protected override async Task<IEnumerable<DomainEntry>> GetAllAsync(ListAccountCommand request, CancellationToken cancellationToken)
+        protected override async Task<IEnumerable<DomainEntry>> GetAllAsync(ListEntryCommand request, CancellationToken cancellationToken)
             => await _accountDomainService.GetAllAsync(cancellationToken);
 
         ///<inheritdoc/>
-        protected override IEnumerable<AccountDto> MapEntities(IEnumerable<DomainEntry> entities)
+        protected override IEnumerable<EntryDto> MapEntities(IEnumerable<DomainEntry> entities)
             => entities.Map();
 
         #endregion
@@ -59,7 +59,7 @@ namespace RSoft.Entry.Application.Handlers
         /// </summary>
         /// <param name="request">Request command data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public async Task<CommandResult<IEnumerable<AccountDto>>> Handle(ListAccountCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResult<IEnumerable<EntryDto>>> Handle(ListEntryCommand request, CancellationToken cancellationToken)
             => await RunHandler(request, cancellationToken);
 
         #endregion

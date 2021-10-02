@@ -24,21 +24,21 @@ namespace RSoft.Entry.Contracts.Commands
         /// </summary>
         /// <param name="periodDate">Date data to filter</param>
         /// <param name="periodYearMonth">Year/month to filter</param>
-        /// <param name="accountId">Account id to filter</param>
+        /// <param name="entryId">Entry id to filter</param>
         /// <param name="transactionType">Transaction type to filter</param>
         /// <param name="paymentMethodId">Period method id to filter</param>
         public ListTransactionCommand
         (
             PeriodDateFilter periodDate = null,
             PeriodYearMonthFilter periodYearMonth = null, 
-            Guid? accountId = null, 
+            Guid? entryId = null, 
             TransactionTypeEnum? transactionType = null, 
             Guid? paymentMethodId = null
         )
         {
             PeriodDate = periodDate;
             PeriodYearMonth = periodYearMonth;
-            AccountId = accountId;
+            EntryId = entryId;
             TransactionType = transactionType;
             PaymentMethodId = paymentMethodId;
         }
@@ -58,9 +58,9 @@ namespace RSoft.Entry.Contracts.Commands
         public PeriodYearMonthFilter PeriodYearMonth { get; set; }
 
         /// <summary>
-        /// Filter by Account id
+        /// Filter by Entry id
         /// </summary>
-        public Guid? AccountId { get; set; }
+        public Guid? EntryId { get; set; }
 
         /// <summary>
         /// Filter by transaction type

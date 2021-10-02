@@ -22,15 +22,15 @@ namespace RSoft.Entry.Contracts.Commands
         /// <param name="transactionType">Transaction type</param>
         /// <param name="amount">Transaction amount</param>
         /// <param name="comment">Transaction Comments/Annotations</param>
-        /// <param name="accountId">Account id</param>
+        /// <param name="entryId">Entry id</param>
         /// <param name="paymentMethodId">Payment method id</param>
-        public CreateTransactionCommand(DateTime date, int transactionType, float amount, string comment, Guid? accountId, Guid? paymentMethodId)
+        public CreateTransactionCommand(DateTime date, int transactionType, float amount, string comment, Guid? entryId, Guid? paymentMethodId)
         {
             Date = date;
             TransactionType = transactionType;
             Amount = amount;
             Comment = comment;
-            AccountId = accountId;
+            EntryId = entryId;
             PaymentMethodId = paymentMethodId;
         }
 
@@ -59,9 +59,9 @@ namespace RSoft.Entry.Contracts.Commands
         public string Comment { get; set; }
 
         /// <summary>
-        /// Account data
+        /// Entry data
         /// </summary>
-        public Guid? AccountId { get; set; }
+        public Guid? EntryId { get; set; }
 
         /// <summary>
         /// Payment method data

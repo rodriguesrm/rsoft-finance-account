@@ -28,8 +28,8 @@ namespace RSoft.Entry.Application.Extensions
         {
 
             DomainEntry account = null;
-            if (command.AccountId.HasValue)
-                account = new DomainEntry(command.AccountId.Value);
+            if (command.EntryId.HasValue)
+                account = new DomainEntry(command.EntryId.Value);
             PaymentMethod paymentMethod = null;
             if (command.PaymentMethodId.HasValue)
                 paymentMethod = new PaymentMethod(command.PaymentMethodId.Value);
@@ -63,7 +63,7 @@ namespace RSoft.Entry.Application.Extensions
                     TransactionType = new SimpleIdentification<int>((int)entity.TransactionType.Value, entity.TransactionType.Value.GetDescription()),
                     Amount = entity.Amount,
                     Comment = entity.Comment,
-                    Account = new SimpleIdentification<Guid>(entity.Entries.Id, entity.Entries.Name),
+                    Entry = new SimpleIdentification<Guid>(entity.Entries.Id, entity.Entries.Name),
                     PaymentMethod = new SimpleIdentification<Guid>(entity.PaymentMethod.Id, entity.PaymentMethod.Name),
                     CreatedBy = new AuditAuthor<Guid>(entity.CreatedOn, entity.CreatedAuthor.Id, entity.CreatedAuthor.Name)
                 };
@@ -107,7 +107,7 @@ namespace RSoft.Entry.Application.Extensions
                    EndAt = command.PeriodDate?.EndAt ?? null,
                    Year = command.PeriodYearMonth?.Year ?? null,
                    Month = command.PeriodYearMonth?.Month ?? null,
-                   EntryId = command.AccountId ?? null,
+                   EntryId = command.EntryId ?? null,
                    TransactionType = command.TransactionType ?? null,
                    PaymentMethodId = command.PaymentMethodId ?? null
                };

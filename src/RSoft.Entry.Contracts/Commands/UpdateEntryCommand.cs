@@ -7,10 +7,10 @@ namespace RSoft.Entry.Contracts.Commands
 {
 
     /// <summary>
-    /// Create Account command contract 
+    /// Update Entry command contract 
     /// </summary>
     [ExcludeFromCodeCoverage(Justification = "Anemic class")]
-    public class ChangeStatusAccountCommand : IRequest<CommandResult<bool>>
+    public class UpdateEntryCommand : IRequest<CommandResult<bool>>
     {
 
         #region Constructors
@@ -18,28 +18,34 @@ namespace RSoft.Entry.Contracts.Commands
         /// <summary>
         /// Create a new command instance
         /// </summary>
-        /// <param name="id">Account id</param>
-        /// <param name="isActive">Active status flag</param>
-        public ChangeStatusAccountCommand(Guid id, bool isActive)
+        /// <param name="id">Entry id</param>
+        /// <param name="name">Entry name</param>
+        /// <param name="categoryId">Category id</param>
+        public UpdateEntryCommand(Guid id, string name, Guid? categoryId)
         {
             Id = id;
-            IsActive = isActive;
+            Name = name;
+            CategoryId = categoryId;
         }
 
         #endregion
 
         #region Request Data
 
-
         /// <summary>
-        /// Account id
+        /// Entry id
         /// </summary>
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Active status flag
+        /// Entry name description
         /// </summary>
-        public bool IsActive { get; set; }
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Category id value
+        /// </summary>
+        public Guid? CategoryId { get; set; }
 
         #endregion
 

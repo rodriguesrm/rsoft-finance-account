@@ -17,7 +17,7 @@ namespace RSoft.Entry.Application.Handlers
     /// <summary>
     /// Change status Account command handler
     /// </summary>
-    public class ChangeStatusAccountCommandHandler : UpdateCommandHandlerBase<ChangeStatusAccountCommand, bool, DomainEntry>, IRequestHandler<ChangeStatusAccountCommand, CommandResult<bool>>
+    public class ChangeStatusAccountCommandHandler : UpdateCommandHandlerBase<ChangeStatusEntryCommand, bool, DomainEntry>, IRequestHandler<ChangeStatusEntryCommand, CommandResult<bool>>
     {
 
         #region Local objects/variables
@@ -49,11 +49,11 @@ namespace RSoft.Entry.Application.Handlers
         #region Overrides
 
         ///<inheritdoc/>
-        protected override async Task<DomainEntry> GetEntityByKeyAsync(ChangeStatusAccountCommand request, CancellationToken cancellationToken)
+        protected override async Task<DomainEntry> GetEntityByKeyAsync(ChangeStatusEntryCommand request, CancellationToken cancellationToken)
             => await _accountDomainService.GetByKeyAsync(request.Id, cancellationToken);
 
         ///<inheritdoc/>
-        protected override void PrepareEntity(ChangeStatusAccountCommand request, DomainEntry entity)
+        protected override void PrepareEntity(ChangeStatusEntryCommand request, DomainEntry entity)
         {
             entity.IsActive = request.IsActive;
         }
@@ -76,7 +76,7 @@ namespace RSoft.Entry.Application.Handlers
         /// </summary>
         /// <param name="request">Command request data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public async Task<CommandResult<bool>> Handle(ChangeStatusAccountCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResult<bool>> Handle(ChangeStatusEntryCommand request, CancellationToken cancellationToken)
             => await RunHandler(request, cancellationToken);
 
         #endregion

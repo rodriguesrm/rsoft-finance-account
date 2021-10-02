@@ -17,7 +17,7 @@ namespace RSoft.Entry.GrpcService.Extensions
         /// Map Account dto to Account-detail (grpc-model)
         /// </summary>
         /// <param name="dto">Account dto instance</param>
-        public static AccountDetail Map(this AccountDto dto)
+        public static AccountDetail Map(this EntryDto dto)
         {
             if (dto == null) return null;
             AccountDetail reply = new();
@@ -30,7 +30,7 @@ namespace RSoft.Entry.GrpcService.Extensions
         /// </summary>
         /// <param name="dto">Account dto instance</param>
         /// <param name="reply">Account detail instance</param>
-        public static void Map(this AccountDto dto, AccountDetail reply)
+        public static void Map(this EntryDto dto, AccountDetail reply)
         {
             
             if (dto != null)
@@ -81,7 +81,7 @@ namespace RSoft.Entry.GrpcService.Extensions
         /// Map Account dto list to Account-detail (grpc-model) list
         /// </summary>
         /// <param name="dtos">Account dtos list</param>
-        public static IEnumerable<AccountDetail> Map(this IEnumerable<AccountDto> dtos)
+        public static IEnumerable<AccountDetail> Map(this IEnumerable<EntryDto> dtos)
         {
             IEnumerable<AccountDetail> result = new List<AccountDetail>();
             if (dtos?.Count() > 0)

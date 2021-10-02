@@ -18,7 +18,7 @@ namespace RSoft.Entry.Application.Handlers
     /// <summary>
     /// Create Account command handler
     /// </summary>
-    public class UpdateAccountCommandHandler : UpdateCommandHandlerBase<UpdateAccountCommand, bool, DomainEntry>, IRequestHandler<UpdateAccountCommand, CommandResult<bool>>
+    public class UpdateAccountCommandHandler : UpdateCommandHandlerBase<UpdateEntryCommand, bool, DomainEntry>, IRequestHandler<UpdateEntryCommand, CommandResult<bool>>
     {
 
         #region Local objects/variables
@@ -50,11 +50,11 @@ namespace RSoft.Entry.Application.Handlers
         #region Overrides
 
         ///<inheritdoc/>
-        protected override async Task<DomainEntry> GetEntityByKeyAsync(UpdateAccountCommand request, CancellationToken cancellationToken)
+        protected override async Task<DomainEntry> GetEntityByKeyAsync(UpdateEntryCommand request, CancellationToken cancellationToken)
             => await _accountDomainService.GetByKeyAsync(request.Id, cancellationToken);
 
         ///<inheritdoc/>
-        protected override void PrepareEntity(UpdateAccountCommand request, DomainEntry entity)
+        protected override void PrepareEntity(UpdateEntryCommand request, DomainEntry entity)
         {
             entity.Name = request.Name;
             if (request.CategoryId.HasValue)
@@ -79,7 +79,7 @@ namespace RSoft.Entry.Application.Handlers
         /// </summary>
         /// <param name="request">Request command data</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        public async Task<CommandResult<bool>> Handle(UpdateAccountCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResult<bool>> Handle(UpdateEntryCommand request, CancellationToken cancellationToken)
             => await RunHandler(request, cancellationToken);
 
         #endregion

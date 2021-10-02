@@ -8,10 +8,10 @@ namespace RSoft.Entry.Contracts.Commands
 {
 
     /// <summary>
-    /// Update Account command contract 
+    /// Update Entry command contract 
     /// </summary>
     [ExcludeFromCodeCoverage(Justification = "Anemic class")]
-    public class ListAccountCommand : IRequest<CommandResult<IEnumerable<AccountDto>>>
+    public class ListEntryCommand : IRequest<CommandResult<IEnumerable<EntryDto>>>
     {
 
         #region Result Data
@@ -19,7 +19,7 @@ namespace RSoft.Entry.Contracts.Commands
         /// <summary>
         /// Response data 
         /// </summary>
-        public CommandResult<IEnumerable<AccountDto>> Response { get; set; }
+        public CommandResult<IEnumerable<EntryDto>> Response { get; set; }
 
         #endregion
 

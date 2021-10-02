@@ -7,10 +7,10 @@ namespace RSoft.Entry.Contracts.Commands
 {
 
     /// <summary>
-    /// Create account command contract 
+    /// Create entry command contract 
     /// </summary>
     [ExcludeFromCodeCoverage(Justification = "Anemic class")]
-    public class CreateAccountCommand : IRequest<CommandResult<Guid?>>
+    public class CreateEntryCommand : IRequest<CommandResult<Guid?>>
     {
 
         #region Constructors
@@ -18,9 +18,9 @@ namespace RSoft.Entry.Contracts.Commands
         /// <summary>
         /// Create a new command instance
         /// </summary>
-        /// <param name="name">Account name</param>
+        /// <param name="name">Entry name</param>
         /// <param name="categoryId">Category id</param>
-        public CreateAccountCommand(string name, Guid? categoryId)
+        public CreateEntryCommand(string name, Guid? categoryId)
         {
             Name = name;
             CategoryId = categoryId;
@@ -31,7 +31,7 @@ namespace RSoft.Entry.Contracts.Commands
         #region Request Data
 
         /// <summary>
-        /// Account name description
+        /// Entry name description
         /// </summary>
         public string Name { get; set; }
 

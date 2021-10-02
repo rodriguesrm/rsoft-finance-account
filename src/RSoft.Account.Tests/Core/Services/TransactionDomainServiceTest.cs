@@ -16,7 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TransactionTable = RSoft.Account.Infra.Tables.Transaction;
 using AccrualPeriodTable = RSoft.Account.Infra.Tables.AccrualPeriod;
-using AccountDomain = RSoft.Account.Core.Entities.Account;
+using AccountDomain = RSoft.Account.Core.Entities.Entry;
 using RSoft.Account.Tests.Stubs;
 using RSoft.Account.Infra.Extensions;
 using Microsoft.Extensions.Localization;
@@ -94,7 +94,7 @@ namespace RSoft.Account.Tests.Core.Services
                 TransactionType = TransactionTypeEnum.Credit,
                 Amount = 300,
                 Comment = "Transaction test",
-                Account = new AccountDomain(MockBuilder.InitialAccountId) { Name = "***" },
+                Entries = new AccountDomain(MockBuilder.InitialAccountId) { Name = "***" },
                 PaymentMethod = new PaymentMethod(MockBuilder.InitialPaymentId) { Name = "***" }
             };
             Transaction result = await Sut.AddAsync(transaction, default);
@@ -148,7 +148,7 @@ namespace RSoft.Account.Tests.Core.Services
                 TransactionType = TransactionTypeEnum.Debt,
                 Amount = newAmount,
                 Comment = oldTableRow.Comment,
-                Account = new AccountDomain(oldTableRow.AccountId) { Name = "***" },
+                Entries = new AccountDomain(oldTableRow.AccountId) { Name = "***" },
                 PaymentMethod = new PaymentMethod(oldTableRow.PaymentMethodId) { Name = "***" },
                 CreatedAuthor = new Author<Guid>(oldTableRow.CreatedAuthor.Id, oldTableRow.CreatedAuthor.GetFullName())
             };

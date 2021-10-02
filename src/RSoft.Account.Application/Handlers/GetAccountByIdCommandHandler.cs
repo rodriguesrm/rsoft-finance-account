@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Contracts.Models;
-using DomainAccount = RSoft.Account.Core.Entities.Account;
+using EntryAccount = RSoft.Account.Core.Entities.Entry;
 using RSoft.Account.Core.Ports;
 using RSoft.Lib.Design.Application.Commands;
 using System.Threading;
@@ -16,7 +16,7 @@ namespace RSoft.Account.Application.Handlers
     /// <summary>
     /// Get Account by id command handler
     /// </summary>
-    public class GetAccountByIdCommandHandler : GetByKeyCommandHandlerBase<GetAccountByIdCommand, AccountDto, DomainAccount>, IRequestHandler<GetAccountByIdCommand, CommandResult<AccountDto>>
+    public class GetAccountByIdCommandHandler : GetByKeyCommandHandlerBase<GetAccountByIdCommand, AccountDto, EntryAccount>, IRequestHandler<GetAccountByIdCommand, CommandResult<AccountDto>>
     {
 
         #region Local objects/variables
@@ -42,11 +42,11 @@ namespace RSoft.Account.Application.Handlers
         #region Overrides
 
         ///<inheritdoc/>
-        protected override async Task<DomainAccount> GetEntityByKeyAsync(GetAccountByIdCommand request, CancellationToken cancellationToken)
+        protected override async Task<EntryAccount> GetEntityByKeyAsync(GetAccountByIdCommand request, CancellationToken cancellationToken)
             => await _accountDomainService.GetByKeyAsync(request.Id, cancellationToken);
 
         ///<inheritdoc/>
-        protected override AccountDto MapEntity(DomainAccount entity)
+        protected override AccountDto MapEntity(EntryAccount entity)
             => entity.Map();
 
         #endregion

@@ -4,7 +4,7 @@ using NUnit.Framework;
 using RSoft.Account.Application.Handlers;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Contracts.Models;
-using DomainAccount = RSoft.Account.Core.Entities.Account;
+using EntryAccount = RSoft.Account.Core.Entities.Entry;
 using RSoft.Account.Core.Ports;
 using RSoft.Account.Tests.DependencyInjection;
 using RSoft.Lib.Design.Application.Commands;
@@ -37,7 +37,7 @@ namespace RSoft.Account.Tests.Application.Handlers
                 .ReturnsAsync(() =>
                 {
 
-                    IEnumerable<DomainAccount> entities = new List<DomainAccount>() { One<DomainAccount>(), One<DomainAccount>(), One<DomainAccount>()};
+                    IEnumerable<EntryAccount> entities = new List<EntryAccount>() { One<EntryAccount>(), One<EntryAccount>(), One<EntryAccount>()};
                     return entities;
                 });
             _fixture.Inject(domainService.Object);

@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AccountTable = RSoft.Account.Infra.Tables.Account;
-using AccountDomain = RSoft.Account.Core.Entities.Account;
+using AccountDomain = RSoft.Account.Core.Entities.Entry;
 using CategoryDomain = RSoft.Account.Core.Entities.Category;
 
 namespace RSoft.Account.Tests.Core.Services

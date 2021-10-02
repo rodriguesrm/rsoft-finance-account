@@ -4,7 +4,7 @@ using NUnit.Framework;
 using RSoft.Account.Application.Handlers;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Contracts.Models;
-using DomainAccount = RSoft.Account.Core.Entities.Account;
+using EntryAccount = RSoft.Account.Core.Entities.Entry;
 using RSoft.Account.Core.Ports;
 using RSoft.Account.Tests.DependencyInjection;
 using RSoft.Lib.Design.Application.Commands;
@@ -32,15 +32,15 @@ namespace RSoft.Account.Tests.Application.Handlers
         public async Task HandleMediatorCommand_ProcessSuccess()
         {
 
-            DomainAccount entity = null;
+            EntryAccount entity = null;
 
             Mock<IAccountDomainService> domainService = new();
             domainService
                 .Setup(m => m.GetByKeyAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync((Guid id, CancellationToken token) =>
                 {
-                    _fixture.Customize<DomainAccount>(c => c.FromFactory(() => new DomainAccount(id)));
-                    entity = One<DomainAccount>();
+                    _fixture.Customize<EntryAccount>(c => c.FromFactory(() => new EntryAccount(id)));
+                    entity = One<EntryAccount>();
                     return entity;
                 });
             _fixture.Inject(domainService.Object);

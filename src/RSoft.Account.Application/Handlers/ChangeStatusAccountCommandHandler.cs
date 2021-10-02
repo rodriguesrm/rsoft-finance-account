@@ -6,7 +6,7 @@ using RSoft.Lib.Design.Application.Commands;
 using RSoft.Lib.Design.Infra.Data;
 using System.Threading;
 using System.Threading.Tasks;
-using DomainAccount = RSoft.Account.Core.Entities.Account;
+using EntryAccount = RSoft.Account.Core.Entities.Entry;
 using RSoft.Lib.Design.Application.Handlers;
 using MassTransit;
 using RSoft.Finance.Contracts.Events;
@@ -17,7 +17,7 @@ namespace RSoft.Account.Application.Handlers
     /// <summary>
     /// Change status Account command handler
     /// </summary>
-    public class ChangeStatusAccountCommandHandler : UpdateCommandHandlerBase<ChangeStatusAccountCommand, bool, DomainAccount>, IRequestHandler<ChangeStatusAccountCommand, CommandResult<bool>>
+    public class ChangeStatusAccountCommandHandler : UpdateCommandHandlerBase<ChangeStatusAccountCommand, bool, EntryAccount>, IRequestHandler<ChangeStatusAccountCommand, CommandResult<bool>>
     {
 
         #region Local objects/variables
@@ -49,17 +49,17 @@ namespace RSoft.Account.Application.Handlers
         #region Overrides
 
         ///<inheritdoc/>
-        protected override async Task<DomainAccount> GetEntityByKeyAsync(ChangeStatusAccountCommand request, CancellationToken cancellationToken)
+        protected override async Task<EntryAccount> GetEntityByKeyAsync(ChangeStatusAccountCommand request, CancellationToken cancellationToken)
             => await _accountDomainService.GetByKeyAsync(request.Id, cancellationToken);
 
         ///<inheritdoc/>
-        protected override void PrepareEntity(ChangeStatusAccountCommand request, DomainAccount entity)
+        protected override void PrepareEntity(ChangeStatusAccountCommand request, EntryAccount entity)
         {
             entity.IsActive = request.IsActive;
         }
 
         ///<inheritdoc/>
-        protected override async Task<bool> SaveAsync(DomainAccount entity, CancellationToken cancellationToken)
+        protected override async Task<bool> SaveAsync(EntryAccount entity, CancellationToken cancellationToken)
         {
             _ = _accountDomainService.Update(entity.Id, entity);
             _ = await _uow.SaveChangesAsync(cancellationToken);

@@ -1,4 +1,4 @@
-﻿using DomainAccount = RSoft.Account.Core.Entities.Account;
+﻿using EntryAccount = RSoft.Account.Core.Entities.Entry;
 using RSoft.Account.Core.Ports;
 using RSoft.Lib.Common.Contracts.Web;
 using RSoft.Lib.Common.ValueObjects;
@@ -11,7 +11,7 @@ namespace RSoft.Account.Core.Services
     /// <summary>
     /// Account domain service operations
     /// </summary>
-    public class AccountDomainService : DomainServiceBase<DomainAccount, Guid, IAccountProvider>, IAccountDomainService
+    public class AccountDomainService : DomainServiceBase<EntryAccount, Guid, IAccountProvider>, IAccountDomainService
     {
 
         #region Constructors
@@ -28,7 +28,7 @@ namespace RSoft.Account.Core.Services
         #region Overrides
 
         ///<inheritdoc/>
-        public override void PrepareSave(DomainAccount entity, bool isUpdate) 
+        public override void PrepareSave(EntryAccount entity, bool isUpdate) 
         {
             if (isUpdate)
             {

@@ -9,7 +9,7 @@ using RSoft.Lib.Design.Application.Commands;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DomainAccount = RSoft.Account.Core.Entities.Account;
+using EntryAccount = RSoft.Account.Core.Entities.Entry;
 
 namespace RSoft.Account.Tests.Application.Handlers
 {
@@ -36,8 +36,8 @@ namespace RSoft.Account.Tests.Application.Handlers
                 .Setup(m => m.GetByKeyAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync((Guid id, CancellationToken token) =>
                 {
-                    _fixture.Customize<DomainAccount>(c => c.FromFactory(() => new DomainAccount(id)));
-                    DomainAccount entity = One<DomainAccount>();
+                    _fixture.Customize<EntryAccount>(c => c.FromFactory(() => new EntryAccount(id)));
+                    EntryAccount entity = One<EntryAccount>();
                     return entity;
                 });
 

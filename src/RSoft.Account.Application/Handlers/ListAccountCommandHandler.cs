@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using RSoft.Account.Application.Extensions;
 using RSoft.Account.Contracts.Commands;
 using RSoft.Account.Contracts.Models;
-using DomainAccount = RSoft.Account.Core.Entities.Account;
+using EntryAccount = RSoft.Account.Core.Entities.Entry;
 using RSoft.Account.Core.Ports;
 using RSoft.Lib.Design.Application.Commands;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace RSoft.Account.Application.Handlers
     /// <summary>
     /// Lista Account command handler
     /// </summary>
-    public class ListAccountCommandHandler : ListCommandHandlerBase<ListAccountCommand, AccountDto, DomainAccount>, IRequestHandler<ListAccountCommand, CommandResult<IEnumerable<AccountDto>>>
+    public class ListAccountCommandHandler : ListCommandHandlerBase<ListAccountCommand, AccountDto, EntryAccount>, IRequestHandler<ListAccountCommand, CommandResult<IEnumerable<AccountDto>>>
     {
 
         #region Local objects/variables
@@ -43,11 +43,11 @@ namespace RSoft.Account.Application.Handlers
         #region Overrides
 
         ///<inheritdoc/>
-        protected override async Task<IEnumerable<DomainAccount>> GetAllAsync(ListAccountCommand request, CancellationToken cancellationToken)
+        protected override async Task<IEnumerable<EntryAccount>> GetAllAsync(ListAccountCommand request, CancellationToken cancellationToken)
             => await _accountDomainService.GetAllAsync(cancellationToken);
 
         ///<inheritdoc/>
-        protected override IEnumerable<AccountDto> MapEntities(IEnumerable<DomainAccount> entities)
+        protected override IEnumerable<AccountDto> MapEntities(IEnumerable<EntryAccount> entities)
             => entities.Map();
 
         #endregion

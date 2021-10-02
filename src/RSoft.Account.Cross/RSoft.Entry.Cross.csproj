@@ -11,10 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RSoft.Account.Application\RSoft.Account.Application.csproj" />
-    <ProjectReference Include="..\RSoft.Account.Contracts\RSoft.Account.Contracts.csproj" />
-    <ProjectReference Include="..\RSoft.Account.Core\RSoft.Account.Core.csproj" />
-    <ProjectReference Include="..\RSoft.Account.Infra\RSoft.Account.Infra.csproj" />
+    <ProjectReference Include="..\RSoft.Account.Application\RSoft.Entry.Application.csproj" />
+    <ProjectReference Include="..\RSoft.Account.Contracts\RSoft.Entry.Contracts.csproj" />
+    <ProjectReference Include="..\RSoft.Account.Core\RSoft.Entry.Core.csproj" />
+    <ProjectReference Include="..\RSoft.Account.Infra\RSoft.Entry.Infra.csproj" />
   </ItemGroup>
 
 </Project>

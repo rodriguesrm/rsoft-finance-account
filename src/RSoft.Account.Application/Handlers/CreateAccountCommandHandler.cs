@@ -10,7 +10,7 @@ using RSoft.Lib.Design.Infra.Data;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using DomainAccount = RSoft.Account.Core.Entities.Account;
+using EntryAccount = RSoft.Account.Core.Entities.Entry;
 
 namespace RSoft.Account.Application.Handlers
 {
@@ -18,7 +18,7 @@ namespace RSoft.Account.Application.Handlers
     /// <summary>
     /// Create account command handler
     /// </summary>
-    public class CreateAccountCommandHandler : CreateCommandHandlerBase<CreateAccountCommand, Guid?, DomainAccount>, IRequestHandler<CreateAccountCommand, CommandResult<Guid?>>
+    public class CreateAccountCommandHandler : CreateCommandHandlerBase<CreateAccountCommand, Guid?, EntryAccount>, IRequestHandler<CreateAccountCommand, CommandResult<Guid?>>
     {
 
         #region Local objects/variables
@@ -62,9 +62,9 @@ namespace RSoft.Account.Application.Handlers
         #region Overrides
 
         ///<inheritdoc/>
-        protected override DomainAccount PrepareEntity(CreateAccountCommand request)
+        protected override EntryAccount PrepareEntity(CreateAccountCommand request)
         {
-            DomainAccount entity = new();
+            EntryAccount entity = new();
             entity.Name = request.Name;
             if (request.CategoryId.HasValue)
                 entity.Category = new(request.CategoryId.Value);
@@ -72,7 +72,7 @@ namespace RSoft.Account.Application.Handlers
         }
 
         ///<inheritdoc/>
-        protected override async Task<Guid?> SaveAsync(DomainAccount entity, CancellationToken cancellationToken)
+        protected override async Task<Guid?> SaveAsync(EntryAccount entity, CancellationToken cancellationToken)
         {
             AccountCreatedEvent accountCreatedEvent = new(entity.Id, entity.Name, entity.Category.Id);
             entity = await _accountDomainService.AddAsync(entity, cancellationToken);

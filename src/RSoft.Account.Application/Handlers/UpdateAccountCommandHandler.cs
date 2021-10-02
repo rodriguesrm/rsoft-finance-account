@@ -7,7 +7,7 @@ using RSoft.Lib.Design.Infra.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using RSoft.Lib.Design.Application.Handlers;
-using DomainAccount = RSoft.Account.Core.Entities.Account;
+using EntryAccount = RSoft.Account.Core.Entities.Entry;
 using DomainCategory = RSoft.Account.Core.Entities.Category;
 using MassTransit;
 using RSoft.Finance.Contracts.Events;
@@ -18,7 +18,7 @@ namespace RSoft.Account.Application.Handlers
     /// <summary>
     /// Create Account command handler
     /// </summary>
-    public class UpdateAccountCommandHandler : UpdateCommandHandlerBase<UpdateAccountCommand, bool, DomainAccount>, IRequestHandler<UpdateAccountCommand, CommandResult<bool>>
+    public class UpdateAccountCommandHandler : UpdateCommandHandlerBase<UpdateAccountCommand, bool, EntryAccount>, IRequestHandler<UpdateAccountCommand, CommandResult<bool>>
     {
 
         #region Local objects/variables
@@ -50,11 +50,11 @@ namespace RSoft.Account.Application.Handlers
         #region Overrides
 
         ///<inheritdoc/>
-        protected override async Task<DomainAccount> GetEntityByKeyAsync(UpdateAccountCommand request, CancellationToken cancellationToken)
+        protected override async Task<EntryAccount> GetEntityByKeyAsync(UpdateAccountCommand request, CancellationToken cancellationToken)
             => await _accountDomainService.GetByKeyAsync(request.Id, cancellationToken);
 
         ///<inheritdoc/>
-        protected override void PrepareEntity(UpdateAccountCommand request, DomainAccount entity)
+        protected override void PrepareEntity(UpdateAccountCommand request, EntryAccount entity)
         {
             entity.Name = request.Name;
             if (request.CategoryId.HasValue)
@@ -62,7 +62,7 @@ namespace RSoft.Account.Application.Handlers
         }
 
         ///<inheritdoc/>
-        protected override async Task<bool> SaveAsync(DomainAccount entity, CancellationToken cancellationToken)
+        protected override async Task<bool> SaveAsync(EntryAccount entity, CancellationToken cancellationToken)
         {
             _ = _accountDomainService.Update(entity.Id, entity);
             _ = await _uow.SaveChangesAsync(cancellationToken);

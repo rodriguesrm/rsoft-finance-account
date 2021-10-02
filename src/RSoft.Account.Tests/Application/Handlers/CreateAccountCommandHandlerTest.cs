@@ -3,7 +3,7 @@ using Moq;
 using NUnit.Framework;
 using RSoft.Account.Application.Handlers;
 using RSoft.Account.Contracts.Commands;
-using DomainAccount = RSoft.Account.Core.Entities.Account;
+using EntryAccount = RSoft.Account.Core.Entities.Entry;
 using RSoft.Account.Core.Ports;
 using RSoft.Account.Tests.DependencyInjection;
 using RSoft.Lib.Design.Application.Commands;
@@ -32,8 +32,8 @@ namespace RSoft.Account.Tests.Application.Handlers
         {
             Mock<IAccountDomainService> domainService = new();
             domainService
-                .Setup(m => m.AddAsync(It.IsAny<DomainAccount>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync((DomainAccount entity, CancellationToken token) => entity);
+                .Setup(m => m.AddAsync(It.IsAny<EntryAccount>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((EntryAccount entity, CancellationToken token) => entity);
             _fixture.Inject(domainService.Object);
         }
 

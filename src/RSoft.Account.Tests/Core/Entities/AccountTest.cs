@@ -2,7 +2,7 @@
 using RSoft.Account.Tests.DependencyInjection;
 using System;
 using System.Linq;
-using AccountDomain = RSoft.Account.Core.Entities.Account;
+using AccountDomain = RSoft.Account.Core.Entities.Entry;
 using CategoryDomain = RSoft.Account.Core.Entities.Category;
 
 namespace RSoft.Account.Tests.Core.Entities

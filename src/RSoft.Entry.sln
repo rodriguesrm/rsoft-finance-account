@@ -9,17 +9,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7-Tests", "7-Tests", "{812B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Web", "1-Web", "{16970498-0A2A-4027-8886-75FE8C80355A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Account.Core", "RSoft.Account.Core\RSoft.Account.Core.csproj", "{48EE250F-1947-4A0F-BEAF-98A7A1A38F15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Entry.Core", "RSoft.Account.Core\RSoft.Entry.Core.csproj", "{48EE250F-1947-4A0F-BEAF-98A7A1A38F15}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Account.Infra", "RSoft.Account.Infra\RSoft.Account.Infra.csproj", "{D0AA2BC7-55D4-4EC4-BD8B-A7A46B5696DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Entry.Infra", "RSoft.Account.Infra\RSoft.Entry.Infra.csproj", "{D0AA2BC7-55D4-4EC4-BD8B-A7A46B5696DC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Account.Application", "RSoft.Account.Application\RSoft.Account.Application.csproj", "{768F2021-B6FA-4617-AC61-86ECC5A9BE45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Entry.Application", "RSoft.Account.Application\RSoft.Entry.Application.csproj", "{768F2021-B6FA-4617-AC61-86ECC5A9BE45}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Account.Contracts", "RSoft.Account.Contracts\RSoft.Account.Contracts.csproj", "{BBB11B07-C832-4CE3-9165-7DBFDE432803}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Entry.Contracts", "RSoft.Account.Contracts\RSoft.Entry.Contracts.csproj", "{BBB11B07-C832-4CE3-9165-7DBFDE432803}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Account.Cross", "RSoft.Account.Cross\RSoft.Account.Cross.csproj", "{17B787D5-55AF-4DD3-9E5A-85A2F4C2A71F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Entry.Cross", "RSoft.Account.Cross\RSoft.Entry.Cross.csproj", "{17B787D5-55AF-4DD3-9E5A-85A2F4C2A71F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Account.GrpcService", "RSoft.Account.GrpcService\RSoft.Account.GrpcService.csproj", "{7E7B5B79-61E9-4366-ACE2-5420C22AAF75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Entry.GrpcService", "RSoft.Account.GrpcService\RSoft.Entry.GrpcService.csproj", "{7E7B5B79-61E9-4366-ACE2-5420C22AAF75}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2-Application", "2-Application", "{045E77EF-6DC7-413B-A750-A83EBB4E6388}"
 EndProject
@@ -31,9 +31,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5-Cross", "5-Cross", "{79F1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6-SDK", "6-SDK", "{EB50D5E5-53E8-499B-988D-A05D6FFDEC28}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Account.GrpcClient", "RSoft.Account.GrpcClient\RSoft.Account.GrpcClient.csproj", "{777ED72D-08AA-4E6E-A480-A35FC68CF8B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Entrt.GrpcClient", "RSoft.Account.GrpcClient\RSoft.Entrt.GrpcClient.csproj", "{777ED72D-08AA-4E6E-A480-A35FC68CF8B8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Account.Tests", "RSoft.Account.Tests\RSoft.Account.Tests.csproj", "{29D04E20-05DE-4839-9B59-DA94E342A2EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Entry.Tests", "RSoft.Account.Tests\RSoft.Entry.Tests.csproj", "{29D04E20-05DE-4839-9B59-DA94E342A2EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

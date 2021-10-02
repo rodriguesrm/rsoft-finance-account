@@ -12,7 +12,7 @@ namespace RSoft.Account.Core.Entities
     /// <summary>
     /// Account entity
     /// </summary>
-    public class Account : EntityIdNameAuditBase<Guid, Account>, IEntity, IAuditAuthor<Guid>, IActive
+    public class Entry : EntityIdNameAuditBase<Guid, Entry>, IEntity, IAuditAuthor<Guid>, IActive
     {
 
         #region Constructors
@@ -20,7 +20,7 @@ namespace RSoft.Account.Core.Entities
         /// <summary>
         /// Create a new Account instance
         /// </summary>
-        public Account() : base(Guid.NewGuid(), null)
+        public Entry() : base(Guid.NewGuid(), null)
         {
             Initialize();
         }
@@ -29,7 +29,7 @@ namespace RSoft.Account.Core.Entities
         /// Create a new Account instance
         /// </summary>
         /// <param name="id">Account id value</param>
-        public Account(Guid id) : base(id, null)
+        public Entry(Guid id) : base(id, null)
         {
             Initialize();
         }
@@ -41,7 +41,7 @@ namespace RSoft.Account.Core.Entities
         /// <exception cref="System.ArgumentNullException"></exception>
         /// <exception cref="System.FormatException"></exception>
         /// <exception cref="System.OverflowException"></exception>
-        public Account(string id) : base()
+        public Entry(string id) : base()
         {
             Id = new Guid(id);
         }
@@ -83,7 +83,7 @@ namespace RSoft.Account.Core.Entities
         ///<inheritdoc/>
         public override void Validate()
         {
-            IStringLocalizer<Account> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<Account>>();
+            IStringLocalizer<Entry> localizer = ServiceActivator.GetScope().ServiceProvider.GetService<IStringLocalizer<Entry>>();
             if (CreatedAuthor != null) AddNotifications(CreatedAuthor.Notifications);
             if (ChangedAuthor != null) AddNotifications(ChangedAuthor.Notifications);
             AddNotifications(new SimpleStringValidationContract(Name, nameof(Name), true, 3, 100).Contract.Notifications);

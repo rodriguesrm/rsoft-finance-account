@@ -44,16 +44,16 @@ namespace RSoft.Account.Infra.Extensions
                 if (useLazy)
                 {
                     result.PaymentMethod = table.PaymentMethod?.Map(false);
-                    result.Account = table.Account?.Map(false);
+                    result.Entries = table.Account?.Map(false);
                 }
                 else
                 {
                     result.PaymentMethod = new Core.Entities.PaymentMethod(table.PaymentMethodId);
-                    result.Account = new Core.Entities.Account(table.AccountId);
+                    result.Entries = new Core.Entities.Entry(table.AccountId);
                 }
                 if (forceLoadNameForLevelUp)
                 {
-                    result.Account.Name = table.Account?.Name;
+                    result.Entries.Name = table.Account?.Name;
                     result.PaymentMethod.Name = table.PaymentMethod?.Name;
                 }
                 result.CreatedAuthor = new Author<Guid>(table.CreatedBy, (table.CreatedAuthor?.GetFullName() ?? "***"));
@@ -83,7 +83,7 @@ namespace RSoft.Account.Infra.Extensions
                     TransactionType = entity.TransactionType,
                     Amount = entity.Amount,
                     Comment = entity.Comment,
-                    AccountId = entity.Account.Id,
+                    AccountId = entity.Entries.Id,
                     PaymentMethodId = entity.PaymentMethod.Id,
                     CreatedOn = entity.CreatedOn,
                     CreatedBy = entity.CreatedAuthor.Id
@@ -108,7 +108,7 @@ namespace RSoft.Account.Infra.Extensions
                 table.TransactionType = entity.TransactionType;
                 table.Amount = entity.Amount;
                 table.Comment = entity.Comment;
-                table.AccountId = entity.Account.Id;
+                table.AccountId = entity.Entries.Id;
                 table.PaymentMethodId = entity.PaymentMethod.Id;
                 table.CreatedOn = entity.CreatedOn;
                 table.CreatedBy = entity.CreatedAuthor.Id;

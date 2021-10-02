@@ -2,7 +2,7 @@
 using RSoft.Account.Infra.Extensions;
 using RSoft.Lib.Design.Infra.Data;
 using System;
-using AccountDomain = RSoft.Account.Core.Entities.Account;
+using AccountDomain = RSoft.Account.Core.Entities.Entry;
 using AccountTable = RSoft.Account.Infra.Tables.Account;
 
 namespace RSoft.Account.Infra.Providers

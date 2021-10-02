@@ -30,7 +30,7 @@ namespace RSoft.Entry.Cross.IoC
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
-        public static IServiceCollection AddAccountRegister(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddEntryRegister(this IServiceCollection services, IConfiguration configuration)
         {
 
             services.AddRSoftRegister<EntryContext>(configuration, true);

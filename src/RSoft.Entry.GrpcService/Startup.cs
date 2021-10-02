@@ -42,7 +42,7 @@ namespace RSoft.Entry.GrpcService
             });
             services.AddHttpContextAccessor();
             services.AddJwtToken(Configuration);
-            services.AddAccountRegister(Configuration);
+            services.AddEntryRegister(Configuration);
             services.AddMiddlewareLoggingOption(Configuration);
             services.AddCultureLanguage(Configuration);
         }
@@ -64,7 +64,7 @@ namespace RSoft.Entry.GrpcService
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGrpcService<AccountGrpcService>();
+                endpoints.MapGrpcService<EntryGrpcService>();
                 endpoints.MapGrpcService<AccrualPeriodGrpcService>();
                 endpoints.MapGrpcService<CategoryGrpcService>();
                 endpoints.MapGrpcService<PaymentMethodGrpcService>();

@@ -111,22 +111,22 @@ message ListCategoryReply {
 	repeated CategoryDetail data = 1;
 }
 
-// account service definitions
+// entry service definitions
 // ------------------------------------------------------------------
 
-service Account {
-	rpc CreateAccount (CreateAccountRequest) returns (CreateAccountReply);
-	rpc UpdateAccount (UpdateAccountRequest) returns (google.protobuf.Empty);
-	rpc EnableAccount (ChangeStatusAccountRequest) returns (google.protobuf.Empty);
-	rpc DisableAccount (ChangeStatusAccountRequest) returns (google.protobuf.Empty);
-	rpc GetAccount (GetAccountRequest) returns (AccountDetail);
-	rpc ListAccount (google.protobuf.Empty) returns (ListAccountReply);
+service Entry {
+	rpc CreateEntry (CreateEntryRequest) returns (CreateEntryReply);
+	rpc UpdateEntry (UpdateEntryRequest) returns (google.protobuf.Empty);
+	rpc EnableEntry (ChangeStatusEntryRequest) returns (google.protobuf.Empty);
+	rpc DisableEntry (ChangeStatusEntryRequest) returns (google.protobuf.Empty);
+	rpc GetEntry (GetEntryRequest) returns (EntryDetail);
+	rpc ListEntry (google.protobuf.Empty) returns (ListEntryReply);
 }
 
-// account message contracts
+// Entry message contracts
 // ------------------------------------------------------------------
 
-message AccountDetail {
+message EntryDetail {
 	string id = 1;
 	string name = 2;
 	NullableSimpleIdName category = 3;
@@ -137,32 +137,32 @@ message AccountDetail {
 	NullableAuthorDetail changed_by = 8;
 }
 
-message CreateAccountRequest {
+message CreateEntryRequest {
 	string name = 1;
 	string category_id = 2;
 }
-message CreateAccountReply {
+message CreateEntryReply {
 	string id = 1;
 }
 
-message UpdateAccountRequest {
+message UpdateEntryRequest {
 	string id = 1;
 	string name = 2;
 	string category_id = 3;
 }
-message UpdateAccountReply {
+message UpdateEntryReply {
 }
 
-message ChangeStatusAccountRequest {
+message ChangeStatusEntryRequest {
 	string id = 1;
 }
 
-message GetAccountRequest {
+message GetEntryRequest {
 	string id = 1;
 }
 
-message ListAccountReply {
-	repeated AccountDetail data = 1;
+message ListEntryReply {
+	repeated EntryDetail data = 1;
 }
 
 // payment method service definitions
@@ -276,7 +276,7 @@ message TransactionDetail {
 	SimpleIdName transaction_type = 5;
 	double amount = 6;
 	string comment = 7;
-	SimpleIdName account_id = 8;
+	SimpleIdName entry_id = 8;
 	SimpleIdName payment_method_id = 9;
 	AuthorDetail transaction_author = 10;
 }
@@ -286,7 +286,7 @@ message CreateTransactionRequest {
 	int32 transaction_type = 2;
 	double amount = 3;
 	string comment = 4;
-	string account_id = 5;
+	string entry_id = 5;
 	string payment_method_id = 6;
 }
 message CreateTransactionReply {
@@ -308,7 +308,7 @@ message GetTransactionRequest {
 message ListTransactionRequest {
 	NullablePeriodDate period_date = 1;
 	NullablePeriodeYearMonth period_year_month = 2;
-	string account_id = 3;
+	string entry_id = 3;
 	google.protobuf.Int32Value transaction_type = 4;
 	string payment_method_id = 5;
 }

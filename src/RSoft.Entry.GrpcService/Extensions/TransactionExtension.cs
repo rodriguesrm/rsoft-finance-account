@@ -24,15 +24,15 @@ namespace RSoft.Entry.GrpcService.Extensions
         public static CreateTransactionCommand Map(this CreateTransactionRequest request)
         {
 
-            Guid? accountId = null;
+            Guid? entryId = null;
             Guid? paymentMethodId = null;
 
-            if (Guid.TryParse(request.AccountId, out Guid id))
-                accountId = id;
+            if (Guid.TryParse(request.EntryId, out Guid id))
+                entryId = id;
             if (Guid.TryParse(request.PaymentMethodId, out id))
                 paymentMethodId = id;
 
-            CreateTransactionCommand command = new(request.Date.ToDateTime(), request.TransactionType, (float)request.Amount, request.Comment, accountId, paymentMethodId);
+            CreateTransactionCommand command = new(request.Date.ToDateTime(), request.TransactionType, (float)request.Amount, request.Comment, entryId, paymentMethodId);
             return command;
 
         }
@@ -64,7 +64,7 @@ namespace RSoft.Entry.GrpcService.Extensions
                 reply.TransactionType = new SimpleIdName() { Id = dto.TransactionType.Id.ToString(), Name = dto.TransactionType.Name };
                 reply.Amount = dto.Amount;
                 reply.Comment = dto.Comment;
-                reply.AccountId = new SimpleIdName() { Id = dto.Entry.Id.ToString(), Name = dto.Entry.Name };
+                reply.EntryId = new SimpleIdName() { Id = dto.Entry.Id.ToString(), Name = dto.Entry.Name };
                 reply.PaymentMethodId = new SimpleIdName() { Id = dto.PaymentMethod.Id.ToString(), Name = dto.PaymentMethod.Name };
                 reply.TransactionAuthor = new AuthorDetail() { Id = dto.CreatedBy.Id.ToString(), Name = dto.CreatedBy.Name };
             }
@@ -106,9 +106,9 @@ namespace RSoft.Entry.GrpcService.Extensions
             if (request.PeriodYearMonth?.Data != null)
                 periodYearMonth = new PeriodYearMonthFilter(request.PeriodYearMonth.Data.Year, request.PeriodYearMonth.Data.Month);
 
-            Guid? accountId = null;
-            if (Guid.TryParse(request.AccountId, out Guid idParsed))
-                accountId = idParsed;
+            Guid? entryId = null;
+            if (Guid.TryParse(request.EntryId, out Guid idParsed))
+                entryId = idParsed;
 
             TransactionTypeEnum? transactionType = null;
             if (request.TransactionType.HasValue)
@@ -118,7 +118,7 @@ namespace RSoft.Entry.GrpcService.Extensions
             if (Guid.TryParse(request.PaymentMethodId, out idParsed))
                 paymentMethodId = idParsed;
 
-            return new ListTransactionCommand(periodDate, periodYearMonth, accountId, transactionType, paymentMethodId);
+            return new ListTransactionCommand(periodDate, periodYearMonth, entryId, transactionType, paymentMethodId);
 
         }
 

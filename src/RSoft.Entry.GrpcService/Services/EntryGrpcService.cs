@@ -14,25 +14,25 @@ namespace RSoft.Entry.GrpcService.Services
 {
 
     /// <summary>
-    /// Account gRPC Service
+    /// Entry gRPC Service
     /// </summary>
     [Authorize]
-    public class AccountGrpcService : Grpc.Protobuf.Account.AccountBase
+    public class EntryGrpcService : Grpc.Protobuf.Entry.EntryBase
     {
 
         #region Local objects/variables
 
-        private readonly ILogger<AccountGrpcService> _logger;
+        private readonly ILogger<EntryGrpcService> _logger;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Create a new Account gRPC Service
+        /// Create a new Entry gRPC Service
         /// </summary>
         /// <param name="logger">Logger object</param>
-        public AccountGrpcService(ILogger<AccountGrpcService> logger)
+        public EntryGrpcService(ILogger<EntryGrpcService> logger)
         {
             _logger = logger;
         }
@@ -42,14 +42,14 @@ namespace RSoft.Entry.GrpcService.Services
         #region Overrides
 
         /// <summary>
-        /// Create a new account
+        /// Create a new entry
         /// </summary>
-        /// <param name="request">Account request data</param>
+        /// <param name="request">Entry request data</param>
         /// <param name="context">Server call context object</param>
-        public override Task<CreateAccountReply> CreateAccount(CreateAccountRequest request, ServerCallContext context)
-            => GrpcServiceHelpers.SendCommand<CreateAccountReply, CreateEntryCommand, Guid?>
+        public override Task<CreateEntryReply> CreateEntry(CreateEntryRequest request, ServerCallContext context)
+            => GrpcServiceHelpers.SendCommand<CreateEntryReply, CreateEntryCommand, Guid?>
             (
-                nameof(CreateAccount),
+                nameof(CreateEntry),
                 () =>
                 {
                     Guid? categoryId = null;
@@ -62,14 +62,14 @@ namespace RSoft.Entry.GrpcService.Services
             );
 
         /// <summary>
-        /// Update an existing account
+        /// Update an existing entry
         /// </summary>
-        /// <param name="request">Account request data</param>
+        /// <param name="request">Entry request data</param>
         /// <param name="context">Server call context object</param>
-        public override Task<Empty> UpdateAccount(UpdateAccountRequest request, ServerCallContext context)
+        public override Task<Empty> UpdateEntry(UpdateEntryRequest request, ServerCallContext context)
             => GrpcServiceHelpers.SendCommand<Empty, UpdateEntryCommand, bool>
             (
-                nameof(UpdateAccount),
+                nameof(UpdateEntry),
                 () =>
                 {
                     Guid? categoryId = null;
@@ -81,54 +81,54 @@ namespace RSoft.Entry.GrpcService.Services
             );
 
         /// <summary>
-        /// Enable an account
+        /// Enable an entry
         /// </summary>
-        /// <param name="request">Account request data</param>
+        /// <param name="request">Entry request data</param>
         /// <param name="context">Server call context object</param>
-        public override Task<Empty> EnableAccount(ChangeStatusAccountRequest request, ServerCallContext context)
+        public override Task<Empty> EnableEntry(ChangeStatusEntryRequest request, ServerCallContext context)
             => GrpcServiceHelpers.SendCommand<Empty, ChangeStatusEntryCommand, bool>
             (
-                nameof(DisableAccount),
+                nameof(DisableEntry),
                 () => new(new Guid(request.Id), true),
                 logger: _logger
             );
 
         /// <summary>
-        /// Disable an account
+        /// Disable an entry
         /// </summary>
-        /// <param name="request">Account request data</param>
+        /// <param name="request">Entry request data</param>
         /// <param name="context">Server call context object</param>
-        public override Task<Empty> DisableAccount(ChangeStatusAccountRequest request, ServerCallContext context)
+        public override Task<Empty> DisableEntry(ChangeStatusEntryRequest request, ServerCallContext context)
             => GrpcServiceHelpers.SendCommand<Empty, ChangeStatusEntryCommand, bool>
             (
-                nameof(DisableAccount),
+                nameof(DisableEntry),
                 () => new(new Guid(request.Id), false),
                 logger: _logger
             );
 
         /// <summary>
-        /// Get an account by id
+        /// Get an entry by id
         /// </summary>
-        /// <param name="request">Account request data</param>
+        /// <param name="request">Entry request data</param>
         /// <param name="context">Server call context object</param>
-        public override Task<AccountDetail> GetAccount(GetAccountRequest request, ServerCallContext context)
-            => GrpcServiceHelpers.SendCommand<AccountDetail, GetEntryByIdCommand, EntryDto>
+        public override Task<EntryDetail> GetEntry(GetEntryRequest request, ServerCallContext context)
+            => GrpcServiceHelpers.SendCommand<EntryDetail, GetEntryByIdCommand, EntryDto>
             (
-                nameof(GetAccount),
+                nameof(GetEntry),
                 () => new(new Guid(request.Id)),
                 (reply, result) => result.Response.Map(reply),
                 logger: _logger
             );
 
         /// <summary>
-        /// List all accounts
+        /// List all entries
         /// </summary>
-        /// <param name="request">Account request data</param>
+        /// <param name="request">Entry request data</param>
         /// <param name="context">Server call context object</param>
-        public override Task<ListAccountReply> ListAccount(Empty request, ServerCallContext context)
-            => GrpcServiceHelpers.SendCommand<ListAccountReply, ListEntryCommand, IEnumerable<EntryDto>>
+        public override Task<ListEntryReply> ListEntry(Empty request, ServerCallContext context)
+            => GrpcServiceHelpers.SendCommand<ListEntryReply, ListEntryCommand, IEnumerable<EntryDto>>
             (
-                nameof(ListAccount),
+                nameof(ListEntry),
                 () => new(),
                 (reply, result) => reply.Data.Add(result.Response.Map()),
                 logger: _logger

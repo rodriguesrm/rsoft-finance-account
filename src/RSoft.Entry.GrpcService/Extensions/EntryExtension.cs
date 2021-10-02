@@ -8,29 +8,29 @@ namespace RSoft.Entry.GrpcService.Extensions
 {
 
     /// <summary>
-    /// Account extensions
+    /// Entry extensions
     /// </summary>
-    public static class AccountExtension
+    public static class EntryExtension
     {
 
         /// <summary>
-        /// Map Account dto to Account-detail (grpc-model)
+        /// Map Entry dto to Entry-detail (grpc-model)
         /// </summary>
-        /// <param name="dto">Account dto instance</param>
-        public static AccountDetail Map(this EntryDto dto)
+        /// <param name="dto">Entry dto instance</param>
+        public static EntryDetail Map(this EntryDto dto)
         {
             if (dto == null) return null;
-            AccountDetail reply = new();
+            EntryDetail reply = new();
             dto.Map(reply);
             return reply;
         }
 
         /// <summary>
-        /// Map Account dto to Account-detail (grpc-model)
+        /// Map Entry dto to Entry-detail (grpc-model)
         /// </summary>
-        /// <param name="dto">Account dto instance</param>
-        /// <param name="reply">Account detail instance</param>
-        public static void Map(this EntryDto dto, AccountDetail reply)
+        /// <param name="dto">Entry dto instance</param>
+        /// <param name="reply">Entry detail instance</param>
+        public static void Map(this EntryDto dto, EntryDetail reply)
         {
             
             if (dto != null)
@@ -78,12 +78,12 @@ namespace RSoft.Entry.GrpcService.Extensions
         }
 
         /// <summary>
-        /// Map Account dto list to Account-detail (grpc-model) list
+        /// Map Entry dto list to Entry-detail (grpc-model) list
         /// </summary>
-        /// <param name="dtos">Account dtos list</param>
-        public static IEnumerable<AccountDetail> Map(this IEnumerable<EntryDto> dtos)
+        /// <param name="dtos">Entry dtos list</param>
+        public static IEnumerable<EntryDetail> Map(this IEnumerable<EntryDto> dtos)
         {
-            IEnumerable<AccountDetail> result = new List<AccountDetail>();
+            IEnumerable<EntryDetail> result = new List<EntryDetail>();
             if (dtos?.Count() > 0)
                 result = dtos.Select(d => d.Map());
             return result;

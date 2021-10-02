@@ -1,8 +1,8 @@
-﻿using RSoft.Account.Infra.Tables;
+﻿using RSoft.Entry.Infra.Tables;
 using RSoft.Lib.Common.ValueObjects;
-using UserDomain = RSoft.Account.Core.Entities.User;
+using UserDomain = RSoft.Entry.Core.Entities.User;
 
-namespace RSoft.Account.Infra.Extensions
+namespace RSoft.Entry.Infra.Extensions
 {
 
     /// <summary>

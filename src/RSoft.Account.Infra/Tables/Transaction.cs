@@ -4,7 +4,7 @@ using RSoft.Lib.Design.Infra.Data.Tables;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace RSoft.Account.Infra.Tables
+namespace RSoft.Entry.Infra.Tables
 {
 
     /// <summary>

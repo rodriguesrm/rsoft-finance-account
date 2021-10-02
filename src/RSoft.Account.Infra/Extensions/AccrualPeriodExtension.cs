@@ -1,9 +1,9 @@
-﻿using RSoft.Account.Infra.Tables;
+﻿using RSoft.Entry.Infra.Tables;
 using RSoft.Lib.Common.ValueObjects;
 using System;
-using AccrualPeriodDomain = RSoft.Account.Core.Entities.AccrualPeriod;
+using AccrualPeriodDomain = RSoft.Entry.Core.Entities.AccrualPeriod;
 
-namespace RSoft.Account.Infra.Extensions
+namespace RSoft.Entry.Infra.Extensions
 {
 
     /// <summary>

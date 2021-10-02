@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RSoft.Account.Infra;
+using RSoft.Entry.Infra;
 
-namespace RSoft.Account.Infra.Migrations
+namespace RSoft.Entry.Infra.Migrations
 {
     [DbContext(typeof(AccountContext))]
     [Migration("20210920192539_InitialCreateDb")]
@@ -19,7 +19,7 @@ namespace RSoft.Account.Infra.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.9");
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.Account", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.Account", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +73,7 @@ namespace RSoft.Account.Infra.Migrations
                     b.ToTable("Account");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.AccrualPeriod", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.AccrualPeriod", b =>
                 {
                     b.Property<short>("Year")
                         .HasColumnType("smallint")
@@ -136,7 +136,7 @@ namespace RSoft.Account.Infra.Migrations
                     b.ToTable("AccrualPeriod");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.Category", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -185,7 +185,7 @@ namespace RSoft.Account.Infra.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.PaymentMethod", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.PaymentMethod", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -238,7 +238,7 @@ namespace RSoft.Account.Infra.Migrations
                     b.ToTable("PaymentMethod");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.Transaction", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.Transaction", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -305,7 +305,7 @@ namespace RSoft.Account.Infra.Migrations
                     b.ToTable("Transaction");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.User", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -336,22 +336,22 @@ namespace RSoft.Account.Infra.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.Account", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.Account", b =>
                 {
-                    b.HasOne("RSoft.Account.Infra.Tables.Category", "Category")
+                    b.HasOne("RSoft.Entry.Infra.Tables.Category", "Category")
                         .WithMany("Accounts")
                         .HasForeignKey("CategoryId")
                         .HasConstraintName("FK_Account_CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RSoft.Account.Infra.Tables.User", "ChangedAuthor")
+                    b.HasOne("RSoft.Entry.Infra.Tables.User", "ChangedAuthor")
                         .WithMany("ChangedAccounts")
                         .HasForeignKey("ChangedBy")
                         .HasConstraintName("FK__User_Account_ChangedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("RSoft.Account.Infra.Tables.User", "CreatedAuthor")
+                    b.HasOne("RSoft.Entry.Infra.Tables.User", "CreatedAuthor")
                         .WithMany("CreatedAccounts")
                         .HasForeignKey("CreatedBy")
                         .HasConstraintName("FK_User_Account_CreatedBy")
@@ -365,22 +365,22 @@ namespace RSoft.Account.Infra.Migrations
                     b.Navigation("CreatedAuthor");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.AccrualPeriod", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.AccrualPeriod", b =>
                 {
-                    b.HasOne("RSoft.Account.Infra.Tables.User", "ChangedAuthor")
+                    b.HasOne("RSoft.Entry.Infra.Tables.User", "ChangedAuthor")
                         .WithMany("ChangedAccrualPeriods")
                         .HasForeignKey("ChangedBy")
                         .HasConstraintName("FK_User_AccrualPeriod_ChangedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("RSoft.Account.Infra.Tables.User", "CreatedAuthor")
+                    b.HasOne("RSoft.Entry.Infra.Tables.User", "CreatedAuthor")
                         .WithMany("CreatedAccrualPeriods")
                         .HasForeignKey("CreatedBy")
                         .HasConstraintName("FK_User_AccrualPeriod_CreatedBy")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RSoft.Account.Infra.Tables.User", "ClosedAuthor")
+                    b.HasOne("RSoft.Entry.Infra.Tables.User", "ClosedAuthor")
                         .WithMany("ClosedAccrualPeriods")
                         .HasForeignKey("UserIdClosed")
                         .HasConstraintName("FK_User_AccrualPeriod_UserIdClosed")
@@ -393,15 +393,15 @@ namespace RSoft.Account.Infra.Migrations
                     b.Navigation("CreatedAuthor");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.Category", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.Category", b =>
                 {
-                    b.HasOne("RSoft.Account.Infra.Tables.User", "ChangedAuthor")
+                    b.HasOne("RSoft.Entry.Infra.Tables.User", "ChangedAuthor")
                         .WithMany("ChangedCategories")
                         .HasForeignKey("ChangedBy")
                         .HasConstraintName("FK_User_Category_ChangedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("RSoft.Account.Infra.Tables.User", "CreatedAuthor")
+                    b.HasOne("RSoft.Entry.Infra.Tables.User", "CreatedAuthor")
                         .WithMany("CreatedCategories")
                         .HasForeignKey("CreatedBy")
                         .HasConstraintName("FK_User_Category_CreatedBy")
@@ -413,15 +413,15 @@ namespace RSoft.Account.Infra.Migrations
                     b.Navigation("CreatedAuthor");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.PaymentMethod", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.PaymentMethod", b =>
                 {
-                    b.HasOne("RSoft.Account.Infra.Tables.User", "ChangedAuthor")
+                    b.HasOne("RSoft.Entry.Infra.Tables.User", "ChangedAuthor")
                         .WithMany("ChangedPaymentMethods")
                         .HasForeignKey("ChangedBy")
                         .HasConstraintName("FK_User_PaymentMethod_ChangedBy")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("RSoft.Account.Infra.Tables.User", "CreatedAuthor")
+                    b.HasOne("RSoft.Entry.Infra.Tables.User", "CreatedAuthor")
                         .WithMany("CreatedPaymentMethods")
                         .HasForeignKey("CreatedBy")
                         .HasConstraintName("FK_User_PaymentMethod_CreatedBy")
@@ -433,30 +433,30 @@ namespace RSoft.Account.Infra.Migrations
                     b.Navigation("CreatedAuthor");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.Transaction", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.Transaction", b =>
                 {
-                    b.HasOne("RSoft.Account.Infra.Tables.Account", "Account")
+                    b.HasOne("RSoft.Entry.Infra.Tables.Account", "Account")
                         .WithMany("Transactions")
                         .HasForeignKey("AccountId")
                         .HasConstraintName("FK_User_Transaction_AccountId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RSoft.Account.Infra.Tables.User", "CreatedAuthor")
+                    b.HasOne("RSoft.Entry.Infra.Tables.User", "CreatedAuthor")
                         .WithMany("CreatedTransactions")
                         .HasForeignKey("CreatedBy")
                         .HasConstraintName("FK_User_Transaction_CreatedBy")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RSoft.Account.Infra.Tables.PaymentMethod", "PaymentMethod")
+                    b.HasOne("RSoft.Entry.Infra.Tables.PaymentMethod", "PaymentMethod")
                         .WithMany("Transactions")
                         .HasForeignKey("PaymentMethodId")
                         .HasConstraintName("FK_User_Transaction_PaymentMethodId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RSoft.Account.Infra.Tables.AccrualPeriod", "AccrualPeriod")
+                    b.HasOne("RSoft.Entry.Infra.Tables.AccrualPeriod", "AccrualPeriod")
                         .WithMany("Transactions")
                         .HasForeignKey("Year", "Month")
                         .HasConstraintName("FK_AccrualPeriod_Transaction_YearMonth")
@@ -472,27 +472,27 @@ namespace RSoft.Account.Infra.Migrations
                     b.Navigation("PaymentMethod");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.Account", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.Account", b =>
                 {
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.AccrualPeriod", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.AccrualPeriod", b =>
                 {
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.Category", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.Category", b =>
                 {
                     b.Navigation("Accounts");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.PaymentMethod", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.PaymentMethod", b =>
                 {
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("RSoft.Account.Infra.Tables.User", b =>
+            modelBuilder.Entity("RSoft.Entry.Infra.Tables.User", b =>
                 {
                     b.Navigation("ChangedAccounts");
 

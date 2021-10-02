@@ -1,8 +1,8 @@
-﻿using RSoft.Account.Core.Entities;
+﻿using RSoft.Entry.Core.Entities;
 using RSoft.Lib.Design.Infra.Data;
 using System;
 
-namespace RSoft.Account.Core.Ports
+namespace RSoft.Entry.Core.Ports
 {
 
     /// <summary>

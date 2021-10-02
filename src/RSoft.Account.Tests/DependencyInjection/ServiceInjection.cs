@@ -4,16 +4,16 @@ using System;
 using RSoft.Lib.Common.Contracts;
 using RSoft.Lib.Common.Abstractions;
 using RSoft.Finance.Contracts.Enum;
-using CategoryDomain = RSoft.Account.Core.Entities.Category;
-using AccountDomain = RSoft.Account.Core.Entities.Entry;
-using AccrualPeriodDomain = RSoft.Account.Core.Entities.AccrualPeriod;
-using TransactionDomain = RSoft.Account.Core.Entities.Transaction;
-using UserDomain = RSoft.Account.Core.Entities.User;
-using RSoft.Account.Core.Services;
-using RSoft.Account.Tests.Stubs;
+using CategoryDomain = RSoft.Entry.Core.Entities.Category;
+using AccountDomain = RSoft.Entry.Core.Entities.Entry;
+using AccrualPeriodDomain = RSoft.Entry.Core.Entities.AccrualPeriod;
+using TransactionDomain = RSoft.Entry.Core.Entities.Transaction;
+using UserDomain = RSoft.Entry.Core.Entities.User;
+using RSoft.Entry.Core.Services;
+using RSoft.Entry.Tests.Stubs;
 using RSoft.Lib.Common.Contracts.Web;
 
-namespace RSoft.Account.Tests.DependencyInjection
+namespace RSoft.Entry.Tests.DependencyInjection
 {
 
     /// <summary>

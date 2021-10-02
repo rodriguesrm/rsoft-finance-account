@@ -3,7 +3,7 @@ using RSoft.Lib.Design.Application.Commands;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace RSoft.Account.Contracts.Commands
+namespace RSoft.Entry.Contracts.Commands
 {
 
     /// <summary>

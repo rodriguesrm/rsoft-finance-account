@@ -1,7 +1,7 @@
 ﻿using RSoft.Lib.Design.Infra.Data;
 using System;
 
-namespace RSoft.Account.Core.Ports
+namespace RSoft.Entry.Core.Ports
 {
 
     /// <summary>

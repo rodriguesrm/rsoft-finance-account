@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RSoft.Account.Tests.Stubs
+namespace RSoft.Entry.Tests.Stubs
 {
     public class AuthenticatedUserStub : IAuthenticatedUser
     {

@@ -1,16 +1,16 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using RSoft.Account.Contracts.Commands;
-using RSoft.Account.Core.Ports;
+using RSoft.Entry.Contracts.Commands;
+using RSoft.Entry.Core.Ports;
 using RSoft.Lib.Design.Application.Commands;
 using RSoft.Lib.Design.Infra.Data;
 using System.Threading;
 using System.Threading.Tasks;
-using DomainAccrualPeriod = RSoft.Account.Core.Entities.AccrualPeriod;
+using DomainAccrualPeriod = RSoft.Entry.Core.Entities.AccrualPeriod;
 using System;
-using RSoft.Account.Application.Extensions;
+using RSoft.Entry.Application.Extensions;
 
-namespace RSoft.Account.Application.Handlers
+namespace RSoft.Entry.Application.Handlers
 {
 
     /// <summary>

@@ -1,22 +1,22 @@
 ﻿using AutoFixture;
 using AutoFixture.Kernel;
 using NUnit.Framework;
-using RSoft.Account.Core.Entities;
-using RSoft.Account.Core.Ports;
-using RSoft.Account.Core.Services;
-using RSoft.Account.Infra;
-using RSoft.Account.Infra.Providers;
-using RSoft.Account.Tests.DependencyInjection;
-using RSoft.Account.Tests.Extensions;
-using RSoft.Account.Tests.Stubs;
+using RSoft.Entry.Core.Entities;
+using RSoft.Entry.Core.Ports;
+using RSoft.Entry.Core.Services;
+using RSoft.Entry.Infra;
+using RSoft.Entry.Infra.Providers;
+using RSoft.Entry.Tests.DependencyInjection;
+using RSoft.Entry.Tests.Extensions;
+using RSoft.Entry.Tests.Stubs;
 using RSoft.Lib.Common.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UserTable = RSoft.Account.Infra.Tables.User;
+using UserTable = RSoft.Entry.Infra.Tables.User;
 
-namespace RSoft.Account.Tests.Core.Services
+namespace RSoft.Entry.Tests.Core.Services
 {
 
     public class UserDomainServiceTest : TestFor<UserDomainService>

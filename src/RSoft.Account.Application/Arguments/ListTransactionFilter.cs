@@ -1,8 +1,8 @@
-﻿using RSoft.Account.Core.Ports;
+﻿using RSoft.Entry.Core.Ports;
 using RSoft.Finance.Contracts.Enum;
 using System;
 
-namespace RSoft.Account.Application.Arguments
+namespace RSoft.Entry.Application.Arguments
 {
 
     /// <summary>

@@ -1,14 +1,14 @@
-﻿using TransactionDomain = RSoft.Account.Core.Entities.Transaction;
-using AccountDomain = RSoft.Account.Core.Entities.Entry;
+﻿using TransactionDomain = RSoft.Entry.Core.Entities.Transaction;
+using AccountDomain = RSoft.Entry.Core.Entities.Entry;
 using System;
 using System.Linq;
 using NUnit.Framework;
 using RSoft.Finance.Contracts.Enum;
-using RSoft.Account.Core.Entities;
-using RSoft.Account.Tests.DependencyInjection;
+using RSoft.Entry.Core.Entities;
+using RSoft.Entry.Tests.DependencyInjection;
 using RSoft.Lib.Common.ValueObjects;
 
-namespace RSoft.Account.Tests.Core.Entities
+namespace RSoft.Entry.Tests.Core.Entities
 {
 
     public class TransactionTest : TestFor<TransactionDomain>

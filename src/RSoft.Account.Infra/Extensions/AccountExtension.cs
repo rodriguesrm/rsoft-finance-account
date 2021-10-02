@@ -1,8 +1,8 @@
-﻿using AccountDomain = RSoft.Account.Core.Entities.Entry;
-using AccountTable = RSoft.Account.Infra.Tables.Account;
-using CategoryDomain = RSoft.Account.Core.Entities.Category;
+﻿using AccountDomain = RSoft.Entry.Core.Entities.Entry;
+using AccountTable = RSoft.Entry.Infra.Tables.Account;
+using CategoryDomain = RSoft.Entry.Core.Entities.Category;
 
-namespace RSoft.Account.Infra.Extensions
+namespace RSoft.Entry.Infra.Extensions
 {
 
     /// <summary>

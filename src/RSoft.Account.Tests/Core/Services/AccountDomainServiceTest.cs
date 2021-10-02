@@ -1,21 +1,21 @@
 ﻿using AutoFixture;
 using AutoFixture.Kernel;
 using NUnit.Framework;
-using RSoft.Account.Core.Ports;
-using RSoft.Account.Core.Services;
-using RSoft.Account.Infra;
-using RSoft.Account.Infra.Providers;
-using RSoft.Account.Tests.DependencyInjection;
-using RSoft.Account.Tests.Extensions;
+using RSoft.Entry.Core.Ports;
+using RSoft.Entry.Core.Services;
+using RSoft.Entry.Infra;
+using RSoft.Entry.Infra.Providers;
+using RSoft.Entry.Tests.DependencyInjection;
+using RSoft.Entry.Tests.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AccountTable = RSoft.Account.Infra.Tables.Account;
-using AccountDomain = RSoft.Account.Core.Entities.Entry;
-using CategoryDomain = RSoft.Account.Core.Entities.Category;
+using AccountTable = RSoft.Entry.Infra.Tables.Account;
+using AccountDomain = RSoft.Entry.Core.Entities.Entry;
+using CategoryDomain = RSoft.Entry.Core.Entities.Category;
 
-namespace RSoft.Account.Tests.Core.Services
+namespace RSoft.Entry.Tests.Core.Services
 {
 
     public class AccountDomainServiceTest : TestFor<AccountDomainService>

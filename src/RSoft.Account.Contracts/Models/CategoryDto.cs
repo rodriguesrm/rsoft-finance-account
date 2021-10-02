@@ -3,7 +3,7 @@ using RSoft.Lib.Common.Dtos;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace RSoft.Account.Contracts.Models
+namespace RSoft.Entry.Contracts.Models
 {
 
     /// <summary>

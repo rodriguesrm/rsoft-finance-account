@@ -1,7 +1,7 @@
 ﻿using RSoft.Lib.Design.Infra.Data;
 using System.Diagnostics.CodeAnalysis;
 
-namespace RSoft.Account.Infra
+namespace RSoft.Entry.Infra
 {
 
     /// <summary>

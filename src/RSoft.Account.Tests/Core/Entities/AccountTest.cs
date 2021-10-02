@@ -1,11 +1,11 @@
 ﻿using NUnit.Framework;
-using RSoft.Account.Tests.DependencyInjection;
+using RSoft.Entry.Tests.DependencyInjection;
 using System;
 using System.Linq;
-using AccountDomain = RSoft.Account.Core.Entities.Entry;
-using CategoryDomain = RSoft.Account.Core.Entities.Category;
+using AccountDomain = RSoft.Entry.Core.Entities.Entry;
+using CategoryDomain = RSoft.Entry.Core.Entities.Category;
 
-namespace RSoft.Account.Tests.Core.Entities
+namespace RSoft.Entry.Tests.Core.Entities
 {
 
     public class AccountTest : TestFor<AccountDomain>

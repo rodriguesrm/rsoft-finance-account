@@ -1,17 +1,17 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using RSoft.Account.Application.Extensions;
-using RSoft.Account.Contracts.Commands;
-using RSoft.Account.Contracts.Models;
-using EntryAccount = RSoft.Account.Core.Entities.Entry;
-using RSoft.Account.Core.Ports;
+using RSoft.Entry.Application.Extensions;
+using RSoft.Entry.Contracts.Commands;
+using RSoft.Entry.Contracts.Models;
+using EntryAccount = RSoft.Entry.Core.Entities.Entry;
+using RSoft.Entry.Core.Ports;
 using RSoft.Lib.Design.Application.Commands;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using RSoft.Lib.Design.Application.Handlers;
 
-namespace RSoft.Account.Application.Handlers
+namespace RSoft.Entry.Application.Handlers
 {
 
     /// <summary>

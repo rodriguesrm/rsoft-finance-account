@@ -1,13 +1,13 @@
 ﻿using MediatR;
-using RSoft.Account.Contracts.FilterArguments;
-using RSoft.Account.Contracts.Models;
+using RSoft.Entry.Contracts.FilterArguments;
+using RSoft.Entry.Contracts.Models;
 using RSoft.Finance.Contracts.Enum;
 using RSoft.Lib.Design.Application.Commands;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace RSoft.Account.Contracts.Commands
+namespace RSoft.Entry.Contracts.Commands
 {
 
     /// <summary>

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using RSoft.Account.Infra.Tables;
+using RSoft.Entry.Infra.Tables;
 
-namespace RSoft.Account.Infra.Configurations
+namespace RSoft.Entry.Infra.Configurations
 {
 
     /// <summary>

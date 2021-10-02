@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RSoft.Account.Core.Ports;
-using RSoft.Account.Core.Services;
-using RSoft.Account.Infra;
-using RSoft.Account.Infra.Providers;
+using RSoft.Entry.Core.Ports;
+using RSoft.Entry.Core.Services;
+using RSoft.Entry.Infra;
+using RSoft.Entry.Infra.Providers;
 using RSoft.Lib.Common.Options;
 using RSoft.Lib.Design.Infra.Data;
 using RSoft.Lib.Design.IoC;
@@ -14,9 +14,9 @@ using RSoft.Lib.Messaging.Abstractions;
 using RSoft.Lib.Messaging.Options;
 using RSoft.Lib.Messaging.Extensions;
 using RSoft.Finance.Contracts.Events;
-using RSoft.Account.Application.Consumers;
+using RSoft.Entry.Application.Consumers;
 
-namespace RSoft.Account.Cross.IoC
+namespace RSoft.Entry.Cross.IoC
 {
 
     /// <summary>
@@ -92,8 +92,8 @@ namespace RSoft.Account.Cross.IoC
 
             List<string> assembliesNames = new()
             {
-                "RSoft.Account.GrpcService",
-                "RSoft.Account.Application"
+                "RSoft.Entry.GrpcService",
+                "RSoft.Entry.Application"
             };
 
 

@@ -1,7 +1,7 @@
-﻿using RSoft.Account.Infra.Tables;
-using CategoryDomain = RSoft.Account.Core.Entities.Category;
+﻿using RSoft.Entry.Infra.Tables;
+using CategoryDomain = RSoft.Entry.Core.Entities.Category;
 
-namespace RSoft.Account.Infra.Extensions
+namespace RSoft.Entry.Infra.Extensions
 {
 
     /// <summary>

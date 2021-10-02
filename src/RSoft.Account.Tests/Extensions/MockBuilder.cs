@@ -1,20 +1,20 @@
 ﻿using AutoFixture;
 using Microsoft.EntityFrameworkCore;
-using RSoft.Account.Infra;
-using RSoft.Account.Tests.Stubs;
+using RSoft.Entry.Infra;
+using RSoft.Entry.Tests.Stubs;
 using RSoft.Lib.Design.Infra.Data.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using RSoft.Finance.Contracts.Enum;
-using CategoryTable = RSoft.Account.Infra.Tables.Category;
-using UserTable = RSoft.Account.Infra.Tables.User;
-using AccountTable = RSoft.Account.Infra.Tables.Account;
-using PaymentMethodTable = RSoft.Account.Infra.Tables.PaymentMethod;
-using AccrualPeriodTable = RSoft.Account.Infra.Tables.AccrualPeriod;
-using TransactionTable = RSoft.Account.Infra.Tables.Transaction;
+using CategoryTable = RSoft.Entry.Infra.Tables.Category;
+using UserTable = RSoft.Entry.Infra.Tables.User;
+using AccountTable = RSoft.Entry.Infra.Tables.Account;
+using PaymentMethodTable = RSoft.Entry.Infra.Tables.PaymentMethod;
+using AccrualPeriodTable = RSoft.Entry.Infra.Tables.AccrualPeriod;
+using TransactionTable = RSoft.Entry.Infra.Tables.Transaction;
 
-namespace RSoft.Account.Tests.Extensions
+namespace RSoft.Entry.Tests.Extensions
 {
 
     /// <summary>

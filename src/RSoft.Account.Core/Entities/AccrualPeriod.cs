@@ -6,7 +6,7 @@ using RSoft.Lib.Design.Domain.Entities;
 using System;
 using RSoft.Lib.Common.ValueObjects;
 
-namespace RSoft.Account.Core.Entities
+namespace RSoft.Entry.Core.Entities
 {
 
     /// <summary>

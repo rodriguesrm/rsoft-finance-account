@@ -5,7 +5,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 
-option csharp_namespace = "RSoft.Account.Grpc.Protobuf";
+option csharp_namespace = "RSoft.Entry.Grpc.Protobuf";
 
 // common message types
 // ------------------------------------------------------------------

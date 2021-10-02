@@ -1,11 +1,11 @@
 ﻿using AutoFixture;
 using AutoFixture.Kernel;
 using NUnit.Framework;
-using RSoft.Account.Infra;
-using RSoft.Account.Infra.Providers;
-using RSoft.Account.Infra.Tables;
-using RSoft.Account.Tests.DependencyInjection;
-using RSoft.Account.Tests.Extensions;
+using RSoft.Entry.Infra;
+using RSoft.Entry.Infra.Providers;
+using RSoft.Entry.Infra.Tables;
+using RSoft.Entry.Tests.DependencyInjection;
+using RSoft.Entry.Tests.Extensions;
 using RSoft.Lib.Design.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -13,9 +13,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using AccrualPeriodDomain = RSoft.Account.Core.Entities.AccrualPeriod;
+using AccrualPeriodDomain = RSoft.Entry.Core.Entities.AccrualPeriod;
 
-namespace RSoft.Account.Tests.Infra.Providers
+namespace RSoft.Entry.Tests.Infra.Providers
 {
     
     public class AccrualPeriodProviderTest : TestFor<AccrualPeriodProvider>

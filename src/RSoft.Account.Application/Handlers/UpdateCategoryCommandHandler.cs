@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using RSoft.Account.Contracts.Commands;
-using RSoft.Account.Core.Entities;
-using RSoft.Account.Core.Ports;
+using RSoft.Entry.Contracts.Commands;
+using RSoft.Entry.Core.Entities;
+using RSoft.Entry.Core.Ports;
 using RSoft.Lib.Design.Application.Commands;
 using RSoft.Lib.Design.Infra.Data;
 using System.Threading;
@@ -11,7 +11,7 @@ using RSoft.Lib.Design.Application.Handlers;
 using MassTransit;
 using RSoft.Finance.Contracts.Events;
 
-namespace RSoft.Account.Application.Handlers
+namespace RSoft.Entry.Application.Handlers
 {
 
     /// <summary>

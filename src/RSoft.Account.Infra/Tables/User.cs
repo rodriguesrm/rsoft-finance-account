@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace RSoft.Account.Infra.Tables
+namespace RSoft.Entry.Infra.Tables
 {
 
     /// <summary>

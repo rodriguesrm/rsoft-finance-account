@@ -1,11 +1,11 @@
-﻿using RSoft.Account.Core.Ports;
-using RSoft.Account.Infra.Extensions;
+﻿using RSoft.Entry.Core.Ports;
+using RSoft.Entry.Infra.Extensions;
 using RSoft.Lib.Design.Infra.Data;
 using System;
-using AccountDomain = RSoft.Account.Core.Entities.Entry;
-using AccountTable = RSoft.Account.Infra.Tables.Account;
+using AccountDomain = RSoft.Entry.Core.Entities.Entry;
+using AccountTable = RSoft.Entry.Infra.Tables.Account;
 
-namespace RSoft.Account.Infra.Providers
+namespace RSoft.Entry.Infra.Providers
 {
 
     /// <summary>

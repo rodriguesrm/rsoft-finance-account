@@ -1,10 +1,10 @@
 ﻿using NUnit.Framework;
-using RSoft.Account.Core.Entities;
+using RSoft.Entry.Core.Entities;
 using RSoft.Lib.Common.ValueObjects;
 using System;
 using System.Linq;
 
-namespace RSoft.Account.Tests.Core.Entities
+namespace RSoft.Entry.Tests.Core.Entities
 {
 
     public class CategoryTest : TestFor<Category>

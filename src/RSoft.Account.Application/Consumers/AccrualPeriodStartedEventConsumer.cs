@@ -5,11 +5,11 @@ using RSoft.Finance.Contracts.Events;
 using RSoft.Lib.Messaging.Contracts;
 using System.Threading.Tasks;
 using MediatR;
-using RSoft.Account.Contracts.Commands;
+using RSoft.Entry.Contracts.Commands;
 using RSoft.Lib.Common.Abstractions;
 using System;
 
-namespace RSoft.Account.Application.Consumers
+namespace RSoft.Entry.Application.Consumers
 {
 
     /// <summary>

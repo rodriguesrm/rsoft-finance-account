@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace RSoft.Account.Contracts.FilterArguments
+namespace RSoft.Entry.Contracts.FilterArguments
 {
 
     /// <summary>

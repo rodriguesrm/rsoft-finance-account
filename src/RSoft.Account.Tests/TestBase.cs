@@ -2,10 +2,10 @@
 using AutoFixture.AutoMoq;
 using AutoFixture.Kernel;
 using NUnit.Framework;
-using RSoft.Account.Tests.Stubs;
+using RSoft.Entry.Tests.Stubs;
 using RSoft.Lib.Common.Contracts.Web;
 
-namespace RSoft.Account.Tests
+namespace RSoft.Entry.Tests
 {
 
     /// <summary>

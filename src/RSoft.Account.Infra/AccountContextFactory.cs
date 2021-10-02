@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using System.Diagnostics.CodeAnalysis;
 
-namespace RSoft.Account.Infra
+namespace RSoft.Entry.Infra
 {
 
     /// <summary>

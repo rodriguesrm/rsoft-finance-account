@@ -1,9 +1,9 @@
-﻿using RSoft.Account.Infra.Tables;
+﻿using RSoft.Entry.Infra.Tables;
 using RSoft.Lib.Common.ValueObjects;
 using System;
-using TransactionDomain = RSoft.Account.Core.Entities.Transaction;
+using TransactionDomain = RSoft.Entry.Core.Entities.Transaction;
 
-namespace RSoft.Account.Infra.Extensions
+namespace RSoft.Entry.Infra.Extensions
 {
 
     /// <summary>

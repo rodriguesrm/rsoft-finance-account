@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RSoft.Logs.Extensions;
 
-namespace RSoft.Account.GrpcService
+namespace RSoft.Entry.GrpcService
 {
 
     /// <summary>

@@ -4,7 +4,7 @@ using RSoft.Lib.Common.Models;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace RSoft.Account.Contracts.Models
+namespace RSoft.Entry.Contracts.Models
 {
 
     /// <summary>

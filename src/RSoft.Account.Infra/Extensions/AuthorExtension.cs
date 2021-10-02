@@ -1,10 +1,10 @@
 ﻿using System;
-using RSoft.Account.Infra.Tables;
+using RSoft.Entry.Infra.Tables;
 using RSoft.Lib.Common.Contracts.Entities;
 using RSoft.Lib.Common.ValueObjects;
 using RSoft.Lib.Design.Infra.Data;
 
-namespace RSoft.Account.Infra.Extensions
+namespace RSoft.Entry.Infra.Extensions
 {
 
     /// <summary>

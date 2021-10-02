@@ -1,28 +1,28 @@
 ﻿using AutoFixture;
 using AutoFixture.Kernel;
 using NUnit.Framework;
-using RSoft.Account.Core.Entities;
-using RSoft.Account.Core.Ports;
-using RSoft.Account.Core.Services;
-using RSoft.Account.Infra;
-using RSoft.Account.Infra.Providers;
-using RSoft.Account.Tests.DependencyInjection;
-using RSoft.Account.Tests.Extensions;
+using RSoft.Entry.Core.Entities;
+using RSoft.Entry.Core.Ports;
+using RSoft.Entry.Core.Services;
+using RSoft.Entry.Infra;
+using RSoft.Entry.Infra.Providers;
+using RSoft.Entry.Tests.DependencyInjection;
+using RSoft.Entry.Tests.Extensions;
 using RSoft.Finance.Contracts.Enum;
 using RSoft.Lib.Common.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TransactionTable = RSoft.Account.Infra.Tables.Transaction;
-using AccrualPeriodTable = RSoft.Account.Infra.Tables.AccrualPeriod;
-using AccountDomain = RSoft.Account.Core.Entities.Entry;
-using RSoft.Account.Tests.Stubs;
-using RSoft.Account.Infra.Extensions;
+using TransactionTable = RSoft.Entry.Infra.Tables.Transaction;
+using AccrualPeriodTable = RSoft.Entry.Infra.Tables.AccrualPeriod;
+using AccountDomain = RSoft.Entry.Core.Entities.Entry;
+using RSoft.Entry.Tests.Stubs;
+using RSoft.Entry.Infra.Extensions;
 using Microsoft.Extensions.Localization;
-using RSoft.Account.Application.Arguments;
+using RSoft.Entry.Application.Arguments;
 
-namespace RSoft.Account.Tests.Core.Services
+namespace RSoft.Entry.Tests.Core.Services
 {
 
     public class TransactionDomainServiceTest : TestFor<TransactionDomainService>

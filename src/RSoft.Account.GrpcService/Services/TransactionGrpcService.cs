@@ -1,16 +1,16 @@
 ﻿using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
-using RSoft.Account.Contracts.Commands;
+using RSoft.Entry.Contracts.Commands;
 using System;
 using System.Threading.Tasks;
-using RSoft.Account.GrpcService.Extensions;
-using RSoft.Account.Grpc.Protobuf;
-using proto = RSoft.Account.Grpc.Protobuf;
-using RSoft.Account.Contracts.Models;
+using RSoft.Entry.GrpcService.Extensions;
+using RSoft.Entry.Grpc.Protobuf;
+using proto = RSoft.Entry.Grpc.Protobuf;
+using RSoft.Entry.Contracts.Models;
 using System.Collections.Generic;
 
-namespace RSoft.Account.GrpcService.Services
+namespace RSoft.Entry.GrpcService.Services
 {
 
     /// <summary>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
 
-namespace RSoft.Account.Tests.Stubs
+namespace RSoft.Entry.Tests.Stubs
 {
 
     public class StringLocalizerStub<T> : IStringLocalizer<T>

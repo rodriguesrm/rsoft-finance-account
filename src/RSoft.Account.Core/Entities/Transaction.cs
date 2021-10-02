@@ -6,7 +6,7 @@ using System;
 using RSoft.Lib.Common.Contracts;
 using RSoft.Finance.Contracts.Enum;
 
-namespace RSoft.Account.Core.Entities
+namespace RSoft.Entry.Core.Entities
 {
 
     /// <summary>

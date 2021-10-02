@@ -1,12 +1,12 @@
 ﻿using NUnit.Framework;
-using RSoft.Account.Core.Entities;
+using RSoft.Entry.Core.Entities;
 using RSoft.Finance.Contracts.Enum;
 using RSoft.Lib.Common.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RSoft.Account.Tests.Core.Entities
+namespace RSoft.Entry.Tests.Core.Entities
 {
 
     public class PaymentMethodTest : TestFor<PaymentMethod>

@@ -1,18 +1,18 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using RSoft.Account.Contracts.Commands;
-using RSoft.Account.Core.Ports;
+using RSoft.Entry.Contracts.Commands;
+using RSoft.Entry.Core.Ports;
 using RSoft.Lib.Design.Application.Commands;
 using RSoft.Lib.Design.Infra.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using RSoft.Lib.Design.Application.Handlers;
-using EntryAccount = RSoft.Account.Core.Entities.Entry;
-using DomainCategory = RSoft.Account.Core.Entities.Category;
+using EntryAccount = RSoft.Entry.Core.Entities.Entry;
+using DomainCategory = RSoft.Entry.Core.Entities.Category;
 using MassTransit;
 using RSoft.Finance.Contracts.Events;
 
-namespace RSoft.Account.Application.Handlers
+namespace RSoft.Entry.Application.Handlers
 {
 
     /// <summary>

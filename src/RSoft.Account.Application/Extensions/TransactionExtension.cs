@@ -1,7 +1,7 @@
-﻿using RSoft.Account.Application.Arguments;
-using RSoft.Account.Contracts.Commands;
-using RSoft.Account.Contracts.Models;
-using RSoft.Account.Core.Entities;
+﻿using RSoft.Entry.Application.Arguments;
+using RSoft.Entry.Contracts.Commands;
+using RSoft.Entry.Contracts.Models;
+using RSoft.Entry.Core.Entities;
 using RSoft.Finance.Contracts.Enum;
 using RSoft.Finance.Contracts.Events;
 using RSoft.Helpers.Extensions;
@@ -9,9 +9,9 @@ using RSoft.Lib.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EntryAccount = RSoft.Account.Core.Entities.Entry;
+using EntryAccount = RSoft.Entry.Core.Entities.Entry;
 
-namespace RSoft.Account.Application.Extensions
+namespace RSoft.Entry.Application.Extensions
 {
 
     /// <summary>

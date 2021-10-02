@@ -3,7 +3,7 @@ using RSoft.Lib.Common.ValueObjects;
 using RSoft.Lib.Design.Domain.Entities;
 using System;
 
-namespace RSoft.Account.Core.Entities
+namespace RSoft.Entry.Core.Entities
 {
 
     /// <summary>

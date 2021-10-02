@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using Grpc.Core;
 
-namespace RSoft.Account.GrpcService.Services
+namespace RSoft.Entry.GrpcService.Services
 {
 
     /// <summary>

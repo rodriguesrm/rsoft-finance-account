@@ -1,18 +1,18 @@
 ﻿using AutoFixture;
 using Moq;
 using NUnit.Framework;
-using RSoft.Account.Application.Handlers;
-using RSoft.Account.Contracts.Commands;
-using RSoft.Account.Contracts.Models;
-using RSoft.Account.Core.Entities;
-using RSoft.Account.Core.Ports;
-using RSoft.Account.Tests.DependencyInjection;
+using RSoft.Entry.Application.Handlers;
+using RSoft.Entry.Contracts.Commands;
+using RSoft.Entry.Contracts.Models;
+using RSoft.Entry.Core.Entities;
+using RSoft.Entry.Core.Ports;
+using RSoft.Entry.Tests.DependencyInjection;
 using RSoft.Lib.Design.Application.Commands;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RSoft.Account.Tests.Application.Handlers
+namespace RSoft.Entry.Tests.Application.Handlers
 {
     public class GetPaymentMethodByIdCommandHandlerTest : TestFor<GetPaymentMethodByIdCommandHandler>
     {

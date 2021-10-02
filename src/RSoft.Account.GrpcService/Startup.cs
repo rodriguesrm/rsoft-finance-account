@@ -5,15 +5,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using RSoft.Account.Cross.IoC;
+using RSoft.Entry.Cross.IoC;
 using RSoft.Logs.Interceptors;
-using RSoft.Account.GrpcService.Services;
-using RSoft.Account.Infra.Extensions;
+using RSoft.Entry.GrpcService.Services;
+using RSoft.Entry.Infra.Extensions;
 using RSoft.Lib.Common.Web.Extensions;
 using RSoft.Lib.Web.Extensions;
 using RSoft.Logs.Extensions;
 
-namespace RSoft.Account.GrpcService
+namespace RSoft.Entry.GrpcService
 {
     public class Startup
     {

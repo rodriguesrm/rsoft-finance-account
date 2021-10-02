@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RSoft.Account.Infra.Configurations;
-using RSoft.Account.Infra.Tables;
+using RSoft.Entry.Infra.Configurations;
+using RSoft.Entry.Infra.Tables;
 using RSoft.Lib.Design.Infra.Data;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace RSoft.Account.Infra
+namespace RSoft.Entry.Infra
 {
 
     /// <summary>

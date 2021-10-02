@@ -2,7 +2,7 @@
 using RSoft.Lib.Common.ValueObjects;
 using System;
 
-namespace RSoft.Account.Application.Extensions
+namespace RSoft.Entry.Application.Extensions
 {
 
     /// <summary>

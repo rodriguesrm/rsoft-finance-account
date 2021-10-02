@@ -1,14 +1,14 @@
 ﻿using Google.Protobuf.WellKnownTypes;
-using RSoft.Account.Contracts.Commands;
-using RSoft.Account.Contracts.FilterArguments;
-using RSoft.Account.Contracts.Models;
-using RSoft.Account.Grpc.Protobuf;
+using RSoft.Entry.Contracts.Commands;
+using RSoft.Entry.Contracts.FilterArguments;
+using RSoft.Entry.Contracts.Models;
+using RSoft.Entry.Grpc.Protobuf;
 using RSoft.Finance.Contracts.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RSoft.Account.GrpcService.Extensions
+namespace RSoft.Entry.GrpcService.Extensions
 {
 
     /// <summary>

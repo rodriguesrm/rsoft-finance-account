@@ -1,7 +1,7 @@
 ﻿using RSoft.Finance.Contracts.Enum;
 using System;
 
-namespace RSoft.Account.Core.Ports
+namespace RSoft.Entry.Core.Ports
 {
 
     /// <summary>

@@ -1,11 +1,11 @@
-﻿using RSoft.Account.Contracts.Models;
-using RSoft.Account.Core.Entities;
+﻿using RSoft.Entry.Contracts.Models;
+using RSoft.Entry.Core.Entities;
 using RSoft.Lib.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RSoft.Account.Application.Extensions
+namespace RSoft.Entry.Application.Extensions
 {
 
     /// <summary>

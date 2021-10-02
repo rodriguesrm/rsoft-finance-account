@@ -1,7 +1,7 @@
-﻿using RSoft.Account.Infra.Tables;
-using PaymentMethodDomain = RSoft.Account.Core.Entities.PaymentMethod;
+﻿using RSoft.Entry.Infra.Tables;
+using PaymentMethodDomain = RSoft.Entry.Core.Entities.PaymentMethod;
 
-namespace RSoft.Account.Infra.Extensions
+namespace RSoft.Entry.Infra.Extensions
 {
 
     /// <summary>

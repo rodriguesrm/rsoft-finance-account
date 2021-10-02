@@ -1,5 +1,5 @@
-﻿using RSoft.Account.Core.Entities;
-using RSoft.Account.Core.Ports;
+﻿using RSoft.Entry.Core.Entities;
+using RSoft.Entry.Core.Ports;
 using RSoft.Lib.Common.Contracts.Web;
 using RSoft.Lib.Common.ValueObjects;
 using RSoft.Lib.Design.Domain.Services;
@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RSoft.Account.Core.Services
+namespace RSoft.Entry.Core.Services
 {
 
     /// <summary>

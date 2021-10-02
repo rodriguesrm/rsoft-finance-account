@@ -1,31 +1,17 @@
 ﻿using AutoFixture;
-using AutoFixture.Kernel;
 using NUnit.Framework;
-using RSoft.Entry.Infra;
 using RSoft.Entry.Infra.Providers;
-using RSoft.Entry.Infra.Tables;
 using RSoft.Entry.Tests.DependencyInjection;
 using RSoft.Entry.Tests.Extensions;
 using RSoft.Lib.Design.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using AccrualPeriodDomain = RSoft.Entry.Core.Entities.AccrualPeriod;
 
 namespace RSoft.Entry.Tests.Infra.Providers
 {
-    
+
     public class AccrualPeriodProviderTest : TestFor<AccrualPeriodProvider>
     {
-
-        #region Local objects/variables
-
-        private EntryContext _dbContext;
-
-        #endregion
 
         #region Constructors
 
@@ -40,7 +26,7 @@ namespace RSoft.Entry.Tests.Infra.Providers
 
         protected override void Setup(IFixture fixture)
         {
-            _fixture.WithInMemoryDatabase(out _dbContext);
+            _fixture.WithInMemoryDatabase(out _);
         }
 
         #endregion

@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0-Docs", "0-Docs", "{14E9B086-A7A4-4F1D-BCB2-5BEE9DA48152}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\license.txt = ..\docs\license.txt
+		..\README.md = ..\README.md
+		..\docs\release-notes.md = ..\docs\release-notes.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7-Tests", "7-Tests", "{812B13B2-617E-4D48-84DC-72E41BF214B0}"
 EndProject

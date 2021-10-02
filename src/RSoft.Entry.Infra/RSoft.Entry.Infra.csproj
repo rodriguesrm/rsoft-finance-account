@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RSoft.Account.Core\RSoft.Entry.Core.csproj" />
+    <ProjectReference Include="..\RSoft.Entry.Core\RSoft.Entry.Core.csproj" />
   </ItemGroup>
 
 </Project>

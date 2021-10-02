@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RSoft.Account.Contracts\RSoft.Entry.Contracts.csproj" />
-    <ProjectReference Include="..\RSoft.Account.Core\RSoft.Entry.Core.csproj" />
+    <ProjectReference Include="..\RSoft.Entry.Contracts\RSoft.Entry.Contracts.csproj" />
+    <ProjectReference Include="..\RSoft.Entry.Core\RSoft.Entry.Core.csproj" />
   </ItemGroup>
 
 </Project>

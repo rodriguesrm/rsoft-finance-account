@@ -22,10 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RSoft.Account.Contracts\RSoft.Entry.Contracts.csproj" />
-    <ProjectReference Include="..\RSoft.Account.Core\RSoft.Entry.Core.csproj" />
-    <ProjectReference Include="..\RSoft.Account.Cross\RSoft.Entry.Cross.csproj" />
-    <ProjectReference Include="..\RSoft.Account.Infra\RSoft.Entry.Infra.csproj" />
+    <ProjectReference Include="..\RSoft.Entry.Application\RSoft.Entry.Application.csproj" />
+    <ProjectReference Include="..\RSoft.Entry.Contracts\RSoft.Entry.Contracts.csproj" />
+    <ProjectReference Include="..\RSoft.Entry.Core\RSoft.Entry.Core.csproj" />
+    <ProjectReference Include="..\RSoft.Entry.Cross\RSoft.Entry.Cross.csproj" />
+    <ProjectReference Include="..\RSoft.Entry.Infra\RSoft.Entry.Infra.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,3 +1,3 @@
-# RSoft.Finance.Account
+# RSoft.Finance.Entry
 
-Financial Account Control Service
+Financial Entry Control Service

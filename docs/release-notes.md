@@ -1,6 +1,6 @@
-# RSoft.Finance.Account.Service
+# RSoft.Finance.Entry.Service
 
-Financial Account Control Service
+Financial Entry Control Service
 
 ### Release Notes
 

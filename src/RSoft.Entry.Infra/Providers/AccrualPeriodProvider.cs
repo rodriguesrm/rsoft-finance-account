@@ -21,7 +21,7 @@ namespace RSoft.Entry.Infra.Providers
         #region Constructors
 
         ///<inheritdoc/>
-        public AccrualPeriodProvider(AccountContext ctx) : base(ctx) { }
+        public AccrualPeriodProvider(EntryContext ctx) : base(ctx) { }
 
         #endregion
 

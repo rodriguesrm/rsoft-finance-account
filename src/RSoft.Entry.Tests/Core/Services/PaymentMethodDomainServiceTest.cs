@@ -27,7 +27,7 @@ namespace RSoft.Entry.Tests.Core.Services
         private const string _paymentAName = "MONEY";
         private const string _paymentBName = "CREDIT CARD";
 
-        private AccountContext _dbContext;
+        private EntryContext _dbContext;
 
         #endregion
 

@@ -23,7 +23,7 @@ namespace RSoft.Entry.Tests.Infra.Providers
 
         #region Local objects/variables
 
-        private AccountContext _dbContext;
+        private EntryContext _dbContext;
 
         #endregion
 

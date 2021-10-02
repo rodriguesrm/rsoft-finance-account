@@ -24,7 +24,7 @@ namespace RSoft.Entry.Tests.Core.Services
 
         #region Local objects/variables
 
-        private AccountContext _dbContext;
+        private EntryContext _dbContext;
 
         #endregion
 

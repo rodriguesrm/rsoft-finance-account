@@ -26,7 +26,7 @@ namespace RSoft.Entry.Tests.Core.Services
         private const string _categoryAName = "VEHICLES";
         private const string _categoryBName = "LEISURE";
 
-        private AccountContext _dbContext;
+        private EntryContext _dbContext;
 
         #endregion
 

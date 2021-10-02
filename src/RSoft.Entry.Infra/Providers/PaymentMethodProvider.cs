@@ -17,7 +17,7 @@ namespace RSoft.Entry.Infra.Providers
         #region Constructors
 
         ///<inheritdoc/>
-        public PaymentMethodProvider(AccountContext ctx) : base(ctx) { }
+        public PaymentMethodProvider(EntryContext ctx) : base(ctx) { }
 
         #endregion
 

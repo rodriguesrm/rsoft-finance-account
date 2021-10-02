@@ -33,7 +33,7 @@ namespace RSoft.Entry.Cross.IoC
         public static IServiceCollection AddAccountRegister(this IServiceCollection services, IConfiguration configuration)
         {
 
-            services.AddRSoftRegister<AccountContext>(configuration, true);
+            services.AddRSoftRegister<EntryContext>(configuration, true);
 
             #region Options
 

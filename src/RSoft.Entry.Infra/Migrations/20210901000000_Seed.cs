@@ -67,7 +67,7 @@ namespace RSoft.Entry.Infra.Migrations
                     nameof(User.LastName),
                     nameof(User.IsActive)
                 },
-                new object[] { serviceId, "Account", "Service", true }
+                new object[] { serviceId, "Entry", "Service", true }
             );
 
             migrationBuilder.Sql("set foreign_key_checks=1");

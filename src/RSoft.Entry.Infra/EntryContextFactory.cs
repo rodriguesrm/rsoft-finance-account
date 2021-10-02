@@ -6,18 +6,18 @@ namespace RSoft.Entry.Infra
 {
 
     /// <summary>
-    /// Account context factory
+    /// Entry context factory
     /// </summary>
     [ExcludeFromCodeCoverage(Justification = "Config class used only for generate migration")]
-    public class AccountContextFactory : IDesignTimeDbContextFactory<AccountContext>
+    public class EntryContextFactory : IDesignTimeDbContextFactory<EntryContext>
     {
 
         ///<inheritdoc/>
-        public AccountContext CreateDbContext(string[] args)
+        public EntryContext CreateDbContext(string[] args)
         {
-            string connectionString = "Server=192.168.3.1;Port=3306;Database=rsoft_account;Uid=root;password=RR.MySqlDev;";
+            string connectionString = "Server=192.168.3.1;Port=3306;Database=rsoft_entry;Uid=root;password=RR.MySqlDev;";
             DbContextOptions options = new DbContextOptionsBuilder().UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)).Options;
-            return new AccountContext(options);
+            return new EntryContext(options);
         }
     }
 }

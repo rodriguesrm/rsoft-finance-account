@@ -17,7 +17,7 @@ namespace RSoft.Entry.Infra.Providers
         #region Constructors
 
         ///<inheritdoc/>
-        public CategoryProvider(AccountContext ctx) : base(ctx) { }
+        public CategoryProvider(EntryContext ctx) : base(ctx) { }
 
         #endregion
 

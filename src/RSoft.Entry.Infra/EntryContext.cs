@@ -9,10 +9,10 @@ namespace RSoft.Entry.Infra
 {
 
     /// <summary>
-    /// Account database context
+    /// Entry database context
     /// </summary>
     [ExcludeFromCodeCoverage(Justification = "DbContext does not contains rules")]
-    public class AccountContext : DbContextBase<Guid>
+    public class EntryContext : DbContextBase<Guid>
     {
 
         #region Constructors
@@ -21,7 +21,7 @@ namespace RSoft.Entry.Infra
         /// Create a new dbcontext instance
         /// </summary>
         /// <param name="options">Context options settings</param>
-        public AccountContext(DbContextOptions options) : base(options) { }
+        public EntryContext(DbContextOptions options) : base(options) { }
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace RSoft.Entry.Infra
 
         protected override void SetTableConfiguration(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new AccountConfiguration());
+            modelBuilder.ApplyConfiguration(new EntryConfiguration());
             modelBuilder.ApplyConfiguration(new AccrualPeriodConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new PaymentMethodConfiguration());
@@ -42,9 +42,9 @@ namespace RSoft.Entry.Infra
         #region DbSets
 
         /// <summary>
-        /// Account dbset
+        /// Entry dbset
         /// </summary>
-        public virtual DbSet<Tables.Entry> Accounts { get; set; }
+        public virtual DbSet<Tables.Entry> Entries { get; set; }
 
         /// <summary>
         /// Accrual periods dbset

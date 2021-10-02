@@ -52,7 +52,7 @@ namespace RSoft.Entry.Tests.Extensions
         /// <summary>
         /// Prepara essential user rows
         /// </summary>
-        private static void PrepareEssentialssRows(AccountContext context = null)
+        private static void PrepareEssentialssRows(EntryContext context = null)
         {
 
             IFixture fixture = new Fixture();
@@ -74,12 +74,12 @@ namespace RSoft.Entry.Tests.Extensions
                 context?.Categories.Add(category);
             }
 
-            AccountTable account = context?.Accounts.FirstOrDefault(a => a.Name == _initialAccountName);
+            AccountTable account = context?.Entries.FirstOrDefault(a => a.Name == _initialAccountName);
             if (account == null)
             {
                 account = fixture.CreateAccount(_initialAccountName);
                 _initialAccountId = account.Id;
-                context?.Accounts.Add(account);
+                context?.Entries.Add(account);
             }
 
             PaymentMethodTable payment = context?.PaymentMethods.FirstOrDefault(p => p.Name == _initialPaymentName);
@@ -110,12 +110,12 @@ namespace RSoft.Entry.Tests.Extensions
         /// </summary>
         /// <param name="fixture">Fixture object</param>
         /// <param name="dbContext">Database context object variable for output</param>
-        public static IFixture WithInMemoryDatabase(this IFixture fixture, out AccountContext dbContext)
+        public static IFixture WithInMemoryDatabase(this IFixture fixture, out EntryContext dbContext)
         {
-            var options = new DbContextOptionsBuilder<AccountContext>()
+            var options = new DbContextOptionsBuilder<EntryContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
-            dbContext = new AccountContext(options);
+            dbContext = new EntryContext(options);
             PrepareEssentialssRows(dbContext);
             fixture.Inject(dbContext);
             return fixture;
@@ -128,7 +128,7 @@ namespace RSoft.Entry.Tests.Extensions
         /// <param name="fixture">Fixture object</param>
         /// <param name="dbContext">DbContext object</param>
         /// <param name="rows">Rows list to add in DbContext</param>
-        public static IFixture WithSeedData<TTable>(this IFixture fixture, AccountContext dbContext, IEnumerable<TTable> rows)
+        public static IFixture WithSeedData<TTable>(this IFixture fixture, EntryContext dbContext, IEnumerable<TTable> rows)
             where TTable : class, ITable
         {
             dbContext.AddRange(rows);

@@ -24,8 +24,8 @@ namespace RSoft.Entry.Infra.Extensions
                 .GetRequiredService<IServiceScopeFactory>()
                 .CreateScope())
             {
-                using var context = serviceScope.ServiceProvider.GetService<AccountContext>();
-                logger.LogInformation($"Migrating database {nameof(AccountContext)}");
+                using var context = serviceScope.ServiceProvider.GetService<EntryContext>();
+                logger.LogInformation($"Migrating database {nameof(EntryContext)}");
                 context.Database.Migrate();
                 logger.LogInformation($"Database migrated");
             }

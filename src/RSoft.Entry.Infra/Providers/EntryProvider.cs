@@ -9,7 +9,7 @@ namespace RSoft.Entry.Infra.Providers
 {
 
     /// <summary>
-    /// Account provider
+    /// Entry provider
     /// </summary>
     public class EntryProvider : RepositoryBase<EntryDomain, EntryTable, Guid>, IEntryProvider
     {
@@ -17,7 +17,7 @@ namespace RSoft.Entry.Infra.Providers
         #region Constructors
 
         ///<inheritdoc/>
-        public EntryProvider(AccountContext ctx) : base(ctx) { }
+        public EntryProvider(EntryContext ctx) : base(ctx) { }
 
         #endregion
 

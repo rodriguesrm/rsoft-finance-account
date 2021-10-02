@@ -22,7 +22,7 @@ namespace RSoft.Entry.Infra.Providers
         #region Constructors
 
         ///<inheritdoc/>
-        public TransactionProvider(AccountContext ctx) : base(ctx) { }
+        public TransactionProvider(EntryContext ctx) : base(ctx) { }
 
         #endregion
 

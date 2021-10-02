@@ -17,7 +17,7 @@ namespace RSoft.Entry.Infra.Providers
         #region Constructors
 
         ///<inheritdoc/>
-        public UserProvider(AccountContext ctx) : base(ctx) { }
+        public UserProvider(EntryContext ctx) : base(ctx) { }
 
         #endregion
 

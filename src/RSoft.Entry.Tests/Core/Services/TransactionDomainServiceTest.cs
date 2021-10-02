@@ -32,7 +32,7 @@ namespace RSoft.Entry.Tests.Core.Services
 
         private const float _creditValue = 9999f;
         private const float _debtValue = 1111;
-        private AccountContext _dbContext;
+        private EntryContext _dbContext;
 
         #endregion
 

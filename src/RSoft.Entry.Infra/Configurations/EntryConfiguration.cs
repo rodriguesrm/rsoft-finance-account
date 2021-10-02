@@ -6,9 +6,9 @@ namespace RSoft.Entry.Infra.Configurations
 {
 
     /// <summary>
-    /// Account table configuration
+    /// Entry table configuration
     /// </summary>
-    public class AccountConfiguration : IEntityTypeConfiguration<Tables.Entry>
+    public class EntryConfiguration : IEntityTypeConfiguration<Tables.Entry>
     {
         
         ///<inheritdoc/>

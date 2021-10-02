@@ -1,21 +1,21 @@
-﻿using AccountDomain = RSoft.Entry.Core.Entities.Entry;
-using AccountTable = RSoft.Entry.Infra.Tables.Entry;
+﻿using EntryDomain = RSoft.Entry.Core.Entities.Entry;
+using EntryTable = RSoft.Entry.Infra.Tables.Entry;
 using CategoryDomain = RSoft.Entry.Core.Entities.Category;
 
 namespace RSoft.Entry.Infra.Extensions
 {
 
     /// <summary>
-    /// Account extesions
+    /// Entry extesions
     /// </summary>
-    public static class AccountExtension
+    public static class EntryExtension
     {
 
         /// <summary>
         /// Maps table to entity
         /// </summary>
         /// <param name="table">Table entity to map</param>
-        public static AccountDomain Map(this AccountTable table)
+        public static EntryDomain Map(this EntryTable table)
             => Map(table, true);
 
         /// <summary>
@@ -23,14 +23,14 @@ namespace RSoft.Entry.Infra.Extensions
         /// </summary>
         /// <param name="table">Table entity to map</param>
         /// <param name="useLazy">Load related data</param>
-        public static AccountDomain Map(this AccountTable table, bool useLazy)
+        public static EntryDomain Map(this EntryTable table, bool useLazy)
         {
-            AccountDomain result = null;
+            EntryDomain result = null;
 
             if (table != null)
             {
 
-                result = new AccountDomain(table.Id)
+                result = new EntryDomain(table.Id)
                 {
                     Name = table.Name,
                     CreatedOn = table.CreatedOn,
@@ -58,14 +58,14 @@ namespace RSoft.Entry.Infra.Extensions
         /// Maps entity to table
         /// </summary>
         /// <param name="entity">Domain entity to map</param>
-        public static AccountTable Map(this AccountDomain entity)
+        public static EntryTable Map(this EntryDomain entity)
         {
 
-            AccountTable result = null;
+            EntryTable result = null;
 
             if (entity != null)
             {
-                result = new AccountTable(entity.Id)
+                result = new EntryTable(entity.Id)
                 {
                     Name = entity.Name,
                     CreatedOn = entity.CreatedOn,
@@ -84,7 +84,7 @@ namespace RSoft.Entry.Infra.Extensions
         /// </summary>
         /// <param name="entity">Domain entity to map</param>
         /// <param name="table">Instance of existing table entity</param>
-        public static AccountTable Map(this AccountDomain entity, AccountTable table)
+        public static EntryTable Map(this EntryDomain entity, EntryTable table)
         {
 
             if (entity != null && table != null)

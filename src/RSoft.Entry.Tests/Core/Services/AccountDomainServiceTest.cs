@@ -26,7 +26,7 @@ namespace RSoft.Entry.Tests.Core.Services
         private const string _accountAName = "SUPERMARKET";
         private const string _accountBName = "TRAVEL";
 
-        private AccountContext _dbContext;
+        private EntryContext _dbContext;
 
         #endregion
 
@@ -58,7 +58,7 @@ namespace RSoft.Entry.Tests.Core.Services
         /// <param name="accountId">Account id output</param>
         private void LoadInitialAccount(out Guid accountId)
         {
-            AccountTable accountA = _dbContext.Accounts.FirstOrDefault(a => a.Name == _accountAName);
+            AccountTable accountA = _dbContext.Entries.FirstOrDefault(a => a.Name == _accountAName);
             if (accountA == null)
             {
                 AccountTable rowA = _fixture.CreateAccount(_accountAName);
@@ -84,7 +84,7 @@ namespace RSoft.Entry.Tests.Core.Services
                 .Create();
             AccountDomain result = await Sut.AddAsync(Account, default);
             Assert.IsTrue(result.Valid);
-            AccountTable check = _dbContext.Accounts.Find(result.Id);
+            AccountTable check = _dbContext.Entries.Find(result.Id);
             Assert.NotNull(check);
             Assert.AreEqual(Account.Id, check.Id);
             Assert.AreEqual(Account.Name, check.Name);
@@ -94,7 +94,7 @@ namespace RSoft.Entry.Tests.Core.Services
         public async Task GetById_ReturnEntity()
         {
             LoadInitialAccount(out Guid accountId);
-            AccountTable table = _dbContext.Accounts.Find(accountId);
+            AccountTable table = _dbContext.Entries.Find(accountId);
             AccountDomain result = await Sut.GetByKeyAsync(accountId, default);
             Assert.NotNull(result);
             Assert.AreEqual(table.Name, result.Name);
@@ -106,8 +106,8 @@ namespace RSoft.Entry.Tests.Core.Services
             LoadInitialAccount(out _);
             IEnumerable<AccountDomain> result = await Sut.GetAllAsync(default);
             Assert.GreaterOrEqual(result.Count(), 2);
-            AccountTable AccountA = _dbContext.Accounts.First(c => c.Name == _accountAName);
-            AccountTable AccountB = _dbContext.Accounts.First(c => c.Name == _accountBName);
+            AccountTable AccountA = _dbContext.Entries.First(c => c.Name == _accountAName);
+            AccountTable AccountB = _dbContext.Entries.First(c => c.Name == _accountBName);
             Assert.True(result.Any(x => x.Id == AccountA.Id));
             Assert.True(result.Any(x => x.Id == AccountB.Id));
         }
@@ -121,7 +121,7 @@ namespace RSoft.Entry.Tests.Core.Services
             _fixture.WithSeedData(_dbContext, new AccountTable[] { oldTableRow });
             AccountDomain account = new(oldTableRow.Id) { Name = newName, Category = new CategoryDomain(MockBuilder.InitialCategoryId) { Name = _fixture.GetItinialCategoryName() } };
             account = Sut.Update(account.Id, account);
-            AccountTable check = _dbContext.Accounts.Where(c => c.Id == account.Id).FirstOrDefault();
+            AccountTable check = _dbContext.Entries.Where(c => c.Id == account.Id).FirstOrDefault();
             Assert.NotNull(account);
             Assert.NotNull(check);
             Assert.AreEqual(check.Name, account.Name);
@@ -137,7 +137,7 @@ namespace RSoft.Entry.Tests.Core.Services
             _fixture.WithSeedData(_dbContext, new AccountTable[] { tableRow });
             Sut.Delete(accountId);
             _dbContext.SaveChanges();
-            AccountTable check = _dbContext.Accounts.FirstOrDefault(c => c.Id == accountId);
+            AccountTable check = _dbContext.Entries.FirstOrDefault(c => c.Id == accountId);
             Assert.Null(check);
         }
 

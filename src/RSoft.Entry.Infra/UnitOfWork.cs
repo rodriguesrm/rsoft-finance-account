@@ -17,7 +17,7 @@ namespace RSoft.Entry.Infra
         /// Create a new UnitOfWork instance
         /// </summary>
         /// <param name="ctx">Database context object</param>
-        public UnitOfWork(AccountContext ctx) : base(ctx) { }
+        public UnitOfWork(EntryContext ctx) : base(ctx) { }
 
         #endregion
 

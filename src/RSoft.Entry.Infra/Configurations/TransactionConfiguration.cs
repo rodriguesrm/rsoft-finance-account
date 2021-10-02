@@ -50,7 +50,7 @@ namespace RSoft.Entry.Infra.Configurations
                 .HasColumnType("decimal(16,2)")
                 .IsRequired();
 
-            builder.Property(c => c.AccountId)
+            builder.Property(c => c.EntryId)
                 .IsRequired();
 
             builder.Property(c => c.PaymentMethodId)
@@ -72,11 +72,11 @@ namespace RSoft.Entry.Infra.Configurations
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName($"FK_{nameof(User)}_{nameof(Transaction)}_{nameof(Transaction.CreatedBy)}");
 
-            builder.HasOne(o => o.Account)
+            builder.HasOne(o => o.Entry)
                 .WithMany(d => d.Transactions)
-                .HasForeignKey(fk => fk.AccountId)
+                .HasForeignKey(fk => fk.EntryId)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK_{nameof(User)}_{nameof(Transaction)}_{nameof(Transaction.AccountId)}");
+                .HasConstraintName($"FK_{nameof(User)}_{nameof(Transaction)}_{nameof(Transaction.EntryId)}");
 
             builder.HasOne(o => o.PaymentMethod)
                 .WithMany(d => d.Transactions)

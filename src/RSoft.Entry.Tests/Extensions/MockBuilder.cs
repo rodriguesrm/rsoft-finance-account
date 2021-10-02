@@ -9,7 +9,7 @@ using System.Linq;
 using RSoft.Finance.Contracts.Enum;
 using CategoryTable = RSoft.Entry.Infra.Tables.Category;
 using UserTable = RSoft.Entry.Infra.Tables.User;
-using AccountTable = RSoft.Entry.Infra.Tables.Account;
+using AccountTable = RSoft.Entry.Infra.Tables.Entry;
 using PaymentMethodTable = RSoft.Entry.Infra.Tables.PaymentMethod;
 using AccrualPeriodTable = RSoft.Entry.Infra.Tables.AccrualPeriod;
 using TransactionTable = RSoft.Entry.Infra.Tables.Transaction;
@@ -153,7 +153,7 @@ namespace RSoft.Entry.Tests.Extensions
                 .With(c => c.Name, categoryName)
                 .With(c => c.CreatedOn, DateTime.UtcNow.AddDays(-1))
                 .With(c => c.CreatedBy, AuthenticatedUserStub.UserAdminId)
-                .Without(c => c.Accounts)
+                .Without(c => c.Entries)
                 .Without(c => c.ChangedOn)
                 .Without(c => c.ChangedBy)
                 .Without(c => c.CreatedAuthor)
@@ -176,8 +176,8 @@ namespace RSoft.Entry.Tests.Extensions
                 .Without(u => u.ChangedCategories)
                 .Without(u => u.CreatedPaymentMethods)
                 .Without(u => u.ChangedPaymentMethods)
-                .Without(u => u.CreatedAccounts)
-                .Without(u => u.ChangedAccounts)
+                .Without(u => u.CreatedEntries)
+                .Without(u => u.ChangedEntries)
                 .Without(u => u.CreatedTransactions)
                 .Without(u => u.CreatedAccrualPeriods)
                 .Without(u => u.ChangedAccrualPeriods)
@@ -241,13 +241,13 @@ namespace RSoft.Entry.Tests.Extensions
                 .With(t => t.Date, new DateTime(year, month, DateTime.UtcNow.Day, 12, 0, 0))
                 .With(t => t.Amount, amount)
                 .With(t => t.TransactionType, type)
-                .With(t => t.AccountId, _initialAccountId)
+                .With(t => t.EntryId, _initialAccountId)
                 .With(t => t.PaymentMethodId, _initialPaymentId)
                 .With(t => t.CreatedOn, DateTime.UtcNow.AddDays(-35))
                 .With(t => t.CreatedBy, AuthenticatedUserStub.UserAdminId)
                 .Without(t => t.CreatedAuthor)
                 .Without(t => t.AccrualPeriod)
-                .Without(t => t.Account)
+                .Without(t => t.Entry)
                 .Without(t => t.PaymentMethod)
                 .Create();
 

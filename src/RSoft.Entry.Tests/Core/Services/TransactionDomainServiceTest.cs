@@ -148,7 +148,7 @@ namespace RSoft.Entry.Tests.Core.Services
                 TransactionType = TransactionTypeEnum.Debt,
                 Amount = newAmount,
                 Comment = oldTableRow.Comment,
-                Entries = new AccountDomain(oldTableRow.AccountId) { Name = "***" },
+                Entries = new AccountDomain(oldTableRow.EntryId) { Name = "***" },
                 PaymentMethod = new PaymentMethod(oldTableRow.PaymentMethodId) { Name = "***" },
                 CreatedAuthor = new Author<Guid>(oldTableRow.CreatedAuthor.Id, oldTableRow.CreatedAuthor.GetFullName())
             };
@@ -259,7 +259,7 @@ namespace RSoft.Entry.Tests.Core.Services
             {
                 Year = date.Year,
                 Month = date.Month,
-                AccountId = MockBuilder.InitialAccountId,
+                EntryId = MockBuilder.InitialAccountId,
                 PaymentMethodId = MockBuilder.InitialPaymentId,
                 TransactionType = TransactionTypeEnum.Credit
             };

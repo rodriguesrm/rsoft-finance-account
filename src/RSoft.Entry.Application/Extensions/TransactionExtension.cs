@@ -107,7 +107,7 @@ namespace RSoft.Entry.Application.Extensions
                    EndAt = command.PeriodDate?.EndAt ?? null,
                    Year = command.PeriodYearMonth?.Year ?? null,
                    Month = command.PeriodYearMonth?.Month ?? null,
-                   AccountId = command.AccountId ?? null,
+                   EntryId = command.AccountId ?? null,
                    TransactionType = command.TransactionType ?? null,
                    PaymentMethodId = command.PaymentMethodId ?? null
                };

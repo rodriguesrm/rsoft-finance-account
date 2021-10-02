@@ -47,7 +47,7 @@ namespace RSoft.Entry.Application.Arguments
         public int? Month { get; set; }
 
         ///<inheritdoc/>
-        public Guid? AccountId { get; set; }
+        public Guid? EntryId { get; set; }
 
         ///<inheritdoc/>
         public TransactionTypeEnum? TransactionType { get; set; }
@@ -65,7 +65,7 @@ namespace RSoft.Entry.Application.Arguments
             bool valid =
                 (StartAt.HasValue && EndAt.HasValue) ||
                 (Year.HasValue || (Month.HasValue && Month.Value >= 1 && Month.Value <= 12)) ||
-                (AccountId.HasValue) ||
+                (EntryId.HasValue) ||
                 (TransactionType.HasValue) ||
                 (PaymentMethodId.HasValue);
 

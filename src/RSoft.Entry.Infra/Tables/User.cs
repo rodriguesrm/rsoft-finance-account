@@ -89,14 +89,14 @@ namespace RSoft.Entry.Infra.Tables
         public virtual ICollection<PaymentMethod> ChangedPaymentMethods { get; set; }
 
         /// <summary>
-        /// Accounts created by this user
+        /// Entries created by this user
         /// </summary>
-        public virtual ICollection<Account> CreatedAccounts { get; set; }
+        public virtual ICollection<Entry> CreatedEntries { get; set; }
 
         /// <summary>
-        /// Accounts changed by this user
+        /// Entries changed by this user
         /// </summary>
-        public virtual ICollection<Account> ChangedAccounts { get; set; }
+        public virtual ICollection<Entry> ChangedEntries { get; set; }
 
         /// <summary>
         /// Transactions created by this user
@@ -132,8 +132,8 @@ namespace RSoft.Entry.Infra.Tables
             ChangedCategories = new HashSet<Category>();
             CreatedPaymentMethods = new HashSet<PaymentMethod>();
             ChangedPaymentMethods = new HashSet<PaymentMethod>();
-            CreatedAccounts = new HashSet<Account>();
-            ChangedAccounts = new HashSet<Account>();
+            CreatedEntries = new HashSet<Entry>();
+            ChangedEntries = new HashSet<Entry>();
             CreatedTransactions = new HashSet<Transaction>();
             CreatedAccrualPeriods = new HashSet<AccrualPeriod>();
             ChangedAccrualPeriods = new HashSet<AccrualPeriod>();

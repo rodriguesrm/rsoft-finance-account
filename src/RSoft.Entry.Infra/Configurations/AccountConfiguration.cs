@@ -8,14 +8,14 @@ namespace RSoft.Entry.Infra.Configurations
     /// <summary>
     /// Account table configuration
     /// </summary>
-    public class AccountConfiguration : IEntityTypeConfiguration<Tables.Account>
+    public class AccountConfiguration : IEntityTypeConfiguration<Tables.Entry>
     {
         
         ///<inheritdoc/>
-        public void Configure(EntityTypeBuilder<Tables.Account> builder)
+        public void Configure(EntityTypeBuilder<Tables.Entry> builder)
         {
 
-            builder.ToTable(nameof(Tables.Account));
+            builder.ToTable(nameof(Tables.Entry));
 
             #region PK
 
@@ -26,7 +26,7 @@ namespace RSoft.Entry.Infra.Configurations
             #region Columns
 
             builder.Property(c => c.Name)
-                .HasColumnName(nameof(Tables.Account.Name))
+                .HasColumnName(nameof(Tables.Entry.Name))
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .IsRequired();
@@ -39,22 +39,22 @@ namespace RSoft.Entry.Infra.Configurations
             #region FKs
 
             builder.HasOne(o => o.CreatedAuthor)
-                .WithMany(d => d.CreatedAccounts)
+                .WithMany(d => d.CreatedEntries)
                 .HasForeignKey(fk => fk.CreatedBy)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK_{nameof(User)}_{nameof(Tables.Account)}_{nameof(Tables.Account.CreatedBy)}");
+                .HasConstraintName($"FK_{nameof(User)}_{nameof(Tables.Entry)}_{nameof(Tables.Entry.CreatedBy)}");
 
             builder.HasOne(o => o.ChangedAuthor)
-                .WithMany(d => d.ChangedAccounts)
+                .WithMany(d => d.ChangedEntries)
                 .HasForeignKey(fk => fk.ChangedBy)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK__{nameof(User)}_{nameof(Tables.Account)}_{nameof(Tables.Account.ChangedBy)}");
+                .HasConstraintName($"FK__{nameof(User)}_{nameof(Tables.Entry)}_{nameof(Tables.Entry.ChangedBy)}");
 
             builder.HasOne(o => o.Category)
-                .WithMany(d => d.Accounts)
+                .WithMany(d => d.Entries)
                 .HasForeignKey(fk => fk.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName($"FK_{nameof(Tables.Account)}_{nameof(Tables.Account.CategoryId)}");
+                .HasConstraintName($"FK_{nameof(Tables.Entry)}_{nameof(Tables.Entry.CategoryId)}");
 
             #endregion
 
@@ -62,7 +62,7 @@ namespace RSoft.Entry.Infra.Configurations
 
             builder
                 .HasIndex(i => i.Name)
-                .HasDatabaseName($"AK_{nameof(Account)}_{nameof(Tables.Account.Name)}")
+                .HasDatabaseName($"AK_{nameof(Entry)}_{nameof(Tables.Entry.Name)}")
                 .IsUnique();
 
             #endregion

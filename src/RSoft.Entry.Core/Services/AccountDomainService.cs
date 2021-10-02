@@ -11,7 +11,7 @@ namespace RSoft.Entry.Core.Services
     /// <summary>
     /// Account domain service operations
     /// </summary>
-    public class AccountDomainService : DomainServiceBase<EntryAccount, Guid, IAccountProvider>, IAccountDomainService
+    public class AccountDomainService : DomainServiceBase<EntryAccount, Guid, IEntryProvider>, IAccountDomainService
     {
 
         #region Constructors
@@ -21,7 +21,7 @@ namespace RSoft.Entry.Core.Services
         /// </summary>
         /// <param name="provider">Account provier</param>
         /// <param name="authenticatedAccount">Authenticated Account object</param>
-        public AccountDomainService(IAccountProvider provider, IAuthenticatedUser authenticatedAccount) : base(provider, authenticatedAccount) { }
+        public AccountDomainService(IEntryProvider provider, IAuthenticatedUser authenticatedAccount) : base(provider, authenticatedAccount) { }
 
         #endregion
 

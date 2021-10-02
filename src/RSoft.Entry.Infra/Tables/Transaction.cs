@@ -74,9 +74,9 @@ namespace RSoft.Entry.Infra.Tables
         public string Comment { get; set; }
 
         /// <summary>
-        /// Account id
+        /// Entry id
         /// </summary>
-        public Guid AccountId { get; set; }
+        public Guid EntryId { get; set; }
 
         /// <summary>
         /// Payment method id
@@ -98,9 +98,9 @@ namespace RSoft.Entry.Infra.Tables
         public virtual User CreatedAuthor { get; set; }
 
         /// <summary>
-        /// Account data
+        /// Entry data
         /// </summary>
-        public virtual Account Account { get; set; }
+        public virtual Entry Entry { get; set; }
 
         /// <summary>
         /// Payment method data

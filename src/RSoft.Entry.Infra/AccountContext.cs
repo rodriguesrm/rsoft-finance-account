@@ -44,7 +44,7 @@ namespace RSoft.Entry.Infra
         /// <summary>
         /// Account dbset
         /// </summary>
-        public virtual DbSet<Tables.Account> Accounts { get; set; }
+        public virtual DbSet<Tables.Entry> Accounts { get; set; }
 
         /// <summary>
         /// Accrual periods dbset

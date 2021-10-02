@@ -53,7 +53,7 @@ namespace RSoft.Entry.Cross.IoC
             #region Infra
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IAccountProvider, AccountProvider>();
+            services.AddScoped<IEntryProvider, EntryProvider>();
             services.AddScoped<IAccrualPeriodProvider, AccrualPeriodProvider>();
             services.AddScoped<ICategoryProvider, CategoryProvider>();
             services.AddScoped<IPaymentMethodProvider, PaymentMethodProvider>();

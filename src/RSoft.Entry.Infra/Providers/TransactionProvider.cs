@@ -49,7 +49,7 @@ namespace RSoft.Entry.Infra.Providers
         {
 
             IQueryable<Transaction> query = _dbSet
-                .Include(x => x.Account)
+                .Include(x => x.Entry)
                 .Include(x => x.PaymentMethod);
 
             if (filter.Year.HasValue)
@@ -58,8 +58,8 @@ namespace RSoft.Entry.Infra.Providers
                 query = query.Where(t => t.Date >= filter.StartAt.Value && t.Date <= filter.EndAt.Value);
 
 
-            if (filter.AccountId.HasValue)
-                query = query.Where(t => t.AccountId == filter.AccountId.Value);
+            if (filter.EntryId.HasValue)
+                query = query.Where(t => t.EntryId == filter.EntryId.Value);
 
             if (filter.TransactionType.HasValue)
                 query = query.Where(t => t.TransactionType == filter.TransactionType.Value);

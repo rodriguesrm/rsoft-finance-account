@@ -9,10 +9,10 @@ namespace RSoft.Entry.Infra.Tables
 {
 
     /// <summary>
-    /// Account table entity
+    /// Entry table entity
     /// </summary>
     [ExcludeFromCodeCoverage(Justification = "Class to map database table in EntityFramework")]
-    public class Account : TableIdNameAuditBase<Guid, Account>, ITable, IAuditNavigation<Guid, User>, IActive
+    public class Entry : TableIdNameAuditBase<Guid, Entry>, ITable, IAuditNavigation<Guid, User>, IActive
     {
 
         #region Constructors
@@ -20,7 +20,7 @@ namespace RSoft.Entry.Infra.Tables
         /// <summary>
         /// Create a new table instance
         /// </summary>
-        public Account() : base(Guid.NewGuid(), null)
+        public Entry() : base(Guid.NewGuid(), null)
         {
             Initialize();
         }
@@ -29,7 +29,7 @@ namespace RSoft.Entry.Infra.Tables
         /// Create a new table instance
         /// </summary>
         /// <param name="id">User id value</param>
-        public Account(Guid id) : base(id, null)
+        public Entry(Guid id) : base(id, null)
         {
             Initialize();
         }
@@ -41,7 +41,7 @@ namespace RSoft.Entry.Infra.Tables
         /// <exception cref="System.ArgumentNullException"></exception>
         /// <exception cref="System.FormatException"></exception>
         /// <exception cref="System.OverflowException"></exception>
-        public Account(string id) : base()
+        public Entry(string id) : base()
         {
             Id = new Guid(id);
         }
@@ -80,7 +80,7 @@ namespace RSoft.Entry.Infra.Tables
         public virtual Category Category { get; set; }
 
         /// <summary>
-        /// Transactions by this account
+        /// Transactions by this entry
         /// </summary>
         public virtual ICollection<Transaction> Transactions { get; set; }
 

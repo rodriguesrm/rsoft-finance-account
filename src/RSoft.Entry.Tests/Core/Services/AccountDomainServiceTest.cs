@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AccountTable = RSoft.Entry.Infra.Tables.Account;
+using AccountTable = RSoft.Entry.Infra.Tables.Entry;
 using AccountDomain = RSoft.Entry.Core.Entities.Entry;
 using CategoryDomain = RSoft.Entry.Core.Entities.Category;
 
@@ -44,7 +44,7 @@ namespace RSoft.Entry.Tests.Core.Services
         protected override void Setup(IFixture fixture)
         {
             _fixture.WithInMemoryDatabase(out _dbContext);
-            _fixture.Customizations.Add(new TypeRelay(typeof(IAccountProvider), typeof(AccountProvider)));
+            _fixture.Customizations.Add(new TypeRelay(typeof(IEntryProvider), typeof(EntryProvider)));
 
         }
 

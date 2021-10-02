@@ -2,8 +2,8 @@
 using RSoft.Entry.Infra.Extensions;
 using RSoft.Lib.Design.Infra.Data;
 using System;
-using AccountDomain = RSoft.Entry.Core.Entities.Entry;
-using AccountTable = RSoft.Entry.Infra.Tables.Account;
+using EntryDomain = RSoft.Entry.Core.Entities.Entry;
+using EntryTable = RSoft.Entry.Infra.Tables.Entry;
 
 namespace RSoft.Entry.Infra.Providers
 {
@@ -11,28 +11,28 @@ namespace RSoft.Entry.Infra.Providers
     /// <summary>
     /// Account provider
     /// </summary>
-    public class AccountProvider : RepositoryBase<AccountDomain, AccountTable, Guid>, IAccountProvider
+    public class EntryProvider : RepositoryBase<EntryDomain, EntryTable, Guid>, IEntryProvider
     {
 
         #region Constructors
 
         ///<inheritdoc/>
-        public AccountProvider(AccountContext ctx) : base(ctx) { }
+        public EntryProvider(AccountContext ctx) : base(ctx) { }
 
         #endregion
 
         #region Overrides
 
         ///<inheritdoc/>
-        protected override AccountDomain Map(AccountTable table)
+        protected override EntryDomain Map(EntryTable table)
             => table.Map();
 
         ///<inheritdoc/>
-        protected override AccountTable MapForAdd(AccountDomain entity)
+        protected override EntryTable MapForAdd(EntryDomain entity)
             => entity.Map();
 
         ///<inheritdoc/>
-        protected override AccountTable MapForUpdate(AccountDomain entity, AccountTable table)
+        protected override EntryTable MapForUpdate(EntryDomain entity, EntryTable table)
             => entity.Map(table);
 
         #endregion

@@ -70,9 +70,9 @@ namespace RSoft.Entry.Infra.Tables
         public virtual User ChangedAuthor { get; set; }
 
         /// <summary>
-        /// Accounts by this category
+        /// Entries by this category
         /// </summary>
-        public virtual ICollection<Account> Accounts { get; set; }
+        public virtual ICollection<Entry> Entries { get; set; }
 
         #endregion
 
@@ -84,7 +84,7 @@ namespace RSoft.Entry.Infra.Tables
         private void Initialize()
         {
             IsActive = true;
-            Accounts = new HashSet<Account>();
+            Entries = new HashSet<Entry>();
         }
 
         #endregion

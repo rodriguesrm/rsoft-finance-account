@@ -5,9 +5,9 @@ namespace RSoft.Entry.Core.Ports
 {
 
     /// <summary>
-    /// Account provider ports contract
+    /// Entry provider ports contract
     /// </summary>
-    public interface IAccountProvider : IRepositoryBase<Entities.Entry, Guid>
+    public interface IEntryProvider : IRepositoryBase<Entities.Entry, Guid>
     {
     }
 }

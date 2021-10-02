@@ -33,9 +33,9 @@ namespace RSoft.Entry.Core.Ports
         int? Month { get; }
         
         /// <summary>
-        /// Account id
+        /// Entry id
         /// </summary>
-        Guid? AccountId { get; }
+        Guid? EntryId { get; }
         
         /// <summary>
         /// Transaction type

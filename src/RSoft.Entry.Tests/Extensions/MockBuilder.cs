@@ -26,13 +26,13 @@ namespace RSoft.Entry.Tests.Extensions
         #region Local objects/variables
 
         private static Guid _initialCategoryId;
-        private static string _initialCategoryName = "INITIAL CATEGORY";
+        private static readonly string _initialCategoryName = "INITIAL CATEGORY";
 
         private static Guid _initialEntryId;
-        private static string _initialEntryName = "INITIAL ENTRY";
+        private static readonly string _initialEntryName = "INITIAL ENTRY";
 
         private static Guid _initialPaymentId;
-        private static string _initialPaymentName = "INITIAL PAYMENTMETHOD";
+        private static readonly string _initialPaymentName = "INITIAL PAYMENTMETHOD";
 
         #endregion
 
@@ -140,7 +140,7 @@ namespace RSoft.Entry.Tests.Extensions
         /// Get initial category name
         /// </summary>
         /// <param name="fixture">Fixture object instance</param>
-        public static string GetItinialCategoryName(this IFixture fixture)
+        public static string GetItinialCategoryName(this IFixture _)
             => _initialCategoryName;
 
         /// <summary>

@@ -12,7 +12,7 @@ namespace RSoft.Entry.Tests.Stubs
 
         #region Local objects/variables
 
-        private readonly List<string> _logs = new List<string>();
+        private readonly List<string> _logs = new();
 
         #endregion
 

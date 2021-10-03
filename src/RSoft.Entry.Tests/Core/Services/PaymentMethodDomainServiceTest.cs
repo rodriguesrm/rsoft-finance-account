@@ -118,7 +118,7 @@ namespace RSoft.Entry.Tests.Core.Services
             string newName = "PIX";
             PaymentMethodTable oldTableRow = _fixture.CreatePaymentMethod(oldName, PaymentTypeEnum.BankTransaction);
             _fixture.WithSeedData(_dbContext, new PaymentMethodTable[] { oldTableRow });
-            PaymentMethod payment = new PaymentMethod(oldTableRow.Id)
+            PaymentMethod payment = new(oldTableRow.Id)
             {
                 Name = newName,
                 PaymentType = PaymentTypeEnum.BankTransaction

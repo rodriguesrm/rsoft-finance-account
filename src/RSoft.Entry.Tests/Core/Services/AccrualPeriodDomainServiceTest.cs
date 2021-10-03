@@ -53,7 +53,7 @@ namespace RSoft.Entry.Tests.Core.Services
         private void LoadInitialAccrualPeriod(out int year, out int month)
         {
 
-            DateTime currentMonth = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
+            DateTime currentMonth = new(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
             DateTime nextMonth = currentMonth.AddMonths(1);
 
             AccrualPeriodTable table = _dbContext.AccrualPeriods.Where(a => a.Year == currentMonth.Year && a.Month == currentMonth.Month).FirstOrDefault();

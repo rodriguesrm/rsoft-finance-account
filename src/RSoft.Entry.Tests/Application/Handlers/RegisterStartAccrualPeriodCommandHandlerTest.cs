@@ -50,7 +50,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
             _fixture.Inject(domainService.Object);
 
             RegisterStartAccrualPeriodCommand command = new() { Year = year, Month = month };
-            CommandResult<bool> result = await Sut.Handle(command, default);
+            CommandResult<bool> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
         }
@@ -96,7 +96,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
             _fixture.Inject(domainService.Object);
 
             RegisterStartAccrualPeriodCommand command = new() { Year = year, Month = month };
-            CommandResult<bool> result = await Sut.Handle(command, default);
+            CommandResult<bool> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
         }

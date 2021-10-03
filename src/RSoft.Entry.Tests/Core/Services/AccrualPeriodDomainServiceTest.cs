@@ -86,7 +86,7 @@ namespace RSoft.Entry.Tests.Core.Services
                 .With(a => a.Month, month)
                 .With(a => a.OpeningBalance, 0)
                 .Create();
-            AccrualPeriod result = await Sut.AddAsync(accrualPeriod, default);
+            AccrualPeriod result = await Target.AddAsync(accrualPeriod, default);
             Assert.IsTrue(result.Valid);
             AccrualPeriodTable check = _dbContext.AccrualPeriods.Find(year, month);
             Assert.NotNull(check);
@@ -100,7 +100,7 @@ namespace RSoft.Entry.Tests.Core.Services
         {
             LoadInitialAccrualPeriod(out int year, out int month);
             AccrualPeriodTable table = _dbContext.AccrualPeriods.Find(year, month);
-            AccrualPeriod result = await Sut.GetByKeyAsync(year, month, default);
+            AccrualPeriod result = await Target.GetByKeyAsync(year, month, default);
             Assert.NotNull(result);
             Assert.AreEqual(table.Year, result.Year);
             Assert.AreEqual(table.Month, result.Month);
@@ -114,7 +114,7 @@ namespace RSoft.Entry.Tests.Core.Services
             LoadInitialAccrualPeriod(out int year, out int month);
             DateTime date1 = new(year, month, 1);
             DateTime date2 = date1.AddMonths(1);
-            IEnumerable<AccrualPeriod> result = await Sut.GetAllAsync(default);
+            IEnumerable<AccrualPeriod> result = await Target.GetAllAsync(default);
             Assert.GreaterOrEqual(result.Count(), 2);
             AccrualPeriodTable accrualPeriodA = _dbContext.AccrualPeriods.First(a => a.Year == date1.Year && a.Month == date1.Month);
             AccrualPeriodTable accrualPeriodB = _dbContext.AccrualPeriods.First(a => a.Year == date2.Year && a.Month == date2.Month);
@@ -129,7 +129,7 @@ namespace RSoft.Entry.Tests.Core.Services
             AccrualPeriodTable oldTableRow = _fixture.CreateAccrualPeriod(date.Year, date.Month, 0);
             _fixture.WithSeedData(_dbContext, new AccrualPeriodTable[] { oldTableRow });
             AccrualPeriod accrualPeriod = new(date.Year, date.Month) { OpeningBalance = 1000, ChangedAuthor = One<AuthorNullable<Guid>>() };
-            accrualPeriod = Sut.Update(date.Year, date.Month, accrualPeriod);
+            accrualPeriod = Target.Update(date.Year, date.Month, accrualPeriod);
             AccrualPeriodTable check = _dbContext.AccrualPeriods.Where(a => a.Year == date.Year && a.Month == date.Month).FirstOrDefault();
             Assert.NotNull(accrualPeriod);
             Assert.NotNull(check);
@@ -144,7 +144,7 @@ namespace RSoft.Entry.Tests.Core.Services
         public void UpdateAccrualPeriod_WithInvalidEntity_ReturnNotifications()
         {
             AccrualPeriod entity = One<AccrualPeriod>();
-            Sut.Update(entity.Year, entity.Month, entity);
+            Target.Update(entity.Year, entity.Month, entity);
             Assert.True(entity.Invalid);
             Assert.True(entity.Notifications.Count > 0);
         }
@@ -156,7 +156,7 @@ namespace RSoft.Entry.Tests.Core.Services
             AccrualPeriod accrualPeriod = new(date.Year, date.Month);
             void DoUpdate()
             {
-                Sut.Update(accrualPeriod.Year, accrualPeriod.Month, accrualPeriod);
+                Target.Update(accrualPeriod.Year, accrualPeriod.Month, accrualPeriod);
             }
             Assert.Throws<InvalidOperationException>(DoUpdate);
         }
@@ -167,7 +167,7 @@ namespace RSoft.Entry.Tests.Core.Services
             DateTime date = DateTime.UtcNow.AddMonths(5);
             AccrualPeriodTable tableRow = _fixture.CreateAccrualPeriod(date.Year, date.Month, 7000);
             _fixture.WithSeedData(_dbContext, new AccrualPeriodTable[] { tableRow });
-            Sut.Delete(date.Year, date.Month);
+            Target.Delete(date.Year, date.Month);
             _dbContext.SaveChanges();
             AccrualPeriodTable check = _dbContext.AccrualPeriods.Where(a => a.Year == date.Year && a.Month == date.Month).FirstOrDefault();
             Assert.Null(check);

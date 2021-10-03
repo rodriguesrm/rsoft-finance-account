@@ -34,7 +34,7 @@ namespace RSoft.Entry.Tests
         /// <summary>
         /// Object instance to be tested
         /// </summary>
-        protected TSut Sut => _lazySut.Value;
+        protected TSut Target => _lazySut.Value;
 
         #endregion
 

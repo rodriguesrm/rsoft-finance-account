@@ -78,7 +78,7 @@ namespace RSoft.Entry.Tests.Core.Services
             EntryDomain entity = _fixture.Build<EntryDomain>()
                 .With(c => c.Name, "Entry TEST")
                 .Create();
-            EntryDomain result = await Sut.AddAsync(entity, default);
+            EntryDomain result = await Target.AddAsync(entity, default);
             Assert.IsTrue(result.Valid);
             EntryTable check = _dbContext.Entries.Find(result.Id);
             Assert.NotNull(check);
@@ -91,7 +91,7 @@ namespace RSoft.Entry.Tests.Core.Services
         {
             LoadInitialEntry(out Guid id);
             EntryTable table = _dbContext.Entries.Find(id);
-            EntryDomain result = await Sut.GetByKeyAsync(id, default);
+            EntryDomain result = await Target.GetByKeyAsync(id, default);
             Assert.NotNull(result);
             Assert.AreEqual(table.Name, result.Name);
         }
@@ -100,7 +100,7 @@ namespace RSoft.Entry.Tests.Core.Services
         public async Task GetAllEntry_ReturnEntityList()
         {
             LoadInitialEntry(out _);
-            IEnumerable<EntryDomain> result = await Sut.GetAllAsync(default);
+            IEnumerable<EntryDomain> result = await Target.GetAllAsync(default);
             Assert.GreaterOrEqual(result.Count(), 2);
             EntryTable tableA = _dbContext.Entries.First(c => c.Name == _entryAName);
             EntryTable tableB = _dbContext.Entries.First(c => c.Name == _entryBName);
@@ -116,7 +116,7 @@ namespace RSoft.Entry.Tests.Core.Services
             EntryTable oldTableRow = _fixture.CreateEntry(oldName);
             _fixture.WithSeedData(_dbContext, new EntryTable[] { oldTableRow });
             EntryDomain entity = new(oldTableRow.Id) { Name = newName, Category = new CategoryDomain(MockBuilder.InitialCategoryId) { Name = _fixture.GetItinialCategoryName() } };
-            entity = Sut.Update(entity.Id, entity);
+            entity = Target.Update(entity.Id, entity);
             EntryTable check = _dbContext.Entries.Where(c => c.Id == entity.Id).FirstOrDefault();
             Assert.NotNull(entity);
             Assert.NotNull(check);
@@ -131,7 +131,7 @@ namespace RSoft.Entry.Tests.Core.Services
             EntryTable tableRow = _fixture.CreateEntry("ENTRY TO_REMOVE");
             Guid id = tableRow.Id;
             _fixture.WithSeedData(_dbContext, new EntryTable[] { tableRow });
-            Sut.Delete(id);
+            Target.Delete(id);
             _dbContext.SaveChanges();
             EntryTable check = _dbContext.Entries.FirstOrDefault(c => c.Id == id);
             Assert.Null(check);

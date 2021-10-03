@@ -49,7 +49,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
         {
 
             ListTransactionCommand command = new();
-            CommandResult<IEnumerable<TransactionDto>> result = await Sut.Handle(command, default);
+            CommandResult<IEnumerable<TransactionDto>> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
             IEnumerable<TransactionDto> dtos = result.Response;

@@ -81,7 +81,7 @@ namespace RSoft.Entry.Tests.Core.Services
                 .With(c => c.CreatedAuthor, One<Author<Guid>>())
                 .With(c => c.ChangedAuthor, One<AuthorNullable<Guid>>())
                 .Create();
-            var result = await Sut.AddAsync(payment, default);
+            var result = await Target.AddAsync(payment, default);
             Assert.IsTrue(result.Valid);
             PaymentMethodTable check = _dbContext.PaymentMethods.Find(result.Id);
             Assert.NotNull(check);
@@ -94,7 +94,7 @@ namespace RSoft.Entry.Tests.Core.Services
         {
             LoadInitialPayments(out Guid id);
             PaymentMethodTable table = _dbContext.PaymentMethods.Find(id);
-            PaymentMethod result = await Sut.GetByKeyAsync(id, default);
+            PaymentMethod result = await Target.GetByKeyAsync(id, default);
             Assert.NotNull(result);
             Assert.AreEqual(table.Name, result.Name);
         }
@@ -103,7 +103,7 @@ namespace RSoft.Entry.Tests.Core.Services
         public async Task GetAllPayment_ReturnEntityList()
         {
             LoadInitialPayments(out _);
-            IEnumerable<PaymentMethod> result = await Sut.GetAllAsync(default);
+            IEnumerable<PaymentMethod> result = await Target.GetAllAsync(default);
             Assert.GreaterOrEqual(result.Count(), 2);
             PaymentMethodTable paymentA = _dbContext.PaymentMethods.First(c => c.Name == _paymentAName);
             PaymentMethodTable paymentB = _dbContext.PaymentMethods.First(c => c.Name == _paymentBName);
@@ -123,7 +123,7 @@ namespace RSoft.Entry.Tests.Core.Services
                 Name = newName,
                 PaymentType = PaymentTypeEnum.BankTransaction
             };
-            payment = Sut.Update(payment.Id, payment);
+            payment = Target.Update(payment.Id, payment);
             PaymentMethodTable check = _dbContext.PaymentMethods.Where(c => c.Id == payment.Id).FirstOrDefault();
             Assert.NotNull(payment);
             Assert.NotNull(check);
@@ -138,7 +138,7 @@ namespace RSoft.Entry.Tests.Core.Services
             PaymentMethodTable tableRow = _fixture.CreatePaymentMethod("PAYMENT TO REMOVE", PaymentTypeEnum.FoodStamps);
             Guid id = tableRow.Id;
             _fixture.WithSeedData(_dbContext, new PaymentMethodTable[] { tableRow });
-            Sut.Delete(id);
+            Target.Delete(id);
             _dbContext.SaveChanges();
             PaymentMethodTable check = _dbContext.PaymentMethods.FirstOrDefault(c => c.Id == id);
             Assert.Null(check);

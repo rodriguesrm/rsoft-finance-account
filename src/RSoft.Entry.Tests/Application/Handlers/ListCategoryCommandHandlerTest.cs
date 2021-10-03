@@ -48,7 +48,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
         {
 
             ListCategoryCommand command = new();
-            CommandResult<IEnumerable<CategoryDto>> result = await Sut.Handle(command, default);
+            CommandResult<IEnumerable<CategoryDto>> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
             IEnumerable<CategoryDto> dtos = result.Response;

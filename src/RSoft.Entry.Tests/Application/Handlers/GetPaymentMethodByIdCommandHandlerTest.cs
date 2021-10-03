@@ -42,7 +42,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
             _fixture.Inject(domainService.Object);
 
             GetPaymentMethodByIdCommand command = new(Guid.NewGuid());
-            CommandResult<PaymentMethodDto> result = await Sut.Handle(command, default);
+            CommandResult<PaymentMethodDto> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
             PaymentMethodDto dto = result.Response;

@@ -48,7 +48,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
         {
 
             ListAccrualPeriodCommand command = new();
-            CommandResult<IEnumerable<AccrualPeriodDto>> result = await Sut.Handle(command, default);
+            CommandResult<IEnumerable<AccrualPeriodDto>> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
             IEnumerable<AccrualPeriodDto> dtos = result.Response;

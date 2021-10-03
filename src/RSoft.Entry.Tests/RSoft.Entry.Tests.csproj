@@ -26,6 +26,7 @@
     <ProjectReference Include="..\RSoft.Entry.Contracts\RSoft.Entry.Contracts.csproj" />
     <ProjectReference Include="..\RSoft.Entry.Core\RSoft.Entry.Core.csproj" />
     <ProjectReference Include="..\RSoft.Entry.Cross\RSoft.Entry.Cross.csproj" />
+    <ProjectReference Include="..\RSoft.Entry.GrpcService\RSoft.Entry.GrpcService.csproj" />
     <ProjectReference Include="..\RSoft.Entry.Infra\RSoft.Entry.Infra.csproj" />
   </ItemGroup>
 

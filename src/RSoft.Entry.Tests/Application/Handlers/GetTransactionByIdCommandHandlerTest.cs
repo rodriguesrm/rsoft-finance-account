@@ -42,7 +42,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
             _fixture.Inject(domainService.Object);
 
             GetTransactionByIdCommand command = new(Guid.NewGuid());
-            CommandResult<TransactionDto> result = await Sut.Handle(command, default);
+            CommandResult<TransactionDto> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
             TransactionDto dto = result.Response;

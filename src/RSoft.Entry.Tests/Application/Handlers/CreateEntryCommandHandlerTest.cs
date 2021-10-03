@@ -41,7 +41,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
         public async Task HandleMediatorCommand_ProcessSuccess()
         {
             CreateEntryCommand command = new("ENTRY_NAME", Guid.NewGuid());
-            CommandResult<Guid?> result = await Sut.Handle(command, default);
+            CommandResult<Guid?> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
         }

@@ -34,7 +34,9 @@ namespace RSoft.Entry.Tests.DependencyInjection
 
         #region Properties
 
-
+        /// <summary>
+        /// Get service collection
+        /// </summary>
         public static IServiceCollection ServiceCollection
         {
             get
@@ -74,6 +76,9 @@ namespace RSoft.Entry.Tests.DependencyInjection
 
         #region Public methods
 
+        /// <summary>
+        /// Build provider for service activator
+        /// </summary>
         public static IServiceProvider BuildProvider()
         {
             if (_serviceProvider == null)

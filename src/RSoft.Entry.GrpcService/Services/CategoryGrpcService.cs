@@ -68,7 +68,6 @@ namespace RSoft.Entry.GrpcService.Services
                 logger: _logger
             );
 
-
         /// <summary>
         /// Enable a category
         /// </summary>

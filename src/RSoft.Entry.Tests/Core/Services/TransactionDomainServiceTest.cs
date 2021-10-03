@@ -93,7 +93,7 @@ namespace RSoft.Entry.Tests.Core.Services
                 Entry = new EntryDomain(MockBuilder.InitialEntryId) { Name = "***" },
                 PaymentMethod = new PaymentMethod(MockBuilder.InitialPaymentId) { Name = "***" }
             };
-            Transaction result = await Sut.AddAsync(transaction, default);
+            Transaction result = await Target.AddAsync(transaction, default);
             Assert.IsTrue(result.Valid);
             TransactionTable check = _dbContext.Transactions.Find(result.Id);
             Assert.NotNull(check);
@@ -109,7 +109,7 @@ namespace RSoft.Entry.Tests.Core.Services
         {
             LoadInitialTransactions(out Guid transactionId);
             var table = _dbContext.Transactions.Find(transactionId);
-            Transaction result = await Sut.GetByKeyAsync(transactionId, default);
+            Transaction result = await Target.GetByKeyAsync(transactionId, default);
             Assert.NotNull(result);
             Assert.AreEqual(table.Year, result.Year);
             Assert.AreEqual(table.Month, result.Month);
@@ -122,7 +122,7 @@ namespace RSoft.Entry.Tests.Core.Services
         {
             DateTime date = DateTime.UtcNow.AddMonths(-1);
             LoadInitialTransactions(out Guid id);
-            IEnumerable<Transaction> result = await Sut.GetAllAsync(default);
+            IEnumerable<Transaction> result = await Target.GetAllAsync(default);
             Assert.GreaterOrEqual(result.Count(), 2);
             var transactionA = _dbContext.Transactions.First(t => t.Year == date.Year && t.Month == date.Month && t.Amount == _creditValue && t.TransactionType == TransactionTypeEnum.Credit);
             var transactionB = _dbContext.Transactions.First(t => t.Year == date.Year && t.Month == date.Month && t.Amount == _debtValue && t.TransactionType == TransactionTypeEnum.Debt);
@@ -148,7 +148,7 @@ namespace RSoft.Entry.Tests.Core.Services
                 PaymentMethod = new PaymentMethod(oldTableRow.PaymentMethodId) { Name = "***" },
                 CreatedAuthor = new Author<Guid>(oldTableRow.CreatedAuthor.Id, oldTableRow.CreatedAuthor.GetFullName())
             };
-            transaction = Sut.Update(transaction.Id, transaction);
+            transaction = Target.Update(transaction.Id, transaction);
             TransactionTable check = _dbContext.Transactions.FirstOrDefault(t => t.Id == transaction.Id);
             Assert.NotNull(transaction);
             Assert.NotNull(check);
@@ -165,7 +165,7 @@ namespace RSoft.Entry.Tests.Core.Services
             TransactionTable tableRow = _fixture.CreateTransaction(date.Year, date.Month, 777, TransactionTypeEnum.Credit);
             Guid transactionId = tableRow.Id;
             _fixture.WithSeedData(_dbContext, new TransactionTable[] { tableRow });
-            Sut.Delete(transactionId);
+            Target.Delete(transactionId);
             _dbContext.SaveChanges();
             TransactionTable check = _dbContext.Transactions.FirstOrDefault(c => c.Id == transactionId);
             Assert.Null(check);
@@ -177,7 +177,7 @@ namespace RSoft.Entry.Tests.Core.Services
             DateTime date = DateTime.UtcNow.AddYears(5);
             LoadInitialTransactions(out _);
             Transaction transaction = _fixture.CreateTransaction(date.Year, date.Month, 100.0f, TransactionTypeEnum.Debt).Map();
-            Sut.ValidateAccrualPeriod(transaction);
+            Target.ValidateAccrualPeriod(transaction);
             Assert.AreEqual(1, transaction.Notifications.Count);
             Assert.True(transaction.Notifications.Any(n => n.Message == "ACCRUAL_PERIOD_NOT_FOUND"));
         }
@@ -199,7 +199,7 @@ namespace RSoft.Entry.Tests.Core.Services
             _dbContext.SaveChanges();
 
             Transaction transaction = _fixture.CreateTransaction(date.Year, date.Month, 100.0f, TransactionTypeEnum.Debt).Map();
-            Sut.ValidateAccrualPeriod(transaction);
+            Target.ValidateAccrualPeriod(transaction);
             Assert.AreEqual(1, transaction.Notifications.Count);
             Assert.True(transaction.Notifications.Any(n => n.Message == "ACCRUAL_PERIOD_IS_CLOSED"));
 
@@ -222,7 +222,7 @@ namespace RSoft.Entry.Tests.Core.Services
                     StartAt = date,
                     EndAt = date.AddMonths(1).AddDays(-1)
                 };
-                _ = await Sut.GetByFilterAsync(filter, default);
+                _ = await Target.GetByFilterAsync(filter, default);
             }
             Assert.ThrowsAsync<ArgumentException>(GetByFilter);
         }
@@ -239,7 +239,7 @@ namespace RSoft.Entry.Tests.Core.Services
                 StartAt = startAt,
                 EndAt = endAt
             };
-            IEnumerable<Transaction> result = Sut.GetByFilterAsync(filter, default).Result;
+            IEnumerable<Transaction> result = Target.GetByFilterAsync(filter, default).Result;
 
             Assert.NotNull(result);
             Assert.GreaterOrEqual(2, result.Count());
@@ -259,7 +259,7 @@ namespace RSoft.Entry.Tests.Core.Services
                 PaymentMethodId = MockBuilder.InitialPaymentId,
                 TransactionType = TransactionTypeEnum.Credit
             };
-            IEnumerable<Transaction> result = Sut.GetByFilterAsync(filter, default).Result;
+            IEnumerable<Transaction> result = Target.GetByFilterAsync(filter, default).Result;
 
             Assert.NotNull(result);
             Assert.GreaterOrEqual(1, result.Count());

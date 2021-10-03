@@ -42,7 +42,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
             _fixture.Inject(domainService.Object);
 
             GetEntryByIdCommand command = new(Guid.NewGuid());
-            CommandResult<EntryDto> result = await Sut.Handle(command, default);
+            CommandResult<EntryDto> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
             EntryDto dto = result.Response;

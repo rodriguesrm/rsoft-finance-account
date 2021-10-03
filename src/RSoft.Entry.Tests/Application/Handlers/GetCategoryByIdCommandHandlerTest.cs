@@ -42,7 +42,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
             _fixture.Inject(domainService.Object);
 
             GetCategoryByIdCommand command = new(Guid.NewGuid());
-            CommandResult<CategoryDto> result = await Sut.Handle(command, default);
+            CommandResult<CategoryDto> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
             CategoryDto dto = result.Response;

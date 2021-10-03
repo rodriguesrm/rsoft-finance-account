@@ -41,7 +41,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
         public async Task HandleMediatorCommand_ProcessSuccess()
         {
             CreateTransactionCommand command = new(DateTime.UtcNow, 2, 1500f, "COMMENT", Guid.NewGuid(), Guid.NewGuid());
-            CommandResult<Guid?> result = await Sut.Handle(command, default);
+            CommandResult<Guid?> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
         }

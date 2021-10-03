@@ -36,7 +36,7 @@ namespace RSoft.Entry.Tests.Infra.Providers
             void DoUpdate()
             {
                 entity.Validate();
-                _ = Sut.Update(entity.Year, entity.Month, entity);
+                _ = Target.Update(entity.Year, entity.Month, entity);
             }
             Assert.Throws<InvalidEntityException>(DoUpdate);
         }

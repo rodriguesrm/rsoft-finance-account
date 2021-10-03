@@ -51,7 +51,7 @@ namespace RSoft.Entry.Tests.Core.Services
             User user = _fixture.Build<User>()
                 .With(c => c.Name, new Name("USER", "TEST"))
                 .Create();
-            User result = await Sut.AddAsync(user, default);
+            User result = await Target.AddAsync(user, default);
             Assert.IsTrue(result.Valid);
             UserTable check = _dbContext.Users.Find(result.Id);
             Assert.NotNull(check);
@@ -64,7 +64,7 @@ namespace RSoft.Entry.Tests.Core.Services
         {
             Guid userId = AuthenticatedUserStub.UserAdminId;
             UserTable table = _dbContext.Users.Find(userId);
-            User result = await Sut.GetByKeyAsync(userId, default);
+            User result = await Target.GetByKeyAsync(userId, default);
             Assert.NotNull(result);
             Assert.AreEqual(table.FirstName, result.Name.FirstName);
             Assert.AreEqual(table.LastName, result.Name.LastName);
@@ -74,7 +74,7 @@ namespace RSoft.Entry.Tests.Core.Services
         [Test]
         public async Task GetAllCategory_ReturnEntityList()
         {
-            IEnumerable<User> result = await Sut.GetAllAsync(default);
+            IEnumerable<User> result = await Target.GetAllAsync(default);
             Assert.NotNull(result);
             Assert.GreaterOrEqual(result.Count(), 1);
             Assert.True(result.Any(x => x.Id == AuthenticatedUserStub.UserAdminId));
@@ -88,7 +88,7 @@ namespace RSoft.Entry.Tests.Core.Services
             UserTable oldUser = _fixture.CreateUser(oldName.FirstName, oldName.LastName);
             _fixture.WithSeedData(_dbContext, new UserTable[] { oldUser });
             User newUser = new(oldUser.Id) { Name = newName };
-            _ = Sut.Update(newUser.Id, newUser);
+            _ = Target.Update(newUser.Id, newUser);
             UserTable check = _dbContext.Users.Where(c => c.Id == newUser.Id).FirstOrDefault();
             Assert.NotNull(newUser);
             Assert.NotNull(check);
@@ -106,7 +106,7 @@ namespace RSoft.Entry.Tests.Core.Services
             UserTable tableRow = _fixture.CreateUser("ALEXANDER", "PIERCE");
             Guid userId = tableRow.Id;
             _fixture.WithSeedData(_dbContext, new UserTable[] { tableRow });
-            Sut.Delete(userId);
+            Target.Delete(userId);
             _dbContext.SaveChanges();
             UserTable check = _dbContext.Users.FirstOrDefault(c => c.Id == userId);
             Assert.Null(check);

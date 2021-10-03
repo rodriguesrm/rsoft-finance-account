@@ -48,7 +48,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
         {
 
             ListEntryCommand command = new();
-            CommandResult<IEnumerable<EntryDto>> result = await Sut.Handle(command, default);
+            CommandResult<IEnumerable<EntryDto>> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
             IEnumerable<EntryDto> dtos = result.Response;

@@ -23,7 +23,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
         {
             DateTime date = DateTime.UtcNow.AddMonths(10);
             StartAccrualPeriodCommand command = new(date.Year, date.Month);
-            var result = await Sut.Handle(command, default);
+            var result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
         }

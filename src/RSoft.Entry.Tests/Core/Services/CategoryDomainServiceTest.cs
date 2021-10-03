@@ -80,7 +80,7 @@ namespace RSoft.Entry.Tests.Core.Services
                 .With(c => c.CreatedAuthor, One<Author<Guid>>())
                 .With(c => c.ChangedAuthor, One<AuthorNullable<Guid>>())
                 .Create();
-            Category result = await Sut.AddAsync(category, default);
+            Category result = await Target.AddAsync(category, default);
             Assert.IsTrue(result.Valid);
             CategoryTable check = _dbContext.Categories.Find(result.Id);
             Assert.NotNull(check);
@@ -93,7 +93,7 @@ namespace RSoft.Entry.Tests.Core.Services
         {
             LoadInitialCategory(out Guid categoryId);
             CategoryTable table = _dbContext.Categories.Find(categoryId);
-            Category result = await Sut.GetByKeyAsync(categoryId, default);
+            Category result = await Target.GetByKeyAsync(categoryId, default);
             Assert.NotNull(result);
             Assert.AreEqual(table.Name, result.Name);
         }
@@ -102,7 +102,7 @@ namespace RSoft.Entry.Tests.Core.Services
         public async Task GetAllCategory_ReturnEntityList()
         {
             LoadInitialCategory(out _);
-            IEnumerable<Category> result = await Sut.GetAllAsync(default);
+            IEnumerable<Category> result = await Target.GetAllAsync(default);
             Assert.GreaterOrEqual(result.Count(), 2);
             CategoryTable categoryA = _dbContext.Categories.First(c => c.Name == _categoryAName);
             CategoryTable categoryB = _dbContext.Categories.First(c => c.Name == _categoryBName);
@@ -118,7 +118,7 @@ namespace RSoft.Entry.Tests.Core.Services
             CategoryTable oldTableRow = _fixture.CreateCategory(oldName);
             _fixture.WithSeedData(_dbContext, new CategoryTable[] { oldTableRow });
             Category category = new(oldTableRow.Id) { Name = newName };
-            category = Sut.Update(category.Id, category);
+            category = Target.Update(category.Id, category);
             CategoryTable check = _dbContext.Categories.Where(c => c.Id == category.Id).FirstOrDefault();
             Assert.NotNull(category);
             Assert.NotNull(check);
@@ -133,7 +133,7 @@ namespace RSoft.Entry.Tests.Core.Services
             CategoryTable tableRow = _fixture.CreateCategory("CATEGORY TO_REMOVE");
             Guid categoryId = tableRow.Id;
             _fixture.WithSeedData(_dbContext, new CategoryTable[] { tableRow });
-            Sut.Delete(categoryId);
+            Target.Delete(categoryId);
             _dbContext.SaveChanges();
             CategoryTable check = _dbContext.Categories.FirstOrDefault(c => c.Id == categoryId);
             Assert.Null(check);

@@ -24,7 +24,7 @@ namespace RSoft.Entry.Tests.Consumers
             ConsumeContext<AccrualPeriodStartedEvent> context = _fixture.Build<ConsumeContextStub<AccrualPeriodStartedEvent>>()
                 .With(c => c.Message, new AccrualPeriodStartedEvent(DateTime.UtcNow.Year, DateTime.UtcNow.Month))
                 .Create();
-            _ = Sut.Consume(context);
+            _ = Target.Consume(context);
 
             LoggerStub<AccrualPeriodStartedEventConsumer> logger = 
                 ServiceActivator.GetScope().ServiceProvider.GetService<ILogger<AccrualPeriodStartedEventConsumer>>() as LoggerStub<AccrualPeriodStartedEventConsumer>;
@@ -42,7 +42,7 @@ namespace RSoft.Entry.Tests.Consumers
             ConsumeContext<AccrualPeriodStartedEvent> context = _fixture.Build<ConsumeContextStub<AccrualPeriodStartedEvent>>()
                 .Without(c => c.Message)
                 .Create();
-            _ = Sut.Consume(context);
+            _ = Target.Consume(context);
             
             LoggerStub<AccrualPeriodStartedEventConsumer> logger =
                 ServiceActivator.GetScope().ServiceProvider.GetService<ILogger<AccrualPeriodStartedEventConsumer>>() as LoggerStub<AccrualPeriodStartedEventConsumer>;

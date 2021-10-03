@@ -54,7 +54,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
         public async Task HandleMediatorCommand_ProcessSuccess()
         {
             UpdateCategoryCommand command = new(Guid.NewGuid(), "CATEGORY_NAME_UPDTED");
-            CommandResult<bool> result = await Sut.Handle(command, default);
+            CommandResult<bool> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
         }

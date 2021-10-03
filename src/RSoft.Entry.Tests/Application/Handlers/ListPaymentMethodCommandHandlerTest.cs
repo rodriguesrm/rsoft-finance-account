@@ -48,7 +48,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
         {
 
             ListPaymentMethodCommand command = new();
-            CommandResult<IEnumerable<PaymentMethodDto>> result = await Sut.Handle(command, default);
+            CommandResult<IEnumerable<PaymentMethodDto>> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
             IEnumerable<PaymentMethodDto> dtos = result.Response;

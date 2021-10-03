@@ -69,7 +69,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
         public async Task HandleMediatorCommand_ProcessSuccess()
         {
             RollbackTransactionCommand command = new(_transactionId, "ROLLBACK OK");
-            CommandResult<Guid?> result = await Sut.Handle(command, default);
+            CommandResult<Guid?> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.True(result.Success);
             Assert.NotNull(result.Response);
@@ -80,7 +80,7 @@ namespace RSoft.Entry.Tests.Application.Handlers
         public async Task HandleMediatorCommand_WhenTransactionNotFound_ProcessFail()
         {
             RollbackTransactionCommand command = new(Guid.NewGuid(), "ROLLBACK FAIL");
-            CommandResult<Guid?> result = await Sut.Handle(command, default);
+            CommandResult<Guid?> result = await Target.Handle(command, default);
             Assert.NotNull(result);
             Assert.False(result.Success);
             Assert.True(result.Errors.Count > 0);

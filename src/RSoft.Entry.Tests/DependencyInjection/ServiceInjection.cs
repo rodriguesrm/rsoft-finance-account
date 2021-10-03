@@ -12,6 +12,8 @@ using UserDomain = RSoft.Entry.Core.Entities.User;
 using RSoft.Entry.Core.Services;
 using RSoft.Entry.Tests.Stubs;
 using RSoft.Lib.Common.Contracts.Web;
+using Microsoft.Extensions.Logging;
+using RSoft.Entry.Application.Consumers;
 
 namespace RSoft.Entry.Tests.DependencyInjection
 {
@@ -54,7 +56,8 @@ namespace RSoft.Entry.Tests.DependencyInjection
                         .AddScoped<IStringLocalizer<FullNameValidationContract>, StringLocalizerStub<FullNameValidationContract>>()
                         .AddScoped<IStringLocalizer<TransactionDomainService>, StringLocalizerStub<TransactionDomainService>>()
                         .AddScoped<IAuthenticatedUser, AuthenticatedUserStub>()
-
+                        .AddScoped<MediatR.IMediator, MediatorSub>()
+                        .AddSingleton<ILogger<AccrualPeriodStartedEventConsumer>, LoggerStub<AccrualPeriodStartedEventConsumer>>()
                         .AddLogging();
                 }
                 return _serviceCollection;

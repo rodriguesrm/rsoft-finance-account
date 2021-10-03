@@ -2,18 +2,13 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using RSoft.Finance.Contracts.Events;
-using RSoft.Lib.Messaging.Contracts;
-using System.Threading.Tasks;
-using MediatR;
-using RSoft.Entry.Contracts.Commands;
 using RSoft.Lib.Common.Abstractions;
 using System;
 using RSoft.Entry.Application.Consumers;
 using NUnit.Framework;
 using AutoFixture;
-using Moq;
-using System.Collections.Generic;
 using System.Linq;
+using RSoft.Entry.Tests.Stubs;
 
 namespace RSoft.Entry.Tests.Consumers
 {
@@ -26,14 +21,37 @@ namespace RSoft.Entry.Tests.Consumers
         public void ConsumeMessage_ProcessSuccess()
         {
             AccrualPeriodStartedEventConsumer.IsLoaded = true;
-            ConsumeContext<AccrualPeriodStartedEvent> context = _fixture.Build<ConsumeContext<AccrualPeriodStartedEvent>>()
+            ConsumeContext<AccrualPeriodStartedEvent> context = _fixture.Build<ConsumeContextStub<AccrualPeriodStartedEvent>>()
                 .With(c => c.Message, new AccrualPeriodStartedEvent(DateTime.UtcNow.Year, DateTime.UtcNow.Month))
                 .Create();
             _ = Sut.Consume(context);
-            //string checkStart = $"{nameof(AccrualPeriodStartedEventConsumer)} START";
-            //string checkEnd = $"{nameof(AccrualPeriodStartedEventConsumer)} END";
-            //Assert.IsTrue(_logRegister.Any(l => l == checkStart));
-            //Assert.IsTrue(_logRegister.Any(l => l == checkEnd));
+
+            LoggerStub<AccrualPeriodStartedEventConsumer> logger = 
+                ServiceActivator.GetScope().ServiceProvider.GetService<ILogger<AccrualPeriodStartedEventConsumer>>() as LoggerStub<AccrualPeriodStartedEventConsumer>;
+
+            string checkStart = $"{nameof(AccrualPeriodStartedEventConsumer)} START";
+            string checkEnd = $"{nameof(AccrualPeriodStartedEventConsumer)} END";
+            Assert.IsTrue(logger.Logs.Any(l => l == checkStart));
+            Assert.IsTrue(logger.Logs.Any(l => l == checkEnd));
+        }
+
+        [Test]
+        public void ConsumeMessage_WhenErrorOccurs_LogException()
+        {
+            AccrualPeriodStartedEventConsumer.IsLoaded = false;
+            ConsumeContext<AccrualPeriodStartedEvent> context = _fixture.Build<ConsumeContextStub<AccrualPeriodStartedEvent>>()
+                .Without(c => c.Message)
+                .Create();
+            _ = Sut.Consume(context);
+            
+            LoggerStub<AccrualPeriodStartedEventConsumer> logger =
+                ServiceActivator.GetScope().ServiceProvider.GetService<ILogger<AccrualPeriodStartedEventConsumer>>() as LoggerStub<AccrualPeriodStartedEventConsumer>;
+
+            string checkStart = $"{nameof(AccrualPeriodStartedEventConsumer)} START";
+            string checkFail = $"Fail on process message {context.MessageId}";
+            Assert.IsTrue(logger.Logs.Any(l => l == checkStart));
+            Assert.IsTrue(logger.Logs.Any(l => l == checkFail));
+
         }
 
         #endregion

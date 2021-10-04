@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 using Google.Protobuf.WellKnownTypes;
 using RSoft.Entry.Contracts.Models;
 using System.Linq;
+using AutoFixture;
 
 namespace RSoft.Entry.Tests.Web_GrpcService.Services
 {
-    
+
     public class EntryGrpcServiceTest : TestFor<EntryGrpcService>
     {
 
@@ -24,7 +25,10 @@ namespace RSoft.Entry.Tests.Web_GrpcService.Services
         public async Task CreateEntry_ProcessSuccess_ReturnId()
         {
             ServerCallContext context = One<ServerCallContext>();
-            CreateEntryRequest request = One<CreateEntryRequest>();
+            CreateEntryRequest request = _fixture
+                .Build<CreateEntryRequest>()
+                .With(c => c.CategoryId, Guid.NewGuid().ToString())
+                .Create();
             CommandResult<Guid?> mockReply = new()
             {
                 Response = Guid.NewGuid()
@@ -60,6 +64,7 @@ namespace RSoft.Entry.Tests.Web_GrpcService.Services
             ServerCallContext context = One<ServerCallContext>();
             UpdateEntryRequest request = One<UpdateEntryRequest>();
             request.Id = Guid.NewGuid().ToString();
+            request.CategoryId = Guid.NewGuid().ToString();
             CommandResult<bool> mockReply = new()
             {
                 Response = true
@@ -68,6 +73,24 @@ namespace RSoft.Entry.Tests.Web_GrpcService.Services
             Empty result = await Target.UpdateEntry(request, context);
             Assert.NotNull(result);
         }
+
+        [Test]
+        public void UpdateEntry_WhenCategoryIsInvalid_ThrowRpcException()
+        {
+            ArgumentException mockReply = new("INVALID_CATEGORY");
+            async Task DoTest()
+            {
+                ServerCallContext context = One<ServerCallContext>();
+                UpdateEntryRequest request = One<UpdateEntryRequest>();
+                request.Id = Guid.NewGuid().ToString();
+                request.CategoryId = "AA33";
+                MediatorSub.SetMockResponse(mockReply);
+                Empty result = await Target.UpdateEntry(request, context);
+            }
+            ArgumentException ex = Assert.ThrowsAsync<ArgumentException>(DoTest);
+            Assert.AreEqual(mockReply.Message, ex.Message);
+        }
+
 
         [Test]
         public async Task EnableEntry_ProcessSuccessReturnEmpt()

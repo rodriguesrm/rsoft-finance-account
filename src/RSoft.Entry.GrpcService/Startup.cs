@@ -12,9 +12,12 @@ using RSoft.Entry.Infra.Extensions;
 using RSoft.Lib.Common.Web.Extensions;
 using RSoft.Lib.Web.Extensions;
 using RSoft.Logs.Extensions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Entry.GrpcService
 {
+
+    [ExcludeFromCodeCoverage(Justification = "StartUp should not be tested by unit tests.")]
     public class Startup
     {
 

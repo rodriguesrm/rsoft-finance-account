@@ -70,7 +70,7 @@ namespace RSoft.Entry.Tests.Web_GrpcService.Services
         }
 
         [Test]
-        public async Task EnablePaymentMethod_ProcessSuccessReturnEmpt()
+        public async Task EnablePaymentMethod_ProcessSuccessReturnEmpty()
         {
             ServerCallContext context = One<ServerCallContext>();
             ChangeStatusPaymentMethodRequest request = One<ChangeStatusPaymentMethodRequest>();
@@ -85,7 +85,7 @@ namespace RSoft.Entry.Tests.Web_GrpcService.Services
         }
 
         [Test]
-        public async Task DisablePaymentMethodPaymentMethod_ProcessSuccessReturnEmpt()
+        public async Task DisablePaymentMethodPaymentMethod_ProcessSuccessReturnEmpty()
         {
             ServerCallContext context = One<ServerCallContext>();
             ChangeStatusPaymentMethodRequest request = One<ChangeStatusPaymentMethodRequest>();

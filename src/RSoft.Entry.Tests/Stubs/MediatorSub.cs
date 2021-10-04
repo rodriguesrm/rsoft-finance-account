@@ -39,10 +39,16 @@ namespace RSoft.Entry.Tests.Stubs
         public Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken = default)
         {
             TResponse response = Activator.CreateInstance<TResponse>();
-            if (response.GetType() == _mockResponse?.GetType())
+            if (_mockResponse != null)
             {
-                response = (TResponse)_mockResponse;
-                _mockResponse = null;
+                if (_mockResponse is Exception)
+                    throw (Exception)_mockResponse;
+
+                if (response.GetType() == _mockResponse.GetType())
+                {
+                    response = (TResponse)_mockResponse;
+                    _mockResponse = null;
+                }
             }
             return Task.FromResult(response);
         }

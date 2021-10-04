@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RSoft.Logs.Extensions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Entry.GrpcService
 {
@@ -9,6 +10,7 @@ namespace RSoft.Entry.GrpcService
     /// <summary>
     /// Create host and run application
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Program should not be tested by unit tests.")]
     public class Program
     {
 

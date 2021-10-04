@@ -9,7 +9,7 @@ namespace RSoft.Entry.Contracts.Commands
     /// <summary>
     /// Create entry command contract 
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class CreateEntryCommand : IRequest<CommandResult<Guid?>>
     {
 

@@ -1,41 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<TargetFramework>netstandard2.1</TargetFramework>
-		<Authors>Rodrigo Rodrigues</Authors>
-		<Company>RSoft</Company>
-		<Description>Entry gRPC client package</Description>
-		<PackageLicenseFile>license.txt</PackageLicenseFile>
-		<RepositoryUrl>https://github.com/rodriguesrm/rsoft-finance-entry</RepositoryUrl>
-		<PackageTags>rsoft grpc entry client</PackageTags>
-		<PackageIcon>rsoft-entry-grpcclient-icon-32x32.png</PackageIcon>
-		<PackageIconUrl />
-	</PropertyGroup>
-
-	<ItemGroup>
-		<None Include="..\..\docs\license.txt">
-			<Pack>True</Pack>
-			<PackagePath></PackagePath>
-		</None>
-		<None Include="rsoft-entry-grpcclient-icon-32x32.png">
-			<Pack>True</Pack>
-			<PackagePath></PackagePath>
-		</None>
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Google.Protobuf" Version="3.18.0" />
-		<PackageReference Include="Grpc.Net.Client" Version="2.39.0" />
-		<PackageReference Include="Grpc.Tools" Version="2.40.0">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<None Include="..\Protos">
-			<Link>Protos</Link>
-		</None>
-		<Protobuf Include="..\Protos\rsoft-entry-service.proto" GrpcServices="Client">
-			<Link>Protos\rsoft-entry-service.proto</Link>
-		</Protobuf>
-	</ItemGroup>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
 </Project>

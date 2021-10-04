@@ -9,7 +9,7 @@ namespace RSoft.Entry.Contracts.Commands
     /// <summary>
     /// Update Entry command contract 
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class UpdateEntryCommand : IRequest<CommandResult<bool>>
     {
 

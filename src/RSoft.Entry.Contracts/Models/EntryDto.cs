@@ -10,7 +10,7 @@ namespace RSoft.Entry.Contracts.Models
     /// <summary>
     /// Entry data transport object
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class EntryDto : AppDtoIdAuditBase<Guid>, IAuditDto<Guid>
     {
 

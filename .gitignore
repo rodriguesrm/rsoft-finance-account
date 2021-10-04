@@ -247,3 +247,4 @@ ModelManifest.xml
 .fake/
 
 # Files project to ignore
+/src/RSoft.Entry.GrpcClient/RSoft.Entry.GrpcClient.xml

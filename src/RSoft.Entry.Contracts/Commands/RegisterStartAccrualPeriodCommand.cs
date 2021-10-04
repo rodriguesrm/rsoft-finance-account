@@ -8,7 +8,7 @@ namespace RSoft.Entry.Contracts.Commands
     /// <summary>
     /// Register Start Accrual Period command contract 
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class RegisterStartAccrualPeriodCommand : IRequest<CommandResult<bool>>
     {
 

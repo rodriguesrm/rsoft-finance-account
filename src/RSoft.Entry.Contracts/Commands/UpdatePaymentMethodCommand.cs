@@ -10,7 +10,7 @@ namespace RSoft.Entry.Contracts.Commands
     /// Update PaymentMethod command contract 
     /// </summary>
 
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class UpdatePaymentMethodCommand : IRequest<CommandResult<bool>>
     {
 

@@ -9,7 +9,7 @@ namespace RSoft.Entry.Contracts.Commands
     /// <summary>
     /// Reserve Transaction command contract 
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class RollbackTransactionCommand : IRequest<CommandResult<Guid?>>
     {
 

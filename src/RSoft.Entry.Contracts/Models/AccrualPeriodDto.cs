@@ -10,7 +10,7 @@ namespace RSoft.Entry.Contracts.Models
     /// <summary>
     /// AccrualPeriod data transport object
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class AccrualPeriodDto : AppDtoAuditBase<Guid>, IAuditDto<Guid>
     {
 

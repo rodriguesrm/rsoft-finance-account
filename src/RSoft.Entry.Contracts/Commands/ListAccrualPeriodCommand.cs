@@ -10,7 +10,7 @@ namespace RSoft.Entry.Contracts.Commands
     /// <summary>
     /// Update AccrualPeriod command contract 
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class ListAccrualPeriodCommand : IRequest<CommandResult<IEnumerable<AccrualPeriodDto>>>
     {
 

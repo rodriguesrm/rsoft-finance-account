@@ -10,7 +10,7 @@ namespace RSoft.Entry.Contracts.Models
     /// <summary>
     /// PaymentMethod data transport object
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class PaymentMethodDto : AppDtoIdAuditBase<Guid>, IAuditDto<Guid>
     {
 

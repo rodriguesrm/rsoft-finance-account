@@ -13,7 +13,7 @@ namespace RSoft.Entry.Contracts.Commands
     /// <summary>
     /// Update Transaction command contract 
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class ListTransactionCommand : IRequest<CommandResult<IEnumerable<TransactionDto>>>
     {
 

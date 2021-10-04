@@ -9,7 +9,7 @@ namespace RSoft.Entry.Contracts.Models
     /// <summary>
     /// Category data transport object
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class CategoryDto : AppDtoIdAuditBase<Guid>, IAuditDto<Guid>
     {
 

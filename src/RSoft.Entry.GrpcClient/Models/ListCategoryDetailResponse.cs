@@ -1,0 +1,25 @@
+﻿using FluentValidator;
+using Grpc.Core;
+using RSoft.Entry.Contracts.Models;
+using System.Collections.Generic;
+
+namespace RSoft.Entry.GrpcClient.Models
+{
+
+    /// <summary>
+    /// Get category response model
+    /// </summary>
+    public class ListCategoryDetailResponse : RpcReply<IEnumerable<CategoryDto>>
+    {
+
+        ///<inheritdoc/>
+        public ListCategoryDetailResponse
+        (
+            StatusCode statusCode,
+            IEnumerable<CategoryDto> responseData,
+            ICollection<Notification> notifications = null,
+            string errorMessage = null
+        ) : base(statusCode, responseData, notifications, errorMessage) { }
+
+    }
+}

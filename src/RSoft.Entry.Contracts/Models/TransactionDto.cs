@@ -10,7 +10,7 @@ namespace RSoft.Entry.Contracts.Models
     /// <summary>
     /// Transaction data transport object
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class TransactionDto : AppDtoIdCreatedAuthorBase<Guid>, ICreatedAuthorDto<Guid>
     {
 

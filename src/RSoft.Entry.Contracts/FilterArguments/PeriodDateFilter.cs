@@ -7,7 +7,7 @@ namespace RSoft.Entry.Contracts.FilterArguments
     /// <summary>
     /// Period date filter model
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class PeriodDateFilter
     {
 

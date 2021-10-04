@@ -8,7 +8,7 @@ namespace RSoft.Entry.Contracts.Commands
     /// <summary>
     /// Close Accrual Period command contract 
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class CloseAccrualPeriodCommand : IRequest<CommandResult<bool>>
     {
 

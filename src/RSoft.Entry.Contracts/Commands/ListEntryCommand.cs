@@ -10,7 +10,7 @@ namespace RSoft.Entry.Contracts.Commands
     /// <summary>
     /// Update Entry command contract 
     /// </summary>
-    [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+    [ExcludeFromCodeCoverage]
     public class ListEntryCommand : IRequest<CommandResult<IEnumerable<EntryDto>>>
     {
 

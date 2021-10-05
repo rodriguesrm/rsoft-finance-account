@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "RSoft.Entry.GrpcClient": {
+      "commandName": "Project"
+    }
+  }
+}

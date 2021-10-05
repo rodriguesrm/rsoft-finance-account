@@ -76,7 +76,7 @@ namespace RSoft.Entry.GrpcClient.Abstractions
                 {
                     HttpClient = new HttpClient(new HttpClientHandler
                     {
-                        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+                        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator,
                     }),
                     Credentials = ChannelCredentials.Create(new SslCredentials(), credentials)
                 });

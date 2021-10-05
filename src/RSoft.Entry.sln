@@ -46,6 +46,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0-Solution Items", "0-Solut
 		test.runsettings = test.runsettings
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RSoft.EntrySdk.Test", "RSoft.EntrySdk.Test\RSoft.EntrySdk.Test.csproj", "{3C2F56B3-918C-49C6-A512-E6850A728B9E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +86,10 @@ Global
 		{29D04E20-05DE-4839-9B59-DA94E342A2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29D04E20-05DE-4839-9B59-DA94E342A2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29D04E20-05DE-4839-9B59-DA94E342A2EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C2F56B3-918C-49C6-A512-E6850A728B9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C2F56B3-918C-49C6-A512-E6850A728B9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C2F56B3-918C-49C6-A512-E6850A728B9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C2F56B3-918C-49C6-A512-E6850A728B9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +103,7 @@ Global
 		{7E7B5B79-61E9-4366-ACE2-5420C22AAF75} = {16970498-0A2A-4027-8886-75FE8C80355A}
 		{777ED72D-08AA-4E6E-A480-A35FC68CF8B8} = {EB50D5E5-53E8-499B-988D-A05D6FFDEC28}
 		{29D04E20-05DE-4839-9B59-DA94E342A2EB} = {812B13B2-617E-4D48-84DC-72E41BF214B0}
+		{3C2F56B3-918C-49C6-A512-E6850A728B9E} = {812B13B2-617E-4D48-84DC-72E41BF214B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E96B579E-924A-4DDC-BF92-AFB65D5E1E88}

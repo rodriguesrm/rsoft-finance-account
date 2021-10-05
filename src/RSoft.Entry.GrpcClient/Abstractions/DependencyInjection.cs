@@ -22,6 +22,7 @@ namespace RSoft.Entry.GrpcClient.Abstractions
             services.Configure<EntryServiceHostOption>(options => configuration.GetSection("EntryGrpcService:Server").Bind(options));
 
             services.AddScoped<IGrpcChannelFactory, GrpcChannelFactory>();
+            services.AddScoped<GrpcCategoryServiceProvider>();
 
             return services;
         }

@@ -14,9 +14,15 @@ services:
       - "5281:443"
     environment:  
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80;https://+:443
       - Logging:Seq:Uri=http://192.168.3.1:5341
       - ConnectionStrings:DbServer=Server=192.168.3.1;Port=3306;Database=rsoft_entry;Uid=root;password=RR.MySqlDev;
       - Messaging:Server:ServerAddress=192.168.3.1
       - Messaging:Server:VirtualHost=rsoft-finance
       - Messaging:Server:Username=rsoft-finance
       - Messaging:Server:Password=RF1n4nc3
+      - Kestrel:Certificates:Default:Path=/app/certs/server.pfx
+      - Kestrel:Certificates:Default:Password=RSoftPfx
+    volumes:
+      - /root/rsoft/certs:/app/certs
+      - /root/.aspnet/rsoft-entry:/root/.aspnet/

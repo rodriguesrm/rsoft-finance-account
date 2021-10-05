@@ -14,7 +14,7 @@ namespace RSoft.Entry.GrpcClient.Options
         /// <summary>
         /// Host/Server address
         /// </summary>
-        public string Server { get; set; }
+        public string Address { get; set; }
 
         /// <summary>
         /// Host/Server port
@@ -26,7 +26,7 @@ namespace RSoft.Entry.GrpcClient.Options
         /// Get full server address
         /// </summary>
         public string GetFullAddress()
-            => $"{Server}:{Port}";
+            => $"{Address}:{Port}";
 
     }
 }

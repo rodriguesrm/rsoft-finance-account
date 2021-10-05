@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "RSoft.EntrySdk.Test": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

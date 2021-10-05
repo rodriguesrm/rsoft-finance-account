@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
 		<UserSecretsId>07d585e4-b71d-4a1c-8e26-c3bc6a5e6e90</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -17,6 +18,7 @@
 	<ItemGroup>
 		<PackageReference Include="Grpc.AspNetCore" Version="2.39.0" />
 		<PackageReference Include="MediatR" Version="9.0.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
 		<PackageReference Include="RSoft.Lib.Web" Version="1.5.2" />
 		<PackageReference Include="RSoft.Logs" Version="1.2.2" />
 	</ItemGroup>

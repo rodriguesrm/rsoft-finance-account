@@ -42,6 +42,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSoft.Entry.Tests", "RSoft.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0-Solution Items", "0-Solution Items", "{21C8F499-9A76-4DC9-B657-3405F890F2EF}"
 	ProjectSection(SolutionItems) = preProject
+		docker-compose.yaml = docker-compose.yaml
 		test.runsettings = test.runsettings
 	EndProjectSection
 EndProject

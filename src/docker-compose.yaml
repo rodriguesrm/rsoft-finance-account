@@ -1,0 +1,22 @@
+version: '2.4'
+
+services:
+ 
+  rsoft-auth:
+    container_name: rsoft-entry
+    image: rodriguesrm/rsoft-entry:1.0.0
+    cpu_count: 1
+    cpus: 0.5
+    mem_limit: 128m
+    mem_reservation: 64m
+    ports: 
+      - "5280:80"
+      - "5281:443"
+    environment:  
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Logging:Seq:Uri=http://192.168.3.1:5341
+      - ConnectionStrings:DbServer=Server=192.168.3.1;Port=3306;Database=rsoft_entry;Uid=root;password=RR.MySqlDev;
+      - Messaging:Server:ServerAddress=192.168.3.1
+      - Messaging:Server:VirtualHost=rsoft-finance
+      - Messaging:Server:Username=rsoft-finance
+      - Messaging:Server:Password=RF1n4nc3

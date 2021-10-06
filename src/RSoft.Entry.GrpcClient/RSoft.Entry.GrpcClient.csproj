@@ -10,6 +10,7 @@
 		<PackageTags>rsoft grpc entry client</PackageTags>
 		<PackageIcon>rsoft-entry-grpcclient-icon-32x32.png</PackageIcon>
 		<PackageIconUrl />
+		<Version>1.0.1</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -35,8 +36,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="FluentValidator" Version="2.0.4" />
-		<PackageReference Include="Google.Protobuf" Version="3.18.0" />
-		<PackageReference Include="Grpc.Net.Client" Version="2.39.0" />
+		<PackageReference Include="Google.Protobuf" Version="3.18.1" />
+		<PackageReference Include="Grpc.Net.Client" Version="2.40.0" />
 		<PackageReference Include="Grpc.Tools" Version="2.41.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -217,7 +217,7 @@ namespace RSoft.Entry.GrpcClient.Extensions
             string errorMessage = null;
 
             if (rpcEx.StatusCode == StatusCode.InvalidArgument)
-                notifications = new List<Notification>() { new Notification(nameof(GrpcCategoryServiceProvider.GetCategory), rpcEx.Message) };
+                notifications = new List<Notification>() { new Notification(nameof(GrpcCategoryServiceProvider.ListCategory), rpcEx.Message) };
             else
                 errorMessage = rpcEx.Message;
 

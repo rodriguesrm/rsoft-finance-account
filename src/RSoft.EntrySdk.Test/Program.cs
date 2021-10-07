@@ -21,6 +21,7 @@ namespace RSoft.EntrySdk.Test
 
         private static Guid? _categoryId;
         private static Guid? _entryId;
+        private static Guid? _paymentMethodId;
 
         #endregion
 
@@ -77,12 +78,13 @@ namespace RSoft.EntrySdk.Test
 
         static async Task Main(string[] args)
         {
-            System.Threading.Thread.Sleep(10000);
+            //System.Threading.Thread.Sleep(10000);
 
             TokenResponse token = await Authenticate();
-            //await CategoryTest(token);
-            //await EntryTest(token);
             await AccrualPeriodTest(token);
+            await CategoryTest(token);
+            await EntryTest(token);
+            await PaymentMethodTest(token);
 
             Console.ReadKey();
         }
@@ -172,6 +174,39 @@ namespace RSoft.EntrySdk.Test
             {
                 Console.WriteLine($"Year: {entity.Year} - Month: {entity.Month} => {(entity.IsClosed ? "CLOSED" : "OPEN")}");
             }
+
+        }
+
+        private static async Task PaymentMethodTest(TokenResponse token)
+        {
+
+            Console.WriteLine("--- PAYMENT METHOD ---------------------");
+
+            IGrpcPaymentMethodServiceProvider provider = ServiceProvider.GetService<IGrpcPaymentMethodServiceProvider>();
+            provider.SetToken(token.Token);
+
+            CreatePaymentMethodResponse resultCreate = await provider.CreatePaymentMethod("PAYMENT_METHOD_NAME", 1);
+            Console.WriteLine($"Id generated: {resultCreate.ResponseData.Value}");
+            _paymentMethodId = resultCreate.ResponseData.Value;
+
+            PaymentMethodDetailResponse resultGet = await provider.GetPaymentMethod(resultCreate.ResponseData.Value);
+            Console.WriteLine($"PaymentMethod found: {resultGet.ResponseData.Name}");
+
+            await provider.UpdatePaymentMethod(resultGet.ResponseData.Id, $"PAYMENT_METHOD_NAME_{DateTime.UtcNow.Ticks}", 2);
+            Console.WriteLine("PaymentMethod Updated");
+
+            await provider.DisablePaymentMethod(resultCreate.ResponseData.Value);
+            Console.WriteLine("PaymentMethod Disabled");
+
+            await provider.EnablePaymentMethod(resultCreate.ResponseData.Value);
+            Console.WriteLine("PaymentMethod Enabled");
+
+            ListPaymentMethodDetailResponse entities = await provider.ListPaymentMethod();
+            foreach (var entity in entities.ResponseData)
+            {
+                Console.WriteLine($"Id: {entity.Id} - Name: {entity.Name}");
+            }
+
 
         }
 

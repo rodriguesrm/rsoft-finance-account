@@ -273,8 +273,8 @@ message TransactionDetail {
 	SimpleIdName transaction_type = 5;
 	double amount = 6;
 	string comment = 7;
-	SimpleIdName entry_id = 8;
-	SimpleIdName payment_method_id = 9;
+	SimpleIdName entry = 8;
+	SimpleIdName payment_method = 9;
 	AuthorDetail transaction_author = 10;
 }
 

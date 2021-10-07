@@ -45,7 +45,7 @@ namespace RSoft.Entry.GrpcClient.Providers
         Task<PaymentMethodDetailResponse> GetPaymentMethod(Guid id);
 
         /// <summary>
-        /// Lista categories
+        /// List payment methods
         /// </summary>
         Task<ListPaymentMethodDetailResponse> ListPaymentMethod();
 

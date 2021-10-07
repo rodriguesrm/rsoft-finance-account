@@ -46,10 +46,6 @@ namespace RSoft.Entry.GrpcClient.Providers
 
         #endregion
 
-        #region Local methods
-
-        #endregion
-
         #region Public methods
 
         ///<inheritdoc/>

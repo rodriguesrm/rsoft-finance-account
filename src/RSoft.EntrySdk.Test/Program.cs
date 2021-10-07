@@ -4,14 +4,25 @@ using Microsoft.Extensions.Logging;
 using RSoft.Entry.GrpcClient;
 using RSoft.Entry.GrpcClient.Abstractions;
 using RSoft.Entry.GrpcClient.Models;
+using RSoft.Entry.GrpcClient.Providers;
 using System;
 using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace RSoft.EntrySdk.Test
 {
     class Program
     {
+
+        #region Local object/variable
+
+        private static Guid? _categoryId;
+        private static Guid? _entryId;
+
+        #endregion
 
         #region Container/Configuration
 
@@ -66,35 +77,134 @@ namespace RSoft.EntrySdk.Test
 
         static async Task Main(string[] args)
         {
+            System.Threading.Thread.Sleep(10000);
 
-            //System.Threading.Thread.Sleep(10000);
+            TokenResponse token = await Authenticate();
+            //await CategoryTest(token);
+            //await EntryTest(token);
+            await AccrualPeriodTest(token);
 
-            GrpcCategoryServiceProvider categoryClient = ServiceProvider.GetService<GrpcCategoryServiceProvider>();
-            //TODO: Make call authentication api
-            categoryClient.SetToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImFkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc2lkIjoiNzQ1OTkxY2MtYzIxZi00NTEyLWJhOGYtOTUzMzQzNWI2NGFiIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IkFkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc3VybmFtZSI6IlJTb2Z0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoibWFzdGVyQHNlcnZlci5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3VzZXJkYXRhIjoiVXNlciIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvZ3JvdXBzaWQiOlsiRW50cnkgU2VydmljZSIsIkF1dGhlbnRpY2F0aW9uIFNlcnZpY2UiXSwibmJmIjoxNjMzNDU1NzUwLCJleHAiOjE2MzM0NzAyNzAsImlzcyI6IlJTb2Z0LkF1dGguRGV2IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1MTAwIn0.fRPZ_Y2ToN7-Il_Zk1b2YYz064n2rp3QUqlLl8KEpuE");
+            Console.ReadKey();
+        }
 
-            CreateCategoryResponse resultCreate = await categoryClient.CreateCategory("MY_CATEGORY");
+        private static async Task CategoryTest(TokenResponse token)
+        {
+
+            Console.WriteLine("--- CATEGORY ---------------------------");
+
+            IGrpcCategoryServiceProvider provider = ServiceProvider.GetService<IGrpcCategoryServiceProvider>();
+            provider.SetToken(token.Token);
+
+            CreateCategoryResponse resultCreate = await provider.CreateCategory("MY_CATEGORY");
             Console.WriteLine($"Id generated: {resultCreate.ResponseData.Value}");
+            _categoryId = resultCreate.ResponseData.Value;
 
-            CategoryDetailResponse resultGet = await categoryClient.GetCategory(resultCreate.ResponseData.Value);
+            CategoryDetailResponse resultGet = await provider.GetCategory(resultCreate.ResponseData.Value);
             Console.WriteLine($"Category found: {resultGet.ResponseData.Name}");
 
-            await categoryClient.UpdateCategory(resultCreate.ResponseData.Value, $"NEW_NAME_CATEGORY{DateTime.UtcNow.Ticks}");
+            await provider.UpdateCategory(resultCreate.ResponseData.Value, $"NEW_NAME_CATEGORY{DateTime.UtcNow.Ticks}");
             Console.WriteLine("Category Updated");
 
-            await categoryClient.DisableCategory(resultCreate.ResponseData.Value);
+            await provider.DisableCategory(resultCreate.ResponseData.Value);
             Console.WriteLine("Category Disabled");
 
-            await categoryClient.EnableCategory(resultCreate.ResponseData.Value);
+            await provider.EnableCategory(resultCreate.ResponseData.Value);
             Console.WriteLine("Category Enabled");
 
-            ListCategoryDetailResponse categories = await categoryClient.ListCategory();
+            ListCategoryDetailResponse categories = await provider.ListCategory();
             foreach (var category in categories.ResponseData)
             {
                 Console.WriteLine($"Id: {category.Id} - Name: {category.Name}");
             }
 
-            Console.ReadKey();
+        }
+
+        private static async Task EntryTest(TokenResponse token)
+        {
+
+            Console.WriteLine("--- ENTRY ------------------------------");
+
+            IGrpcEntryServiceProvider provider = ServiceProvider.GetService<IGrpcEntryServiceProvider>();
+            provider.SetToken(token.Token);
+
+            CreateEntryResponse resultCreate = await provider.CreateEntry("ENTRY_NAME", _categoryId);
+            Console.WriteLine($"Id generated: {resultCreate.ResponseData.Value}");
+            _entryId = resultCreate.ResponseData.Value;
+
+            EntryDetailResponse resultGet = await provider.GetEntry(resultCreate.ResponseData.Value);
+            Console.WriteLine($"Entry found: {resultGet.ResponseData.Name}");
+
+            await provider.UpdateEntry(resultCreate.ResponseData.Value, $"NEW_NAME_ENTRY{DateTime.UtcNow.Ticks}", _categoryId);
+            Console.WriteLine("Entry Updated");
+
+            await provider.DisableEntry(resultCreate.ResponseData.Value);
+            Console.WriteLine("Entry Disabled");
+
+            await provider.EnableEntry(resultCreate.ResponseData.Value);
+            Console.WriteLine("Entry Enabled");
+
+            ListEntryDetailResponse entities = await provider.ListEntry();
+            foreach (var Entry in entities.ResponseData)
+            {
+                Console.WriteLine($"Id: {Entry.Id} - Name: {Entry.Name}");
+            }
+
+        }
+
+        private static async Task AccrualPeriodTest(TokenResponse token)
+        {
+
+            Console.WriteLine("--- ACCRUAL PERIOD ---------------------");
+
+            IGrpcAccrualPeriodServiceProvider provider = ServiceProvider.GetService<IGrpcAccrualPeriodServiceProvider>();
+            provider.SetToken(token.Token);
+
+            DateTime date = DateTime.UtcNow.AddYears(7);
+
+            StartPeriodResponse startResult = await provider.StartPeriod(date.Year, date.Month);
+            Console.WriteLine($"Started period for {date.Year}.{date.Month} was {(startResult.StatusCode == Grpc.Core.StatusCode.OK ? "Success" : "Fail")}");
+
+            ClosePeriodResponse closeResult = await provider.ClosePeriod(date.Year, date.Month);
+            Console.WriteLine($"Close period for {date.Year}.{date.Month} was {(closeResult.StatusCode == Grpc.Core.StatusCode.OK ? "Success" : "Fail")}");
+
+            ListAccrualPeriodDetailResponse entities = await provider.ListPeriod();
+            foreach (var entity in entities.ResponseData)
+            {
+                Console.WriteLine($"Year: {entity.Year} - Month: {entity.Month} => {(entity.IsClosed ? "CLOSED" : "OPEN")}");
+            }
+
+        }
+
+        private static async Task<TokenResponse> Authenticate()
+        {
+            HttpClient httpClient = new();
+            httpClient.BaseAddress = new Uri("http://192.168.3.1:5100");
+            httpClient.DefaultRequestHeaders.Add("app-key", "3f3b94db-d868-4cb3-8098-214a53eccc35");
+            httpClient.DefaultRequestHeaders.Add("app-access", "cda09ab8-2b05-49e8-8eec-60ad6cfea2e5");
+
+            JsonSerializerOptions options = new()
+            {
+                PropertyNameCaseInsensitive = true,
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+            };
+
+            StringContent body = new
+            (
+                JsonSerializer.Serialize(new { Login = "admin", Password = "master@soft" }, options),
+                Encoding.UTF8,
+                "application/json"
+            );
+            HttpResponseMessage resp = await httpClient.PostAsync("/api/v1.0/Auth", body, default);
+
+            string result = await resp.Content.ReadAsStringAsync();
+            TokenResponse token = JsonSerializer.Deserialize<TokenResponse>(result, options);
+            return token;
+        }
+
+        class TokenResponse
+        {
+            public string Token { get; set; }
+            public DateTime? ExpirationDate { get; set; }
         }
 
         #endregion

@@ -13,34 +13,34 @@ namespace RSoft.Entry.GrpcClient.Extensions
 {
 
     /// <summary>
-    /// Category extensions methods
+    /// Entry extensions methods
     /// </summary>
-    public static class CategoryExtension
+    public static class EntryExtension
     {
 
         /// <summary>
-        /// Map create-category-reply model to create-category-response model
+        /// Map create-Entry-reply model to create-Entry-response model
         /// </summary>
-        /// <param name="reply">CreateCategoryReply instance</param>
-        public static CreateCategoryResponse ToCreateCategoryResponse(this CreateCategoryReply reply)
-            => new CreateCategoryResponse(StatusCode.OK, new Guid(reply.Id));
+        /// <param name="reply">CreateEntryReply instance</param>
+        public static CreateEntryResponse ToCreateEntryResponse(this CreateEntryReply reply)
+            => new CreateEntryResponse(StatusCode.OK, new Guid(reply.Id));
 
         /// <summary>
-        /// Map RpcException to create-category-response model
+        /// Map RpcException to create-Entry-response model
         /// </summary>
         /// <param name="rpcEx">Rpc exception object instance</param>
-        public static CreateCategoryResponse ToCreateCategoryResponse(this RpcException rpcEx)
+        public static CreateEntryResponse ToCreateEntryResponse(this RpcException rpcEx)
         {
 
             IList<Notification> notifications = null;
             string errorMessage = null;
 
             if (rpcEx.StatusCode == StatusCode.InvalidArgument)
-                notifications = new List<Notification>() { new Notification(nameof(GrpcCategoryServiceProvider.CreateCategory), rpcEx.Message) };
+                notifications = new List<Notification>() { new Notification(nameof(GrpcEntryServiceProvider.CreateEntry), rpcEx.Message) };
             else
                 errorMessage = rpcEx.Message;
 
-            return new CreateCategoryResponse
+            return new CreateEntryResponse
             (
                 rpcEx.StatusCode,
                 null,
@@ -51,11 +51,11 @@ namespace RSoft.Entry.GrpcClient.Extensions
         }
 
         /// <summary>
-        /// Map RpcException to create-category-response model
+        /// Map RpcException to create-Entry-response model
         /// </summary>
         /// <param name="ex">Exception object instance</param>
-        public static CreateCategoryResponse ToCreateCategoryResponse(this Exception ex)
-            => new CreateCategoryResponse
+        public static CreateEntryResponse ToCreateEntryResponse(this Exception ex)
+            => new CreateEntryResponse
                 (
                     StatusCode.Internal,
                     null,
@@ -63,20 +63,20 @@ namespace RSoft.Entry.GrpcClient.Extensions
                 );
 
         /// <summary>
-        /// Map RpcException to update-category-response model
+        /// Map RpcException to update-Entry-response model
         /// </summary>
         /// <param name="rpcEx">RpcException object instance</param>
-        public static UpdateCategoryResponse ToUpdateCategoryResponse(this RpcException rpcEx)
+        public static UpdateEntryResponse ToUpdateEntryResponse(this RpcException rpcEx)
         {
             IList<Notification> notifications = null;
             string errorMessage = null;
 
             if (rpcEx.StatusCode == StatusCode.InvalidArgument)
-                notifications = new List<Notification>() { new Notification(nameof(GrpcCategoryServiceProvider.UpdateCategory), rpcEx.Message) };
+                notifications = new List<Notification>() { new Notification(nameof(GrpcEntryServiceProvider.UpdateEntry), rpcEx.Message) };
             else
                 errorMessage = rpcEx.Message;
 
-            return new UpdateCategoryResponse
+            return new UpdateEntryResponse
             (
                 rpcEx.StatusCode,
                 notifications,
@@ -85,11 +85,11 @@ namespace RSoft.Entry.GrpcClient.Extensions
         }
 
         /// <summary>
-        /// Map RpcException to update-category-response model
+        /// Map RpcException to update-Entry-response model
         /// </summary>
         /// <param name="ex">Exception object instance</param>
-        public static UpdateCategoryResponse ToUpdateCategoryResponse(this Exception ex)
-            => new UpdateCategoryResponse
+        public static UpdateEntryResponse ToUpdateEntryResponse(this Exception ex)
+            => new UpdateEntryResponse
                 (
                     StatusCode.Internal,
                     null,
@@ -97,11 +97,11 @@ namespace RSoft.Entry.GrpcClient.Extensions
                 );
 
         /// <summary>
-        /// Map RpcException to change-category-status-response model
+        /// Map RpcException to change-Entry-status-response model
         /// </summary>
         /// <param name="rpcEx">RpcException object instance</param>
         /// <param name="methodName">Method name (for notification)</param>
-        public static ChangeCategoryStatusResponse ToChangeCategoryStatusResponse(this RpcException rpcEx, string methodName)
+        public static ChangeEntryStatusResponse ToChangeEntryStatusResponse(this RpcException rpcEx, string methodName)
         {
 
             IList<Notification> notifications = null;
@@ -112,7 +112,7 @@ namespace RSoft.Entry.GrpcClient.Extensions
             else
                 errorMessage = rpcEx.Message;
 
-            return new ChangeCategoryStatusResponse
+            return new ChangeEntryStatusResponse
             (
                 rpcEx.StatusCode,
                 notifications,
@@ -122,60 +122,67 @@ namespace RSoft.Entry.GrpcClient.Extensions
         }
 
         /// <summary>
-        /// Map Exception to change-category-status-response model
+        /// Map Exception to change-Entry-status-response model
         /// </summary>
         /// <param name="ex">Exception object instance</param>
-        public static ChangeCategoryStatusResponse ToChangeCategoryStatusResponse(this Exception ex)
-            =>  new ChangeCategoryStatusResponse
+        public static ChangeEntryStatusResponse ToChangeEntryStatusResponse(this Exception ex)
+            =>  new ChangeEntryStatusResponse
                 (
                     StatusCode.Internal,
                     errorMessage: ex.Message
                 );
 
         /// <summary>
-        /// Map category-detail model to category-dto-model
+        /// Map Entry-detail model to Entry-dto-model
         /// </summary>
-        /// <param name="detail">Category detail model instance</param>
-        public static CategoryDto Map(this CategoryDetail detail)
+        /// <param name="detail">Entry detail model instance</param>
+        public static EntryDto Map(this EntryDetail detail)
         {
-            CategoryDto dto = new CategoryDto()
+
+            EntryDto dto = new EntryDto()
             {
                 Id = new Guid(detail.Id),
                 Name = detail.Name,
                 IsActive = detail.IsActive,
                 CreatedBy = new AuditAuthor<Guid>(detail.CreatedOn.ToDateTime(), new Guid(detail.CreatedBy.Id), detail.CreatedBy.Name)
             };
+
+            if (detail.Category.Data != null)
+                dto.Category = new SimpleIdentification<Guid>(new Guid(detail.Category.Data.Id), detail.Category.Data.Name);
+
             if (detail.ChangedBy != null)
                 dto.ChangedBy = new AuditAuthor<Guid>(detail.ChangedOn.Data.ToDateTime(), new Guid(detail.ChangedBy.Data.Id), detail.ChangedBy.Data.Name);
+
             return dto;
+
         }
 
         /// <summary>
-        /// Map category-detail model to category-detail-response model
+        /// Map Entry-detail model to Entry-detail-response model
         /// </summary>
-        /// <param name="detail">Category detail model instance</param>
-        public static CategoryDetailResponse ToCategoryDetailResponse(this CategoryDetail detail)
-            => new CategoryDetailResponse
+        /// <param name="detail">Entry detail model instance</param>
+        public static EntryDetailResponse ToEntryDetailResponse(this EntryDetail detail)
+            => new EntryDetailResponse
             (
                 StatusCode.OK,
                 detail.Map()
             );
 
         /// <summary>
-        /// Map RpcException to category-detail-response model
+        /// Map RpcException to Entry-detail-response model
         /// </summary>
         /// <param name="rpcEx">RpcException object instance</param>
-        public static CategoryDetailResponse ToCategoryDetailResponse(this RpcException rpcEx)
+        public static EntryDetailResponse ToEntryDetailResponse(this RpcException rpcEx)
         {
             IList<Notification> notifications = null;
             string errorMessage = null;
 
             if (rpcEx.StatusCode == StatusCode.InvalidArgument)
-                notifications = new List<Notification>() { new Notification(nameof(GrpcCategoryServiceProvider.GetCategory), rpcEx.Message) };
+                notifications = new List<Notification>() { new Notification(nameof(GrpcEntryServiceProvider.GetEntry), rpcEx.Message) };
             else
                 errorMessage = rpcEx.Message;
 
-            return new CategoryDetailResponse
+            return new EntryDetailResponse
             (
                 rpcEx.StatusCode,
                 null,
@@ -185,11 +192,11 @@ namespace RSoft.Entry.GrpcClient.Extensions
         }
 
         /// <summary>
-        /// Map RpcException to category-detail-response model
+        /// Map RpcException to Entry-detail-response model
         /// </summary>
         /// <param name="ex">Exception object instance</param>
-        public static CategoryDetailResponse ToCategoryDetailResponse(this Exception ex)
-            => new CategoryDetailResponse
+        public static EntryDetailResponse ToEntryDetailResponse(this Exception ex)
+            => new EntryDetailResponse
             (
                 StatusCode.Internal,
                 null,
@@ -197,31 +204,31 @@ namespace RSoft.Entry.GrpcClient.Extensions
             );
 
         /// <summary>
-        /// Map list-category-reply model to list-category-detail-response model
+        /// Map list-Entry-reply model to list-Entry-detail-response model
         /// </summary>
-        /// <param name="reply">ListCategoryReply object instance</param>
-        public static ListCategoryDetailResponse ToListCategoryDetailResponse(this ListCategoryReply reply )
-            => new ListCategoryDetailResponse
+        /// <param name="reply">ListEntryReply object instance</param>
+        public static ListEntryDetailResponse ToListEntryDetailResponse(this ListEntryReply reply )
+            => new ListEntryDetailResponse
             (
                 StatusCode.OK,
                 reply.Data.Select(s => s.Map()).ToList()
             );
 
         /// <summary>
-        /// Map RpcException to category-detail-response model
+        /// Map RpcException to Entry-detail-response model
         /// </summary>
         /// <param name="rpcEx">RpcException object instance</param>
-        public static ListCategoryDetailResponse ToListCategoryDetailResponse(this RpcException rpcEx)
+        public static ListEntryDetailResponse ToListEntryDetailResponse(this RpcException rpcEx)
         {
             IList<Notification> notifications = null;
             string errorMessage = null;
 
             if (rpcEx.StatusCode == StatusCode.InvalidArgument)
-                notifications = new List<Notification>() { new Notification(nameof(GrpcCategoryServiceProvider.GetCategory), rpcEx.Message) };
+                notifications = new List<Notification>() { new Notification(nameof(GrpcEntryServiceProvider.GetEntry), rpcEx.Message) };
             else
                 errorMessage = rpcEx.Message;
 
-            return new ListCategoryDetailResponse
+            return new ListEntryDetailResponse
             (
                 rpcEx.StatusCode,
                 null,
@@ -231,11 +238,11 @@ namespace RSoft.Entry.GrpcClient.Extensions
         }
 
         /// <summary>
-        /// Map RpcException to category-detail-response model
+        /// Map RpcException to Entry-detail-response model
         /// </summary>
         /// <param name="ex">Exception object instance</param>
-        public static ListCategoryDetailResponse ToListCategoryDetailResponse(this Exception ex)
-            => new ListCategoryDetailResponse
+        public static ListEntryDetailResponse ToListEntryDetailResponse(this Exception ex)
+            => new ListEntryDetailResponse
             (
                 StatusCode.Internal,
                 null,

@@ -1,11 +1,13 @@
 ﻿using MediatR;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace RSoft.Entry.Tests.Stubs
 {
 
+    [ExcludeFromCodeCoverage(Justification = "Stub class")]
     public class MediatorSub : IMediator
     {
 

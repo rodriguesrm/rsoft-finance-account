@@ -99,12 +99,12 @@ namespace RSoft.Entry.GrpcService.Services
         /// </summary>
         /// <param name="request">PaymentMethod request data</param>
         /// <param name="context">Server call context object</param>
-        public override async Task<GetPaymentMethodReply> GetPaymentMethod(GetPaymentMethodRequest request, ServerCallContext context)
-            => await GrpcServiceHelpers.SendCommand<GetPaymentMethodReply, GetPaymentMethodByIdCommand, PaymentMethodDto>
+        public override async Task<PaymentMethodDetail> GetPaymentMethod(GetPaymentMethodRequest request, ServerCallContext context)
+            => await GrpcServiceHelpers.SendCommand<PaymentMethodDetail, GetPaymentMethodByIdCommand, PaymentMethodDto>
             (
                 nameof(GetPaymentMethod),
                 () => new(new Guid(request.Id)),
-                (reply, result) => reply.Data = result.Response.Map(),
+                (reply, result) => result.Response.Map(reply),
                 logger: _logger
             );
 

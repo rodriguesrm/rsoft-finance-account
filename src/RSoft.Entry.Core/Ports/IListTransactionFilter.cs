@@ -54,8 +54,22 @@ namespace RSoft.Entry.Core.Ports
         /// <summary>
         /// Valid status flag
         /// </summary>
-        /// <returns></returns>
-        bool IsValid();
+        public bool IsValid()
+        {
+            bool valid =
+                (StartAt.HasValue && EndAt.HasValue) ||
+                (Year.HasValue && (Month.HasValue && Month.Value >= 1 && Month.Value <= 12)) ||
+                (EntryId.HasValue) ||
+                (TransactionType.HasValue) ||
+                (PaymentMethodId.HasValue);
+
+            if (valid)
+            {
+                if ((StartAt.HasValue || EndAt.HasValue) && (Year.HasValue || Month.HasValue))
+                    valid = false;
+            }
+            return valid;
+        }
 
         #endregion
     }

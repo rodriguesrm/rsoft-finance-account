@@ -17,11 +17,27 @@ namespace RSoft.Entry.Contracts.Commands
         /// <summary>
         /// Create command instance
         /// </summary>
-        public CloseAccrualPeriodCommand() { }
+        /// <param name="year">Year number</param>
+        /// <param name="month">Month number</param>
+        public CloseAccrualPeriodCommand(int year, int month)
+        {
+            Year = year;
+            Month = month;
+        }
 
         #endregion
 
         #region Request Data
+
+        /// <summary>
+        /// Accrual period year
+        /// </summary>
+        public int Year { get; private set; }
+
+        /// <summary>
+        /// Accrual period month
+        /// </summary>
+        public int Month { get; private set; }
 
         #endregion
 

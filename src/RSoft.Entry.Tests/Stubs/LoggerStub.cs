@@ -2,11 +2,13 @@
 using RSoft.Lib.Common.Abstractions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace RSoft.Entry.Tests.Stubs
 {
 
+    [ExcludeFromCodeCoverage(Justification = "Stub class")]
     public class LoggerStub<T> : ILogger<T>
     {
 

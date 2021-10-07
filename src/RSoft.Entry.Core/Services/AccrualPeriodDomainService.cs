@@ -1,10 +1,16 @@
-﻿using RSoft.Entry.Core.Entities;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
+using RSoft.Entry.Core.Entities;
 using RSoft.Entry.Core.Ports;
+using RSoft.Finance.Contracts.Enum;
 using RSoft.Lib.Common.Contracts.Web;
+using RSoft.Lib.Common.Models;
 using RSoft.Lib.Common.ValueObjects;
 using RSoft.Lib.Design.Domain.Services;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,14 +23,33 @@ namespace RSoft.Entry.Core.Services
     public class AccrualPeriodDomainService : DomainServiceBase<AccrualPeriod, Guid, IAccrualPeriodProvider>, IAccrualPeriodDomainService
     {
 
+        #region Local objects/variables
+
+        private readonly IStringLocalizer<AccrualPeriodDomainService> _localizer;
+        private readonly ITransactionProvider _transactionProvider;
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
         /// Create a new scopde domain service instance
         /// </summary>
-        /// <param name="provider">AccrualPeriod provier</param>
+        /// <param name="provider">AccrualPeriod provider</param>
+        /// <param name="transactionProvider">Transaction provider</param>
         /// <param name="authenticatedAccrualPeriod">Authenticated AccrualPeriod object</param>
-        public AccrualPeriodDomainService(IAccrualPeriodProvider provider, IAuthenticatedUser authenticatedAccrualPeriod) : base(provider, authenticatedAccrualPeriod) { }
+        /// <param name="localizer">String localizer object</param>
+        public AccrualPeriodDomainService
+        (
+            IAccrualPeriodProvider provider,
+            ITransactionProvider transactionProvider,
+            IAuthenticatedUser authenticatedAccrualPeriod,
+            IStringLocalizer<AccrualPeriodDomainService> localizer
+        ) : base(provider, authenticatedAccrualPeriod) 
+        {
+            _transactionProvider = transactionProvider;
+            _localizer = localizer;
+        }
 
         #endregion
 
@@ -97,6 +122,74 @@ namespace RSoft.Entry.Core.Services
         ///<inheritdoc/>
         public void Delete(int year, int month)
             => _repository.Delete(year, month);
+
+        ///<inheritdoc/>
+        public async Task<SimpleOperationResult> ClosePeriodAsync(int year, int month, CancellationToken cancellationToken = default)
+        {
+            //BACKLOG: Use command/events (messaging) to divide operation
+            IDictionary<string, string> errors = new Dictionary<string, string>();
+            AccrualPeriod accrualPeriod = await _repository.GetByKeyAsync(year, month, cancellationToken);
+            if (accrualPeriod == null)
+            {
+                errors.Add("ClosePeriod", _localizer["ACCRUAL_PERIOD_NOT_FOUND"]);
+            }
+            else
+            {
+
+                if (accrualPeriod.IsClosed)
+                {
+                    errors.Add("ClosePeriod", _localizer["ACCRUAL_PERIOD_ALREADY_CLOSED"]);
+                }
+                else
+                {
+
+                    IEnumerable<Transaction> transactions =
+                        await _transactionProvider.GetByFilterAsync(new ListTransactionFilterArgument(year, month), cancellationToken);
+
+                    float totalCredits = transactions.Where(t => t.TransactionType == TransactionTypeEnum.Credit).Sum(t => t.Amount);
+                    float totalDebts = transactions.Where(t => t.TransactionType == TransactionTypeEnum.Debt).Sum(t => t.Amount);
+
+                    accrualPeriod.CloseAccrualPeriod(_authenticatedUser.Id.Value, totalCredits, totalDebts);
+
+                    _repository.Update(year, month, accrualPeriod);
+
+                }
+
+            }
+            return new SimpleOperationResult(errors.Count == 0, errors);
+
+        }
+
+        #endregion
+
+        #region Internal classes
+
+        /// <summary>
+        /// Transaction filter argument
+        /// </summary>
+        [ExcludeFromCodeCoverage(Justification = "Anemic class")]
+        class ListTransactionFilterArgument : IListTransactionFilter
+        {
+
+            /// <summary>
+            /// Create a new object instance
+            /// </summary>
+            /// <param name="year">Year number</param>
+            /// <param name="month">Month number</param>
+            public ListTransactionFilterArgument(int? year, int? month)
+            {
+                Year = year;
+                Month = month;
+            }
+
+            public DateTime? StartAt { get; }
+            public DateTime? EndAt { get; }
+            public int? Year { get; private set; }
+            public int? Month { get; private set; }
+            public Guid? EntryId { get; }
+            public TransactionTypeEnum? TransactionType { get; }
+            public Guid? PaymentMethodId { get; }
+        }
 
         #endregion
 

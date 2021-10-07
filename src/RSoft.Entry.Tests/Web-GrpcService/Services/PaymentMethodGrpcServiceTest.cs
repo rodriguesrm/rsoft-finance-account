@@ -111,10 +111,10 @@ namespace RSoft.Entry.Tests.Web_GrpcService.Services
             };
             mockReply.Response.Id = new Guid(request.Id);
             MediatorSub.SetMockResponse(mockReply);
-            GetPaymentMethodReply result = await Target.GetPaymentMethod(request, context);
+            PaymentMethodDetail result = await Target.GetPaymentMethod(request, context);
             Assert.IsTrue(mockReply.Success);
-            Assert.AreEqual(mockReply.Response.Id.ToString(), result.Data.Id);
-            Assert.AreEqual(mockReply.Response.Name, result.Data.Name);
+            Assert.AreEqual(mockReply.Response.Id.ToString(), result.Id);
+            Assert.AreEqual(mockReply.Response.Name, result.Name);
         }
 
         [Test]

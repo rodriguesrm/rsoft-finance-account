@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using AutoFixture.Kernel;
+using Microsoft.Extensions.Localization;
 using NUnit.Framework;
 using RSoft.Entry.Core.Entities;
 using RSoft.Entry.Core.Ports;
@@ -7,6 +8,8 @@ using RSoft.Entry.Core.Services;
 using RSoft.Entry.Infra;
 using RSoft.Entry.Infra.Providers;
 using RSoft.Entry.Tests.Extensions;
+using RSoft.Entry.Tests.Stubs;
+using RSoft.Lib.Common.Models;
 using RSoft.Lib.Common.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -38,7 +41,8 @@ namespace RSoft.Entry.Tests.Core.Services
         {
             _fixture.WithInMemoryDatabase(out _dbContext);
             _fixture.Customizations.Add(new TypeRelay(typeof(IAccrualPeriodProvider), typeof(AccrualPeriodProvider)));
-
+            _fixture.Customizations.Add(new TypeRelay(typeof(ITransactionProvider), typeof(TransactionProvider)));
+            _fixture.Customizations.Add(new TypeRelay(typeof(IStringLocalizer<AccrualPeriodDomainService>), typeof(StringLocalizerStub<AccrualPeriodDomainService>)));
         }
 
         #endregion
@@ -171,6 +175,54 @@ namespace RSoft.Entry.Tests.Core.Services
             _dbContext.SaveChanges();
             AccrualPeriodTable check = _dbContext.AccrualPeriods.Where(a => a.Year == date.Year && a.Month == date.Month).FirstOrDefault();
             Assert.Null(check);
+        }
+
+        [Test]
+        public async Task CloseAccrualPeriod_ProcessSuccess()
+        {
+
+            DateTime date = DateTime.UtcNow.AddMonths(13);
+            AccrualPeriodTable tableRow = _fixture.CreateAccrualPeriod(date.Year, date.Month, 1000);
+            tableRow.Transactions.Add(_fixture.CreateTransaction(date.Year, date.Month, 500, Finance.Contracts.Enum.TransactionTypeEnum.Credit));
+            tableRow.Transactions.Add(_fixture.CreateTransaction(date.Year, date.Month, 500, Finance.Contracts.Enum.TransactionTypeEnum.Credit));
+            tableRow.Transactions.Add(_fixture.CreateTransaction(date.Year, date.Month, 500, Finance.Contracts.Enum.TransactionTypeEnum.Credit));
+            tableRow.Transactions.Add(_fixture.CreateTransaction(date.Year, date.Month, 150, Finance.Contracts.Enum.TransactionTypeEnum.Debt));
+            tableRow.Transactions.Add(_fixture.CreateTransaction(date.Year, date.Month, 150, Finance.Contracts.Enum.TransactionTypeEnum.Debt));
+            tableRow.Transactions.Add(_fixture.CreateTransaction(date.Year, date.Month, 150, Finance.Contracts.Enum.TransactionTypeEnum.Debt));
+            _fixture.WithSeedData(_dbContext, new AccrualPeriodTable[] { tableRow });
+
+            SimpleOperationResult result = await Target.ClosePeriodAsync(date.Year, date.Month);
+            _dbContext.SaveChanges();
+            Assert.IsTrue(result.Success);
+            AccrualPeriodTable tableCheck = _dbContext.AccrualPeriods.FirstOrDefault(a => a.Year == date.Year && a.Month == date.Month);
+            Assert.NotNull(tableCheck);
+            Assert.AreEqual(1500, tableCheck.TotalCredits);
+            Assert.AreEqual(450, tableCheck.TotalDebts);
+
+        }
+
+        [Test]
+        public async Task CloseAccrualPeriod_WhenPeriodNotExists_ProcessFailReturnErroMessage()
+        {
+
+            DateTime date = DateTime.UtcNow.AddMonths(-9);
+            SimpleOperationResult result = await Target.ClosePeriodAsync(date.Year, date.Month);
+            Assert.IsFalse(result.Success);
+            Assert.IsTrue(result.Errors.Any(e => e.Value == "ACCRUAL_PERIOD_NOT_FOUND"));
+
+        }
+
+        [Test]
+        public async Task CloseAccrualPeriod_WhenPeriodAlreadyClosed_ProcessFailReturnErroMessage()
+        {
+            DateTime date = DateTime.UtcNow.AddMonths(-9);
+            AccrualPeriodTable tableRow = _fixture.CreateAccrualPeriod(date.Year, date.Month, 0);
+            tableRow.IsClosed = true;
+            tableRow.UserIdClosed = AuthenticatedUserStub.UserAdminId;
+            _fixture.WithSeedData(_dbContext, new AccrualPeriodTable[] { tableRow });
+            SimpleOperationResult result = await Target.ClosePeriodAsync(date.Year, date.Month);
+            Assert.IsFalse(result.Success);
+            Assert.IsTrue(result.Errors.Any(e => e.Value == "ACCRUAL_PERIOD_ALREADY_CLOSED"));
         }
 
         #endregion

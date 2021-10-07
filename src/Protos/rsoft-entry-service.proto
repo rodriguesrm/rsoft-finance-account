@@ -173,7 +173,7 @@ service PaymentMethod {
 	rpc UpdatePaymentMethod (UpdatePaymentMethodRequest) returns (google.protobuf.Empty);
 	rpc EnablePaymentMethod (ChangeStatusPaymentMethodRequest) returns (google.protobuf.Empty);
 	rpc DisablePaymentMethod (ChangeStatusPaymentMethodRequest) returns (google.protobuf.Empty);
-	rpc GetPaymentMethod (GetPaymentMethodRequest) returns (GetPaymentMethodReply);
+	rpc GetPaymentMethod (GetPaymentMethodRequest) returns (PaymentMethodDetail);
 	rpc ListPaymentMethod (google.protobuf.Empty) returns (ListPaymentMethodReply);
 }
 
@@ -213,9 +213,6 @@ message ChangeStatusPaymentMethodRequest {
 
 message GetPaymentMethodRequest {
 	string id = 1;
-}
-message GetPaymentMethodReply {
-	PaymentMethodDetail data = 1;
 }
 
 message ListPaymentMethodReply {

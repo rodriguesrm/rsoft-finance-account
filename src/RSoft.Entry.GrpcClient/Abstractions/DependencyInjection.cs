@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RSoft.Entry.GrpcClient.Options;
+using RSoft.Entry.GrpcClient.Providers;
 
 namespace RSoft.Entry.GrpcClient.Abstractions
 {
@@ -22,7 +23,9 @@ namespace RSoft.Entry.GrpcClient.Abstractions
             services.Configure<EntryServiceHostOption>(options => configuration.GetSection("EntryGrpcService:Server").Bind(options));
 
             services.AddScoped<IGrpcChannelFactory, GrpcChannelFactory>();
-            services.AddScoped<GrpcCategoryServiceProvider>();
+            services.AddScoped<IGrpcCategoryServiceProvider, GrpcCategoryServiceProvider>();
+            services.AddScoped<IGrpcEntryServiceProvider, GrpcEntryServiceProvider>();
+            services.AddScoped<IGrpcAccrualPeriodServiceProvider, GrpcAccrualPeriodServiceProvider>();
 
             return services;
         }

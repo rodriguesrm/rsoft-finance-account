@@ -2,6 +2,7 @@
 using MassTransit;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace RSoft.Entry.Tests.Stubs
 {
+    [ExcludeFromCodeCoverage(Justification = "Stub class")]
     public class ConsumeContextStub<T> : ConsumeContext<T>
         where T : class
     {

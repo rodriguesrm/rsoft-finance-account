@@ -63,7 +63,7 @@ namespace RSoft.Entry.GrpcService.Services
             => await GrpcServiceHelpers.SendCommand<Empty, CloseAccrualPeriodCommand, bool>
             (
                 nameof(ClosePeriod),
-                () => new(),
+                () => new(request.Year, request.Month),
                 (reply, result) => result.Response = true,
                 logger: _logger
             );

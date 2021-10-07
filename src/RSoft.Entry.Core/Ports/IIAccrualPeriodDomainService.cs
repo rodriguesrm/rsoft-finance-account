@@ -1,4 +1,5 @@
 ﻿using RSoft.Entry.Core.Entities;
+using RSoft.Lib.Common.Models;
 using RSoft.Lib.Design.Domain.Services;
 using System;
 using System.Threading;
@@ -35,6 +36,14 @@ namespace RSoft.Entry.Core.Ports
         /// <param name="year">Year number</param>
         /// <param name="month">Month number</param>
         void Delete(int year, int month);
+
+        /// <summary>
+        /// Close the accrual period by summarizing the debit and credit amounts.
+        /// </summary>
+        /// <param name="year">Year number</param>
+        /// <param name="month">Month number</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        Task<SimpleOperationResult> ClosePeriodAsync(int year, int month, CancellationToken cancellationToken = default);
 
     }
 

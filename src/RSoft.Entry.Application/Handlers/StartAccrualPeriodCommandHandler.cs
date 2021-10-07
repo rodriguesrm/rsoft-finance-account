@@ -9,7 +9,6 @@ using RSoft.Finance.Contracts.Events;
 using RSoft.Lib.Design.Application.Commands;
 using RSoft.Lib.Design.Application.Handlers;
 using RSoft.Lib.Design.Infra.Data;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +16,7 @@ namespace RSoft.Entry.Application.Handlers
 {
 
     /// <summary>
-    /// Create AccrualPeriod command handler
+    /// Start AccrualPeriod command handler
     /// </summary>
     [Authorize]
     public class StartAccrualPeriodCommandHandler : CreateCommandHandlerBase<StartAccrualPeriodCommand, bool, AccrualPeriod>, IRequestHandler<StartAccrualPeriodCommand, CommandResult<bool>>

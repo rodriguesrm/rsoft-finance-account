@@ -57,27 +57,5 @@ namespace RSoft.Entry.Application.Arguments
 
         #endregion
 
-        #region Public Methods
-
-        ///<inheritdoc/>
-        public bool IsValid()
-        {
-            bool valid =
-                (StartAt.HasValue && EndAt.HasValue) ||
-                (Year.HasValue && (Month.HasValue && Month.Value >= 1 && Month.Value <= 12)) ||
-                (EntryId.HasValue) ||
-                (TransactionType.HasValue) ||
-                (PaymentMethodId.HasValue);
-
-            if (valid)
-            {
-                if ((StartAt.HasValue || EndAt.HasValue) && (Year.HasValue || Month.HasValue))
-                    valid = false;
-            }
-            return valid;
-        }
-
-        #endregion
-
     }
 }

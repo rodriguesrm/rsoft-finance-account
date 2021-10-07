@@ -18,35 +18,35 @@ namespace RSoft.Entry.GrpcService.Extensions
         /// Map PaymentMethod dto to PaymentMethod-detail (grpc-model)
         /// </summary>
         /// <param name="dto">PaymentMethod dto instance</param>
-        public static PaymentMethodDetail Map(this PaymentMethodDto dto)
+        /// <param name="detail">PaymentMethod detail</param>
+        public static void Map(this PaymentMethodDto dto, PaymentMethodDetail detail)
         {
-            PaymentMethodDetail result = null;
+
             if (dto != null)
             {
-                result = new PaymentMethodDetail()
+
+                detail.Id = dto.Id.ToString();
+                detail.Name = dto.Name;
+                detail.IsActive = dto.IsActive;
+                detail.PaymentType = new SimpleIdName()
                 {
-                    Id = dto.Id.ToString(),
-                    Name = dto.Name,
-                    IsActive = dto.IsActive,
-                    PaymentType = new SimpleIdName()
-                    {
-                        Id = ((int)dto.PaymentType).ToString(),
-                        Name = dto.PaymentType.GetDescription()
-                    },
-                    CreatedOn = Timestamp.FromDateTime(dto.CreatedBy.Date.ToUniversalTime()),
-                    CreatedBy = new AuthorDetail()
-                    {
-                        Id = dto.CreatedBy.Id.ToString(),
-                        Name = dto.CreatedBy.Name
-                    }
+                    Id = ((int)dto.PaymentType).ToString(),
+                    Name = dto.PaymentType.GetDescription()
                 };
+                detail.CreatedOn = Timestamp.FromDateTime(dto.CreatedBy.Date.ToUniversalTime());
+                detail.CreatedBy = new AuthorDetail()
+                {
+                    Id = dto.CreatedBy.Id.ToString(),
+                    Name = dto.CreatedBy.Name
+                };
+
                 if (dto.ChangedBy != null)
                 {
-                    result.ChangedOn = new NullableTimestamp()
+                    detail.ChangedOn = new NullableTimestamp()
                     {
                         Data = Timestamp.FromDateTime(dto.ChangedBy.Date.ToUniversalTime())
                     };
-                    result.ChangedBy = new NullableAuthorDetail()
+                    detail.ChangedBy = new NullableAuthorDetail()
                     {
                         Data = new AuthorDetail()
                         {
@@ -56,6 +56,17 @@ namespace RSoft.Entry.GrpcService.Extensions
                     };
                 }
             }
+
+        }
+
+        /// <summary>
+        /// Map PaymentMethod dto to PaymentMethod-detail (grpc-model)
+        /// </summary>
+        /// <param name="dto">PaymentMethod dto instance</param>
+        public static PaymentMethodDetail Map(this PaymentMethodDto dto)
+        {
+            PaymentMethodDetail result = new PaymentMethodDetail();
+            Map(dto, result);
             return result;
         }
 

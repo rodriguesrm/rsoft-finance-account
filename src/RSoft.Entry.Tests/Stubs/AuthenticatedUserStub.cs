@@ -1,9 +1,12 @@
 ﻿using RSoft.Lib.Common.Contracts.Web;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Entry.Tests.Stubs
 {
+
+    [ExcludeFromCodeCoverage(Justification = "Stub class")]
     public class AuthenticatedUserStub : IAuthenticatedUser
     {
 

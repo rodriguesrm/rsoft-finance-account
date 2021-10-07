@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 using RSoft.Entry.Grpc.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 
-namespace RSoft.Entry.GrpcClient
+namespace RSoft.Entry.GrpcClient.Providers
 {
 
     /// <summary>
     /// RSoft gRpc Category Service provider
     /// </summary>
-    public class GrpcCategoryServiceProvider
+    internal class GrpcCategoryServiceProvider : IGrpcCategoryServiceProvider
     {
 
         #region Local objects/variables
@@ -36,7 +36,7 @@ namespace RSoft.Entry.GrpcClient
         /// <param name="loggerFactory">Logger factory object</param>
         public GrpcCategoryServiceProvider
         (
-            IGrpcChannelFactory channelFactory, 
+            IGrpcChannelFactory channelFactory,
             ILoggerFactory loggerFactory
         )
         {
@@ -52,25 +52,19 @@ namespace RSoft.Entry.GrpcClient
 
         #region Public methods
 
-        /// <summary>
-        /// Set token
-        /// </summary>
-        /// <param name="token">Token authorization</param>
+        ///<inheritdoc/>
         public void SetToken(string token)
         {
             _token = token;
             _categoryClient = new Category.CategoryClient(_channelFactory.CreateChannel(_token));
         }
 
-        /// <summary>
-        /// Create category
-        /// </summary>
-        /// <param name="name">Category name</param>
+        ///<inheritdoc/>
         public async Task<CreateCategoryResponse> CreateCategory(string name)
         {
 
             CreateCategoryResponse resp;
-            CreateCategoryRequest request = 
+            CreateCategoryRequest request =
                 new CreateCategoryRequest() { Name = name };
 
             _logger?.LogInformation("Call CreateCategory on gRPC Service on {urlService}", _channelFactory.UrlServer);
@@ -94,11 +88,7 @@ namespace RSoft.Entry.GrpcClient
 
         }
 
-        /// <summary>
-        /// Udpate an existing category
-        /// </summary>
-        /// <param name="id">Category id key value</param>
-        /// <param name="name">Category name</param>
+        ///<inheritdoc/>
         public async Task<UpdateCategoryResponse> UpdateCategory(Guid id, string name)
         {
 
@@ -127,10 +117,7 @@ namespace RSoft.Entry.GrpcClient
             return resp;
         }
 
-        /// <summary>
-        /// Enable an existing category
-        /// </summary>
-        /// <param name="id">Category id key value</param>
+        ///<inheritdoc/>
         public async Task<ChangeCategoryStatusResponse> EnableCategory(Guid id)
         {
 
@@ -159,10 +146,7 @@ namespace RSoft.Entry.GrpcClient
 
         }
 
-        /// <summary>
-        /// Disable an existing category
-        /// </summary>
-        /// <param name="id">Category id key value</param>
+        ///<inheritdoc/>
         public async Task<ChangeCategoryStatusResponse> DisableCategory(Guid id)
         {
 
@@ -179,7 +163,7 @@ namespace RSoft.Entry.GrpcClient
             catch (RpcException rpcEx)
             {
                 resp = rpcEx.ToChangeCategoryStatusResponse(nameof(DisableCategory));
-            }   
+            }
             catch (Exception ex)
             {
                 resp = ex.ToChangeCategoryStatusResponse();
@@ -191,10 +175,7 @@ namespace RSoft.Entry.GrpcClient
 
         }
 
-        /// <summary>
-        /// Get category by id
-        /// </summary>
-        /// <param name="id">Category id key value</param>
+        ///<inheritdoc/>
         public async Task<CategoryDetailResponse> GetCategory(Guid id)
         {
             GetCategoryRequest request = new GetCategoryRequest() { Id = id.ToString() };
@@ -222,9 +203,7 @@ namespace RSoft.Entry.GrpcClient
             return resp;
         }
 
-        /// <summary>
-        /// Lista categories
-        /// </summary>
+        ///<inheritdoc/>
         public async Task<ListCategoryDetailResponse> ListCategory()
         {
 

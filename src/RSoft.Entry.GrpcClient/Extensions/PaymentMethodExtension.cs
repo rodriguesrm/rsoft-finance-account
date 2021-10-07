@@ -8,39 +8,40 @@ using RSoft.Entry.Contracts.Models;
 using RSoft.Lib.Common.Models;
 using System.Linq;
 using RSoft.Entry.GrpcClient.Providers;
+using RSoft.Finance.Contracts.Enum;
 
 namespace RSoft.Entry.GrpcClient.Extensions
 {
 
     /// <summary>
-    /// Category extensions methods
+    /// PaymentMethod extensions methods
     /// </summary>
-    public static class CategoryExtension
+    public static class PaymentMethodExtension
     {
 
         /// <summary>
-        /// Map create-category-reply model to create-category-response model
+        /// Map create-PaymentMethod-reply model to create-PaymentMethod-response model
         /// </summary>
-        /// <param name="reply">CreateCategoryReply instance</param>
-        public static CreateCategoryResponse ToCreateCategoryResponse(this CreateCategoryReply reply)
-            => new CreateCategoryResponse(StatusCode.OK, new Guid(reply.Id));
+        /// <param name="reply">CreatePaymentMethodReply instance</param>
+        public static CreatePaymentMethodResponse ToCreatePaymentMethodResponse(this CreatePaymentMethodReply reply)
+            => new CreatePaymentMethodResponse(StatusCode.OK, new Guid(reply.Id));
 
         /// <summary>
-        /// Map RpcException to create-category-response model
+        /// Map RpcException to create-PaymentMethod-response model
         /// </summary>
         /// <param name="rpcEx">Rpc exception object instance</param>
-        public static CreateCategoryResponse ToCreateCategoryResponse(this RpcException rpcEx)
+        public static CreatePaymentMethodResponse ToCreatePaymentMethodResponse(this RpcException rpcEx)
         {
 
             IList<Notification> notifications = null;
             string errorMessage = null;
 
             if (rpcEx.StatusCode == StatusCode.InvalidArgument)
-                notifications = new List<Notification>() { new Notification(nameof(GrpcCategoryServiceProvider.CreateCategory), rpcEx.Message) };
+                notifications = new List<Notification>() { new Notification(nameof(GrpcPaymentMethodServiceProvider.CreatePaymentMethod), rpcEx.Message) };
             else
                 errorMessage = rpcEx.Message;
 
-            return new CreateCategoryResponse
+            return new CreatePaymentMethodResponse
             (
                 rpcEx.StatusCode,
                 null,
@@ -51,11 +52,11 @@ namespace RSoft.Entry.GrpcClient.Extensions
         }
 
         /// <summary>
-        /// Map RpcException to create-category-response model
+        /// Map RpcException to create-PaymentMethod-response model
         /// </summary>
         /// <param name="ex">Exception object instance</param>
-        public static CreateCategoryResponse ToCreateCategoryResponse(this Exception ex)
-            => new CreateCategoryResponse
+        public static CreatePaymentMethodResponse ToCreatePaymentMethodResponse(this Exception ex)
+            => new CreatePaymentMethodResponse
                 (
                     StatusCode.Internal,
                     null,
@@ -63,20 +64,20 @@ namespace RSoft.Entry.GrpcClient.Extensions
                 );
 
         /// <summary>
-        /// Map RpcException to update-category-response model
+        /// Map RpcException to update-PaymentMethod-response model
         /// </summary>
         /// <param name="rpcEx">RpcException object instance</param>
-        public static UpdateCategoryResponse ToUpdateCategoryResponse(this RpcException rpcEx)
+        public static UpdatePaymentMethodResponse ToUpdatePaymentMethodResponse(this RpcException rpcEx)
         {
             IList<Notification> notifications = null;
             string errorMessage = null;
 
             if (rpcEx.StatusCode == StatusCode.InvalidArgument)
-                notifications = new List<Notification>() { new Notification(nameof(GrpcCategoryServiceProvider.UpdateCategory), rpcEx.Message) };
+                notifications = new List<Notification>() { new Notification(nameof(GrpcPaymentMethodServiceProvider.UpdatePaymentMethod), rpcEx.Message) };
             else
                 errorMessage = rpcEx.Message;
 
-            return new UpdateCategoryResponse
+            return new UpdatePaymentMethodResponse
             (
                 rpcEx.StatusCode,
                 notifications,
@@ -85,11 +86,11 @@ namespace RSoft.Entry.GrpcClient.Extensions
         }
 
         /// <summary>
-        /// Map RpcException to update-category-response model
+        /// Map RpcException to update-PaymentMethod-response model
         /// </summary>
         /// <param name="ex">Exception object instance</param>
-        public static UpdateCategoryResponse ToUpdateCategoryResponse(this Exception ex)
-            => new UpdateCategoryResponse
+        public static UpdatePaymentMethodResponse ToUpdatePaymentMethodResponse(this Exception ex)
+            => new UpdatePaymentMethodResponse
                 (
                     StatusCode.Internal,
                     null,
@@ -97,11 +98,11 @@ namespace RSoft.Entry.GrpcClient.Extensions
                 );
 
         /// <summary>
-        /// Map RpcException to change-category-status-response model
+        /// Map RpcException to change-PaymentMethod-status-response model
         /// </summary>
         /// <param name="rpcEx">RpcException object instance</param>
         /// <param name="methodName">Method name (for notification)</param>
-        public static ChangeCategoryStatusResponse ToChangeCategoryStatusResponse(this RpcException rpcEx, string methodName)
+        public static ChangePaymentMethodStatusResponse ToChangePaymentMethodStatusResponse(this RpcException rpcEx, string methodName)
         {
 
             IList<Notification> notifications = null;
@@ -112,7 +113,7 @@ namespace RSoft.Entry.GrpcClient.Extensions
             else
                 errorMessage = rpcEx.Message;
 
-            return new ChangeCategoryStatusResponse
+            return new ChangePaymentMethodStatusResponse
             (
                 rpcEx.StatusCode,
                 notifications,
@@ -122,27 +123,28 @@ namespace RSoft.Entry.GrpcClient.Extensions
         }
 
         /// <summary>
-        /// Map Exception to change-category-status-response model
+        /// Map Exception to change-PaymentMethod-status-response model
         /// </summary>
         /// <param name="ex">Exception object instance</param>
-        public static ChangeCategoryStatusResponse ToChangeCategoryStatusResponse(this Exception ex)
-            =>  new ChangeCategoryStatusResponse
+        public static ChangePaymentMethodStatusResponse ToChangePaymentMethodStatusResponse(this Exception ex)
+            =>  new ChangePaymentMethodStatusResponse
                 (
                     StatusCode.Internal,
                     errorMessage: ex.Message
                 );
 
         /// <summary>
-        /// Map category-detail model to category-dto-model
+        /// Map PaymentMethod-detail model to PaymentMethod-dto-model
         /// </summary>
-        /// <param name="detail">Category detail model instance</param>
-        public static CategoryDto Map(this CategoryDetail detail)
+        /// <param name="detail">PaymentMethod detail model instance</param>
+        public static PaymentMethodDto Map(this PaymentMethodDetail detail)
         {
-            CategoryDto dto = new CategoryDto()
+            PaymentMethodDto dto = new PaymentMethodDto()
             {
                 Id = new Guid(detail.Id),
                 Name = detail.Name,
                 IsActive = detail.IsActive,
+                PaymentType = (PaymentTypeEnum)int.Parse(detail.PaymentType.Id),
                 CreatedBy = new AuditAuthor<Guid>(detail.CreatedOn.ToDateTime(), new Guid(detail.CreatedBy.Id), detail.CreatedBy.Name)
             };
             if (detail.ChangedBy != null)
@@ -151,31 +153,31 @@ namespace RSoft.Entry.GrpcClient.Extensions
         }
 
         /// <summary>
-        /// Map category-detail model to category-detail-response model
+        /// Map PaymentMethod-detail model to PaymentMethod-detail-response model
         /// </summary>
-        /// <param name="detail">Category detail model instance</param>
-        public static CategoryDetailResponse ToCategoryDetailResponse(this CategoryDetail detail)
-            => new CategoryDetailResponse
+        /// <param name="detail">PaymentMethod detail model instance</param>
+        public static PaymentMethodDetailResponse ToPaymentMethodDetailResponse(this PaymentMethodDetail detail)
+            => new PaymentMethodDetailResponse
             (
                 StatusCode.OK,
                 detail.Map()
             );
 
         /// <summary>
-        /// Map RpcException to category-detail-response model
+        /// Map RpcException to PaymentMethod-detail-response model
         /// </summary>
         /// <param name="rpcEx">RpcException object instance</param>
-        public static CategoryDetailResponse ToCategoryDetailResponse(this RpcException rpcEx)
+        public static PaymentMethodDetailResponse ToPaymentMethodDetailResponse(this RpcException rpcEx)
         {
             IList<Notification> notifications = null;
             string errorMessage = null;
 
             if (rpcEx.StatusCode == StatusCode.InvalidArgument)
-                notifications = new List<Notification>() { new Notification(nameof(GrpcCategoryServiceProvider.GetCategory), rpcEx.Message) };
+                notifications = new List<Notification>() { new Notification(nameof(GrpcPaymentMethodServiceProvider.GetPaymentMethod), rpcEx.Message) };
             else
                 errorMessage = rpcEx.Message;
 
-            return new CategoryDetailResponse
+            return new PaymentMethodDetailResponse
             (
                 rpcEx.StatusCode,
                 null,
@@ -185,11 +187,11 @@ namespace RSoft.Entry.GrpcClient.Extensions
         }
 
         /// <summary>
-        /// Map RpcException to category-detail-response model
+        /// Map RpcException to PaymentMethod-detail-response model
         /// </summary>
         /// <param name="ex">Exception object instance</param>
-        public static CategoryDetailResponse ToCategoryDetailResponse(this Exception ex)
-            => new CategoryDetailResponse
+        public static PaymentMethodDetailResponse ToPaymentMethodDetailResponse(this Exception ex)
+            => new PaymentMethodDetailResponse
             (
                 StatusCode.Internal,
                 null,
@@ -197,31 +199,31 @@ namespace RSoft.Entry.GrpcClient.Extensions
             );
 
         /// <summary>
-        /// Map list-category-reply model to list-category-detail-response model
+        /// Map list-PaymentMethod-reply model to list-PaymentMethod-detail-response model
         /// </summary>
-        /// <param name="reply">ListCategoryReply object instance</param>
-        public static ListCategoryDetailResponse ToListCategoryDetailResponse(this ListCategoryReply reply )
-            => new ListCategoryDetailResponse
+        /// <param name="reply">ListPaymentMethodReply object instance</param>
+        public static ListPaymentMethodDetailResponse ToListPaymentMethodDetailResponse(this ListPaymentMethodReply reply )
+            => new ListPaymentMethodDetailResponse
             (
                 StatusCode.OK,
                 reply.Data.Select(s => s.Map()).ToList()
             );
 
         /// <summary>
-        /// Map RpcException to category-detail-response model
+        /// Map RpcException to PaymentMethod-detail-response model
         /// </summary>
         /// <param name="rpcEx">RpcException object instance</param>
-        public static ListCategoryDetailResponse ToListCategoryDetailResponse(this RpcException rpcEx)
+        public static ListPaymentMethodDetailResponse ToListPaymentMethodDetailResponse(this RpcException rpcEx)
         {
             IList<Notification> notifications = null;
             string errorMessage = null;
 
             if (rpcEx.StatusCode == StatusCode.InvalidArgument)
-                notifications = new List<Notification>() { new Notification(nameof(GrpcCategoryServiceProvider.GetCategory), rpcEx.Message) };
+                notifications = new List<Notification>() { new Notification(nameof(GrpcPaymentMethodServiceProvider.GetPaymentMethod), rpcEx.Message) };
             else
                 errorMessage = rpcEx.Message;
 
-            return new ListCategoryDetailResponse
+            return new ListPaymentMethodDetailResponse
             (
                 rpcEx.StatusCode,
                 null,
@@ -231,11 +233,11 @@ namespace RSoft.Entry.GrpcClient.Extensions
         }
 
         /// <summary>
-        /// Map RpcException to category-detail-response model
+        /// Map RpcException to PaymentMethod-detail-response model
         /// </summary>
         /// <param name="ex">Exception object instance</param>
-        public static ListCategoryDetailResponse ToListCategoryDetailResponse(this Exception ex)
-            => new ListCategoryDetailResponse
+        public static ListPaymentMethodDetailResponse ToListPaymentMethodDetailResponse(this Exception ex)
+            => new ListPaymentMethodDetailResponse
             (
                 StatusCode.Internal,
                 null,

@@ -275,7 +275,8 @@ message TransactionDetail {
 	string comment = 7;
 	SimpleIdName entry = 8;
 	SimpleIdName payment_method = 9;
-	AuthorDetail transaction_author = 10;
+	google.protobuf.Timestamp created_on = 10;
+	AuthorDetail transaction_author = 11;
 }
 
 message CreateTransactionRequest {

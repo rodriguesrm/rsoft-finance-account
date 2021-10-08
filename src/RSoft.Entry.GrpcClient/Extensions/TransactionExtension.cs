@@ -78,7 +78,7 @@ namespace RSoft.Entry.GrpcClient.Extensions
                 TransactionType = new SimpleIdentification<int>(int.Parse(detail.TransactionType.Id), detail.TransactionType.Name),
                 PaymentMethod = new SimpleIdentification<Guid>(new Guid(detail.PaymentMethod.Id), detail.PaymentMethod.Name),
                 Entry = new SimpleIdentification<Guid>(new Guid(detail.Entry.Id), detail.Entry.Name),
-                CreatedBy = new AuditAuthor<Guid>(detail.Date.ToDateTime(), new Guid(detail.TransactionAuthor.Id), detail.TransactionAuthor.Name)
+                CreatedBy = new AuditAuthor<Guid>(detail.CreatedOn.ToDateTime(), new Guid(detail.TransactionAuthor.Id), detail.TransactionAuthor.Name)
             };
             return dto;
         }

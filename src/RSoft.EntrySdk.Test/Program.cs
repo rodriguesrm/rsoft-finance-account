@@ -78,13 +78,14 @@ namespace RSoft.EntrySdk.Test
 
         static async Task Main(string[] args)
         {
-            //System.Threading.Thread.Sleep(10000);
+            System.Threading.Thread.Sleep(5000);
 
             TokenResponse token = await Authenticate();
             await AccrualPeriodTest(token);
             await CategoryTest(token);
             await EntryTest(token);
             await PaymentMethodTest(token);
+            await TransactionTest(token);
 
             Console.ReadKey();
         }
@@ -175,6 +176,8 @@ namespace RSoft.EntrySdk.Test
                 Console.WriteLine($"Year: {entity.Year} - Month: {entity.Month} => {(entity.IsClosed ? "CLOSED" : "OPEN")}");
             }
 
+            await provider.StartPeriod(DateTime.UtcNow.Year, DateTime.UtcNow.Month);
+
         }
 
         private static async Task PaymentMethodTest(TokenResponse token)
@@ -207,6 +210,42 @@ namespace RSoft.EntrySdk.Test
                 Console.WriteLine($"Id: {entity.Id} - Name: {entity.Name}");
             }
 
+
+        }
+
+        private static async Task TransactionTest(TokenResponse token)
+        {
+
+            Console.WriteLine("--- TRANSACTION ------------------------");
+
+            IGrpcTransactionServiceProvider provider = ServiceProvider.GetService<IGrpcTransactionServiceProvider>();
+            provider.SetToken(token.Token);
+
+            CreateTransactionResponse transactionCredit = await provider.CreateTransaction(DateTime.UtcNow, true, 1000, "TRANSACTION_CREDIT", _entryId.Value, _paymentMethodId.Value);
+            Console.WriteLine($"Transaction Credit Id: {transactionCredit.ResponseData.Value}");
+
+            CreateTransactionResponse transactionDebt = await provider.CreateTransaction(DateTime.UtcNow, false, 500, "TRANSACTION_DEBIT", _entryId.Value, _paymentMethodId.Value);
+            Console.WriteLine($"Transaction Debt Id: {transactionDebt.ResponseData.Value}");
+
+            RollbackTransactionResponse transactionRollback = await provider.RollbackTransaction(transactionDebt.ResponseData.Value, "ROLLBACK_DEBT_TEST");
+            Console.WriteLine($"Rollback Transaction Debt Id: {transactionRollback.ResponseData.Value}");
+
+            TransactionDetailResponse transactionResp = await provider.GetTransaction(transactionRollback.ResponseData.Value);
+            Console.WriteLine($"Get transaction result => Id: {transactionResp.ResponseData.Id}, Amount: {transactionResp.ResponseData.Amount}");
+
+            ListTransactionDetailResponse entities = await provider.ListTransaction(DateTime.UtcNow.Year, DateTime.UtcNow.Month);
+            foreach (var entity in entities.ResponseData)
+            {
+                Console.WriteLine($"Id: {entity.Id} - Name: {entity.Amount}");
+            }
+
+            DateTime dateStart = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1, 0, 0, 0, DateTimeKind.Utc);
+            DateTime dateEnd = dateStart.AddMonths(1).AddDays(-1);
+            entities = await provider.ListTransaction(dateStart, dateEnd);
+            foreach (var entity in entities.ResponseData)
+            {
+                Console.WriteLine($"Id: {entity.Id} - Name: {entity.Amount}");
+            }
 
         }
 

@@ -84,12 +84,12 @@ namespace RSoft.Entry.GrpcClient.Providers
                     }
                 };
 
-            request.EntryId = entryId?.ToString();
+            request.EntryId = entryId?.ToString() ?? string.Empty ;
             
             if (transactionType.HasValue)
                 request.TransactionType = (int)transactionType.Value;
 
-            request.PaymentMethodId = paymentMethodId?.ToString();
+            request.PaymentMethodId = paymentMethodId?.ToString() ?? string.Empty;
 
             ListTransactionDetailResponse resp;
 
@@ -223,11 +223,11 @@ namespace RSoft.Entry.GrpcClient.Providers
         }
 
         ///<inheritdoc/>
-        public async Task<ListTransactionDetailResponse> ListTransaction(DateTime startAt, DateTime endAt, Guid? entryId, TransactionTypeEnum? transactionType, Guid? paymentMethodId)
+        public async Task<ListTransactionDetailResponse> ListTransaction(DateTime startAt, DateTime endAt, Guid? entryId = null, TransactionTypeEnum? transactionType = null, Guid? paymentMethodId = null)
             => await ListTransaction(startAt, endAt, null, null, entryId, transactionType, paymentMethodId);
 
         ///<inheritdoc/>
-        public async Task<ListTransactionDetailResponse> ListTransaction(int year, int month, Guid? entryId, TransactionTypeEnum? transactionType, Guid? paymentMethodId)
+        public async Task<ListTransactionDetailResponse> ListTransaction(int year, int month, Guid? entryId = null, TransactionTypeEnum? transactionType = null, Guid? paymentMethodId = null)
             => await ListTransaction(null, null, year, month, entryId, transactionType, paymentMethodId);
 
         #endregion

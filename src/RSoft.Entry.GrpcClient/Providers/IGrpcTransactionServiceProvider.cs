@@ -9,7 +9,7 @@ namespace RSoft.Entry.GrpcClient.Providers
     /// <summary>
     /// RSoft gRpc Transaction Service provider interface contract
     /// </summary>
-    public interface IGrpcTransactionServiceProvider
+    public interface IGrpcTransactionServiceProvider : ITokenForProvider
     {
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace RSoft.Entry.GrpcClient.Providers
         /// <param name="entryId">Entry id key value</param>
         /// <param name="transactionType">Transaction type</param>
         /// <param name="paymentMethodId">Payment method id key value</param>
-        Task<ListTransactionDetailResponse> ListTransaction(DateTime startAt, DateTime endAt, Guid? entryId, TransactionTypeEnum? transactionType, Guid? paymentMethodId);
+        Task<ListTransactionDetailResponse> ListTransaction(DateTime startAt, DateTime endAt, Guid? entryId = null, TransactionTypeEnum? transactionType = null, Guid? paymentMethodId = null);
 
         /// <summary>
         /// List transaction
@@ -55,7 +55,7 @@ namespace RSoft.Entry.GrpcClient.Providers
         /// <param name="entryId">Entry id key value</param>
         /// <param name="transactionType">Transaction type</param>
         /// <param name="paymentMethodId">Payment method id key value</param>
-        Task<ListTransactionDetailResponse> ListTransaction(int year, int month, Guid? entryId, TransactionTypeEnum? transactionType, Guid? paymentMethodId);
+        Task<ListTransactionDetailResponse> ListTransaction(int year, int month, Guid? entryId = null, TransactionTypeEnum? transactionType = null, Guid? paymentMethodId = null);
 
     }
 

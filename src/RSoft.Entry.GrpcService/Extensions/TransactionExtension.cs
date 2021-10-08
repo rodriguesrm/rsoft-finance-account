@@ -66,6 +66,7 @@ namespace RSoft.Entry.GrpcService.Extensions
                 reply.Comment = dto.Comment;
                 reply.Entry = new SimpleIdName() { Id = dto.Entry.Id.ToString(), Name = dto.Entry.Name };
                 reply.PaymentMethod = new SimpleIdName() { Id = dto.PaymentMethod.Id.ToString(), Name = dto.PaymentMethod.Name };
+                reply.CreatedOn = Timestamp.FromDateTime(dto.CreatedBy.Date.ToUniversalTime());
                 reply.TransactionAuthor = new AuthorDetail() { Id = dto.CreatedBy.Id.ToString(), Name = dto.CreatedBy.Name };
             }
         }

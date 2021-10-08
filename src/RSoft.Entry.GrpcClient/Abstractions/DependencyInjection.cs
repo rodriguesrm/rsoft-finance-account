@@ -27,6 +27,7 @@ namespace RSoft.Entry.GrpcClient.Abstractions
             services.AddScoped<IGrpcEntryServiceProvider, GrpcEntryServiceProvider>();
             services.AddScoped<IGrpcAccrualPeriodServiceProvider, GrpcAccrualPeriodServiceProvider>();
             services.AddScoped<IGrpcPaymentMethodServiceProvider, GrpcPaymentMethodServiceProvider>();
+            services.AddScoped<IGrpcTransactionServiceProvider, GrpcTransactionServiceProvider>();
 
             return services;
         }

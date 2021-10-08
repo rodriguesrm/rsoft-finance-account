@@ -60,8 +60,11 @@ namespace RSoft.Entry.Core.Services
         {
             if (isUpdate)
             {
-                entity.ChangedAuthor = new AuthorNullable<Guid>(_authenticatedUser.Id.Value, $"{_authenticatedUser.FirstName} {_authenticatedUser.LastName}");
-                entity.ChangedOn = DateTime.UtcNow;
+                if (entity.ChangedAuthor == null) //TODO: Remove this IF when Consumers was moved to Worker
+                {
+                    entity.ChangedAuthor = new AuthorNullable<Guid>(_authenticatedUser.Id.Value, $"{_authenticatedUser.FirstName} {_authenticatedUser.LastName}");
+                    entity.ChangedOn = DateTime.UtcNow;
+                }
             }
             else
             {

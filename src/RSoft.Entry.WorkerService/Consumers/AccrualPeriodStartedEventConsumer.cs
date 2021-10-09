@@ -9,7 +9,7 @@ using RSoft.Entry.Contracts.Commands;
 using RSoft.Lib.Common.Abstractions;
 using System;
 
-namespace RSoft.Entry.Application.Consumers
+namespace RSoft.Entry.WorkerService.Consumers
 {
 
     /// <summary>
@@ -38,16 +38,6 @@ namespace RSoft.Entry.Application.Consumers
 
         #endregion
 
-        #region Static properties
-
-
-        /// <summary>
-        /// Delayed control flag
-        /// </summary>
-        public static bool IsLoaded { get; set; } = false;
-
-        #endregion
-
         #region Consumer methods
 
         /// <summary>
@@ -57,34 +47,16 @@ namespace RSoft.Entry.Application.Consumers
         public async Task Consume(ConsumeContext<AccrualPeriodStartedEvent> context)
         {
 
-            if (!IsLoaded)
+            _logger.LogInformation($"{nameof(AccrualPeriodStartedEventConsumer)} START");
+
+            RegisterStartAccrualPeriodCommand command = new()
             {
-                System.Threading.Thread.Sleep(4000);
-                IsLoaded = true;
-            }
+                Year = context.Message.Year,
+                Month = context.Message.Month
+            };
+            _ = await _mediator.Send(command);
 
-            try
-            {
-
-                _logger.LogInformation($"{nameof(AccrualPeriodStartedEventConsumer)} START");
-
-                RegisterStartAccrualPeriodCommand command = new()
-                {
-                    Year = context.Message.Year,
-                    Month = context.Message.Month
-                };
-                _ = await _mediator.Send(command);
-
-                //BACKLOG: Handle exceptions
-
-                _logger.LogInformation($"{nameof(AccrualPeriodStartedEventConsumer)} END");
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Fail on process message {context.MessageId}");
-                await context.Publish(context.MessageId);
-            }
+            _logger.LogInformation($"{nameof(AccrualPeriodStartedEventConsumer)} END");
 
         }
 

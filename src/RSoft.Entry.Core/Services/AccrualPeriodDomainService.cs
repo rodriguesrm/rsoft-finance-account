@@ -60,7 +60,7 @@ namespace RSoft.Entry.Core.Services
         {
             if (isUpdate)
             {
-                if (entity.ChangedAuthor == null) //TODO: Remove this IF when Consumers was moved to Worker
+                if (entity.ChangedAuthor == null)
                 {
                     entity.ChangedAuthor = new AuthorNullable<Guid>(_authenticatedUser.Id.Value, $"{_authenticatedUser.FirstName} {_authenticatedUser.LastName}");
                     entity.ChangedOn = DateTime.UtcNow;
@@ -129,7 +129,6 @@ namespace RSoft.Entry.Core.Services
         ///<inheritdoc/>
         public async Task<SimpleOperationResult> ClosePeriodAsync(int year, int month, CancellationToken cancellationToken = default)
         {
-            //BACKLOG: Use command/events (messaging) to divide operation
             IDictionary<string, string> errors = new Dictionary<string, string>();
             AccrualPeriod accrualPeriod = await _repository.GetByKeyAsync(year, month, cancellationToken);
             if (accrualPeriod == null)

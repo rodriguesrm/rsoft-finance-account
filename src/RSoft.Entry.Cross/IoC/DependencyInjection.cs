@@ -12,9 +12,7 @@ using System;
 using System.Collections.Generic;
 using RSoft.Lib.Messaging.Abstractions;
 using RSoft.Lib.Messaging.Options;
-using RSoft.Lib.Messaging.Extensions;
-using RSoft.Finance.Contracts.Events;
-using RSoft.Entry.Application.Consumers;
+using MassTransit.RabbitMqTransport;
 
 namespace RSoft.Entry.Cross.IoC
 {
@@ -28,9 +26,15 @@ namespace RSoft.Entry.Cross.IoC
         /// <summary>
         /// Register dependency injection services
         /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        public static IServiceCollection AddEntryRegister(this IServiceCollection services, IConfiguration configuration)
+        /// <param name="services">Service collection</param>
+        /// <param name="configuration">Configuration object</param>
+        /// <param name="aditionalConfig">Action to adicional configuration for messaging</param>
+        public static IServiceCollection AddEntryRegister
+        (
+            this IServiceCollection services, 
+            IConfiguration configuration,
+            Action<IRabbitMqBusFactoryConfigurator> aditionalConfig = null
+        )
         {
 
             services.AddRSoftRegister<EntryContext>(configuration, true);
@@ -42,13 +46,7 @@ namespace RSoft.Entry.Cross.IoC
 
             #endregion
 
-            services.AddMassTransitUsingRabbitMq(configuration, cfg =>
-            {
-                //BACKLOG: Add retries
-                //BACKLOG: Move consumer to worker
-                // Events consumers
-                cfg.AddEventConsumerEndpoint<AccrualPeriodStartedEvent, AccrualPeriodStartedEventConsumer>($"{nameof(AccrualPeriodStartedEvent)}.EntryService");
-            });
+            services.AddMassTransitUsingRabbitMq(configuration, cfg => aditionalConfig?.Invoke(cfg));
 
             #region Infra
 
@@ -92,7 +90,6 @@ namespace RSoft.Entry.Cross.IoC
 
             List<string> assembliesNames = new()
             {
-                "RSoft.Entry.GrpcService",
                 "RSoft.Entry.Application"
             };
 

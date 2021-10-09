@@ -22,9 +22,15 @@ namespace RSoft.Entry.Application.Extensions
             string userName = "Entry Service";
 
             if (isUpdate)
+            {
                 entity.ChangedAuthor = new AuthorNullable<Guid>(userId, userName);
+                entity.ChangedOn = DateTime.UtcNow;
+            }
             else
+            {
                 entity.CreatedAuthor = new Author<Guid>(userId, userName);
+                entity.CreatedOn = DateTime.UtcNow;
+            }
         }
 
     }

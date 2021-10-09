@@ -4,11 +4,11 @@ using Microsoft.Extensions.DependencyInjection;
 using RSoft.Finance.Contracts.Events;
 using RSoft.Lib.Common.Abstractions;
 using System;
-using RSoft.Entry.Application.Consumers;
 using NUnit.Framework;
 using AutoFixture;
 using System.Linq;
 using RSoft.Entry.Tests.Stubs;
+using RSoft.Entry.WorkerService.Consumers;
 
 namespace RSoft.Entry.Tests.Consumers
 {
@@ -20,7 +20,6 @@ namespace RSoft.Entry.Tests.Consumers
         [Test]
         public void ConsumeMessage_ProcessSuccess()
         {
-            AccrualPeriodStartedEventConsumer.IsLoaded = true;
             ConsumeContext<AccrualPeriodStartedEvent> context = _fixture.Build<ConsumeContextStub<AccrualPeriodStartedEvent>>()
                 .With(c => c.Message, new AccrualPeriodStartedEvent(DateTime.UtcNow.Year, DateTime.UtcNow.Month))
                 .Create();
@@ -38,7 +37,6 @@ namespace RSoft.Entry.Tests.Consumers
         [Test]
         public void ConsumeMessage_WhenErrorOccurs_LogException()
         {
-            AccrualPeriodStartedEventConsumer.IsLoaded = false;
             ConsumeContext<AccrualPeriodStartedEvent> context = _fixture.Build<ConsumeContextStub<AccrualPeriodStartedEvent>>()
                 .Without(c => c.Message)
                 .Create();

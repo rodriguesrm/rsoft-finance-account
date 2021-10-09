@@ -13,7 +13,7 @@ using RSoft.Entry.Core.Services;
 using RSoft.Entry.Tests.Stubs;
 using RSoft.Lib.Common.Contracts.Web;
 using Microsoft.Extensions.Logging;
-using RSoft.Entry.Application.Consumers;
+using RSoft.Entry.WorkerService.Consumers;
 
 namespace RSoft.Entry.Tests.DependencyInjection
 {

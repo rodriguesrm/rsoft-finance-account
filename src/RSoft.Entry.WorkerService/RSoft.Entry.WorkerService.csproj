@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>dotnet-RSoft.Entry.WorkerService-1616425B-BA9D-4ACB-B2A0-C0B6E21AA150</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <Authors>Rodrigo Rodrigues</Authors>
     <Company>RSoft</Company>
     <Description>Entry gRPC Worker Service (Messages Consumers)</Description>
@@ -14,7 +14,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
-    <PackageReference Include="RSoft.Logs" Version="1.3.0" />
+    <PackageReference Include="RSoft.Lib.Contracts" Version="1.6.0" />
+    <PackageReference Include="RSoft.Logs" Version="1.3.1" />
   </ItemGroup>
 
   <ItemGroup>

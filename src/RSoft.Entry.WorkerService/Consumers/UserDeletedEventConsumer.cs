@@ -1,12 +1,12 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using RSoft.Finance.Contracts.Events;
 using RSoft.Lib.Messaging.Contracts;
 using System.Threading.Tasks;
 using MediatR;
 using RSoft.Entry.Contracts.Commands;
 using RSoft.Lib.Common.Abstractions;
+using RSoft.Lib.Contracts.Events;
 using System.Text.Json;
 using RSoft.Entry.WorkerService.Extensions;
 
@@ -14,14 +14,14 @@ namespace RSoft.Entry.WorkerService.Consumers
 {
 
     /// <summary>
-    /// Consumer event raised when accrual period is started
+    /// Consumer event raised when user is deleted
     /// </summary>
-    public class AccrualPeriodStartedEventConsumer : IConsumerEvent<AccrualPeriodStartedEvent>
+    public class UserDeletedEventConsumer : IConsumerEvent<UserDeletedEvent>
     {
 
         #region Local objects/variables
 
-        private readonly ILogger<AccrualPeriodStartedEventConsumer> _logger;
+        private readonly ILogger<UserDeletedEventConsumer> _logger;
         private readonly IMediator _mediator;
 
         #endregion
@@ -31,9 +31,9 @@ namespace RSoft.Entry.WorkerService.Consumers
         /// <summary>
         /// Create a new consumer event instance
         /// </summary>
-        public AccrualPeriodStartedEventConsumer()
+        public UserDeletedEventConsumer()
         {
-            _logger = ServiceActivator.GetScope().ServiceProvider.GetService<ILogger<AccrualPeriodStartedEventConsumer>>();
+            _logger = ServiceActivator.GetScope().ServiceProvider.GetService<ILogger<UserDeletedEventConsumer>>();
             _mediator = ServiceActivator.GetScope().ServiceProvider.GetService<IMediator>();
         }
 
@@ -42,26 +42,23 @@ namespace RSoft.Entry.WorkerService.Consumers
         #region Consumer methods
 
         /// <summary>
-        /// Consume event handler
+        /// Consume UserDeletedEvent handler
         /// </summary>
         /// <param name="context">Consumer context</param>
-        public async Task Consume(ConsumeContext<AccrualPeriodStartedEvent> context)
+        public async Task Consume(ConsumeContext<UserDeletedEvent> context)
         {
 
-            _logger.LogInformation($"Process {nameof(AccrualPeriodStartedEvent)} MessageId:{context.MessageId} START", JsonSerializer.Serialize(context.Message));
+            _logger.LogInformation($"Process {nameof(UserChangedEvent)} MessageId:{context.MessageId} START", JsonSerializer.Serialize(context.Message));
 
-            RegisterStartAccrualPeriodCommand command = new()
-            {
-                Year = context.Message.Year,
-                Month = context.Message.Month
-            };
+            DeleteUserCommand command = new(context.Message.Id);
             _ = await _mediator.Send(command);
 
-            _logger.LogInformation($"Process {nameof(AccrualPeriodStartedEvent)} MesssageId:{context.MessageId} END");
+            _logger.LogInformation($"Process {nameof(UserChangedEvent)} MesssageId:{context.MessageId} END");
 
         }
 
         #endregion
 
     }
+
 }

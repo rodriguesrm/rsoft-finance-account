@@ -7,8 +7,8 @@
   <ItemGroup>
     <PackageReference Include="MediatR" Version="9.0.0" />
     <PackageReference Include="RSoft.Finance.Contracts" Version="1.2.0" />
-    <PackageReference Include="RSoft.Lib.Common" Version="1.5.2" />
-    <PackageReference Include="RSoft.Lib.Design" Version="1.5.2" />
+    <PackageReference Include="RSoft.Lib.Common" Version="1.6.0" />
+    <PackageReference Include="RSoft.Lib.Design" Version="1.6.2" />
   </ItemGroup>
 
 </Project>

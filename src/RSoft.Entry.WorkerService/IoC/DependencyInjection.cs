@@ -8,6 +8,7 @@ using RSoft.Entry.WorkerService.Consumers;
 using RSoft.Finance.Contracts.Events;
 using RSoft.Lib.Common.Abstractions;
 using RSoft.Lib.Common.Web.Extensions;
+using RSoft.Lib.Contracts.Events;
 using RSoft.Lib.Messaging.Extensions;
 using System;
 
@@ -50,8 +51,16 @@ namespace RSoft.Entry.WorkerService.IoC
         /// <param name="config">Bus factory configurator instance</param>
         private static void AddConsumers(this IRabbitMqBusFactoryConfigurator config)
         {
+
+            // Retry policy
             config.UseMessageRetry(retryConfig => retryConfig.Incremental(4, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(3)));
+
+            // Consumers
             config.AddEventConsumerEndpoint<AccrualPeriodStartedEvent, AccrualPeriodStartedEventConsumer>($"{nameof(AccrualPeriodStartedEvent)}.EntryService");
+            config.AddEventConsumerEndpoint<UserCreatedEvent, UserCreatedEventConsumer>($"{nameof(UserCreatedEvent)}.EntryService");
+            config.AddEventConsumerEndpoint<UserChangedEvent, UserChangedEventConsumer>($"{nameof(UserChangedEvent)}.EntryService");
+            config.AddEventConsumerEndpoint<UserDeletedEvent, UserDeletedEventConsumer>($"{nameof(UserDeletedEvent)}.EntryService");
+
         }
 
         #endregion

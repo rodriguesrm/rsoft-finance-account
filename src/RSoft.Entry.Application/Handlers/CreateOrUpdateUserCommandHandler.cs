@@ -82,7 +82,7 @@ namespace RSoft.Entry.Application.Handlers
             else
                 _ = await _userDomainService.AddAsync(entity, cancellationToken);
             _ = await _uow.SaveChangesAsync(cancellationToken);
-            return entity.Valid ? entity.Id : null;
+            return entity.Id;
         }
 
         #endregion

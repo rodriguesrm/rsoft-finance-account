@@ -18,14 +18,14 @@ namespace RSoft.Entry.Contracts.Commands
         /// <summary>
         /// Create a new command instance
         /// </summary>
-        /// <param name="messageDate">Command type flag</param>
+        /// <param name="isCreatedCommand">Command type flag</param>
         /// <param name="id">User id key value</param>
         /// <param name="firstName">User first name</param>
         /// <param name="lastName">User last name</param>
         /// <param name="isActive">Active status flag</param>
-        public CreateOrUpdateUserCommand(bool messageDate, Guid id, string firstName, string lastName, bool isActive)
+        public CreateOrUpdateUserCommand(bool isCreatedCommand, Guid id, string firstName, string lastName, bool isActive)
         {
-            IsCreatedCommand = messageDate;
+            IsCreatedCommand = isCreatedCommand;
             Id = id;
             FirstName = firstName;
             LastName = lastName;

@@ -8,10 +8,7 @@ using RSoft.Lib.Design.Infra.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using RSoft.Lib.Design.Application.Handlers;
-using MassTransit;
-using RSoft.Finance.Contracts.Events;
 using RSoft.Lib.Common.ValueObjects;
-using System;
 
 namespace RSoft.Entry.Application.Handlers
 {

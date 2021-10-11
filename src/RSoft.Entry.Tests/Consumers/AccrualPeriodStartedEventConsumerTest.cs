@@ -28,8 +28,8 @@ namespace RSoft.Entry.Tests.Consumers
             LoggerStub<AccrualPeriodStartedEventConsumer> logger = 
                 ServiceActivator.GetScope().ServiceProvider.GetService<ILogger<AccrualPeriodStartedEventConsumer>>() as LoggerStub<AccrualPeriodStartedEventConsumer>;
 
-            string checkStart = $"{nameof(AccrualPeriodStartedEventConsumer)} START";
-            string checkEnd = $"{nameof(AccrualPeriodStartedEventConsumer)} END";
+            string checkStart = $"Process {nameof(AccrualPeriodStartedEvent)} MessageId:{context.MessageId} START";
+            string checkEnd = $"Process {nameof(AccrualPeriodStartedEvent)} MesssageId:{context.MessageId} END";
             Assert.IsTrue(logger.Logs.Any(l => l == checkStart));
             Assert.IsTrue(logger.Logs.Any(l => l == checkEnd));
         }

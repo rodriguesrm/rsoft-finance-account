@@ -48,12 +48,12 @@ namespace RSoft.Entry.WorkerService.Consumers
         public async Task Consume(ConsumeContext<UserDeletedEvent> context)
         {
 
-            _logger.LogInformation($"Process {nameof(UserChangedEvent)} MessageId:{context.MessageId} START", JsonSerializer.Serialize(context.Message));
+            _logger.LogInformation($"Process {nameof(UserDeletedEvent)} MessageId:{context.MessageId} START", JsonSerializer.Serialize(context.Message));
 
             DeleteUserCommand command = new(context.Message.Id);
             _ = await _mediator.Send(command);
 
-            _logger.LogInformation($"Process {nameof(UserChangedEvent)} MesssageId:{context.MessageId} END");
+            _logger.LogInformation($"Process {nameof(UserDeletedEvent)} MesssageId:{context.MessageId} END");
 
         }
 

@@ -11,6 +11,7 @@ using RSoft.Lib.Common.Web.Extensions;
 using RSoft.Lib.Contracts.Events;
 using RSoft.Lib.Messaging.Extensions;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Entry.WorkerService.IoC
 {
@@ -18,6 +19,7 @@ namespace RSoft.Entry.WorkerService.IoC
     /// <summary>
     /// Dependency injection register service
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Injection for unit-tests")]
     public static class DependencyInjection
     {
 

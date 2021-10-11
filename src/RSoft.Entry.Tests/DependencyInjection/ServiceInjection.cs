@@ -14,6 +14,7 @@ using RSoft.Entry.Tests.Stubs;
 using RSoft.Lib.Common.Contracts.Web;
 using Microsoft.Extensions.Logging;
 using RSoft.Entry.WorkerService.Consumers;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RSoft.Entry.Tests.DependencyInjection
 {
@@ -21,6 +22,7 @@ namespace RSoft.Entry.Tests.DependencyInjection
     /// <summary>
     /// Services injection static class
     /// </summary>
+    [ExcludeFromCodeCoverage(Justification = "Injection for unit-tests")]
     public static class ServiceInjection
     {
 
@@ -60,6 +62,9 @@ namespace RSoft.Entry.Tests.DependencyInjection
                         .AddScoped<IAuthenticatedUser, AuthenticatedUserStub>()
                         .AddScoped<MediatR.IMediator, MediatorSub>()
                         .AddSingleton<ILogger<AccrualPeriodStartedEventConsumer>, LoggerStub<AccrualPeriodStartedEventConsumer>>()
+                        .AddSingleton<ILogger<UserDeletedEventConsumer>, LoggerStub<UserDeletedEventConsumer>>()
+                        .AddSingleton<ILogger<UserCreatedEventConsumer>, LoggerStub<UserCreatedEventConsumer>>()
+                        .AddSingleton<ILogger<UserChangedEventConsumer>, LoggerStub<UserChangedEventConsumer>>()
                         .AddLogging();
                 }
                 return _serviceCollection;

@@ -12,8 +12,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.1" />
-	<PackageReference Include="RSoft.Lib.Common" Version="1.6.0" />
-    <PackageReference Include="RSoft.Lib.Design" Version="1.6.2" />
+	<PackageReference Include="RSoft.Lib.Common" Version="1.7.0" />
+    <PackageReference Include="RSoft.Lib.Design" Version="1.9.0" />
   </ItemGroup>
 
   <ItemGroup>

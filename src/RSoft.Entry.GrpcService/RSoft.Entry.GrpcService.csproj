@@ -4,7 +4,7 @@
 		<TargetFramework>net5.0</TargetFramework>
 		<UserSecretsId>07d585e4-b71d-4a1c-8e26-c3bc6a5e6e90</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-		<Version>1.2.0</Version>
+		<Version>1.2.1</Version>
 		<Authors>Rodrigo Rodrigues</Authors>
 		<Company>RSoft</Company>
 		<Description>Entry gRPC Host Server</Description>

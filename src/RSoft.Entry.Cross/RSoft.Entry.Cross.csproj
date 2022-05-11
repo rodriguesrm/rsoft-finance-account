@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
-    <PackageReference Include="RSoft.Lib.Design" Version="1.6.2" />
+    <PackageReference Include="RSoft.Lib.Design" Version="1.9.0" />
     <PackageReference Include="RSoft.Lib.Messaging" Version="1.6.0" />
   </ItemGroup>
 

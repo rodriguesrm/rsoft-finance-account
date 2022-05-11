@@ -8,7 +8,7 @@
   <ItemGroup>
     <PackageReference Include="MassTransit" Version="7.2.2" />
     <PackageReference Include="MediatR" Version="9.0.0" />
-    <PackageReference Include="RSoft.Finance.Contracts" Version="1.2.0" />
+    <PackageReference Include="RSoft.Finance.Contracts" Version="1.4.0" />
 	<PackageReference Include="RSoft.Lib.Messaging" Version="1.6.0" />
   </ItemGroup>
 

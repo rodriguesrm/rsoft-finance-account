@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>dotnet-RSoft.Entry.WorkerService-1616425B-BA9D-4ACB-B2A0-C0B6E21AA150</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
     <Authors>Rodrigo Rodrigues</Authors>
     <Company>RSoft</Company>
     <Description>Entry gRPC Worker Service (Messages Consumers)</Description>

@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFramework>netstandard2.1</TargetFramework>
+	  <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="RSoft.Finance.Contracts" Version="1.4.0" />
-    <PackageReference Include="RSoft.Lib.Common" Version="1.7.0" />
-    <PackageReference Include="RSoft.Lib.Design" Version="1.9.0" />
+    <PackageReference Include="RSoft.Lib.Common" Version="2.1.0" />
+    <PackageReference Include="RSoft.Lib.Design" Version="2.1.0" />
   </ItemGroup>
 
 </Project>

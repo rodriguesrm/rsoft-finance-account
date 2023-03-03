@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netstandard2.1</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<Authors>Rodrigo Rodrigues</Authors>
 		<Company>RSoft</Company>
 		<Description>Entry gRPC client package</Description>
@@ -10,17 +10,18 @@
 		<PackageTags>rsoft grpc entry client</PackageTags>
 		<PackageIcon>rsoft-entry-grpcclient-icon-32x32.png</PackageIcon>
 		<PackageIconUrl />
-		<Version>1.2.0</Version>
+		<Version>1.3.0</Version>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <DocumentationFile>RSoft.Entry.GrpcClient.xml</DocumentationFile>
-	  <OutputPath>bin\Debug\netstandard2.1\</OutputPath>
+	  <OutputPath>bin\Debug\dotnet6\</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <DocumentationFile>RSoft.Entry.GrpcClient.xml</DocumentationFile>
-	  <OutputPath>bin\Release\netstandard2.1\</OutputPath>
+	  <OutputPath>bin\Release\dotnet6\</OutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -36,13 +37,13 @@
 
 	<ItemGroup>
 		<PackageReference Include="FluentValidator" Version="2.0.4" />
-		<PackageReference Include="Google.Protobuf" Version="3.18.1" />
-		<PackageReference Include="Grpc.Net.Client" Version="2.40.0" />
-		<PackageReference Include="Grpc.Tools" Version="2.41.0">
+		<PackageReference Include="Google.Protobuf" Version="3.22.0" />
+		<PackageReference Include="Grpc.Net.Client" Version="2.51.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.52.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
 		<None Include="..\Protos">
 			<Link>Protos</Link>
 		</None>

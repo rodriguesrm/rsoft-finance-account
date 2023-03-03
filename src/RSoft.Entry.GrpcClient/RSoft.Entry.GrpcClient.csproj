@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>netstandard2.1</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 		<Authors>Rodrigo Rodrigues</Authors>
 		<Company>RSoft</Company>
 		<Description>Entry gRPC client package</Description>
@@ -15,12 +15,12 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <DocumentationFile>RSoft.Entry.GrpcClient.xml</DocumentationFile>
-	  <OutputPath>bin\Debug\netstandard2.1\</OutputPath>
+	  <OutputPath>bin\Debug\dotnet6\</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <DocumentationFile>RSoft.Entry.GrpcClient.xml</DocumentationFile>
-	  <OutputPath>bin\Release\netstandard2.1\</OutputPath>
+	  <OutputPath>bin\Release\dotnet6\</OutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>

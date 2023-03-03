@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Version>1.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MassTransit" Version="7.2.2" />
-    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MassTransit" Version="7.3.1" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="RSoft.Finance.Contracts" Version="1.4.0" />
-	<PackageReference Include="RSoft.Lib.Messaging" Version="1.6.0" />
+	<PackageReference Include="RSoft.Lib.Messaging" Version="2.4.0" />
   </ItemGroup>
 
   <ItemGroup>

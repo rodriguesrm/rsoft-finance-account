@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,12 +33,15 @@ namespace RSoft.Entry.Tests.Stubs
 
         #region Public methods
 
+        ///<inheritdoc/>
         public Task Publish(object notification, CancellationToken cancellationToken = default)
             => Task.CompletedTask;
 
+        ///<inheritdoc/>
         public Task Publish<TNotification>(TNotification notification, CancellationToken cancellationToken = default) where TNotification : INotification
             => Task.CompletedTask;
 
+        ///<inheritdoc/>
         public Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancellationToken = default)
         {
             TResponse response = Activator.CreateInstance<TResponse>();
@@ -55,10 +59,25 @@ namespace RSoft.Entry.Tests.Stubs
             return Task.FromResult(response);
         }
 
+        ///<inheritdoc/>
         public Task<object> Send(object request, CancellationToken cancellationToken = default)
         {
             object response = default;
             return Task.FromResult(response);
+        }
+
+        ///<inheritdoc/>
+        public IAsyncEnumerable<TResponse> CreateStream<TResponse>(IStreamRequest<TResponse> request, CancellationToken cancellationToken = default)
+        {
+            IAsyncEnumerable<TResponse> response = default;
+            return response;
+        }
+
+        ///<inheritdoc/>
+        public IAsyncEnumerable<object> CreateStream(object request, CancellationToken cancellationToken = default)
+        {
+            IAsyncEnumerable<object> response = default;
+            return response;
         }
 
         #endregion

@@ -6,8 +6,8 @@
 
   <ItemGroup>
 	<PackageReference Include="RSoft.Finance.Contracts" Version="1.4.0" />
-	<PackageReference Include="RSoft.Lib.Common" Version="1.7.0" />
-    <PackageReference Include="RSoft.Lib.Design" Version="1.9.0" />
+	<PackageReference Include="RSoft.Lib.Common" Version="2.1.0" />
+    <PackageReference Include="RSoft.Lib.Design" Version="2.1.0" />
   </ItemGroup>
 
 </Project>
